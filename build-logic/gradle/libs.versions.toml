@@ -1,0 +1,84 @@
+[versions]
+java = "21"
+minSdk = "28"
+compileSdk = "34"
+targetSdk = "34"
+
+agp = "8.3.1"
+kotlin = "1.9.22"
+ksp = "1.9.22-1.0.18"
+
+compose-compiler = "1.5.10"
+compose-activity = "1.8.2"
+
+decompose = "2.2.2"
+decompose-router = "0.5.1"
+
+ktor = "2.3.4"
+ktorfit = "1.12.0"
+
+[libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+
+compose-android-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
+compose-android-bom = "androidx.compose:compose-bom:2024.02.02"
+compose-android-ui = { module = "androidx.compose.ui:ui" }
+compose-android-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+compose-android-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-android-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-android-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+compose-android-material3 = { module = "androidx.compose.material3:material3" }
+
+decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+decompose-android = { module = "com.arkivanov.decompose:extensions-compose-jetpack", version.ref = "decompose" }
+decompose-multiplatform = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decompose" }
+decompose-router = { module = "io.github.xxfast:decompose-router", version.ref = "decompose-router" }
+
+koin-bom = "io.insert-koin:koin-bom:3.5.3"
+koin-core = { module = "io.insert-koin:koin-core" }
+#koin-android = { module = "io.insert-koin:koin-android" }
+koin-compose = { module = "io.insert-koin:koin-compose" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
+koin-ktor = { module = "io.insert-koin:koin-ktor" }
+
+ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+
+ktorfit = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "ktorfit" }
+ktorfit-ksp = { module = "de.jensklingenberg.ktorfit:ktorfit-ksp", version.ref = "ktorfit" }
+
+settings = "com.russhwolf:multiplatform-settings-test:1.1.1"
+
+gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradle-kotlin-multiplatform = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }
+gradle-ksp = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+gradle-ktorfit = { module = "de.jensklingenberg.ktorfit:ktorfit-gradle-plugin", version.ref = "ktorfit" }
+gradle-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+
+[bundles]
+ktor = ["ktor-client-serialization", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json", "ktor-client-cio"]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
+ktorfit = { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
+
+convention-build-feature-buildConfig = "build-feature.build-config:1.0"
+convention-build-feature-resValues = "build-feature.res-values:1.0"
+convention-build-feature-compose = "build-feature.compose:1.0"
+
+convention-component-android-compose = "component.android.compose:1.0"
+convention-component-ktorfit = "component.ktorfit:1.0"
+
+convention-bundle-android-ui-screen-compose = "bundle-android.ui.screen.compose:1.0"
+
+convention-config-android = "config.android:1.0"
+convention-config-android-library = "config.android.library:1.0"
+convention-config-kotlin-library = "config.kotlin.library:1.0"
+convention-config-shared-library = "config.shared.library:1.0"
