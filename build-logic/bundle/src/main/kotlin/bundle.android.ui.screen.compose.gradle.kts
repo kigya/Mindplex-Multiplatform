@@ -1,5 +1,3 @@
-import dev.kigya.mindplex.config.withLibsVersionCatalog
-
 plugins {
     id("component.android.compose")
 }

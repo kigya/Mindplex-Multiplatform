@@ -1,5 +1,3 @@
-import dev.kigya.mindplex.config.libs
-
 plugins {
     `java-library`
     kotlin("jvm")

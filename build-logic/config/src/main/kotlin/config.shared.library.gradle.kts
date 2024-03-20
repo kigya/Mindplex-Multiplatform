@@ -1,4 +1,3 @@
-import dev.kigya.mindplex.config.libs
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 plugins {

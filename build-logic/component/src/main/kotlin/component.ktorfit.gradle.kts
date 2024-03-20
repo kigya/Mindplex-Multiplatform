@@ -1,5 +1,3 @@
-import dev.kigya.mindplex.config.withLibsVersionCatalog
-
 plugins {
     id("com.google.devtools.ksp")
     id("de.jensklingenberg.ktorfit")

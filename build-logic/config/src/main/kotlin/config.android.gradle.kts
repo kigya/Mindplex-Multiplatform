@@ -1,5 +1,4 @@
 import com.android.build.gradle.BaseExtension
-import dev.kigya.mindplex.config.libs
 
 plugins {
     kotlin("android")

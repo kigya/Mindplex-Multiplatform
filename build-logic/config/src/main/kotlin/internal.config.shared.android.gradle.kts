@@ -1,7 +1,5 @@
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.gradle.BaseExtension
-import dev.kigya.mindplex.config.configureIfExists
-import dev.kigya.mindplex.config.libs
 
 /**
  * Smth with android should be applied before using this plugin.
