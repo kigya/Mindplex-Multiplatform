@@ -14,11 +14,17 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+    versionCatalogs {
+        create("libs") {
+            from(files("../gradle/libs.versions.toml"))
+        }
+    }
 }
 
-rootProject.name = "Mindplex-Multiplatform"
-includeBuild("build-logic")
+rootProject.name = "build-logic"
 include(
-    ":androidApp",
-    ":shared",
+    "build-feature",
+    "component",
+    "config",
+    "gradle-ext",
 )

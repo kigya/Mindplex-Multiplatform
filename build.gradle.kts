@@ -1,7 +1,16 @@
 plugins {
-    //trick: for the same plugin versions in all sub-modules
-    alias(libs.plugins.androidApplication).apply(false)
-    alias(libs.plugins.androidLibrary).apply(false)
-    alias(libs.plugins.kotlinAndroid).apply(false)
-    alias(libs.plugins.kotlinMultiplatform).apply(false)
+    with(libs.plugins) {
+        with(android) {
+            alias(application) apply false
+            alias(library) apply false
+        }
+        with(kotlin) {
+            alias(android) apply false
+            alias(multiplatform) apply false
+        }
+
+        alias(ksp) apply false
+        alias(ktorfit) apply false
+        alias(compose) apply false
+    }
 }

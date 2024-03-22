@@ -1,4 +1,4 @@
-package dev.kigya.mindplex.android
+package dev.kigya.mindplex.androidApp
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
