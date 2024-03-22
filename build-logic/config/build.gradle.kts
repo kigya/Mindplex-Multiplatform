@@ -3,9 +3,15 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.gradle.kotlin)
-    implementation(libs.gradle.kotlin.multiplatform)
-    implementation(libs.gradle.android)
+    with(libs) {
+        with(gradle) {
+            implementation(kotlin)
+            implementation(kotlin.multiplatform)
+            implementation(android)
+        }
+    }
 
-    implementation(projects.gradleExt)
+    with(projects) {
+        implementation(gradleExt)
+    }
 }

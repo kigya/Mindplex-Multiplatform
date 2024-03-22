@@ -3,7 +3,11 @@ plugins {
 }
 
 dependencies {
-    api(libs.gradle.compose)
+    with(libs) {
+        with(gradle) {
+            api(compose)
+        }
 
-    api(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
+        api(files(javaClass.superclass.protectionDomain.codeSource.location))
+    }
 }

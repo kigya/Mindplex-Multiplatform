@@ -18,7 +18,11 @@ android {
 }
 
 dependencies {
-    implementation(libs.compose.android.activity)
+    with(libs) {
+        with(compose) {
+            implementation(android.activity)
+        }
+    }
 
     with(projects) {
         implementation(shared)

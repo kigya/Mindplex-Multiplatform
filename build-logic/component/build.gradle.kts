@@ -3,11 +3,17 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.gradle.kotlin)
-    implementation(libs.gradle.ksp)
-    implementation(libs.gradle.android)
-    implementation(libs.gradle.ktorfit)
+    with(libs) {
+        with(gradle) {
+            implementation(kotlin)
+            implementation(ksp)
+            implementation(android)
+            implementation(ktorfit)
+        }
+    }
 
-    implementation(projects.buildFeature)
-    implementation(projects.gradleExt)
+    with(projects) {
+        implementation(buildFeature)
+        implementation(gradleExt)
+    }
 }

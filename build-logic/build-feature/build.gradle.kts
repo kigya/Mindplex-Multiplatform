@@ -3,7 +3,13 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.gradle.android)
+    with(libs) {
+        with(gradle) {
+            implementation(android)
+        }
+    }
 
-    implementation(projects.gradleExt)
+    with(projects) {
+        implementation(gradleExt)
+    }
 }
