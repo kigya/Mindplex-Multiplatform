@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.CommonExtension
 import com.android.build.gradle.BaseExtension
 
 plugins {
@@ -17,5 +18,12 @@ configure<BaseExtension> {
 
     kotlin {
         jvmToolchain(project.libs.versions.java.getInt())
+    }
+}
+
+configureIfExists(CommonExtension::class.java) {
+    lint {
+        htmlReport = false
+        baseline = file("${project.projectDir}/lint-baseline.xml")
     }
 }
