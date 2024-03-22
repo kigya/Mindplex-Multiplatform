@@ -1,28 +1,26 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.convention.config.android)
-    alias(libs.plugins.convention.component.android.compose)
-}
+    with(libs.plugins) {
+        alias(android.application)
 
-android {
-    namespace = "dev.kigya.mindplex.android"
-    defaultConfig {
-        applicationId = "dev.kigya.mindplex.android"
-        versionCode = 1
-        versionName = "1.0"
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
+        with(convention) {
+            alias(config.android)
+            alias(bundle.android.ui.screen.compose)
         }
     }
 }
 
-dependencies {
-    implementation(projects.shared)
+android {
+    defaultConfig {
+        applicationId = "dev.kigya.mindplex"
+        versionCode = 1
+        versionName = "1.0"
+    }
+}
 
+dependencies {
     implementation(libs.compose.android.activity)
 
-    debugImplementation(libs.compose.android.ui.tooling)
+    with(projects) {
+        implementation(shared)
+    }
 }

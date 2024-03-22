@@ -1,8 +1,16 @@
 plugins {
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.multiplatform) apply false
-    alias(libs.plugins.ksp) apply false
-    alias(libs.plugins.ktorfit) apply false
+    with(libs.plugins) {
+        with(android) {
+            alias(application) apply false
+            alias(library) apply false
+        }
+        with(kotlin) {
+            alias(android) apply false
+            alias(multiplatform) apply false
+        }
+
+        alias(ksp) apply false
+        alias(ktorfit) apply false
+        alias(compose) apply false
+    }
 }

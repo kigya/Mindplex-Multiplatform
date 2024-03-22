@@ -16,6 +16,6 @@ configure<BaseExtension> {
     }
 
     kotlin {
-        jvmToolchain(project.libs.versions.java.get().toInt())
+        jvmToolchain(project.libs.versions.java.getInt())
     }
 }

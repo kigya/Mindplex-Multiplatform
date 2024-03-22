@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
@@ -12,16 +14,11 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
-    versionCatalogs {
-        create("libs") {
-            from(files("build-logic/gradle/libs.versions.toml"))
-        }
-    }
 }
 
 rootProject.name = "Mindplex-Multiplatform"
+includeBuild("build-logic")
 include(
     ":androidApp",
     ":shared",
 )
-includeBuild("build-logic")

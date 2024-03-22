@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.kotlin.dsl.add
@@ -10,7 +12,7 @@ import org.gradle.kotlin.dsl.add
  *
  * @see [DependencyHandler.add]
  */
-fun DependencyHandler.implementation(dependencyNotation: Any): Dependency? =
+inline fun DependencyHandler.implementation(dependencyNotation: Any): Dependency? =
     add("implementation", dependencyNotation)
 
 /**
@@ -21,7 +23,7 @@ fun DependencyHandler.implementation(dependencyNotation: Any): Dependency? =
  *
  * @see [DependencyHandler.add]
  */
-fun DependencyHandler.debugImplementation(dependencyNotation: Any): Dependency? =
+inline fun DependencyHandler.debugImplementation(dependencyNotation: Any): Dependency? =
     add("debugImplementation", dependencyNotation)
 
 /**
@@ -32,7 +34,7 @@ fun DependencyHandler.debugImplementation(dependencyNotation: Any): Dependency? 
  *
  * @see [DependencyHandler.add]
  */
-fun DependencyHandler.ksp(dependencyNotation: Any): Dependency? =
+inline fun DependencyHandler.ksp(dependencyNotation: Any): Dependency? =
     add("ksp", dependencyNotation)
 
 
@@ -44,7 +46,7 @@ fun DependencyHandler.ksp(dependencyNotation: Any): Dependency? =
  *
  * @see [DependencyHandler.add]
  */
-fun DependencyHandler.testImplementation(dependencyNotation: Any): Dependency? =
+inline fun DependencyHandler.testImplementation(dependencyNotation: Any): Dependency? =
     add("testImplementation", dependencyNotation)
 
 /**
@@ -55,5 +57,5 @@ fun DependencyHandler.testImplementation(dependencyNotation: Any): Dependency? =
  *
  * @see [DependencyHandler.add]
  */
-fun DependencyHandler.androidTestImplementation(dependencyNotation: Any): Dependency? =
+inline fun DependencyHandler.androidTestImplementation(dependencyNotation: Any): Dependency? =
     add("androidTestImplementation", dependencyNotation)

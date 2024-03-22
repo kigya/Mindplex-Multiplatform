@@ -2,8 +2,8 @@ import com.android.build.api.dsl.CommonExtension
 import com.android.build.gradle.BaseExtension
 
 /**
- * Smth with android should be applied before using this plugin.
- * Doesn't configure kotlin jvm version.
+ * Before using this plugin, ensure that necessary Android configurations have been applied.
+ * Note: This script does not configure the Kotlin JVM version.
  */
 
 configure<BaseExtension> {
@@ -11,11 +11,11 @@ configure<BaseExtension> {
     println("Namespace: ${project.path} -> $projectNameFormatted")
     namespace = "dev.kigya.mindplex.$projectNameFormatted"
 
-    compileSdkVersion(libs.versions.compileSdk.get().toInt())
+    compileSdkVersion(libs.versions.compileSdk.getInt())
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        minSdk = libs.versions.minSdk.getInt()
+        targetSdk = libs.versions.targetSdk.getInt()
 
         resourceConfigurations += listOf("ru", "en")
     }

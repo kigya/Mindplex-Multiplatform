@@ -4,8 +4,8 @@ plugins {
 
 dependencies {
     implementation(libs.gradle.kotlin)
-    implementation(libs.gradle.android)
     implementation(libs.gradle.ksp)
+    implementation(libs.gradle.android)
     implementation(libs.gradle.ktorfit)
 
     implementation(projects.buildFeature)
