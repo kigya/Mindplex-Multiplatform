@@ -20,25 +20,4 @@ jobs:
       - name: Build
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: iosArm64Binaries
-
-      - name: Link
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: linkIosArm64
-
-  lint:
-    needs: [ build ]
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ macos-latest ]
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/setup_gradle
-
-      - name: Lint
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: lintDebug
+          arguments: linkIosArm64 assembleDebugAppleFrameworkForXcodeIosArm64
