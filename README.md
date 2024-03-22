@@ -1,4 +1,4 @@
-# About Mindplex
+# ℹ️ About Mindplex
 
 
 
@@ -14,4 +14,6 @@ Log in effortlessly and explore the main screen, where a world of quizzes awaits
 
 Personalize your experience on the profile screen, where you can customize your avatar and display your quiz conquests. With Mindplex, you're not just playing a game; you're embarking on a journey of learning and fun. So why wait? Check Mindplex now and start your quiz adventure today!
 
-{% @figma/embed fileId="iI2ctMyZwWFNMbFcYsbk9q" nodeId="0:1" url="https://www.figma.com/file/iI2ctMyZwWFNMbFcYsbk9q/Mindplex?mode=design&node-id=0:1&t=vMWsP6c7ww8jP46A-1&type=design" %}
+
+
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
