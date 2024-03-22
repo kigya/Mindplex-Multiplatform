@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/setup_android
+      - uses: ./.github/setup_gradle
 
       - name: Build
         uses: gradle/gradle-build-action@v2
@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/setup_android
+      - uses: ./.github/setup_gradle
 
       - name: Lint
         uses: gradle/gradle-build-action@v2
@@ -47,7 +47,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/setup_android
+      - uses: ./.github/setup_gradle
 
       - name: Unit tests
         uses: gradle/gradle-build-action@v2
