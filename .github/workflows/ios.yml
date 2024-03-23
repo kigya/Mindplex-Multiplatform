@@ -1,0 +1,38 @@
+name: iOS CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest ]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/setup_gradle
+
+      - name: Build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: linkIosArm64 iosArm64MainBinaries
+
+  build-simulator:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest ]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/setup_gradle
+
+      - name: Build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: linkIosSimulatorArm64 iosSimulatorArm64MainBinaries
