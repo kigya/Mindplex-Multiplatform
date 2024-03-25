@@ -25,3 +25,5 @@ configure<KotlinMultiplatformExtension> {
         }
     }
 }
+
+tasks.register("testClasses")
