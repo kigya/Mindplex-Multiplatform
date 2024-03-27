@@ -28,6 +28,7 @@ junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
 material = "1.11.0"
+jetbrainsKotlinJvm = "1.9.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -98,3 +99,4 @@ convention-config-android = "config.android:1.0"
 convention-config-android-library = "config.android.library:1.0"
 convention-config-kotlin-library = "config.kotlin.library:1.0"
 convention-config-shared-library = "config.shared.library:1.0"
+jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }

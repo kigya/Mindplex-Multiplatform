@@ -1,5 +1,5 @@
 import SwiftUI
-import shared.core.presentation.theme
+import umbrella
 
 struct ContentView: View {
     var body: some View {

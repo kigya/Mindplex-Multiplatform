@@ -4,8 +4,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color.Companion.White
 import com.kigya.mindplex.shared.core.presentation.theme.color.AmericanGreen
+import com.kigya.mindplex.shared.core.presentation.theme.color.White
 import com.kigya.mindplex.shared.core.presentation.theme.color.Crayola
 import com.kigya.mindplex.shared.core.presentation.theme.color.Gunmetal100
 import com.kigya.mindplex.shared.core.presentation.theme.color.Gunmetal60

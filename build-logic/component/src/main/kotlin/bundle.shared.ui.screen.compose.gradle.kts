@@ -2,13 +2,19 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 plugins {
     id("component.shared.compose")
+    id("build-feature.compose")
 }
 
 configure<KotlinMultiplatformExtension> {
-    sourceSets.commonMain.dependencies {
+    sourceSets {
         with(compose.dependencies) {
-            implementation(components.resources)
-            implementation(preview)
+            commonMain.dependencies {
+                implementation(components.resources)
+            }
+            androidMain.dependencies {
+                implementation(preview)
+                implementation(uiTooling)
+            }
         }
     }
 }

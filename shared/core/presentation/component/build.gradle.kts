@@ -5,8 +5,10 @@ plugins {
     }
 }
 
-dependencies {
-    with(projects) {
-        implementation(shared.core.presentation.theme)
+kotlin.sourceSets.commonMain {
+    dependencies {
+        with(projects) {
+            implementation(shared.core.presentation.theme)
+        }
     }
 }

@@ -1,11 +1,11 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":shared:core:presentation:component")
-
-
 include(
     ":androidApp",
+    ":umbrella",
+    ":shared:core:util",
     ":shared:core:presentation:theme",
+    ":shared:core:presentation:component",
     ":shared:feature:onboarding:presentation"
 )
 

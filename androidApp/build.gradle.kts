@@ -25,7 +25,8 @@ dependencies {
     }
 
     with(projects) {
-        implementation(shared.core.presentation.theme)
-        implementation(shared.feature.onboarding.presentation)
+//        implementation(shared.core.presentation.theme)
+//        implementation(shared.feature.onboarding.presentation)
+        implementation(umbrella)
     }
 }

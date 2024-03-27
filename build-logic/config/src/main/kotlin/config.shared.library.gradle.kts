@@ -20,8 +20,10 @@ configure<KotlinMultiplatformExtension> {
         iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
+            baseName = "umbrella"
+            binaryOption("bundleId", "com.kigya.mindplex.umbrella")
             isStatic = true
+            //export(project(":shared:core:presentation:theme"))
         }
     }
 }
