@@ -21,4 +21,5 @@ includeBuild("build-logic")
 include(
     ":androidApp",
     ":shared",
+    ":core:presentation:theme",
 )
