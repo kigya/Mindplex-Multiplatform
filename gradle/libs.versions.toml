@@ -76,10 +76,12 @@ convention-build-feature-buildConfig = "build-feature.build-config:1.0"
 convention-build-feature-resValues = "build-feature.res-values:1.0"
 convention-build-feature-compose = "build-feature.compose:1.0"
 
-convention-component-android-compose = "mindplex.component.android.compose:1.0"
+convention-component-android-compose = "component.android.compose:1.0"
+convention-component-shared-compose = "component.shared.compose:1.0"
 convention-component-ktorfit = "component.ktorfit:1.0"
 
 convention-bundle-android-ui-screen-compose = "bundle.android.ui.screen.compose:1.0"
+convention-bundle-shared-ui-screen-compose = "bundle.shared.ui.screen.compose:1.0"
 
 convention-config-android = "config.android:1.0"
 convention-config-android-library = "config.android.library:1.0"

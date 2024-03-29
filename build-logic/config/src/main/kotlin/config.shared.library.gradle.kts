@@ -21,7 +21,10 @@ configure<KotlinMultiplatformExtension> {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+            binaryOption("bundleId", "com.kigya.mindplex.shared")
             isStatic = true
         }
     }
 }
+
+tasks.register("testClasses")
