@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 @Immutable
 data class Spacing(
     val default: Dp = 0.dp,
+    val unitary: Dp = 1.dp,
+    val tiny: Dp = 2.dp,
     val extraSmall: Dp = 8.dp,
     val small: Dp = 12.dp,
     val medium: Dp = 16.dp,

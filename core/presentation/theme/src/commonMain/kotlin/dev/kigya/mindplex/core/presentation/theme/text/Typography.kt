@@ -8,6 +8,11 @@ import androidx.compose.ui.text.font.FontWeight
 internal val Typography
     @Composable
     get() = Typography(
+        displayLarge = TextStyle(
+            fontSize = TextSize.extraGiant,
+            fontWeight = FontWeight.ExtraBold,
+            fontFamily = Nunito,
+        ),
         displaySmall = TextStyle(
             fontSize = TextSize.large,
             fontWeight = FontWeight.Medium,

@@ -1,4 +1,14 @@
 plugins {
-    alias(libs.plugins.convention.config.shared.library)
-    alias(libs.plugins.convention.bundle.shared.ui.screen.compose)
+    with(libs.plugins.convention) {
+        alias(config.shared.library)
+        alias(bundle.shared.ui.screen.compose)
+    }
+}
+
+kotlin.sourceSets.commonMain {
+    dependencies {
+        with(projects) {
+            implementation(core.presentation.resources)
+        }
+    }
 }
