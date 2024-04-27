@@ -53,7 +53,6 @@ private fun SplashScreenContent(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        println("SCREENWIDTH: ${getScreenWidth()} ")
         MindplexLottie(
             modifier = Modifier.size(getLottieSplashSize()),
             reader = { with(ResourceProvider.Lottie) { loadAsByteArray(mindplexLogo) } },
