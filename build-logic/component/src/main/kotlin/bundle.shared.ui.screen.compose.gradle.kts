@@ -6,11 +6,17 @@ plugins {
 
 configure<KotlinMultiplatformExtension> {
     sourceSets {
-        with(compose.dependencies) {
-            commonMain.dependencies {
-                implementation(components.resources)
+        commonMain.dependencies {
+            with(libs) {
+                implementation(kotlinx.collections.immutable)
             }
-            androidMain.dependencies {
+            with(compose.dependencies) {
+                implementation(components.resources)
+                implementation(animation)
+            }
+        }
+        androidMain.dependencies {
+            with(compose.dependencies) {
                 implementation(preview)
                 implementation(uiTooling)
             }

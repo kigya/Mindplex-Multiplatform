@@ -1,0 +1,12 @@
+<resources>
+    <string name="splash_title" translatable="false">Mindplex</string>
+    <string name="onboarding_first_title">Unleash Your Knowledge</string>
+    <string name="onboarding_first_description">Challenge yourself with a variety of questions and expand your mind.</string>
+    <string name="onboarding_second_title">Think Fast, Choose Wisely</string>
+    <string name="onboarding_second_description">Test your decision-making skills as you pick the right answer from multiple choices.</string>
+    <string name="onboarding_third_title">True or False Mastery</string>
+    <string name="onboarding_third_description">Sharpen your instincts by answering true/false questions with confidence.</string>
+    <string name="onboarding_skip_button_text">Skip</string>
+    <string name="onboarding_next_button_text">Next</string>
+    <string name="onboarding_get_started_button_text">Get Started</string>
+</resources>

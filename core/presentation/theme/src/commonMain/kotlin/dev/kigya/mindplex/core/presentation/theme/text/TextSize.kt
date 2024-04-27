@@ -18,6 +18,7 @@ object TextSize {
     val large: TextUnit = 18.sp
     val extraLarge: TextUnit = 20.sp
     val giant: TextUnit = 24.sp
+    val extraGiant: TextUnit = 36.sp
 }
 
 internal val LocalTextSize = staticCompositionLocalOf { TextSize }

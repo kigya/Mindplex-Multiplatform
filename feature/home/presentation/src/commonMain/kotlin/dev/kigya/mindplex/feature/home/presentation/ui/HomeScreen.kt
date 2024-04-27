@@ -1,0 +1,42 @@
+package dev.kigya.mindplex.feature.home.presentation.ui
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import dev.kigya.mindplex.core.presentation.feature.effect.use
+import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
+import dev.kigya.mindplex.feature.home.presentation.component.HomeComponent
+import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
+import kotlinx.coroutines.flow.Flow
+
+@Composable
+fun HomeScreen(contract: HomeComponent) {
+    val (state, event, effect) = use(contract)
+
+    HomeScreenContent(
+        state = state,
+        event = event,
+        effect = effect,
+    )
+}
+
+@Composable
+private fun HomeScreenContent(
+    state: HomeContract.State,
+    event: (HomeContract.Event) -> Unit,
+    effect: Flow<HomeContract.Effect>,
+) {
+    LaunchedEffectSaveable(Unit) { event(HomeContract.Event.OnFirstLaunch) }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text("Home")
+    }
+}
