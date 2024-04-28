@@ -81,7 +81,6 @@ private fun OnboardingScreenContent(
                             easing = FastOutSlowInEasing,
                         )
                     )
-                    performClickHapticFeedback(hapticFeedback)
                 }
             }
         }

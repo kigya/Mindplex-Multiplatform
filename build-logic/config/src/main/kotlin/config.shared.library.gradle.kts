@@ -57,12 +57,10 @@ project.afterEvaluate {
     }
     tasks.named("linkDebugFrameworkIosArm64") {
         dependsOn("clearComposeResources")
-        dependsOn("clean")
         dependsOn("copyComposeResources")
     }
     tasks.named("linkDebugFrameworkIosSimulatorArm64") {
         dependsOn("clearComposeResources")
-        dependsOn("clean")
         dependsOn("copyComposeResources")
     }
 }
