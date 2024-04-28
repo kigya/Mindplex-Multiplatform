@@ -3,6 +3,7 @@ package dev.kigya.mindplex.feature.onboarding.presentation.ui
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -25,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalHapticFeedback
 import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexHorizontalPager
 import dev.kigya.mindplex.core.presentation.component.MindplexJumpingDotsIndicator
@@ -34,6 +36,7 @@ import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
 import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
+import dev.kigya.mindplex.core.util.compose.performClickHapticFeedback
 import dev.kigya.mindplex.core.util.extension.ifNotEmpty
 import dev.kigya.mindplex.feature.onboarding.presentation.component.OnboardingComponent
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
@@ -65,12 +68,20 @@ private fun OnboardingScreenContent(
     LaunchedEffectSaveable(Unit) { event(OnboardingContract.Event.OnFirstLaunch) }
 
     val pagerState = rememberPagerState(pageCount = state.onboardingData::size)
+    val hapticFeedback = LocalHapticFeedback.current
 
     LaunchedEffect(effect) {
         effect.collect { onboardingEffect ->
             when (onboardingEffect) {
                 is OnboardingContract.Effect.ScrollToPage -> {
-                    pagerState.animateScrollToPage(onboardingEffect.pageTo)
+                    pagerState.animateScrollToPage(
+                        page = onboardingEffect.pageTo,
+                        animationSpec = tween(
+                            durationMillis = 500,
+                            easing = FastOutSlowInEasing,
+                        )
+                    )
+                    performClickHapticFeedback(hapticFeedback)
                 }
             }
         }
@@ -179,7 +190,10 @@ private fun OnboardingScreenContent(
                                     modifier = Modifier.fillMaxWidth(),
                                     labelText = stringResource(skipResource),
                                     contentColor = MaterialTheme.colorScheme.onSecondary,
-                                ) { event(OnboardingContract.Event.OnSkipClicked) }
+                                ) {
+                                    event(OnboardingContract.Event.OnSkipClicked)
+                                    performClickHapticFeedback(hapticFeedback)
+                                }
                             }
                             if (page < size) {
                                 MindplexSpacer(size = MindplexSpacerSize.LARGE)
@@ -191,7 +205,10 @@ private fun OnboardingScreenContent(
                                 labelText = stringResource(nextResource),
                                 containerColor = MaterialTheme.colorScheme.onSecondary,
                                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                            ) { event(OnboardingContract.Event.OnNextClicked(pagerState.currentPage)) }
+                            ) {
+                                event(OnboardingContract.Event.OnNextClicked(pagerState.currentPage))
+                                performClickHapticFeedback(hapticFeedback)
+                            }
                         }
                     }
                 }
