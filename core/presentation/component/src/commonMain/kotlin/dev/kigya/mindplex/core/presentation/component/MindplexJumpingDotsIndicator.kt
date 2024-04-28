@@ -28,8 +28,8 @@ import dev.kigya.mindplex.core.util.extension.compose.jumpingDotTransition
 fun MindplexJumpingDotsIndicator(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    selectedColor: Color = MaterialTheme.colorScheme.primary,
-    unselectedColor: Color = MaterialTheme.colorScheme.primary,
+    selectedColor: Color = MaterialTheme.colorScheme.onSecondary,
+    unselectedColor: Color = MaterialTheme.colorScheme.onSecondary,
     itemWidth: Dp = MaterialTheme.spacing.extraSmall,
     itemHeight: Dp = MaterialTheme.spacing.extraSmall,
     itemRadius: Dp = MaterialTheme.spacing.extraSmall,
