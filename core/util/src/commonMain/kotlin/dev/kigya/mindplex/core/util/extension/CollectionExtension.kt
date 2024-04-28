@@ -5,8 +5,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @OptIn(ExperimentalContracts::class)
-@Suppress("BOUNDS_NOT_ALLOWED_IF_BOUNDED_BY_TYPE_PARAMETER")
-inline fun <C, R> C.ifNotEmpty(block: () -> R): R where C : Collection<*>, C : R {
+inline fun <C : Collection<*>> C.ifNotEmpty(block: C.() -> Unit): Any {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }

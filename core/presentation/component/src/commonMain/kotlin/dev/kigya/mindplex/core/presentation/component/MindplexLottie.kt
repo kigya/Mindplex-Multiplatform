@@ -34,7 +34,7 @@ fun MindplexLottie(
     )
     val isAnimationComplete by derivedStateOf { progress == 1f }
 
-    LaunchedEffectSaveable(Unit) { json = reader().decodeToString() }
+    LaunchedEffect(Unit) { json = reader().decodeToString() }
     LaunchedEffect(isAnimationComplete) { if (isAnimationComplete) onFinish() }
 
     LottieAnimation(

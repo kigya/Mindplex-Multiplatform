@@ -20,9 +20,9 @@ fun MindplexHorizontalPager(
         modifier = modifier,
         state = pagerState,
         flingBehavior =
-            PagerDefaults.flingBehavior(
-                state = pagerState,
-                snapAnimationSpec = spring(dampingRatio = 1.9f, stiffness = 600f),
-            ),
+        PagerDefaults.flingBehavior(
+            state = pagerState,
+            snapAnimationSpec = spring(dampingRatio = 1.9f, stiffness = 600f),
+        ),
     ) { page -> pageContent(page) }
 }
