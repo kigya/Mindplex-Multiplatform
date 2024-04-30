@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.library")
     id("internal.config.shared.android")
+    id("internal.config.detekt")
 }
 
 configure<KotlinMultiplatformExtension> {
@@ -25,3 +26,5 @@ configure<KotlinMultiplatformExtension> {
         }
     }
 }
+
+tasks.register("testClasses")

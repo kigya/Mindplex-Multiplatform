@@ -1,3 +1,7 @@
 plugins {
-    alias(libs.plugins.convention.config.shared.library)
+    with(libs.plugins) {
+        with(convention) {
+            alias(config.shared.library)
+        }
+    }
 }

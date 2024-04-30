@@ -8,4 +8,10 @@ dependencies {
         implementation(ui)
         implementation(material3)
     }
+
+    with(libs) {
+        with(detekt.plugins) {
+            detektPlugins(compose)
+        }
+    }
 }
