@@ -50,3 +50,6 @@ include(":di:core")
 // Application Modules
 include(":androidApp")
 include(":shared")
+
+// Test Modules
+include(":konsistTest")

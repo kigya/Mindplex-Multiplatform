@@ -27,9 +27,7 @@ import org.jetbrains.compose.resources.stringResource
 internal const val LOTTIE_WIDTH_PROPORTIONAL_DIVIDER = 3f
 
 @Composable
-fun SplashScreen(
-    contract: SplashContract,
-) {
+fun SplashScreen(contract: SplashContract) {
     val (state, event, _) = use(contract)
 
     SplashScreenContent(

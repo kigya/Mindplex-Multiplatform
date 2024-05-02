@@ -22,7 +22,7 @@ lifecycle = { require = "2.7.0" }
 
 # Decompose and UI Components
 decompose = "3.0.0-alpha09"
-essenty = "2.0.0-alpha07"
+essenty = "2.0.0"
 compottie = "1.1.2"
 
 # DI and Service Frameworks
@@ -35,6 +35,10 @@ dataStore = "1.1.0"
 
 # Coroutines for Async Programming
 coroutines = "1.8.0"
+
+# Tests
+konsist = "0.15.1"
+junit = "5.11.0-M1"
 
 [libraries]
 # Compose Libraries
@@ -69,12 +73,13 @@ ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktorfit = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "ktorfit" }
 ktorfit-ksp = { module = "de.jensklingenberg.ktorfit:ktorfit-ksp", version.ref = "ktorfit" }
 
-# Kotlin Test Libraries
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-
 # Serialization and Immutable Collections Libraries
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
+
+# Test Libraries
+konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 
 # Gradle Plugins
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -101,7 +106,6 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 compose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktorfit = { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
-kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 
 convention-build-feature-buildConfig = "build-feature.build-config:1.0"
 convention-build-feature-resValues = "build-feature.res-values:1.0"
@@ -113,6 +117,8 @@ convention-component-ktorfit = "component.ktorfit:1.0"
 convention-component-android-decompose = "component.android.decompose:1.0"
 convention-component-shared-decompose = "component.shared.decompose:1.0"
 convention-component-koin = "component.koin:1.0"
+convention-component-shared-test = "component.shared.test:1.0"
+convention-component-jvm-konsist = "component.jvm.konsist:1.0"
 
 convention-bundle-android-ui-screen-compose = "bundle.android.ui.screen.compose:1.0"
 convention-bundle-shared-ui-screen-compose = "bundle.shared.ui.screen.compose:1.0"

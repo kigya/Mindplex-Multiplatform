@@ -9,11 +9,11 @@ interface HomeContract :
     @Immutable
     data class State(val mock: String = "") : CopyableComponentState
 
+    @Immutable
     sealed class Event {
         data object OnFirstLaunch : Event()
     }
 
-    sealed class Effect {
-        data class ScrollToPage(val pageTo: Int) : Effect()
-    }
+    @Immutable
+    sealed class Effect
 }

@@ -38,7 +38,6 @@ import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
 import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
 import dev.kigya.mindplex.core.util.compose.performClickHapticFeedback
 import dev.kigya.mindplex.core.util.extension.ifNotEmpty
-import dev.kigya.mindplex.feature.onboarding.presentation.component.OnboardingComponent
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.DrawableResource
@@ -48,7 +47,7 @@ internal const val LOTTIE_WIDTH_PROPORTIONAL_DIVIDER = 2.1f
 internal const val LOTTIE_ASPECT_RATIO = 2.24f
 
 @Composable
-fun OnboardingScreen(contract: OnboardingComponent) {
+fun OnboardingScreen(contract: OnboardingContract) {
     val (state, event, effect) = use(contract)
 
     OnboardingScreenContent(
