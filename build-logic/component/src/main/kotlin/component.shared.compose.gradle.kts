@@ -9,6 +9,8 @@ configure<KotlinMultiplatformExtension> {
     sourceSets {
         commonMain.dependencies {
             with(compose.dependencies) {
+                implementation(components.resources)
+                implementation(animation)
                 implementation(ui)
                 implementation(material3)
             }

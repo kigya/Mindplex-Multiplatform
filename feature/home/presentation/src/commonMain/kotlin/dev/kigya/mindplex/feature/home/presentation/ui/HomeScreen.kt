@@ -9,12 +9,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
-import dev.kigya.mindplex.feature.home.presentation.component.HomeComponent
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun HomeScreen(contract: HomeComponent) {
+fun HomeScreen(contract: HomeContract) {
     val (state, event, effect) = use(contract)
 
     HomeScreenContent(
