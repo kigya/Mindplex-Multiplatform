@@ -32,7 +32,7 @@ class RootComponent(
 
     private fun createChild(
         config: Configuration,
-        context: ComponentContext
+        context: ComponentContext,
     ): Child = when (config) {
         Configuration.SplashScreen -> Child.SplashScreen(
             SplashComponent(

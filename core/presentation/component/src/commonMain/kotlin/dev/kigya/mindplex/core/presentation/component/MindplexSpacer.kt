@@ -56,7 +56,7 @@ fun RowScope.MindplexSpacer(
 private fun drawSpacer(
     orientation: MindplexSpacerOrientation,
     size: MindplexSpacerSize,
-    modifier: Modifier
+    modifier: Modifier,
 ) = if (orientation == MindplexSpacerOrientation.VERTICAL) {
     Spacer(modifier = Modifier.height(size.value).then(modifier))
 } else {

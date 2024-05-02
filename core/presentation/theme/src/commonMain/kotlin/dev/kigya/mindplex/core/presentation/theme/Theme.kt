@@ -5,7 +5,6 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import dev.kigya.mindplex.core.presentation.theme.color.AmericanGreen
-import dev.kigya.mindplex.core.presentation.theme.color.White
 import dev.kigya.mindplex.core.presentation.theme.color.Crayola
 import dev.kigya.mindplex.core.presentation.theme.color.Gunmetal100
 import dev.kigya.mindplex.core.presentation.theme.color.Gunmetal60
@@ -19,6 +18,7 @@ import dev.kigya.mindplex.core.presentation.theme.color.Iris50
 import dev.kigya.mindplex.core.presentation.theme.color.Iris60
 import dev.kigya.mindplex.core.presentation.theme.color.Iris70
 import dev.kigya.mindplex.core.presentation.theme.color.Iris80
+import dev.kigya.mindplex.core.presentation.theme.color.White
 
 val LightColorScheme = lightColorScheme(
     background = Iris10,

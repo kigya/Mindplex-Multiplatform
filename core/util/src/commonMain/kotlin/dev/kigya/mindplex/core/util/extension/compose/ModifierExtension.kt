@@ -8,7 +8,7 @@ fun Modifier.jumpingDotTransition(
     distance: Float,
     currentPage: Int,
     currentPageOffsetFraction: Float,
-    jumpScale: Float
+    jumpScale: Float,
 ) = graphicsLayer {
     val scrollPosition = currentPage + currentPageOffsetFraction
     translationX = scrollPosition * distance

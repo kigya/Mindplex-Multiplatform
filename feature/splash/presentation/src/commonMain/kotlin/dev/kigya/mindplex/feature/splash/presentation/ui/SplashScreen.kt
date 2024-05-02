@@ -21,7 +21,6 @@ import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.resources.ResourceProvider
 import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
-import dev.kigya.mindplex.core.util.window.getScreenWidth
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import org.jetbrains.compose.resources.stringResource
 
