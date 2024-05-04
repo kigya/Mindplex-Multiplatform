@@ -1,10 +1,10 @@
 name: iOS CI
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  workflow_run:
+    workflows: [ "Pre-build" ]
+    types:
+      - completed
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
       - uses: ./.github/setup_gradle
 
       - name: Build
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: linkIosArm64 iosArm64MainBinaries
 
@@ -33,6 +33,6 @@ jobs:
       - uses: ./.github/setup_gradle
 
       - name: Build
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: linkIosSimulatorArm64 iosSimulatorArm64MainBinaries

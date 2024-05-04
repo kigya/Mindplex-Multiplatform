@@ -1,10 +1,10 @@
 name: Android CI
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_run:
+    workflows: [ "Pre-build" ]
+    types:
+      - completed
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
       - uses: ./.github/setup_gradle
 
       - name: Build
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: assembleDebug
 
@@ -34,25 +34,9 @@ jobs:
       - uses: ./.github/setup_gradle
 
       - name: Lint
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: lintDebug
-
-  detekt:
-    needs: [ build ]
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ macos-latest ]
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/setup_gradle
-
-      - name: Detekt
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: detekt
 
   test:
     needs: [ build ]
@@ -66,7 +50,7 @@ jobs:
       - uses: ./.github/setup_gradle
 
       - name: Unit tests
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: testDebugUnitTest --info
       - name: Android Test Report Action
