@@ -4,12 +4,12 @@ minSdk = "28"
 compileSdk = "34"
 targetSdk = "34"
 
-agp = "8.3.1"
+agp = "8.4.0"
 kotlin = "1.9.23"
 ksp = "1.9.23-1.0.19"
 
 compose-compiler = "1.5.11"
-compose-activity = "1.8.2"
+compose-activity = "1.9.0"
 compose-multiplatform = "1.6.1"
 lifecycle = "2.7.0"
 
@@ -54,6 +54,7 @@ ktorfit = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "kt
 ktorfit-ksp = { module = "de.jensklingenberg.ktorfit:ktorfit-ksp", version.ref = "ktorfit" }
 
 #detekt-plugins-compose = { module = "ru.kode:detekt-rules-compose", version.ref = "detekt-compose" }
+detekt-plugins-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-plugins-compose = { module = "io.nlopez.compose.rules:detekt", version = "0.3.13" }
 
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }

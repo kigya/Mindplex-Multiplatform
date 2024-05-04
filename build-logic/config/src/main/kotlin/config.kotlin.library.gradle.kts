@@ -2,6 +2,7 @@ plugins {
     `java-library`
     kotlin("jvm")
     id("com.android.lint")
+    id("internal.config.kotlin.detekt")
 }
 
 java {

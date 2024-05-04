@@ -42,11 +42,11 @@ console-reports:
   #  - 'LiteFindingsReport'
 
 output-reports:
-  active: true
+  active: false
   exclude:
-    # - 'TxtOutputReport'
+    - 'TxtOutputReport'
     - 'XmlOutputReport'
-    - 'HtmlOutputReport'
+    #    - 'HtmlOutputReport'
     - 'MdOutputReport'
 
 comments:
@@ -88,8 +88,8 @@ comments:
 complexity:
   active: true
   CognitiveComplexMethod:
-    active: false
-    threshold: 10
+    active: true
+    threshold: 8
   ComplexCondition:
     active: true
     threshold: 5
@@ -126,12 +126,12 @@ complexity:
     threshold: 90
   LongParameterList:
     active: true
-    functionThreshold: 16
+    functionThreshold: 6
     constructorThreshold: 7
     ignoreDefaultParameters: true
     ignoreDataClasses: true
-    ignoreAnnotatedParameter: [ ]
-    ignoreAnnotated: [ 'Composable' ] #ToDo exist
+    #    ignoreAnnotatedParameter: []
+    ignoreAnnotated: [ 'Composable' ]
   MethodOverloading:
     active: false
     threshold: 6
@@ -159,8 +159,8 @@ complexity:
     threshold: 2
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: false
-    ignoreStringsRegex: '$^'
-    ignoreAnnotated: [ 'Composable' ] #ToDo exist
+  #    ignoreStringsRegex: '$^'
+  #    ignoreAnnotated: [ 'Preview' ] #not exist
   TooManyFunctions:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
@@ -187,8 +187,8 @@ coroutines:
     active: true
   SleepInsteadOfDelay:
     active: true
-  SuspendFunWithCoroutineScopeReceiver: #ToDo what
-    active: false
+  SuspendFunWithCoroutineScopeReceiver:
+    active: true
   SuspendFunWithFlowReturnType:
     active: true
 
@@ -217,7 +217,7 @@ empty-blocks:
   EmptyInitBlock:
     active: true
   EmptyKtFile:
-    active: true #ToDo ignore if completely commented
+    active: true
   EmptySecondaryConstructor:
     active: true
   EmptyTryBlock:
@@ -231,7 +231,7 @@ exceptions:
   active: true
   ExceptionRaisedInUnexpectedLocation:
     active: true
-    methodNames: #ToDo in constructor too
+    methodNames: #should work in constructor too but it doesn't
       - 'equals'
       - 'finalize'
       - 'hashCode'
@@ -239,34 +239,35 @@ exceptions:
   InstanceOfCheckForException:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
-  NotImplementedDeclaration: #ToDo what
-    active: false
-  ObjectExtendsThrowable: #ToDo what
+  NotImplementedDeclaration:
     active: true
-  PrintStackTrace: #ToDo what
+  ObjectExtendsThrowable:
+    active: true
+  PrintStackTrace:
     active: true
   RethrowCaughtException:
     active: true
-    excludes: [ 'CancellationException' ] #ToDo exist
+  #    excludes: [ 'CancellationException' ] #not exist
   ReturnFromFinally:
     active: true
     ignoreLabeled: false
-  SwallowedException: #ToDo what
+  SwallowedException:
     active: true
     ignoredExceptionTypes:
       - 'InterruptedException'
       - 'MalformedURLException'
       - 'NumberFormatException'
       - 'ParseException'
+      - 'CancellationException'
     allowedExceptionNameRegex: '_|(ignore|expected).*'
   ThrowingExceptionFromFinally:
     active: true
-  ThrowingExceptionInMain: #ToDo what
+  ThrowingExceptionInMain:
     active: false
   ThrowingExceptionsWithoutMessageOrCause:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
-    exceptions: #ToDo no excludes?
+    exceptions:
       - 'ArrayIndexOutOfBoundsException'
       - 'IllegalArgumentException'
       - 'IllegalMonitorStateException'
@@ -274,6 +275,8 @@ exceptions:
       - 'IndexOutOfBoundsException'
       - 'NullPointerException'
       - 'RuntimeException'
+      - 'Exception'
+      - 'Throwable'
   ThrowingNewInstanceOfSameException:
     active: true
   TooGenericExceptionCaught:
@@ -315,9 +318,9 @@ naming:
   EnumNaming:
     active: true
     enumEntryPattern: '[A-Z][_a-zA-Z0-9]*'
-  ForbiddenClassName: #ToDo what
+  ForbiddenClassName:
     active: false
-    forbiddenName: [ ]
+    forbiddenName: [ 'Manager' ]
   FunctionMaxLength:
     active: false
     maximumFunctionNameLength: 30
@@ -329,36 +332,36 @@ naming:
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
     functionPattern: '[a-z][a-zA-Z0-9]*'
     ignoreAnnotated: [ 'Composable' ]
-    excludeClassPattern: '$^'
+    #    excludeClassPattern: '$^'
     ignoreOverridden: true
   FunctionParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
     ignoreOverridden: true
-  InvalidPackageDeclaration: #ToDo what
+  InvalidPackageDeclaration:
     active: true
     rootPackage: 'dev.kigya.mindplex'
-    requireRootInDeclaration: false #ToDo what
+    requireRootInDeclaration: true
   LambdaParameterNaming:
     active: false
     parameterPattern: '[a-z][A-Za-z0-9]*|_'
-  MatchingDeclarationName: #ToDo what
+  MatchingDeclarationName:
     active: true
     mustBeFirst: true
-  MemberNameEqualsClassName: #ToDo what
+  MemberNameEqualsClassName:
     active: true
-    ignoreOverridden: true
+    ignoreOverridden: false
   NoNameShadowing:
     active: false #for local non-nulls
-  NonBooleanPropertyPrefixedWithIs: #ToDo what. I hope doesn't affect Flow
+  NonBooleanPropertyPrefixedWithIs: #has no effect for Flow
     active: true
   ObjectPropertyNaming:
     active: true
     constantPattern: '[A-Z][_A-Za-z0-9]*'
     propertyPattern: '([A-Z]+[_A-Z]*)|([a-z]+[A-Za-z]*)' #A_A or aA
     privatePropertyPattern: '(_)?[A-Za-z][_A-Za-z0-9]*'
-  PackageNaming: #ToDo what else exist
+  PackageNaming:
     active: true
     packagePattern: '[a-z]+(\.[a-z][A-Za-z]*)*'
   TopLevelPropertyNaming:
@@ -370,23 +373,23 @@ naming:
   VariableMaxLength:
     active: false
     maximumVariableNameLength: 64
-  VariableMinLength: #ToDo except i
-    active: false
+  VariableMinLength:
+    active: true
     minimumVariableNameLength: 1
   VariableNaming:
     active: true
     variablePattern: '[a-z][A-Za-z0-9]*'
     privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
-    excludeClassPattern: '$^'
+    #    excludeClassPattern: '$^'
     ignoreOverridden: true
 
-performance: #ToDo what else exist
+performance:
   active: true
   ArrayPrimitive:
     active: true
   CouldBeSequence:
     active: true
-    threshold: 3
+    threshold: 2
   ForEachOnRange:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
@@ -408,27 +411,29 @@ potential-bugs:
     active: false
   Deprecation:
     active: false
-  DontDowncastCollectionTypes: #ToDo what
-    active: false
-  DoubleMutabilityForCollection: #ToDo what
+  DontDowncastCollectionTypes:
+    active: true
+  DoubleMutabilityForCollection:
     active: true
     mutableTypes:
       - 'kotlin.collections.MutableList'
       - 'kotlin.collections.MutableMap'
       - 'kotlin.collections.MutableSet'
       - 'java.util.ArrayList'
+      - 'java.util.LinkedList'
       - 'java.util.LinkedHashSet'
       - 'java.util.HashSet'
       - 'java.util.LinkedHashMap'
       - 'java.util.HashMap'
+      - 'androidx.compose.runtime.MutableState'
   ElseCaseInsteadOfExhaustiveWhen:
     active: true
   EqualsAlwaysReturnsTrueOrFalse:
     active: true
   EqualsWithHashCodeExist:
     active: true
-  ExitOutsideMain: #ToDo what
-    active: false
+  ExitOutsideMain:
+    active: true
   ExplicitGarbageCollectionCall:
     active: true
   HasPlatformType:
@@ -451,29 +456,30 @@ potential-bugs:
   ImplicitUnitReturnType:
     active: false
     allowExplicitReturnType: true
-  InvalidRange: #ToDo what
+  InvalidRange:
     active: true
-  IteratorHasNextCallsNextMethod: #ToDo what
+  IteratorHasNextCallsNextMethod:
     active: true
   IteratorNotThrowingNoSuchElementException:
     active: true
-  LateinitUsage: #ToDo what
+  LateinitUsage:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
-    ignoreOnClassesPattern: ''
+  #    ignoreOnClassesPattern: ''
+  #    ignoreAnnotated: []
   MapGetWithNotNullAssertionOperator:
     active: true
   MissingPackageDeclaration:
     active: true
     excludes: [ '**/*.kts' ]
-  NullCheckOnMutableProperty: #ToDo what
+  NullCheckOnMutableProperty:
+    active: true
+  NullableToStringCall: #Any?.toString() = "null"
     active: false
-  NullableToStringCall: #ToDo what
-    active: false
-  UnconditionalJumpStatementInLoop: #ToDo what
-    active: false
-  UnnecessaryNotNullCheck: #ToDo what
-    active: false
+  UnconditionalJumpStatementInLoop:
+    active: true
+  UnnecessaryNotNullCheck:
+    active: true
   UnnecessaryNotNullOperator:
     active: true
   UnnecessarySafeCall:
@@ -485,27 +491,35 @@ potential-bugs:
   UnsafeCallOnNullableType:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
-  UnsafeCast: #ToDo what
+  UnsafeCast:
     active: true
-  UnusedUnaryOperator: #ToDo what
+  UnusedUnaryOperator:
     active: true
-  UselessPostfixExpression: #ToDo what
+  UselessPostfixExpression:
     active: true
-  WrongEqualsTypeParameter: #ToDo what
+  WrongEqualsTypeParameter:
     active: true
 
 style:
   active: true
-  AlsoCouldBeApply: #ToDo what
+  AlsoCouldBeApply:
     active: true
-  CanBeNonNullable: #ToDo what
+  BracesOnIfStatements:
     active: true
-  CascadingCallWrapping: #ToDo what
-    active: false
+    singleLine: necessary
+    multiLine: always
+  BracesOnWhenStatements:
+    active: true
+    singleLine: necessary
+    multiLine: necessary
+  CanBeNonNullable:
+    active: true
+  CascadingCallWrapping:
+    active: true
     includeElvis: true
-  ClassOrdering: #ToDo what
-    active: false
-  CollapsibleIfStatements: #ToDo what
+  ClassOrdering:
+    active: true
+  CollapsibleIfStatements:
     active: false
   DataClassContainsFunctions:
     active: true
@@ -514,26 +528,45 @@ style:
       - 'mapTo'
   DataClassShouldBeImmutable:
     active: true
-  DestructuringDeclarationWithTooManyEntries: #ToDo except constraints or smth
+  DestructuringDeclarationWithTooManyEntries:
     active: true
     maxDestructuringEntries: 5
-  EqualsNullCall: #ToDo what
+  DoubleNegativeLambda:
     active: true
-  EqualsOnSignatureLine: #ToDo what
-    active: false
-  ExplicitCollectionElementAccessMethod: #ToDo what
-    active: false
-  ExplicitItLambdaParameter: #ToDo what
+    negativeFunctions:
+      - 'takeUnless'
+      - 'none'
+    negativeFunctionNameParts:
+      - 'unless'
+      - 'not'
+      - 'non'
+  EqualsNullCall:
     active: true
-  ExpressionBodySyntax: #ToDo what
-    active: false
-    includeLineWrapping: false
-  ForbiddenComment: #ToDo what
+  EqualsOnSignatureLine:
     active: true
-    values:
-      - 'FIXME:'
-      - 'STOPSHIP:'
-      - 'TODO:'  #ToDo allow TODO
+  ExplicitCollectionElementAccessMethod:
+    active: true
+  ExplicitItLambdaParameter:
+    active: true
+  ExpressionBodySyntax:
+    active: true
+    includeLineWrapping: true
+  ForbiddenAnnotation:
+    active: true
+    annotations:
+      - 'java.lang.SuppressWarnings'
+      - 'java.lang.Deprecated'
+      - 'java.lang.annotation.Documented'
+      - 'java.lang.annotation.Target'
+      - 'java.lang.annotation.Retention'
+      - 'java.lang.annotation.Repeatable'
+      - 'java.lang.annotation.Inherited'
+  ForbiddenComment:
+    active: true
+    comments:
+      - 'FIXME'
+      - 'STOPSHIP'
+      - 'TODO'
     allowedPatterns: ''
     customMessage: ''
   ForbiddenImport:
@@ -550,19 +583,20 @@ style:
   ForbiddenSuppress:
     active: false
     rules: [ ]
-  ForbiddenVoid: #ToDo what
+  ForbiddenVoid:
     active: true
-    ignoreOverridden: false
+    ignoreOverridden: true
     ignoreUsageInGenerics: false
   FunctionOnlyReturningConstant:
     active: true
     ignoreOverridableFunction: true
     ignoreActualFunction: true
     excludedFunctions: [ ]
+    ignoreAnnotated: [ ]
   LoopWithTooManyJumpStatements:
     active: true
     maxJumpCount: 1
-  MagicNumber: #ToDo what params
+  MagicNumber:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.kts' ]
     ignoreNumbers:
@@ -570,13 +604,13 @@ style:
       - '0'
       - '1'
     ignoreHashCodeFunction: true
-    ignorePropertyDeclaration: true
+    ignorePropertyDeclaration: false
     ignoreLocalVariableDeclaration: false
     ignoreConstantDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
-    ignoreAnnotation: false
+    ignoreAnnotation: true
     ignoreNamedArgument: true
-    ignoreEnums: false
+    ignoreEnums: true
     ignoreRanges: false
     ignoreExtensionFunctions: true
   MandatoryBracesIfStatements:
@@ -585,7 +619,7 @@ style:
     active: false
   MaxChainedCallsOnSameLine:
     active: true
-    maxChainedCalls: 3
+    maxChainedCalls: 5
   MaxLineLength: #ToDo what params
     active: true
     maxLineLength: 120
@@ -597,84 +631,89 @@ style:
     active: true
   ModifierOrder:
     active: true
-  MultilineLambdaItParameter: #ToDo what
-    active: false
-  MultilineRawStringIndentation: #ToDo what
-    active: false
+  MultilineLambdaItParameter:
+    active: true
+  MultilineRawStringIndentation:
+    active: true
     indentSize: 4
-  NestedClassesVisibility: #ToDo what
+    trimmingMethods: [ 'trimIndent', 'trimMargin' ]
+  NestedClassesVisibility:
     active: true
   NewLineAtEndOfFile:
     active: true
-  NoTabs: #ToDo what params (maybe for raw strings)
+  NoTabs: #no params for raw strings
     active: true
-  NullableBooleanCheck: #ToDo what
-    active: false
-  ObjectLiteralToLambda: #ToDo what
+  NullableBooleanCheck:
     active: true
-  OptionalAbstractKeyword: #ToDo what
+  ObjectLiteralToLambda:
     active: true
-  OptionalUnit: #ToDo what
-    active: false
-  OptionalWhenBraces: #ToDo what
-    active: false
-  PreferToOverPairSyntax: #ToDo what
-    active: false
+  OptionalAbstractKeyword:
+    active: true
+  OptionalUnit:
+    active: true
+  PreferToOverPairSyntax:
+    active: true
   ProtectedMemberInFinalClass:
     active: true
   RedundantExplicitType:
     active: false
-  RedundantHigherOrderMapUsage: #ToDo what
+  RedundantHigherOrderMapUsage:
     active: true
   RedundantVisibilityModifierRule:
     active: true
   ReturnCount:
     active: true
-    max: 2
+    max: 4
     excludedFunctions:
       - 'equals'
     excludeLabeled: false
     excludeReturnFromLambda: true
     excludeGuardClauses: true
-  SafeCast: #ToDo what
+  SafeCast:
     active: true
   SerialVersionUIDInSerializableClass:
     active: true
-  SpacingBetweenPackageAndImports: #ToDo params
+  SpacingBetweenPackageAndImports:
     active: true
+  StringShouldBeRawString:
+    active: true
+    maxEscapedCharacterCount: 2
+    ignoredCharacters: [ ]
   ThrowsCount:
     active: true
-    max: 2
-    excludeGuardClauses: false
-  TrailingWhitespace: #ToDo what
+    max: 3
+    excludeGuardClauses: true
+  TrailingWhitespace:
     active: true
   TrimMultilineRawString:
     active: false
   UnderscoresInNumericLiterals:
-    active: false
+    active: true
     acceptableLength: 4
     allowNonStandardGrouping: false
   UnnecessaryAbstractClass:
     active: true
   UnnecessaryAnnotationUseSiteTarget:
-    active: false
+    active: true
   UnnecessaryApply:
     active: true
-  UnnecessaryBackticks: #ToDo what
+  UnnecessaryBackticks:
     active: true
-  UnnecessaryFilter: #ToDo what
+  UnnecessaryBracesAroundTrailingLambda:
     active: true
-  UnnecessaryInheritance: #ToDo what
+  UnnecessaryFilter:
+    active: true
+  UnnecessaryInheritance:
     active: true
   UnnecessaryInnerClass:
     active: true
-  UnnecessaryLet: #ToDo what
+  UnnecessaryLet:
     active: true
   UnnecessaryParentheses:
     active: true
-    allowForUnclearPrecedence: true #ToDo what
-  UntilInsteadOfRangeTo: #ToDo what
-    active: false
+    allowForUnclearPrecedence: true
+  UntilInsteadOfRangeTo:
+    active: true
   UnusedImports:
     active: true
   UnusedPrivateClass:
@@ -683,34 +722,40 @@ style:
     ignoreAnnotated: [ 'Preview' ]
     active: true
     allowedNames: '(_|ignored|expected|serialVersionUID)'
-  UseAnyOrNoneInsteadOfFind: #ToDo what
+  UnusedPrivateProperty:
+    active: true
+    allowedNames: '(_|ignored|expected|serialVersionUID)'
+  UseAnyOrNoneInsteadOfFind:
     active: true
   UseArrayLiteralsInAnnotations:
     active: true
-  UseCheckNotNull: #ToDo what
+  UseCheckNotNull:
     active: true
-  UseCheckOrError: #ToDo what
+  UseCheckOrError:
     active: true
-  UseDataClass: #ToDo what
-    active: false
-    allowVars: false
-  UseEmptyCounterpart: #ToDo what
-    active: false
-  UseIfEmptyOrIfBlank: #ToDo what
+  UseDataClass:
     active: true
-  UseIfInsteadOfWhen: #ToDo what
-    active: false
+    allowVars: true
+    ignoreAnnotated: [ ]
+  UseEmptyCounterpart:
+    active: true
+  UseIfEmptyOrIfBlank:
+    active: true
+  UseIfInsteadOfWhen:
+    active: true
   UseIsNullOrEmpty:
     active: true
   UseOrEmpty:
     active: true
-  UseRequire: #ToDo what
+  UseLet:
+    active: true
+  UseRequire:
     active: true
   UseRequireNotNull:
-    active: false
-  UseSumOfInsteadOfFlatMapSize: #ToDo what
-    active: false
-  UselessCallOnNotNull: #ToDo what
+    active: true
+  UseSumOfInsteadOfFlatMapSize:
+    active: true
+  UselessCallOnNotNull:
     active: true
   UtilityClassWithPublicConstructor:
     active: true
@@ -722,123 +767,336 @@ style:
     excludeImports:
       - 'java.util.*'
 
-#compose:
-#  ReusedModifierInstance:
-#    active: true
-#  UnnecessaryEventHandlerParameter:
-#    active: true
-#  ComposableEventParameterNaming:
-#    active: true
-#  ComposableParametersOrdering:
-#    active: true
-#  ModifierHeightWithText:
-#    active: true
-#  ModifierParameterPosition:
-#    active: true
-#  ModifierDefaultValue:
-#    active: true
-#  MissingModifierDefaultValue:
-#    active: true
-#  PublicComposablePreview:
-#    active: true
-#  TopLevelComposableFunctions:
-#    active: true
-#    allowInObjects: false
-#  ComposableFunctionName:
-#    active: true
-#  ConditionCouldBeLifted:
-#    active: true
-#    ignoreCallsWithArgumentNames: [ 'modifier', 'contentAlignment' ]
-
-Compose:
-  ComposableAnnotationNaming:
+formatting:
+  active: true
+  android: true
+  autoCorrect: true
+  AnnotationOnSeparateLine:
     active: true
-  ComposableNaming:
+    autoCorrect: true
+    indentSize: 4
+  AnnotationSpacing:
     active: true
-    # -- You can optionally disable the checks in this rule for regex matches against the composable name (e.g. molecule presenters)
-    # allowedComposableFunctionNames: .*Presenter,.*MoleculePresenter
-  ComposableParamOrder:
+    autoCorrect: true
+  ArgumentListWrapping:
     active: true
-    # -- You can optionally have a list of types to be treated as lambdas (e.g. typedefs or fun interfaces not picked up automatically)
-    # treatAsLambda: MyLambdaType
-  CompositionLocalAllowlist:
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 120
+    ignoreRuleParameterThreshold: 8
+  BackingPropertyNaming:
     active: true
-    # -- You can optionally define a list of CompositionLocals that are allowed here
-    # allowedCompositionLocals: LocalSomething, LocalSomethingElse
-  CompositionLocalNaming:
+  BinaryExpressionWrapping:
+    active: false
+    autoCorrect: true
+    maxLineLength: 120
+    indentSize: 4
+  BlankLineBeforeDeclaration:
     active: true
-  ContentEmitterReturningValues:
+    autoCorrect: true
+  BlankLineBetweenWhenConditions:
     active: true
-    # -- You can optionally add your own composables here
-    # contentEmitters: MyComposable,MyOtherComposable
-  DefaultsVisibility:
+    autoCorrect: true
+    lineBreakAfterWhenEntries: true
+  BlockCommentInitialStarAlignment:
     active: true
-  LambdaParameterInRestartableEffect:
+    autoCorrect: true
+  ChainMethodContinuation:
     active: true
-    # -- You can optionally have a list of types to be treated as lambdas (e.g. typedefs or fun interfaces not picked up automatically)
-    # treatAsLambda: MyLambdaType
-  ModifierClickableOrder:
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 120
+  ChainWrapping:
     active: true
-    # -- You can optionally add your own Modifier types
-    # customModifiers: BananaModifier,PotatoModifier
-  ModifierComposable:
+    autoCorrect: true
+    indentSize: 4
+  ClassName:
     active: true
-    # -- You can optionally add your own Modifier types
-    # customModifiers: BananaModifier,PotatoModifier
-  ModifierComposed:
+  ClassSignature:
     active: true
-    # -- You can optionally add your own Modifier types
-    # customModifiers: BananaModifier,PotatoModifier
-  ModifierMissing:
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 80
+  CommentSpacing:
     active: true
-    # -- You can optionally control the visibility of which composables to check for here
-    # -- Possible values are: `only_public`, `public_and_internal` and `all` (default is `only_public`)
-    # checkModifiersForVisibility: only_public
-    # -- You can optionally add your own Modifier types
-    # customModifiers: BananaModifier,PotatoModifier
-  ModifierNaming:
+    autoCorrect: true
+  CommentWrapping:
     active: true
-    # -- You can optionally add your own Modifier types
-    # customModifiers: BananaModifier,PotatoModifier
-  ModifierNotUsedAtRoot:
+    autoCorrect: true
+    indentSize: 4
+  ConditionWrapping:
     active: true
-    # -- You can optionally add your own composables here
-    # contentEmitters: MyComposable,MyOtherComposable
-    # -- You can optionally add your own Modifier types
-    # customModifiers: BananaModifier,PotatoModifier
-  ModifierReused:
+    autoCorrect: true
+    indentSize: 4
+  ContextReceiverMapping:
     active: true
-    # -- You can optionally add your own Modifier types
-    # customModifiers: BananaModifier,PotatoModifier
-  ModifierWithoutDefault:
+    autoCorrect: true
+    maxLineLength: 80
+    indentSize: 4
+  EnumEntryNameCase:
     active: true
-  MultipleEmitters:
+    autoCorrect: true
+  EnumWrapping:
     active: true
-    # -- You can optionally add your own composables here that will count as content emitters
-    # contentEmitters: MyComposable,MyOtherComposable
-    # -- You can add composables here that you don't want to count as content emitters (e.g. custom dialogs or modals)
-    # contentEmittersDenylist: MyNonEmitterComposable
-  MutableParams:
+    autoCorrect: true
+    indentSize: 4
+  Filename:
     active: true
-  MutableStateParam:
+  FinalNewline:
     active: true
-  PreviewAnnotationNaming:
+    autoCorrect: true
+    insertFinalNewLine: true
+  FunKeywordSpacing:
     active: true
-  PreviewPublic:
+    autoCorrect: true
+  FunctionExpressionBody:
     active: true
-  RememberMissing:
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 120
+  FunctionLiteral:
     active: true
-  RememberContentMissing:
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 120
+  FunctionName:
     active: true
-  UnstableCollections:
+  FunctionReturnTypeSpacing:
     active: true
-  ViewModelForwarding:
+    autoCorrect: true
+    maxLineLength: 120
+  FunctionSignature:
     active: true
-    # -- You can optionally use this rule on things other than types ending in "ViewModel" or "Presenter" (which are the defaults). You can add your own via a regex here:
-    # allowedStateHolderNames: .*ViewModel,.*Presenter
-    # -- You can optionally add an allowlist for Composable names that won't be affected by this rule
-    # allowedForwarding: .*Content,.*FancyStuff
-  ViewModelInjection:
+    autoCorrect: true
+    forceMultilineWhenParameterCountGreaterOrEqualThan: 4
+    functionBodyExpressionWrapping: 'default'
+    maxLineLength: 100
+    indentSize: 4
+  FunctionStartOfBodySpacing:
     active: true
-    # -- You can optionally add your own ViewModel factories here
-    # viewModelFactories: hiltViewModel, potatoViewModel
+    autoCorrect: true
+  FunctionTypeModifierSpacing:
+    active: true
+    autoCorrect: true
+  FunctionTypeReferenceSpacing:
+    active: true
+    autoCorrect: true
+  IfElseBracing:
+    active: false # bcz it doesn't have modes like BracesOnIfStatements
+    autoCorrect: true
+    indentSize: 4
+  IfElseWrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  ImportOrdering:
+    active: true
+    autoCorrect: true
+    layout: '*,java.**,javax.**,kotlin.**,^'
+  Indentation:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  Kdoc:
+    active: true
+  KdocWrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  MaximumLineLength:
+    active: true
+    maxLineLength: 120
+    ignoreBackTickedIdentifier: true
+  MixedConditionOperators:
+    active: true
+  ModifierListSpacing:
+    active: true
+    autoCorrect: true
+  ModifierOrdering:
+    active: true
+    autoCorrect: true
+  MultiLineIfElse:
+    active: false # bcz it doesn't have modes like BracesOnIfStatements
+    autoCorrect: true
+    indentSize: 4
+  MultilineExpressionWrapping:
+    active: false
+    autoCorrect: true
+    indentSize: 4
+  MultilineLoop:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  NoBlankLineBeforeRbrace:
+    active: true
+    autoCorrect: true
+  NoBlankLineInList:
+    active: true # probably can be false
+    autoCorrect: true
+  NoBlankLinesInChainedMethodCalls:
+    active: true
+    autoCorrect: true
+  NoConsecutiveBlankLines:
+    active: true # for my style should be false
+    autoCorrect: true
+  NoConsecutiveComments:
+    active: true
+  NoEmptyClassBody:
+    active: true
+    autoCorrect: true
+  NoEmptyFile:
+    active: true
+  NoEmptyFirstLineInClassBody:
+    active: false
+    autoCorrect: true
+    indentSize: 4
+  NoEmptyFirstLineInMethodBlock:
+    active: true
+    autoCorrect: true
+  NoLineBreakAfterElse:
+    active: true
+    autoCorrect: true
+  NoLineBreakBeforeAssignment:
+    active: true
+    autoCorrect: true
+  NoMultipleSpaces:
+    active: true
+    autoCorrect: true
+  NoSemicolons: # hope it works with enums
+    active: true
+    autoCorrect: true
+  NoSingleLineBlockComment:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  NoTrailingSpaces:
+    active: true
+    autoCorrect: true
+  NoUnitReturn:
+    active: true
+    autoCorrect: true
+  NoUnusedImports:
+    active: true
+    autoCorrect: true
+  NoWildcardImports:
+    active: true
+    packagesToUseImportOnDemandProperty: 'java.util.*'
+  NullableTypeSpacing:
+    active: true
+    autoCorrect: true
+  PackageName:
+    active: true
+  ParameterListSpacing:
+    active: true
+    autoCorrect: true
+    maxLineLength: 120
+  ParameterListWrapping:
+    active: true
+    autoCorrect: true
+    maxLineLength: 120
+    indentSize: 4
+  ParameterWrapping:
+    active: false # looks weird when it wraps type on a new line
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 120
+  PropertyName:
+    active: true
+  PropertyWrapping:
+    active: false # looks weird when it wraps type on a new line
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 120
+  SpacingAroundAngleBrackets:
+    active: true
+    autoCorrect: true
+  SpacingAroundColon:
+    active: true
+    autoCorrect: true
+  SpacingAroundComma:
+    active: true
+    autoCorrect: true
+  SpacingAroundCurly:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  SpacingAroundDot:
+    active: true
+    autoCorrect: true
+  SpacingAroundDoubleColon:
+    active: true
+    autoCorrect: true
+  SpacingAroundKeyword:
+    active: true
+    autoCorrect: true
+  SpacingAroundOperators:
+    active: true
+    autoCorrect: true
+  SpacingAroundParens:
+    active: true
+    autoCorrect: true
+  SpacingAroundRangeOperator:
+    active: true
+    autoCorrect: true
+  SpacingAroundSquareBrackets:
+    active: false
+    autoCorrect: true
+  SpacingAroundUnaryOperator:
+    active: true
+    autoCorrect: true
+  SpacingBetweenDeclarationsWithAnnotations:
+    active: true
+    autoCorrect: true
+  SpacingBetweenDeclarationsWithComments:
+    active: true
+    autoCorrect: true
+  SpacingBetweenFunctionNameAndOpeningParenthesis:
+    active: true
+    autoCorrect: true
+  StatementWrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  StringTemplate:
+    active: true
+    autoCorrect: true
+  StringTemplateIndent:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  TrailingCommaOnCallSite:
+    active: true
+    autoCorrect: true
+    useTrailingCommaOnCallSite: true
+  TrailingCommaOnDeclarationSite:
+    active: true
+    autoCorrect: true
+    useTrailingCommaOnDeclarationSite: true
+  TryCatchFinallySpacing:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  TypeArgumentComment:
+    active: false
+  TypeArgumentListSpacing:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  TypeParameterComment:
+    active: false
+  TypeParameterListSpacing:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+  UnnecessaryParenthesesBeforeTrailingLambda:
+    active: true # hope it works with compose
+    autoCorrect: true
+  ValueArgumentComment:
+    active: true
+  ValueParameterComment:
+    active: true
+  Wrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 120

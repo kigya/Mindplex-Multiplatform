@@ -9,6 +9,7 @@ dependencies {
             implementation(ksp)
             implementation(android)
             implementation(ktorfit)
+            implementation(detekt)
         }
     }
 

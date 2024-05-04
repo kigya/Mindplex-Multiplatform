@@ -1,3 +1,6 @@
+import detekt.DetektConfigs
+import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 
 plugins {
@@ -5,7 +8,30 @@ plugins {
 }
 
 configure<DetektExtension> {
-    config.setFrom(rootProject.file("detekt.yml"))
+    config.from(rootProject.file(DetektConfigs.MAIN))
+    autoCorrect = false
     parallel = true
+    allRules = true
     debug = true
+}
+
+tasks.withType<Detekt>().configureEach {
+    jvmTarget = libs.versions.java.get()
+    reports {
+        html.required.set(false)
+        xml.required.set(false)
+        txt.required.set(false)
+        sarif.required.set(false)
+        md.required.set(false)
+    }
+}
+
+tasks.withType<DetektCreateBaselineTask>().configureEach {
+    jvmTarget = libs.versions.java.get()
+}
+
+dependencies {
+    with(libs.detekt.plugins) {
+        detektPlugins(formatting)
+    }
 }

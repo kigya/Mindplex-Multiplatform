@@ -3,8 +3,8 @@ import com.android.build.gradle.BaseExtension
 
 plugins {
     kotlin("android")
-    id("internal.config.shared.android")
-    id("internal.config.detekt")
+    id("internal.config.android")
+    id("internal.config.kotlin.detekt")
 }
 
 configure<BaseExtension> {
