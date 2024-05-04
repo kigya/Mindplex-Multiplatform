@@ -16,6 +16,16 @@ Personalize your experience on the profile screen, where you can customize your 
 
 <figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
+## Development
+
+### Setup
+
+We use Git Hooks to run Detekt before commit so you need to install them:
+
+```shell
+./gradlew installGitHooks
+```
+
 ## 📁 Development Conventions
 
 #### Branching

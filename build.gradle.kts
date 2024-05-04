@@ -16,3 +16,7 @@ plugins {
         alias(detekt) apply false
     }
 }
+
+apply {
+    from("config/git/hooks/installer.gradle.kts")
+}
