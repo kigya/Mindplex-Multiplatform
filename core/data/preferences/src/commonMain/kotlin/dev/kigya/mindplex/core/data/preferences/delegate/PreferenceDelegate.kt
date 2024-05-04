@@ -172,4 +172,3 @@ inline fun <reified T> getPreferencesKey(key: String): Preferences.Key<T> =
             "Preference type of \"${T::class}\" is not supported, must be one of Int, Double, String, Boolean, Float, or Long",
         )
     }
-
