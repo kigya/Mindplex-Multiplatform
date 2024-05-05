@@ -59,3 +59,14 @@ inline fun DependencyHandler.testImplementation(dependencyNotation: Any): Depend
  */
 inline fun DependencyHandler.androidTestImplementation(dependencyNotation: Any): Dependency? =
     add("androidTestImplementation", dependencyNotation)
+
+/**
+ * Adds a dependency to the 'detektPlugins' configuration.
+ *
+ * @param dependencyNotation notation for the dependency to be added.
+ * @return The dependency.
+ *
+ * @see [DependencyHandler.add]
+ */
+inline fun DependencyHandler.detektPlugins(dependencyNotation: Any): Dependency? =
+    add("detektPlugins", dependencyNotation)

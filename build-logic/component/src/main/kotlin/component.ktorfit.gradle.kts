@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    withLibsVersionCatalog { libs ->
-        ksp(libs.ktorfit.ksp)
-        implementation(libs.ktorfit)
+    with(libs) {
+        ksp(ktorfit.ksp)
+        implementation(ktorfit)
     }
 }
