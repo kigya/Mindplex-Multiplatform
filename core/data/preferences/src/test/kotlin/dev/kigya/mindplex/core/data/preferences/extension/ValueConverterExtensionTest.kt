@@ -47,7 +47,7 @@ class ValueConverterExtensionTest {
         // Then
         assertEquals(
             expected = -1,
-            actual = nonNullableConverter.toConverted("test")
+            actual = nonNullableConverter.toConverted("test"),
         )
         assertEquals(
             expected = "default",

@@ -1,4 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
@@ -9,9 +11,9 @@ plugins {
 
 configure<KotlinMultiplatformExtension> {
     androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = libs.versions.java.get()
+        tasks.withType<KotlinJvmCompile>().configureEach {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.fromTarget(libs.versions.java.get()))
             }
         }
     }

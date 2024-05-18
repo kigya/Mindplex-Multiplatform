@@ -12,14 +12,13 @@ import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreen
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreen
 import dev.kigya.mindplex.navigation.mediator.RootComponent
 
-
 @Composable
 fun App(root: RootComponent) {
     val childStack by root.childStack.subscribeAsState()
     MindplexTheme {
         Children(
             stack = childStack,
-            animation = stackAnimation(fade())
+            animation = stackAnimation(fade()),
         ) { child ->
             when (val instance = child.instance) {
                 is RootComponent.Child.SplashScreen -> SplashScreen(instance.component)

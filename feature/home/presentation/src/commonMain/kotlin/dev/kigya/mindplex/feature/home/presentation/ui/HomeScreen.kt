@@ -24,6 +24,7 @@ fun HomeScreen(contract: HomeContract) {
 }
 
 @Composable
+@Suppress("UnusedParameter")
 private fun HomeScreenContent(
     state: HomeContract.State,
     event: (HomeContract.Event) -> Unit,

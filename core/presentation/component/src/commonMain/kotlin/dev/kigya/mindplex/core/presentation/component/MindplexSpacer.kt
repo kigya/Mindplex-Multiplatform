@@ -15,7 +15,14 @@ import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
 enum class MindplexSpacerOrientation { VERTICAL, HORIZONTAL }
 
 enum class MindplexSpacerSize {
-    DEFAULT, EXTRA_SMALL, SMALL, MEDIUM, LARGE, EXTRA_LARGE, GIANT;
+    DEFAULT,
+    EXTRA_SMALL,
+    SMALL,
+    MEDIUM,
+    LARGE,
+    EXTRA_LARGE,
+    GIANT,
+    ;
 
     internal val value: Dp
         @Composable
@@ -62,4 +69,3 @@ private fun drawSpacer(
 } else {
     Spacer(modifier = Modifier.width(size.value).then(modifier))
 }
-

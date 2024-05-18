@@ -1,4 +1,4 @@
-@file:Suppress("ktlint")
+@file:Suppress("TopLevelPropertyNaming", "PropertyName")
 
 package dev.kigya.mindplex.core.presentation.theme.text
 

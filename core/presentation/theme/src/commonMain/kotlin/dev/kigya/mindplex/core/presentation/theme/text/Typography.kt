@@ -1,3 +1,5 @@
+@file:Suppress("TopLevelPropertyNaming", "PropertyName")
+
 package dev.kigya.mindplex.core.presentation.theme.text
 
 import androidx.compose.material3.Typography

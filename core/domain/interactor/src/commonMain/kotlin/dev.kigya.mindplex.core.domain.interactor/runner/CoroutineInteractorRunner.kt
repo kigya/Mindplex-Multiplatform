@@ -1,4 +1,4 @@
-package dev.kigya.core.domain.interactor.runner
+package dev.kigya.mindplex.core.domain.interactor.runner
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

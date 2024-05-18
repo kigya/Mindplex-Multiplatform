@@ -1,4 +1,4 @@
-package domain
+package dev.kigya.mindplex.konsistTest.domain
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.declaration.KoInterfaceDeclaration

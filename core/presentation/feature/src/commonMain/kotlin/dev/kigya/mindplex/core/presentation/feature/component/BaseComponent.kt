@@ -2,7 +2,7 @@ package dev.kigya.mindplex.core.presentation.feature.component
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
-import dev.kigya.core.domain.interactor.runner.CoroutineInteractorRunner
+import dev.kigya.mindplex.core.domain.interactor.runner.CoroutineInteractorRunner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -32,10 +32,12 @@ interface CopyableComponentState
  * own state and effects, encapsulating the business logic and interaction patterns.
  *
  * Type Parameters:
- * @param STATE The type of the state managed by this component. Must be a subtype of [Any] and [CopyableComponentState].
+ * @param STATE The type of the state managed by this component.
+ * Must be a subtype of [Any] and [CopyableComponentState].
  * @param EFFECT The type of the effects that can be emitted by this component.
  *
- * @property componentContext The context associated with this component, typically provided by a UI or application framework.
+ * @property componentContext The context associated with this component,
+ * typically provided by a UI or application framework.
  * @property initialState The initial state of the component when it is created.
  */
 abstract class BaseComponent<STATE, EFFECT>(
@@ -65,13 +67,15 @@ abstract class BaseComponent<STATE, EFFECT>(
     val state: StateFlow<STATE> = _state
 
     /**
-     * A flow of effects, which are one-time events meant to be handled by the UI (e.g., navigation actions, toast messages).
+     * A flow of effects, which are one-time events meant to be handled by the UI
+     * (e.g., navigation actions, toast messages).
      */
     private val _effect = Channel<EFFECT>(capacity = BUFFERED)
     val effect: Flow<EFFECT> = _effect.receiveAsFlow()
 
     /**
-     * Updates the current state of the component. This function should be used to modify the state in a thread-safe manner.
+     * Updates the current state of the component.
+     * This function should be used to modify the state in a thread-safe manner.
      *
      * @param transform A lambda function that takes the current state and returns a transformed state.
      */
@@ -85,7 +89,8 @@ abstract class BaseComponent<STATE, EFFECT>(
     protected fun getState(): STATE = _state.value
 
     /**
-     * Sends an effect to be handled by the UI or an external observer. This method ensures that effects are dispatched safely and can be used to communicate with the UI layer.
+     * Sends an effect to be handled by the UI or an external observer.
+     * This method ensures that effects are dispatched safely and can be used to communicate with the UI layer.
      *
      * @param effect The effect to be emitted.
      */
@@ -94,7 +99,8 @@ abstract class BaseComponent<STATE, EFFECT>(
     }
 
     /**
-     * Cleans up resources when the component is destroyed, particularly cancelling all coroutines launched by this component's use case coroutine scope.
+     * Cleans up resources when the component is destroyed, particularly cancelling all coroutines
+     * launched by this component's use case coroutine scope.
      */
     override fun onDestroy() {
         useCaseCoroutineScope.cancel()

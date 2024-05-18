@@ -1,4 +1,4 @@
-package dev.kigya.core.domain.interactor.base
+package dev.kigya.mindplex.core.domain.interactor.base
 
 /**
  * Abstract class for defining a use case that performs operations synchronously.

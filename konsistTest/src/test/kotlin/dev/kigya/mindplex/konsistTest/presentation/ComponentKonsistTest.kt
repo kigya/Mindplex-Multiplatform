@@ -1,4 +1,4 @@
-package presentation
+package dev.kigya.mindplex.konsistTest.presentation
 
 import com.arkivanov.decompose.ComponentContext
 import com.lemonappdev.konsist.api.Konsist
@@ -42,20 +42,18 @@ class ComponentKonsistTest {
         components.assertTrue(function = KoClassDeclaration::hasPublicOrDefaultModifier)
 
     @Test
-    fun `every component implements a feature contract`() =
-        components.assertTrue { koClass ->
-            koClass.hasParentInterface { koInterface ->
-                koInterface.hasParentInterfaceOf(UnidirectionalComponentContract::class)
-            }
+    fun `every component implements a feature contract`() = components.assertTrue { koClass ->
+        koClass.hasParentInterface { koInterface ->
+            koInterface.hasParentInterfaceOf(UnidirectionalComponentContract::class)
         }
+    }
 
     @Test
-    fun `every component overrides handleEvent function`() =
-        components.assertTrue { koClass ->
-            koClass.hasFunction { koFunction ->
-                koFunction.hasOverrideModifier && koFunction.hasNameContaining("handleEvent")
-            }
+    fun `every component overrides handleEvent function`() = components.assertTrue { koClass ->
+        koClass.hasFunction { koFunction ->
+            koFunction.hasOverrideModifier && koFunction.hasNameContaining("handleEvent")
         }
+    }
 
     @Test
     fun `every component should be placed inside component package`() =

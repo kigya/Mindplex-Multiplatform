@@ -1,4 +1,4 @@
-package architecture
+package dev.kigya.mindplex.konsistTest.architecture
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.architecture.KoArchitectureCreator.assertArchitecture
@@ -12,12 +12,11 @@ class ArchitectureKonsistTest {
     private val data = Layer("Data", "dev.kigya.mindplex..data..")
 
     @Test
-    fun `every feature should follow dependency rule`() =
-        Konsist
-            .scopeFromProject()
-            .assertArchitecture {
-                presentation.dependsOn(domain)
-                data.dependsOn(domain)
-                domain.dependsOnNothing()
-            }
+    fun `every feature should follow dependency rule`() = Konsist
+        .scopeFromProject()
+        .assertArchitecture {
+            presentation.dependsOn(domain)
+            data.dependsOn(domain)
+            domain.dependsOnNothing()
+        }
 }

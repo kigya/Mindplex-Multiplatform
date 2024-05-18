@@ -19,7 +19,7 @@ class RootComponent(
 ) : ComponentContext by componentContext {
 
     private val scope = instanceKeeper.getOrCreate(::ComponentKoinContext).getOrCreateKoinScope(
-        KoinModuleHolder.getAppModules(appModule)
+        KoinModuleHolder.getAppModules(appModule),
     )
 
     val childStack = childStack(
@@ -27,35 +27,33 @@ class RootComponent(
         serializer = Configuration.serializer(),
         initialConfiguration = Configuration.SplashScreen,
         handleBackButton = true,
-        childFactory = ::createChild
+        childFactory = ::createChild,
     )
 
-    private fun createChild(
-        config: Configuration,
-        context: ComponentContext,
-    ): Child = when (config) {
-        Configuration.SplashScreen -> Child.SplashScreen(
-            SplashComponent(
-                componentContext = context,
-                navigation = scope.get(),
-                getIsOnboardingCompletedUseCase = scope.get()
+    private fun createChild(config: Configuration, context: ComponentContext): Child =
+        when (config) {
+            Configuration.SplashScreen -> Child.SplashScreen(
+                SplashComponent(
+                    componentContext = context,
+                    navigation = scope.get(),
+                    getIsOnboardingCompletedUseCase = scope.get(),
+                ),
             )
-        )
 
-        is Configuration.OnboardingScreen -> Child.OnboardingScreen(
-            OnboardingComponent(
-                componentContext = context,
-                navigation = scope.get(),
-                setOnboardingCompletedUseCase = scope.get()
+            is Configuration.OnboardingScreen -> Child.OnboardingScreen(
+                OnboardingComponent(
+                    componentContext = context,
+                    navigation = scope.get(),
+                    setOnboardingCompletedUseCase = scope.get(),
+                ),
             )
-        )
 
-        is Configuration.HomeScreen -> Child.HomeScreen(
-            HomeComponent(
-                componentContext = context,
+            is Configuration.HomeScreen -> Child.HomeScreen(
+                HomeComponent(
+                    componentContext = context,
+                ),
             )
-        )
-    }
+        }
 
     sealed class Child {
         data class SplashScreen(val component: SplashComponent) : Child()

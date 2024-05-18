@@ -1,4 +1,4 @@
-package presentation
+package dev.kigya.mindplex.konsistTest.presentation
 
 import androidx.compose.runtime.Immutable
 import com.lemonappdev.konsist.api.Konsist

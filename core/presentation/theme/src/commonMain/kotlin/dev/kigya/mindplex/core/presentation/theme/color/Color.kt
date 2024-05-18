@@ -1,3 +1,5 @@
+@file:Suppress("TopLevelPropertyNaming", "MagicNumber", "PropertyName")
+
 package dev.kigya.mindplex.core.presentation.theme.color
 
 import androidx.compose.foundation.isSystemInDarkTheme

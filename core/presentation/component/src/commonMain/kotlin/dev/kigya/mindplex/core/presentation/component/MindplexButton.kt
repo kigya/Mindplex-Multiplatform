@@ -32,6 +32,7 @@ import dev.kigya.mindplex.core.util.extension.empty
 private const val TRANSITION_ANIMATION_DURATION = 300
 
 @Composable
+@Suppress("CognitiveComplexMethod")
 fun MindplexButton(
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
@@ -81,7 +82,7 @@ fun MindplexButton(
                 Row(
                     modifier = Modifier.padding(contentPadding),
                     horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     startIcon?.invoke()
                     Text(

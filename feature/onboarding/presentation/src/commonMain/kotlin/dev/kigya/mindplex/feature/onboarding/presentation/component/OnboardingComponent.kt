@@ -3,7 +3,7 @@ package dev.kigya.mindplex.feature.onboarding.presentation.component
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.replaceAll
-import dev.kigya.core.domain.interactor.base.None
+import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.component.BaseComponent
 import dev.kigya.mindplex.core.presentation.resources.ResourceProvider
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
@@ -22,7 +22,8 @@ class OnboardingComponent(
 ) : BaseComponent<OnboardingContract.State, OnboardingContract.Effect>(
     componentContext = componentContext,
     initialState = OnboardingContract.State(),
-), OnboardingContract {
+),
+    OnboardingContract {
 
     override fun handleEvent(event: OnboardingContract.Event) = withUseCaseScope {
         when (event) {
@@ -38,13 +39,12 @@ class OnboardingComponent(
                 }
             }
 
-            is OnboardingContract.Event.OnNextClicked -> {
+            is OnboardingContract.Event.OnNextClicked ->
                 if (event.currentPage == getState().onboardingData.size - 1) {
                     navigation.replaceAll(Configuration.HomeScreen)
                 } else {
                     sendEffect(OnboardingContract.Effect.ScrollToPage(pageTo = event.currentPage + 1))
                 }
-            }
 
             is OnboardingContract.Event.OnSkipClicked -> {
                 setOnboardingCompletedUseCase(None)
@@ -55,34 +55,35 @@ class OnboardingComponent(
 
     private fun getOnboardingData(): ImmutableList<OnboardingScreenUiModel> = persistentListOf(
         OnboardingScreenUiModel(
-            lottiePath = ResourceProvider.Lottie.onboardingFirst,
-            lottieDrawableResource = ResourceProvider.Drawable.imageOnboardingFirst,
-            titleTextResource = ResourceProvider.Strings.onboardingFirstTitle,
-            descriptionTextResource = ResourceProvider.Strings.onboardingFirstDescription,
+            lottiePath = ResourceProvider.Lottie.ONBOARDING_FIRST,
+            lottieDrawableResource = ResourceProvider.Drawable.IMAGE_ONBOARDING_FIRST,
+            titleTextResource = ResourceProvider.Strings.ONBOARDING_FIRST_TITLE,
+            descriptionTextResource = ResourceProvider.Strings.ONBOARDING_FIRST_DESCRIPTION,
             page = 0,
-            skipButtonTextResource = ResourceProvider.Strings.onboardingSkipButtonText,
-            nextButtonTextResource = ResourceProvider.Strings.onboardingNextButtonText,
-        ), OnboardingScreenUiModel(
-            lottiePath = ResourceProvider.Lottie.onboardingSecond,
-            lottieDrawableResource = ResourceProvider.Drawable.imageOnboardingSecond,
-            titleTextResource = ResourceProvider.Strings.onboardingSecondTitle,
-            descriptionTextResource = ResourceProvider.Strings.onboardingSecondDescription,
+            skipButtonTextResource = ResourceProvider.Strings.ONBOARDING_SKIP_BUTTON_TEXT,
+            nextButtonTextResource = ResourceProvider.Strings.ONBOARDING_NEXT_BUTTON_TEXT,
+        ),
+        OnboardingScreenUiModel(
+            lottiePath = ResourceProvider.Lottie.ONBOARDING_SECOND,
+            lottieDrawableResource = ResourceProvider.Drawable.IMAGE_ONBOARDING_SECOND,
+            titleTextResource = ResourceProvider.Strings.ONBOARDING_SECOND_TITLE,
+            descriptionTextResource = ResourceProvider.Strings.ONBOARDING_SECOND_DESCRIPTION,
             page = 1,
-            skipButtonTextResource = ResourceProvider.Strings.onboardingSkipButtonText,
-            nextButtonTextResource = ResourceProvider.Strings.onboardingNextButtonText,
-        ), OnboardingScreenUiModel(
-            lottiePath = ResourceProvider.Lottie.onboardingThird,
-            lottieDrawableResource = ResourceProvider.Drawable.imageOnboardingThird,
-            titleTextResource = ResourceProvider.Strings.onboardingThirdTitle,
-            descriptionTextResource = ResourceProvider.Strings.onboardingThirdDescription,
+            skipButtonTextResource = ResourceProvider.Strings.ONBOARDING_SKIP_BUTTON_TEXT,
+            nextButtonTextResource = ResourceProvider.Strings.ONBOARDING_NEXT_BUTTON_TEXT,
+        ),
+        OnboardingScreenUiModel(
+            lottiePath = ResourceProvider.Lottie.ONBOARDING_THIRD,
+            lottieDrawableResource = ResourceProvider.Drawable.IMAGE_ONBOARDING_THIRD,
+            titleTextResource = ResourceProvider.Strings.ONBOARDING_THIRD_TITLE,
+            descriptionTextResource = ResourceProvider.Strings.ONBOARDING_THIRD_DESCRIPTION,
             page = 2,
             skipButtonTextResource = null,
-            nextButtonTextResource = ResourceProvider.Strings.onboardingGetStartedButtonText,
-        )
+            nextButtonTextResource = ResourceProvider.Strings.ONBOARDING_GET_STARTED_BUTTON_TEXT,
+        ),
     )
 
     private companion object {
         val stateFirstLaunchDelayedUpdatesDuration = 400.milliseconds
     }
 }
-

@@ -12,7 +12,8 @@ import kotlinx.coroutines.CoroutineScope
  * Executes a suspendable block only once during the composition lifecycle, even across configuration changes.
  * Intended for use with immutable keys to preserve the "already executed" state through recompositions.
  *
- * @param key An immutable key to associate the launched effect. It ensures the effect is not restarted during recompositions.
+ * @param key An immutable key to associate the launched effect.
+ * It ensures the effect is not restarted during recompositions.
  * @param block The suspendable block of code to be executed.
  */
 @Composable

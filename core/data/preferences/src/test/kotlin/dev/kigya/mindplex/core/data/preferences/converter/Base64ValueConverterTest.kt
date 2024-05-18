@@ -1,6 +1,5 @@
 package dev.kigya.mindplex.core.data.preferences.converter
 
-import org.junit.Assert.assertArrayEquals
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.test.DefaultAsserter.assertEquals

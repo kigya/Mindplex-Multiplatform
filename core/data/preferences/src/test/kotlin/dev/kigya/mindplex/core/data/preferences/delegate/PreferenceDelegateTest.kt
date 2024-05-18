@@ -55,7 +55,7 @@ class PreferenceDelegateTest {
         val propertyDelegate = mockDataStore.retrieveDataStoreProperty(
             valueSetter = { store, _ -> store },
             valueGetter = { "Light" },
-            converter = converter
+            converter = converter,
         )
         val property = mockk<KProperty<*>>()
         val flow = propertyDelegate.getValue(mockDataStore, property).take(1)
@@ -87,7 +87,7 @@ class PreferenceDelegateTest {
                 preferencesOf(prefKey to newValue)
             },
             valueGetter = { it[prefKey] ?: "Default" },
-            converter = converter
+            converter = converter,
         )
 
         val property = mockk<KProperty<*>>()

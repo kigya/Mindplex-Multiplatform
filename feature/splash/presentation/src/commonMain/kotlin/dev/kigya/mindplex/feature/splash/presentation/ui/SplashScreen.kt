@@ -25,6 +25,7 @@ import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import org.jetbrains.compose.resources.stringResource
 
 internal const val LOTTIE_WIDTH_PROPORTIONAL_DIVIDER = 3f
+private const val ANIMATION_DURATION_MILLIS = 700
 
 @Composable
 fun SplashScreen(contract: SplashContract) {
@@ -52,18 +53,20 @@ private fun SplashScreenContent(
     ) {
         MindplexLottie(
             modifier = Modifier.size(getLottieSplashSize()),
-            reader = { with(ResourceProvider.Lottie) { loadAsByteArray(mindplexLogo) } },
+            reader = { with(ResourceProvider.Lottie) { loadAsByteArray(MINDPLEX_LOGO) } },
             speed = 1.5f,
-            onFinish = { event(SplashContract.Event.OnAnimationFinished) }
+            onFinish = { event(SplashContract.Event.OnAnimationFinished) },
         )
         AnimatedVisibility(
             visible = state.shouldDisplayText,
-            enter = fadeIn(animationSpec = tween(700)) + expandVertically(animationSpec = tween(700))
+            enter = fadeIn(animationSpec = tween(ANIMATION_DURATION_MILLIS)) + expandVertically(
+                animationSpec = tween(ANIMATION_DURATION_MILLIS),
+            ),
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 MindplexSpacer(size = MindplexSpacerSize.MEDIUM)
                 MindplexText(
-                    text = stringResource(ResourceProvider.Strings.splashTitle),
+                    text = stringResource(ResourceProvider.Strings.SPLASH_TITLE),
                     style = MaterialTheme.typography.displayLarge,
                     color = MaterialTheme.colorScheme.onSecondary,
                 )

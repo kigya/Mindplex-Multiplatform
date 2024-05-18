@@ -24,9 +24,13 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.util.lerp
 import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexHorizontalPager
 import dev.kigya.mindplex.core.presentation.component.MindplexJumpingDotsIndicator
@@ -42,6 +46,7 @@ import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingCon
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
+import kotlin.math.abs
 
 internal const val LOTTIE_WIDTH_PROPORTIONAL_DIVIDER = 2.1f
 internal const val LOTTIE_ASPECT_RATIO = 2.24f
@@ -68,19 +73,19 @@ private fun OnboardingScreenContent(
 
     val pagerState = rememberPagerState(pageCount = state.onboardingData::size)
     val hapticFeedback = LocalHapticFeedback.current
+    val pageOffset by derivedStateOf { abs(pagerState.currentPageOffsetFraction) }
 
     LaunchedEffect(effect) {
         effect.collect { onboardingEffect ->
             when (onboardingEffect) {
-                is OnboardingContract.Effect.ScrollToPage -> {
+                is OnboardingContract.Effect.ScrollToPage ->
                     pagerState.animateScrollToPage(
                         page = onboardingEffect.pageTo,
                         animationSpec = tween(
                             durationMillis = 500,
                             easing = FastOutSlowInEasing,
-                        )
+                        ),
                     )
-                }
             }
         }
     }
@@ -106,10 +111,19 @@ private fun OnboardingScreenContent(
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceBetween
+                        verticalArrangement = Arrangement.SpaceBetween,
                     ) {
                         MindplexSpacer(size = MindplexSpacerSize.SMALL)
                         OnboardingLottie(
+                            modifier = Modifier.graphicsLayer {
+                                val scale = lerp(
+                                    start = 1f,
+                                    stop = 0.5f,
+                                    fraction = pageOffset,
+                                )
+                                scaleX = scale
+                                scaleY = scale
+                            },
                             drawableResource = get(page).lottieDrawableResource,
                             lottiePath = get(page).lottiePath,
                         )
@@ -146,7 +160,7 @@ private fun OnboardingScreenContent(
                 AnimatedVisibility(visible = state.shouldDisplayDotsIndicator) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
+                        horizontalArrangement = Arrangement.Center,
                     ) {
                         MindplexJumpingDotsIndicator(pagerState = pagerState)
                         MindplexSpacer(size = MindplexSpacerSize.GIANT)
@@ -159,17 +173,17 @@ private fun OnboardingScreenContent(
                         if (arrayOf(0, 1).contains(targetState) && arrayOf(0, 1).contains(initialState)) {
                             fadeIn(animationSpec = tween(0)) togetherWith fadeOut(animationSpec = tween(0))
                         } else if (targetState > initialState) {
-                            (slideInHorizontally { width -> width } + fadeIn() togetherWith
-                                slideOutHorizontally { width -> -width } + fadeOut()).using(
-                                SizeTransform(clip = false)
-                            )
+                            (
+                                slideInHorizontally { width -> width } + fadeIn() togetherWith
+                                    slideOutHorizontally { width -> -width } + fadeOut()
+                                ).using(SizeTransform(clip = false))
                         } else {
-                            (slideInHorizontally { width -> -width } + fadeIn() togetherWith
-                                slideOutHorizontally { width -> width } + fadeOut()).using(
-                                SizeTransform(clip = false)
-                            )
+                            (
+                                slideInHorizontally { width -> -width } + fadeIn() togetherWith
+                                    slideOutHorizontally { width -> width } + fadeOut()
+                                ).using(SizeTransform(clip = false))
                         }
-                    }
+                    },
                 ) { page ->
                     Row(
                         modifier = Modifier
@@ -182,7 +196,7 @@ private fun OnboardingScreenContent(
                                 modifier = Modifier.weight(1f),
                                 visible = page < size,
                                 enter = fadeIn() + slideInHorizontally(),
-                                exit = fadeOut() + slideOutHorizontally()
+                                exit = fadeOut() + slideOutHorizontally(),
                             ) {
                                 MindplexButton(
                                     modifier = Modifier.fillMaxWidth(),

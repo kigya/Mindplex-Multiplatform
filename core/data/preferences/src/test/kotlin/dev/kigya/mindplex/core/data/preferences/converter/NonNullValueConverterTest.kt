@@ -24,7 +24,7 @@ class NonNullValueConverterTest {
         assertEquals(
             message = "Conversion should return the length of the string",
             expected = 5,
-            actual = convertedValue
+            actual = convertedValue,
         )
     }
 

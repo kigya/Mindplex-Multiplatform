@@ -1,3 +1,5 @@
+@file:Suppress("TopLevelPropertyNaming", "PropertyName")
+
 package dev.kigya.mindplex.core.presentation.theme.text
 
 import androidx.compose.runtime.Composable
@@ -11,14 +13,14 @@ internal val Rubik
     @Composable
     get() = FontFamily(
         Font(
-            resource = ResourceProvider.Font.rubikMedium,
+            resource = ResourceProvider.Font.RUBIK_MEDIUM,
             weight = FontWeight.Medium,
-            style = FontStyle.Normal
+            style = FontStyle.Normal,
         ),
         Font(
-            resource = ResourceProvider.Font.rubikRegular,
+            resource = ResourceProvider.Font.RUBIK_REGULAR,
             weight = FontWeight.Normal,
-            style = FontStyle.Normal
+            style = FontStyle.Normal,
         ),
     )
 
@@ -26,8 +28,8 @@ internal val Nunito
     @Composable
     get() = FontFamily(
         Font(
-            resource = ResourceProvider.Font.nunitoExtrabold,
+            resource = ResourceProvider.Font.NUNITO_EXTRABOLD,
             weight = FontWeight.ExtraBold,
-            style = FontStyle.Normal
+            style = FontStyle.Normal,
         ),
     )

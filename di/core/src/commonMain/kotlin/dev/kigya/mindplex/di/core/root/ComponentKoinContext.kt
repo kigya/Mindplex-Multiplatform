@@ -23,6 +23,7 @@ import org.koin.dsl.koinApplication
 class ComponentKoinContext : InstanceKeeper.Instance {
     private var koinApp: KoinApplication? = null
 
+    @Suppress("SpreadOperator")
     @OptIn(KoinInternalApi::class)
     fun getOrCreateKoinScope(modules: Array<Module>): Scope {
         if (koinApp == null) {

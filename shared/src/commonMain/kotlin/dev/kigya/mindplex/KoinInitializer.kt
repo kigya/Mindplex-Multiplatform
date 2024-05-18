@@ -16,11 +16,9 @@ fun initKoin() = initKoin(module { })
  *
  * @param appModule the app module to be included
  */
+@Suppress("SpreadOperator")
 fun initKoin(appModule: Module = module {}) {
     startKoin {
-        modules(
-            appModule,
-            *KoinModuleHolder.getAppModules(),
-        )
+        modules(appModule, *KoinModuleHolder.getAppModules())
     }
 }

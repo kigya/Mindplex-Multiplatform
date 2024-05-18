@@ -11,10 +11,7 @@ import dev.kigya.mindplex.core.presentation.theme.text.TextSize
 import dev.kigya.mindplex.core.presentation.theme.text.Typography
 
 @Composable
-actual fun MindplexTheme(
-    isDarkTheme: Boolean,
-    content: @Composable () -> Unit,
-) {
+actual fun MindplexTheme(isDarkTheme: Boolean, content: @Composable () -> Unit) {
     val colorScheme = remember(isDarkTheme) {
         if (isDarkTheme) DarkColorScheme else LightColorScheme
     }

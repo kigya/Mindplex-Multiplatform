@@ -1,4 +1,4 @@
-package dev.kigya.core.domain.interactor.base
+package dev.kigya.mindplex.core.domain.interactor.base
 
 /**
  * A utility object used in cases where no input parameters are required for a function or method.

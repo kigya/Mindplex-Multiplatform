@@ -22,7 +22,8 @@ import mindplex_multiplatform.core.presentation.resources.generated.resources.sp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 /**
- * `ResourceProvider` is an object designed to centralize and simplify the access to various resources
+ * `dev.kigya.mindplex.core.presentation.resources.ResourceProvider`
+ * is an object designed to centralize and simplify the access to various resources
  * in project. For now Kotlin Multiplatform does not have a support of modular resources.
  *
  * The use of `@OptIn(ExperimentalResourceApi::class)` indicates that this object makes use
@@ -37,36 +38,36 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 @OptIn(ExperimentalResourceApi::class)
 object ResourceProvider {
     object Strings {
-        val splashTitle = Res.string.splash_title
-        val onboardingFirstTitle = Res.string.onboarding_first_title
-        val onboardingFirstDescription = Res.string.onboarding_first_description
-        val onboardingSecondTitle = Res.string.onboarding_second_title
-        val onboardingSecondDescription = Res.string.onboarding_second_description
-        val onboardingThirdTitle = Res.string.onboarding_third_title
-        val onboardingThirdDescription = Res.string.onboarding_third_description
-        val onboardingSkipButtonText = Res.string.onboarding_skip_button_text
-        val onboardingNextButtonText = Res.string.onboarding_next_button_text
-        val onboardingGetStartedButtonText = Res.string.onboarding_get_started_button_text
+        val SPLASH_TITLE = Res.string.splash_title
+        val ONBOARDING_FIRST_TITLE = Res.string.onboarding_first_title
+        val ONBOARDING_FIRST_DESCRIPTION = Res.string.onboarding_first_description
+        val ONBOARDING_SECOND_TITLE = Res.string.onboarding_second_title
+        val ONBOARDING_SECOND_DESCRIPTION = Res.string.onboarding_second_description
+        val ONBOARDING_THIRD_TITLE = Res.string.onboarding_third_title
+        val ONBOARDING_THIRD_DESCRIPTION = Res.string.onboarding_third_description
+        val ONBOARDING_SKIP_BUTTON_TEXT = Res.string.onboarding_skip_button_text
+        val ONBOARDING_NEXT_BUTTON_TEXT = Res.string.onboarding_next_button_text
+        val ONBOARDING_GET_STARTED_BUTTON_TEXT = Res.string.onboarding_get_started_button_text
     }
 
     object Drawable {
-        val imageOnboardingFirst = Res.drawable.im_onboarding_first
-        val imageOnboardingSecond = Res.drawable.im_onboarding_second
-        val imageOnboardingThird = Res.drawable.im_onboarding_third
+        val IMAGE_ONBOARDING_FIRST = Res.drawable.im_onboarding_first
+        val IMAGE_ONBOARDING_SECOND = Res.drawable.im_onboarding_second
+        val IMAGE_ONBOARDING_THIRD = Res.drawable.im_onboarding_third
     }
 
     object Lottie {
-        const val mindplexLogo = "files/mindplex_logo.json"
-        const val onboardingFirst = "files/onboarding_first.json"
-        const val onboardingSecond = "files/onboarding_second.json"
-        const val onboardingThird = "files/onboarding_third.json"
+        const val MINDPLEX_LOGO = "files/mindplex_logo.json"
+        const val ONBOARDING_FIRST = "files/onboarding_first.json"
+        const val ONBOARDING_SECOND = "files/onboarding_second.json"
+        const val ONBOARDING_THIRD = "files/onboarding_third.json"
 
         suspend fun loadAsByteArray(path: String): ByteArray = Res.readBytes(path)
     }
 
     object Font {
-        val nunitoExtrabold = Res.font.nunito_extrabold
-        val rubikMedium = Res.font.rubik_medium
-        val rubikRegular = Res.font.rubik_regular
+        val NUNITO_EXTRABOLD = Res.font.nunito_extrabold
+        val RUBIK_MEDIUM = Res.font.rubik_medium
+        val RUBIK_REGULAR = Res.font.rubik_regular
     }
 }

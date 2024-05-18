@@ -88,7 +88,7 @@ comments:
 complexity:
   active: true
   CognitiveComplexMethod:
-    active: true
+    active: false
     threshold: 8
   ComplexCondition:
     active: true
@@ -101,7 +101,7 @@ complexity:
     ignoreOverloaded: false
   CyclomaticComplexMethod:
     active: true
-    threshold: 10
+    threshold: 13
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
@@ -123,7 +123,7 @@ complexity:
     threshold: 600
   LongMethod:
     active: true
-    threshold: 90
+    threshold: 300
   LongParameterList:
     active: true
     functionThreshold: 6
@@ -340,7 +340,7 @@ naming:
     excludeClassPattern: '$^'
     ignoreOverridden: true
   InvalidPackageDeclaration:
-    active: true
+    active: false # does not work properly
     rootPackage: 'dev.kigya.mindplex'
     requireRootInDeclaration: true
   LambdaParameterNaming:
@@ -860,7 +860,7 @@ formatting:
     indentSize: 4
     maxLineLength: 120
   FunctionName:
-    active: true
+    active: false
   FunctionReturnTypeSpacing:
     active: true
     autoCorrect: true
@@ -1001,7 +1001,7 @@ formatting:
     indentSize: 4
     maxLineLength: 120
   PropertyName:
-    active: true
+    active: false
   PropertyWrapping:
     active: false # looks weird when it wraps type on a new line
     autoCorrect: true

@@ -10,11 +10,6 @@ class NonNullValueConverter<ORIGINAL, CONVERTED>(
     private val source: ValueConverter<ORIGINAL?, CONVERTED?>,
     private val errorHandler: ErrorHandler<ORIGINAL, CONVERTED> = defaultErrorHandler(),
 ) : ValueConverter<ORIGINAL, CONVERTED> {
-    companion object {
-        @Suppress("UNCHECKED_CAST")
-        fun <ORIGINAL, CONVERTED> defaultErrorHandler(): ErrorHandler<ORIGINAL, CONVERTED> =
-            DefaultErrorHandler() as ErrorHandler<ORIGINAL, CONVERTED>
-    }
 
     override fun toConverted(originalValue: ORIGINAL): CONVERTED =
         source.toConverted(originalValue) ?: errorHandler.onNullToConverted(originalValue)
@@ -42,5 +37,11 @@ class NonNullValueConverter<ORIGINAL, CONVERTED>(
         override fun onNullToOriginal(convertedValue: Any?): Any? {
             throw IllegalArgumentException("Unable to convert from value $convertedValue, result was `null`")
         }
+    }
+
+    companion object {
+        @Suppress("UNCHECKED_CAST")
+        fun <ORIGINAL, CONVERTED> defaultErrorHandler(): ErrorHandler<ORIGINAL, CONVERTED> =
+            DefaultErrorHandler() as ErrorHandler<ORIGINAL, CONVERTED>
     }
 }

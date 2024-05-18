@@ -1,8 +1,6 @@
-import org.gradle.kotlin.dsl.dependencies
-
 dependencies {
-    withLibsVersionCatalog { libs ->
-        implementation(libs.konsist)
-        implementation(libs.junit.jupiter.engine)
+    with(libs) {
+        implementation(konsist)
+        implementation(junit.jupiter.engine)
     }
 }

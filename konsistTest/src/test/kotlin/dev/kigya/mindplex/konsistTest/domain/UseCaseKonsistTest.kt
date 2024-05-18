@@ -1,10 +1,10 @@
-package domain
+package dev.kigya.mindplex.konsistTest.domain
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
 import com.lemonappdev.konsist.api.verify.assertTrue
-import dev.kigya.core.domain.interactor.base.BaseSuspendUseCase
-import dev.kigya.core.domain.interactor.base.BaseUseCase
+import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
+import dev.kigya.mindplex.core.domain.interactor.base.BaseUseCase
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 

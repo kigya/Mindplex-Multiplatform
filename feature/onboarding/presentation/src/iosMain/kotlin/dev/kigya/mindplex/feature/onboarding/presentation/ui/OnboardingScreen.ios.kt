@@ -23,7 +23,8 @@ actual fun OnboardingLottie(
             MindplexLottie(
                 modifier = Modifier
                     .width(relativeLottieWidth.toDp())
-                    .height(relativeLottieHeight.toDp()),
+                    .height(relativeLottieHeight.toDp())
+                    .then(modifier),
                 reader = { with(ResourceProvider.Lottie) { loadAsByteArray(path) } },
             )
         }

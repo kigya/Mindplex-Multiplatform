@@ -1,4 +1,4 @@
-package presentation
+package dev.kigya.mindplex.konsistTest.presentation
 
 import androidx.compose.runtime.Composable
 import com.lemonappdev.konsist.api.Konsist
@@ -26,16 +26,15 @@ class ScreenKonsistTest {
         }
 
     @Test
-    fun `every feature screen should have contract param`() =
-        screens.assertTrue { koFunction ->
-            koFunction.hasParameter { koParameter ->
-                koParameter.hasType { koType ->
-                    koType.hasInterfaceDeclaration { koInterfaceDeclaration ->
-                        koInterfaceDeclaration.hasParentInterfaceOf(UnidirectionalComponentContract::class)
-                    }
+    fun `every feature screen should have contract param`() = screens.assertTrue { koFunction ->
+        koFunction.hasParameter { koParameter ->
+            koParameter.hasType { koType ->
+                koType.hasInterfaceDeclaration { koInterfaceDeclaration ->
+                    koInterfaceDeclaration.hasParentInterfaceOf(UnidirectionalComponentContract::class)
                 }
             }
         }
+    }
 
     @Test
     fun `every feature screen should be a top-level function`() =

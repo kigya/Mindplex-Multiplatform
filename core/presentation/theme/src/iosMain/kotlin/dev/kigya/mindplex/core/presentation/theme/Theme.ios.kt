@@ -11,10 +11,7 @@ import dev.kigya.mindplex.core.presentation.theme.text.TextSize
 import dev.kigya.mindplex.core.presentation.theme.text.Typography
 
 @Composable
-actual fun MindplexTheme(
-    isDarkTheme: Boolean,
-    content: @Composable () -> Unit,
-) {
+actual fun MindplexTheme(isDarkTheme: Boolean, content: @Composable () -> Unit) {
     CompositionLocalProvider(
         LocalSpacing provides Spacing(),
         LocalTextSize provides TextSize,
@@ -26,7 +23,7 @@ actual fun MindplexTheme(
         MaterialTheme(
             colorScheme = colorScheme,
             typography = Typography,
-            content = content
+            content = content,
         )
     }
 }

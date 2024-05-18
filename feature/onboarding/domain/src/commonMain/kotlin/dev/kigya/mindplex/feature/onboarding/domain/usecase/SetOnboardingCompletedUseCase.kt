@@ -1,7 +1,7 @@
 package dev.kigya.mindplex.feature.onboarding.domain.usecase
 
-import dev.kigya.core.domain.interactor.base.BaseSuspendUseCase
-import dev.kigya.core.domain.interactor.base.None
+import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
+import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.feature.onboarding.domain.contract.OnboardingRepositoryContract
 import kotlinx.coroutines.flow.flowOf
 

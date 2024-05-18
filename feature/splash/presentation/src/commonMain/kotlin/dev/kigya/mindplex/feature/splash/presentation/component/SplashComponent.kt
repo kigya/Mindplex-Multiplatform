@@ -3,7 +3,7 @@ package dev.kigya.mindplex.feature.splash.presentation.component
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.replaceAll
-import dev.kigya.core.domain.interactor.base.None
+import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.component.BaseComponent
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
@@ -20,32 +20,31 @@ class SplashComponent(
 ) : BaseComponent<SplashContract.State, SplashContract.Effect>(
     componentContext = componentContext,
     initialState = SplashContract.State(),
-), SplashContract {
+),
+    SplashContract {
 
     private val _isOnboardingCompleted = MutableStateFlow<Boolean?>(null)
 
-    override fun handleEvent(event: SplashContract.Event) =
-        withUseCaseScope {
-            when (event) {
-                SplashContract.Event.OnFirstLaunch -> {
-                    getIsOnboardingCompletedUseCase(None).collect { isCompleted ->
-                        _isOnboardingCompleted.update { isCompleted }
-                    }
+    override fun handleEvent(event: SplashContract.Event) = withUseCaseScope {
+        when (event) {
+            SplashContract.Event.OnFirstLaunch ->
+                getIsOnboardingCompletedUseCase(None).collect { isCompleted ->
+                    _isOnboardingCompleted.update { isCompleted }
                 }
 
-                SplashContract.Event.OnAnimationFinished -> {
-                    updateState { copy(shouldDisplayText = true) }
-                    delay(postAnimationDelay)
-                    if (_isOnboardingCompleted.value == true) {
-                        navigation.replaceAll(Configuration.HomeScreen)
-                    } else {
-                        navigation.replaceAll(Configuration.OnboardingScreen)
-                    }
+            SplashContract.Event.OnAnimationFinished -> {
+                updateState { copy(shouldDisplayText = true) }
+                delay(POST_ANIMATION_DELAY)
+                if (_isOnboardingCompleted.value == true) {
+                    navigation.replaceAll(Configuration.HomeScreen)
+                } else {
+                    navigation.replaceAll(Configuration.OnboardingScreen)
                 }
             }
         }
+    }
 
     private companion object {
-        val postAnimationDelay = 700.milliseconds
+        val POST_ANIMATION_DELAY = 700.milliseconds
     }
 }

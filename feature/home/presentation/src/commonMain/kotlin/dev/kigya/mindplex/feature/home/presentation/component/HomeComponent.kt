@@ -9,12 +9,12 @@ class HomeComponent(
 ) : BaseComponent<HomeContract.State, HomeContract.Effect>(
     componentContext = componentContext,
     initialState = HomeContract.State(),
-), HomeContract {
+),
+    HomeContract {
 
-    override fun handleEvent(event: HomeContract.Event) =
-        withUseCaseScope {
-            when (event) {
-                is HomeContract.Event.OnFirstLaunch -> {}
-            }
+    override fun handleEvent(event: HomeContract.Event) = withUseCaseScope {
+        when (event) {
+            is HomeContract.Event.OnFirstLaunch -> {}
         }
+    }
 }

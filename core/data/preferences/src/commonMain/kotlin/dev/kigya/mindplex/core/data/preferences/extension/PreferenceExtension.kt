@@ -12,14 +12,12 @@ import dev.kigya.mindplex.core.data.preferences.converter.ValueConverter
  * @param key The [Preferences.Key] used to retrieve the [Preferences] value
  * @param defaultValue The value to return when [key] isn't defined in [Preferences]
  */
-internal fun <T> Preferences.getOrDefault(
-    key: Preferences.Key<T>,
-    defaultValue: T,
-): T = getOrDefault(
-    key = key,
-    defaultValue = defaultValue,
-    converter = NoOpValueConverter(),
-)
+internal fun <T> Preferences.getOrDefault(key: Preferences.Key<T>, defaultValue: T): T =
+    getOrDefault(
+        key = key,
+        defaultValue = defaultValue,
+        converter = NoOpValueConverter(),
+    )
 
 /**
  * Retrieves the [Preferences] value associated with the [key],
