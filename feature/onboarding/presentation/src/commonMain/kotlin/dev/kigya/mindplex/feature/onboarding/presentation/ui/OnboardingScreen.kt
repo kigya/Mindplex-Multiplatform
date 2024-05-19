@@ -40,10 +40,10 @@ import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
 import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
+import dev.kigya.mindplex.core.util.compose.StableFlow
 import dev.kigya.mindplex.core.util.compose.performClickHapticFeedback
 import dev.kigya.mindplex.core.util.extension.ifNotEmpty
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
-import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.abs
@@ -67,7 +67,7 @@ fun OnboardingScreen(contract: OnboardingContract) {
 private fun OnboardingScreenContent(
     state: OnboardingContract.State,
     event: (OnboardingContract.Event) -> Unit,
-    effect: Flow<OnboardingContract.Effect>,
+    effect: StableFlow<OnboardingContract.Effect>,
 ) {
     LaunchedEffectSaveable(Unit) { event(OnboardingContract.Event.OnFirstLaunch) }
 
@@ -76,7 +76,7 @@ private fun OnboardingScreenContent(
     val pageOffset by derivedStateOf { abs(pagerState.currentPageOffsetFraction) }
 
     LaunchedEffect(effect) {
-        effect.collect { onboardingEffect ->
+        effect.value.collect { onboardingEffect ->
             when (onboardingEffect) {
                 is OnboardingContract.Effect.ScrollToPage ->
                     pagerState.animateScrollToPage(

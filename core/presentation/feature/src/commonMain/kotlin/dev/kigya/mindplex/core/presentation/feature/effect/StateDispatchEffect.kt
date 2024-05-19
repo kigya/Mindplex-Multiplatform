@@ -1,12 +1,11 @@
 package dev.kigya.mindplex.core.presentation.feature.effect
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import dev.kigya.mindplex.core.presentation.feature.component.UnidirectionalComponentContract
+import dev.kigya.mindplex.core.util.compose.StableFlow
 import dev.kigya.mindplex.core.util.extension.collectAsStateMultiplatform
-import kotlinx.coroutines.flow.Flow
 
 @Composable
 inline fun <reified STATE, EVENT, EFFECT> use(
@@ -21,7 +20,7 @@ inline fun <reified STATE, EVENT, EFFECT> use(
     ) {
         StateDispatchEffect(
             state = state,
-            effectFlow = component.effect,
+            effectFlow = StableFlow(component.effect),
             dispatch = dispatch,
         )
     }
@@ -32,5 +31,5 @@ inline fun <reified STATE, EVENT, EFFECT> use(
 data class StateDispatchEffect<STATE, EVENT, EFFECT>(
     val state: STATE,
     val dispatch: (EVENT) -> Unit,
-    @Stable val effectFlow: Flow<EFFECT>,
+    val effectFlow: StableFlow<EFFECT>,
 )

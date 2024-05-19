@@ -9,8 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
+import dev.kigya.mindplex.core.util.compose.StableFlow
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
-import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun HomeScreen(contract: HomeContract) {
@@ -28,7 +28,7 @@ fun HomeScreen(contract: HomeContract) {
 private fun HomeScreenContent(
     state: HomeContract.State,
     event: (HomeContract.Event) -> Unit,
-    effect: Flow<HomeContract.Effect>,
+    effect: StableFlow<HomeContract.Effect>,
 ) {
     LaunchedEffectSaveable(Unit) { event(HomeContract.Event.OnFirstLaunch) }
 

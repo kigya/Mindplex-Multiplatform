@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.splash.presentation.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.replaceAll
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.time.Duration.Companion.milliseconds
 
+@Stable
 class SplashComponent(
     componentContext: ComponentContext,
     private val navigation: StackNavigation<Configuration>,

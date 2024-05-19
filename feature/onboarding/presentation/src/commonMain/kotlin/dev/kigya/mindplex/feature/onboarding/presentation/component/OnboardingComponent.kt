@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.onboarding.presentation.component
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.replaceAll
@@ -15,6 +16,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
+@Stable
 class OnboardingComponent(
     componentContext: ComponentContext,
     private val navigation: StackNavigation<Configuration>,

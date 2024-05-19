@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.konsistTest.presentation
 
+import androidx.compose.runtime.Stable
 import com.arkivanov.decompose.ComponentContext
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
@@ -60,4 +61,9 @@ class ComponentKonsistTest {
         components.assertTrue { koClass ->
             koClass.resideInPackage("dev.kigya.mindplex.feature..component")
         }
+
+    @Test
+    fun `every component should have @Stable annotation`() = components.assertTrue { koClass ->
+        koClass.hasAnnotationOf(Stable::class)
+    }
 }
