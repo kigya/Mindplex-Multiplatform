@@ -8,7 +8,7 @@ import dev.kigya.mindplex.core.domain.interactor.base.BaseUseCase
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 
-class UseCaseKonsistTest {
+internal class UseCaseKonsistTest {
     private val useCases = Konsist
         .scopeFromProject()
         .classes()

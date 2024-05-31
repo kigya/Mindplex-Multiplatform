@@ -34,10 +34,4 @@ internal fun <T, S> Preferences.getOrDefault(
     key: Preferences.Key<S>,
     defaultValue: T,
     converter: ValueConverter<T, S>,
-): T {
-    if (contains(key)) {
-        return get(key)?.let { converter.toOriginal(it) } as T
-    }
-
-    return defaultValue
-}
+): T = get(key)?.let(converter::toOriginal) ?: defaultValue

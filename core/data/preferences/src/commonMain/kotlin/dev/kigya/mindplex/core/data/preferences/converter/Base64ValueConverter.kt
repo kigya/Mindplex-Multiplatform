@@ -8,12 +8,10 @@ import kotlin.io.encoding.ExperimentalEncodingApi
  */
 class Base64ValueConverter : ValueConverter<ByteArray?, String?> {
     @OptIn(ExperimentalEncodingApi::class)
-    override fun toConverted(originalValue: ByteArray?): String? = originalValue?.let {
-        Base64.encode(it)
-    }
+    override fun toConverted(originalValue: ByteArray?): String? =
+        originalValue?.let(Base64::encode)
 
     @OptIn(ExperimentalEncodingApi::class)
-    override fun toOriginal(convertedValue: String?): ByteArray? = convertedValue?.let {
-        Base64.decode(it)
-    }
+    override fun toOriginal(convertedValue: String?): ByteArray? =
+        convertedValue?.let(Base64::decode)
 }

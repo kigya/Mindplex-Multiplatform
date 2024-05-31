@@ -22,34 +22,36 @@ dependencyResolutionManagement {
 includeBuild("build-logic")
 
 // Core Modules
-include(":core:data:preferences")
-include(":core:domain:interactor")
-include(":core:presentation:resources")
-include(":core:presentation:feature")
-include(":core:presentation:component")
-include(":core:presentation:theme")
-include(":core:util")
+include(
+    ":core:data:preferences",
+    ":core:domain:interactor",
+    ":core:presentation:resources",
+    ":core:presentation:feature",
+    ":core:presentation:component",
+    ":core:presentation:theme",
+    ":core:util",
 
-// Feature Modules
-include(":feature:home:domain")
-include(":feature:home:data")
-include(":feature:home:presentation")
-include(":feature:onboarding:domain")
-include(":feature:onboarding:data")
-include(":feature:onboarding:presentation")
-include(":feature:splash:presentation")
+    // Feature Modules
+    ":feature:home:domain",
+    ":feature:home:data",
+    ":feature:home:presentation",
+    ":feature:onboarding:domain",
+    ":feature:onboarding:data",
+    ":feature:onboarding:presentation",
+    ":feature:splash:presentation",
 
-// Navigation Modules
-include(":navigation:mediator")
-include(":navigation:navigator")
+    // Navigation Modules
+    ":navigation:mediator",
+    ":navigation:navigator",
 
-// DI Modules
-include(":di:provider")
-include(":di:core")
+    // DI Modules
+    ":di:provider",
+    ":di:core",
 
-// Application Modules
-include(":androidApp")
-include(":shared")
+    // Application Modules
+    ":androidApp",
+    ":shared",
 
-// Test Modules
-include(":konsistTest")
+    // Test Modules
+    ":konsistTest",
+)

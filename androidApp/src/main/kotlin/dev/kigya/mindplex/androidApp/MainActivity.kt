@@ -46,7 +46,7 @@ import dev.kigya.mindplex.navigation.mediator.RootComponent
  * @see ComponentActivity for more details on activity behavior and lifecycle.
  * @see RootComponent for specific details on the root component's responsibilities and behavior.
  */
-class MainActivity : ComponentActivity() {
+internal class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalDecomposeApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

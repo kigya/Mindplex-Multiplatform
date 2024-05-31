@@ -5,7 +5,7 @@ import com.lemonappdev.konsist.api.architecture.KoArchitectureCreator.assertArch
 import com.lemonappdev.konsist.api.architecture.Layer
 import org.junit.jupiter.api.Test
 
-class ArchitectureKonsistTest {
+internal class ArchitectureKonsistTest {
 
     private val presentation = Layer("Presentation", "dev.kigya.mindplex..presentation..")
     private val domain = Layer("Domain", "dev.kigya.mindplex..domain..")

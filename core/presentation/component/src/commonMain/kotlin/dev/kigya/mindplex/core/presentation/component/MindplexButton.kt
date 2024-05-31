@@ -52,13 +52,12 @@ fun MindplexButton(
     Button(
         enabled = isEnabled,
         shape = CircleShape,
-        contentPadding = PaddingValues(MaterialTheme.spacing.default),
-        modifier =
-        modifier
+        contentPadding = PaddingValues(MaterialTheme.spacing.none),
+        modifier =  modifier
             .requiredHeightIn(min = MaterialTheme.spacing.giant)
             .shadow(
                 shape = CircleShape,
-                elevation = MaterialTheme.spacing.default,
+                elevation = MaterialTheme.spacing.none,
             ),
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
@@ -71,11 +70,9 @@ fun MindplexButton(
         AnimatedContent(
             modifier = Modifier.height(MaterialTheme.spacing.giant),
             targetState = isLoading,
-            label = String.empty,
             transitionSpec = {
-                fadeIn(animationSpec = tween(durationMillis = TRANSITION_ANIMATION_DURATION)).togetherWith(
-                    exit = fadeOut(animationSpec = tween(durationMillis = TRANSITION_ANIMATION_DURATION)),
-                )
+                fadeIn(animationSpec = tween(durationMillis = TRANSITION_ANIMATION_DURATION)) togetherWith
+                    fadeOut(animationSpec = tween(durationMillis = TRANSITION_ANIMATION_DURATION))
             },
         ) { showLoading ->
             if (showLoading.not()) {
@@ -94,8 +91,8 @@ fun MindplexButton(
                             .weight(1f)
                             .align(Alignment.CenterVertically)
                             .padding(
-                                start = if (startIcon != null) contentSpace else MaterialTheme.spacing.default,
-                                end = if (endIcon != null) contentSpace else MaterialTheme.spacing.default,
+                                start = if (startIcon != null) contentSpace else MaterialTheme.spacing.none,
+                                end = if (endIcon != null) contentSpace else MaterialTheme.spacing.none,
                             ),
                         textAlign = if (startIcon == null && endIcon == null) TextAlign.Center else TextAlign.Start,
                     )

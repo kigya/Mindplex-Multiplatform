@@ -10,7 +10,7 @@ import dev.kigya.mindplex.core.presentation.feature.component.UnidirectionalComp
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 
-class ComponentKonsistTest {
+internal class ComponentKonsistTest {
 
     private val components = Konsist
         .scopeFromProject()

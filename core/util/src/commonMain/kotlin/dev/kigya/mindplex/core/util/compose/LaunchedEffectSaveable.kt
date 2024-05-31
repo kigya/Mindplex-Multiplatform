@@ -18,12 +18,13 @@ import kotlinx.coroutines.CoroutineScope
  */
 @Composable
 fun LaunchedEffectSaveable(key: Any?, block: suspend CoroutineScope.() -> Unit) {
-    var alreadyExecuted by rememberSaveable { mutableStateOf(false) }
+    var hasAlreadyExecuted by rememberSaveable { mutableStateOf(false) }
 
-    if (!alreadyExecuted) {
-        LaunchedEffect(key) {
-            block()
-        }
-        alreadyExecuted = true
+    if (!hasAlreadyExecuted) {
+        LaunchedEffect(
+            key1 = key,
+            block = block,
+        )
+        hasAlreadyExecuted = true
     }
 }

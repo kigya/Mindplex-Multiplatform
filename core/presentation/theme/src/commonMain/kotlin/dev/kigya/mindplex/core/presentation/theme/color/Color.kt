@@ -29,4 +29,4 @@ val Crayola = Color(0xFFFF4B4F)
 
 val ColorScheme.quaternary: Color
     @Composable
-    get() = if (isSystemInDarkTheme().not()) Iris70 else Iris90
+    get() = if (isSystemInDarkTheme()) Iris90 else Iris70

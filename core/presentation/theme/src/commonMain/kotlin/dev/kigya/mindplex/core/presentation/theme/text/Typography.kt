@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 
-internal val Typography
+internal val Typography: Typography
     @Composable
     get() = Typography(
         displayLarge = TextStyle(

@@ -3,8 +3,6 @@ package dev.kigya.mindplex.core.data.preferences.converter
 /**
  * A [ValueConverter] that ensures that the delegated [ValueConverter] doesn't return
  * `null` values otherwise an exception will be thrown.
- *
- * @param
  */
 class NonNullValueConverter<ORIGINAL, CONVERTED>(
     private val source: ValueConverter<ORIGINAL?, CONVERTED?>,

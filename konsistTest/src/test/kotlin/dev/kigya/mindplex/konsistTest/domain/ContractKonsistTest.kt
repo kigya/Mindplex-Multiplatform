@@ -6,7 +6,7 @@ import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 
-class ContractKonsistTest {
+internal class ContractKonsistTest {
     private val contracts = Konsist
         .scopeFromProject()
         .interfaces()

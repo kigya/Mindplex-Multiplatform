@@ -115,18 +115,18 @@ internal fun <T, S, DS> DataStore<DS>.retrieveDataStoreProperty(
 ): ReadWriteProperty<Any, Flow<T>> {
     val currentFlow = MutableSharedFlow<T>(replay = 1)
 
-    fun launchAutoCloseableDataStoreOperation(block: suspend CoroutineScope.() -> Unit) {
-        val scope = CoroutineScope(coroutineContext)
-        scope.launch {
-            try {
-                block()
-            } finally {
-                scope.cancel()
+    return object : ReadWriteProperty<Any, Flow<T>> {
+        fun launchAutoCloseableDataStoreOperation(block: suspend CoroutineScope.() -> Unit) {
+            val scope = CoroutineScope(coroutineContext)
+            scope.launch {
+                try {
+                    block()
+                } finally {
+                    scope.cancel()
+                }
             }
         }
-    }
 
-    return object : ReadWriteProperty<Any, Flow<T>> {
         override fun setValue(thisRef: Any, property: KProperty<*>, value: Flow<T>) =
             launchAutoCloseableDataStoreOperation {
                 value.collect { newValue ->
@@ -155,12 +155,12 @@ internal fun <T, S, DS> DataStore<DS>.retrieveDataStoreProperty(
  */
 @Suppress("UNCHECKED_CAST")
 inline fun <reified T> getPreferencesKey(key: String): Preferences.Key<T> = when (T::class) {
-    Int::class -> intPreferencesKey(key) as Preferences.Key<T>
-    Double::class -> doublePreferencesKey(key) as Preferences.Key<T>
-    String::class -> stringPreferencesKey(key) as Preferences.Key<T>
     Boolean::class -> booleanPreferencesKey(key) as Preferences.Key<T>
+    Int::class -> intPreferencesKey(key) as Preferences.Key<T>
     Float::class -> floatPreferencesKey(key) as Preferences.Key<T>
     Long::class -> longPreferencesKey(key) as Preferences.Key<T>
+    Double::class -> doublePreferencesKey(key) as Preferences.Key<T>
+    String::class -> stringPreferencesKey(key) as Preferences.Key<T>
     else -> throw IllegalArgumentException(
         "Preference type of \"${T::class}\" is not supported, must be one of " +
             "Int, Double, String, Boolean, Float, or Long",

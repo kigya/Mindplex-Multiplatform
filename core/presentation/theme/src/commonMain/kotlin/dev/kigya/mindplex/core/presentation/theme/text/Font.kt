@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontWeight
 import dev.kigya.mindplex.core.presentation.resources.ResourceProvider
 import org.jetbrains.compose.resources.Font
 
-internal val Rubik
+internal val Rubik: FontFamily
     @Composable
     get() = FontFamily(
         Font(

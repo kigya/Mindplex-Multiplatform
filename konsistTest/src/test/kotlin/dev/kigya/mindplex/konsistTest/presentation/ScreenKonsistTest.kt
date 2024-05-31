@@ -7,7 +7,7 @@ import com.lemonappdev.konsist.api.verify.assertTrue
 import dev.kigya.mindplex.core.presentation.feature.component.UnidirectionalComponentContract
 import org.junit.jupiter.api.Test
 
-class ScreenKonsistTest {
+internal class ScreenKonsistTest {
     private val screens = Konsist
         .scopeFromProject()
         .functions()

@@ -5,8 +5,8 @@ plugins {
 }
 
 configure<KotlinMultiplatformExtension> {
-    sourceSets.commonMain {
-        dependencies {
+    sourceSets {
+        commonMain.dependencies {
             with(libs) {
                 implementation(bundles.decompose)
                 implementation(essenty)

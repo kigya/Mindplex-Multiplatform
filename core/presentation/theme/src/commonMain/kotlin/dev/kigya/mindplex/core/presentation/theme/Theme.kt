@@ -3,9 +3,12 @@
 package dev.kigya.mindplex.core.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import dev.kigya.mindplex.core.presentation.theme.color.AmericanGreen
 import dev.kigya.mindplex.core.presentation.theme.color.Crayola
 import dev.kigya.mindplex.core.presentation.theme.color.Gunmetal100
@@ -21,8 +24,13 @@ import dev.kigya.mindplex.core.presentation.theme.color.Iris60
 import dev.kigya.mindplex.core.presentation.theme.color.Iris70
 import dev.kigya.mindplex.core.presentation.theme.color.Iris80
 import dev.kigya.mindplex.core.presentation.theme.color.White
+import dev.kigya.mindplex.core.presentation.theme.spacing.LocalSpacing
+import dev.kigya.mindplex.core.presentation.theme.spacing.Spacing
+import dev.kigya.mindplex.core.presentation.theme.text.LocalTextSize
+import dev.kigya.mindplex.core.presentation.theme.text.TextSize
+import dev.kigya.mindplex.core.presentation.theme.text.Typography
 
-val LightColorScheme = lightColorScheme(
+internal val LightColorScheme = lightColorScheme(
     background = Iris10,
     onBackground = Gunmetal100,
     surface = White,
@@ -46,7 +54,7 @@ val LightColorScheme = lightColorScheme(
     scrim = AmericanGreen,
 )
 
-val DarkColorScheme = darkColorScheme(
+internal val DarkColorScheme = darkColorScheme(
     background = Iris80,
     onBackground = White,
     surface = Iris60,
@@ -71,7 +79,22 @@ val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-expect fun MindplexTheme(
+fun MindplexTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
-)
+) {
+    val colorScheme = remember(isDarkTheme) {
+        if (isDarkTheme) DarkColorScheme else LightColorScheme
+    }
+
+    CompositionLocalProvider(
+        LocalSpacing provides Spacing(),
+        LocalTextSize provides TextSize,
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content,
+        )
+    }
+}

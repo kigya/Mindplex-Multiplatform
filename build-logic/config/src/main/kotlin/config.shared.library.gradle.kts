@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
@@ -24,7 +25,6 @@ configure<KotlinMultiplatformExtension> {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
-            binaryOption("bundleId", "com.kigya.mindplex.shared")
             isStatic = true
         }
     }
@@ -35,7 +35,7 @@ configure<KotlinMultiplatformExtension> {
  * a shared module, ensuring that resources required for the Compose UI are available across
  * different modules, particularly for iOS builds in a Kotlin Multiplatform environment.
  */
-tasks.register("copyComposeResources", Copy::class) {
+tasks.register<Copy>("copyComposeResources") {
     val sourceDir = "${rootProject.projectDir}/core/presentation/resources/src/commonMain/composeResources"
     val destinationDir = "${rootProject.projectDir}/shared/src/commonMain/composeResources"
 
@@ -48,7 +48,7 @@ tasks.register("copyComposeResources", Copy::class) {
  * This is crucial for avoiding issues related to stale or conflicting resources during the build process,
  * especially before starting a new build after executing *copyComposeResources*.
  */
-tasks.register("clearComposeResources", Delete::class) {
+tasks.register<Delete>("clearComposeResources") {
     val destinationDir = "${rootProject.projectDir}/shared/src/commonMain/composeResources"
     delete(destinationDir)
 }

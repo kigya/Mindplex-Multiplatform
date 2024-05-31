@@ -54,12 +54,6 @@ abstract class BaseComponent<STATE, EFFECT>(
     override val useCaseCoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     /**
-     * A coroutine scope for operations that should not block the main thread,
-     * typically used for I/O operations like network requests or database transactions.
-     */
-    override val nonBlockingCoroutineScope = CoroutineScope(Dispatchers.IO)
-
-    /**
      * A flow of states representing the current state of the component.
      * This state is observable and can be collected from the UI to update the interface accordingly.
      */
@@ -104,5 +98,6 @@ abstract class BaseComponent<STATE, EFFECT>(
      */
     override fun onDestroy() {
         useCaseCoroutineScope.cancel()
+        _effect.cancel()
     }
 }

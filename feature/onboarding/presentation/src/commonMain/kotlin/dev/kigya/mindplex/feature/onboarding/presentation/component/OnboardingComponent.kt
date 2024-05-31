@@ -31,18 +31,16 @@ class OnboardingComponent(
         when (event) {
             is OnboardingContract.Event.OnFirstLaunch -> {
                 updateState { copy(onboardingData = getOnboardingData()) }
-                withNonBlockingScope {
-                    delay(stateFirstLaunchDelayedUpdatesDuration)
-                    updateState { copy(shouldDisplayTitle = true) }
-                    delay(stateFirstLaunchDelayedUpdatesDuration)
-                    updateState { copy(shouldDisplayDescription = true) }
-                    delay(stateFirstLaunchDelayedUpdatesDuration)
-                    updateState { copy(shouldDisplayDotsIndicator = true) }
-                }
+                delay(STATE_FIRST_LAUNCH_UPDATES_DELAYED_TRANSITION)
+                updateState { copy(shouldDisplayTitle = true) }
+                delay(STATE_FIRST_LAUNCH_UPDATES_DELAYED_TRANSITION)
+                updateState { copy(shouldDisplayDescription = true) }
+                delay(STATE_FIRST_LAUNCH_UPDATES_DELAYED_TRANSITION)
+                updateState { copy(shouldDisplayDotsIndicator = true) }
             }
 
             is OnboardingContract.Event.OnNextClicked ->
-                if (event.currentPage == getState().onboardingData.size - 1) {
+                if (event.currentPage == getState().onboardingData.lastIndex) {
                     navigation.replaceAll(Configuration.HomeScreen)
                 } else {
                     sendEffect(OnboardingContract.Effect.ScrollToPage(pageTo = event.currentPage + 1))
@@ -86,6 +84,6 @@ class OnboardingComponent(
     )
 
     private companion object {
-        val stateFirstLaunchDelayedUpdatesDuration = 400.milliseconds
+        val STATE_FIRST_LAUNCH_UPDATES_DELAYED_TRANSITION = 400.milliseconds
     }
 }

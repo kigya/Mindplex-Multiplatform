@@ -28,7 +28,7 @@ enum class MindplexSpacerSize {
         @Composable
         @ReadOnlyComposable
         get() = when (this) {
-            DEFAULT -> MaterialTheme.spacing.default
+            DEFAULT -> MaterialTheme.spacing.none
             EXTRA_SMALL -> MaterialTheme.spacing.extraSmall
             SMALL -> MaterialTheme.spacing.small
             MEDIUM -> MaterialTheme.spacing.medium

@@ -38,7 +38,7 @@ import org.koin.dsl.module
  *
  * The `RootComponent` uses `getAppModules(appModule)` to initialize its scope with necessary dependencies.
  */
-class MindplexApp : Application() {
+internal class MindplexApp : Application() {
     val appModule = module { single<Context> { this@MindplexApp } }
 
     override fun onCreate() {

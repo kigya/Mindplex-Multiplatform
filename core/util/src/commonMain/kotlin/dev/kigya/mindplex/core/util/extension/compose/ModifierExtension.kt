@@ -4,9 +4,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import kotlin.math.absoluteValue
 
-private const val HALF_POINT = 0.5f
-private const val DOUBLE = 2.0f
-private const val ONE_F = 1.0f
+private const val DOUBLE_SCALE = 2.0f
+private const val DEFAULT_SCALE = 1.0f
 
 /**
  * Adds a jumping dot transition effect to a modifier.
@@ -25,11 +24,12 @@ fun Modifier.jumpingDotTransition(
     val scrollPosition = currentPage + currentPageOffsetFraction
     translationX = scrollPosition * distance
 
-    val targetScale = jumpScale - ONE_F
-    val scale: Float = if (currentPageOffsetFraction.absoluteValue < HALF_POINT) {
-        ONE_F + currentPageOffsetFraction.absoluteValue * DOUBLE * targetScale
+    val targetScale = jumpScale - DEFAULT_SCALE
+    val currentPageOffsetFractionAbs = currentPageOffsetFraction.absoluteValue * DOUBLE_SCALE
+    val scale = if (currentPageOffsetFractionAbs < DEFAULT_SCALE) {
+        DEFAULT_SCALE + currentPageOffsetFractionAbs * targetScale
     } else {
-        jumpScale + (ONE_F - (currentPageOffsetFraction.absoluteValue * DOUBLE)) * targetScale
+        jumpScale + (DEFAULT_SCALE - currentPageOffsetFractionAbs) * targetScale
     }
 
     scaleX = scale

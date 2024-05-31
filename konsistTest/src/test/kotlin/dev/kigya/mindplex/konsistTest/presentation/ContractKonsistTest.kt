@@ -7,7 +7,7 @@ import dev.kigya.mindplex.core.presentation.feature.component.CopyableComponentS
 import dev.kigya.mindplex.core.presentation.feature.component.UnidirectionalComponentContract
 import org.junit.jupiter.api.Test
 
-class ContractKonsistTest {
+internal class ContractKonsistTest {
     private val contracts = Konsist
         .scopeFromProject()
         .interfaces()
