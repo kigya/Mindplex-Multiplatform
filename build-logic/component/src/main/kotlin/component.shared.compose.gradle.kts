@@ -8,6 +8,9 @@ plugins {
 configure<KotlinMultiplatformExtension> {
     sourceSets {
         commonMain.dependencies {
+            with(libs) {
+                implementation(lifecycle.viewmodel)
+            }
             with(compose.dependencies) {
                 implementation(components.resources)
                 implementation(animation)

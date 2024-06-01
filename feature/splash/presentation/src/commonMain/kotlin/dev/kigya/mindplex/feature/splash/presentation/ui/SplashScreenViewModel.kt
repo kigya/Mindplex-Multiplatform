@@ -1,28 +1,20 @@
-package dev.kigya.mindplex.feature.splash.presentation.component
+package dev.kigya.mindplex.feature.splash.presentation.ui
 
-import androidx.compose.runtime.Stable
-import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.replaceAll
 import dev.kigya.mindplex.core.domain.interactor.base.None
-import dev.kigya.mindplex.core.presentation.feature.component.BaseComponent
+import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
-import dev.kigya.mindplex.navigation.navigator.Configuration
+import dev.kigya.mindplex.navigation.navigator.navigator.AppNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.time.Duration.Companion.milliseconds
 
-@Stable
-class SplashComponent(
-    componentContext: ComponentContext,
-    private val navigation: StackNavigation<Configuration>,
+class SplashScreenViewModel(
+    private val navigatorContract: AppNavigatorContract,
     private val getIsOnboardingCompletedUseCase: GetIsOnboardingCompletedUseCase,
-) : BaseComponent<SplashContract.State, SplashContract.Effect>(
-    componentContext = componentContext,
-    initialState = SplashContract.State(),
-),
+) : BaseViewModel<SplashContract.State, SplashContract.Effect>(SplashContract.State()),
     SplashContract {
 
     private val _isOnboardingCompleted = MutableStateFlow<Boolean?>(null)
@@ -38,9 +30,17 @@ class SplashComponent(
                 updateState { copy(shouldDisplayText = true) }
                 delay(POST_ANIMATION_DELAY)
                 if (_isOnboardingCompleted.value == true) {
-                    navigation.replaceAll(Configuration.HomeScreen)
+                    navigatorContract.navigateTo(
+                        route = ScreenRoute.HOME,
+                        popUpToRoute = ScreenRoute.SPLASH,
+                        inclusive = true,
+                    )
                 } else {
-                    navigation.replaceAll(Configuration.OnboardingScreen)
+                    navigatorContract.navigateTo(
+                        route = ScreenRoute.ONBOARDING,
+                        popUpToRoute = ScreenRoute.SPLASH,
+                        inclusive = true,
+                    )
                 }
             }
         }

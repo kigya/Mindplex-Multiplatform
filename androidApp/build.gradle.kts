@@ -5,7 +5,6 @@ plugins {
         with(convention) {
             alias(config.android)
             alias(bundle.android.ui.screen.compose)
-            alias(component.android.decompose)
         }
     }
 }
@@ -26,7 +25,5 @@ dependencies {
 
     with(projects) {
         implementation(shared)
-        implementation(navigation.mediator)
-        implementation(di.provider)
     }
 }

@@ -3,13 +3,13 @@ package dev.kigya.mindplex.core.presentation.feature.effect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import dev.kigya.mindplex.core.presentation.feature.component.UnidirectionalComponentContract
+import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContract
 import dev.kigya.mindplex.core.util.compose.StableFlow
 import dev.kigya.mindplex.core.util.extension.collectAsStateMultiplatform
 
 @Composable
 inline fun <reified STATE, EVENT, EFFECT> use(
-    component: UnidirectionalComponentContract<STATE, EVENT, EFFECT>,
+    component: UnidirectionalViewModelContract<STATE, EVENT, EFFECT>,
 ): StateDispatchEffect<STATE, EVENT, EFFECT> {
     val state by component.state.collectAsStateMultiplatform()
     val dispatch: (EVENT) -> Unit = component::handleEvent

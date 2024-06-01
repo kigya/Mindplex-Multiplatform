@@ -2,6 +2,7 @@ plugins {
     with(libs.plugins.convention) {
         alias(config.shared.library)
         alias(bundle.shared.ui.screen.compose)
+        alias(component.koin)
     }
 }
 
@@ -10,14 +11,8 @@ kotlin.sourceSets {
         commonMain {
             dependencies {
                 implementation(coroutines.core)
-            }
-        }
-        androidMain {
-            dependencies {
-                implementation(lifecycle.runtime.compose)
-                implementation(lifecycle.runtime.ktx)
+                implementation(compose.navigation)
             }
         }
     }
-
 }

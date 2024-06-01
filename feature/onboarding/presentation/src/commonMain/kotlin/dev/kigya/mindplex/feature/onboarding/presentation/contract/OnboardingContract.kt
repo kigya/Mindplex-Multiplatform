@@ -1,14 +1,14 @@
 package dev.kigya.mindplex.feature.onboarding.presentation.contract
 
 import androidx.compose.runtime.Immutable
-import dev.kigya.mindplex.core.presentation.feature.component.CopyableComponentState
-import dev.kigya.mindplex.core.presentation.feature.component.UnidirectionalComponentContract
+import dev.kigya.mindplex.core.presentation.feature.CopyableComponentState
+import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContract
 import dev.kigya.mindplex.feature.onboarding.presentation.model.OnboardingScreenUiModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 interface OnboardingContract :
-    UnidirectionalComponentContract<OnboardingContract.State, OnboardingContract.Event, OnboardingContract.Effect> {
+    UnidirectionalViewModelContract<OnboardingContract.State, OnboardingContract.Event, OnboardingContract.Effect> {
     @Immutable
     data class State(
         val onboardingData: ImmutableList<OnboardingScreenUiModel> = persistentListOf(),

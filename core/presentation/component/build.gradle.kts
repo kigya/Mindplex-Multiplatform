@@ -5,14 +5,16 @@ plugins {
     }
 }
 
-kotlin.sourceSets.commonMain {
-    dependencies {
-        with(projects) {
-            implementation(core.presentation.theme)
-            implementation(core.util)
-        }
-        with(libs) {
-            implementation(compottie)
+kotlin.sourceSets {
+    commonMain {
+        dependencies {
+            with(projects) {
+                implementation(core.presentation.theme)
+                implementation(core.util)
+            }
+            with(libs) {
+                implementation(compottie)
+            }
         }
     }
 }

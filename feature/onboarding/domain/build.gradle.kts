@@ -4,13 +4,15 @@ plugins {
     }
 }
 
-kotlin.sourceSets.commonMain {
-    dependencies {
-        with(libs) {
-            implementation(coroutines.core)
-        }
-        with(projects) {
-            api(core.domain.interactor)
+kotlin.sourceSets {
+    commonMain {
+        dependencies {
+            with(libs) {
+                implementation(coroutines.core)
+            }
+            with(projects) {
+                api(core.domain.interactor)
+            }
         }
     }
 }

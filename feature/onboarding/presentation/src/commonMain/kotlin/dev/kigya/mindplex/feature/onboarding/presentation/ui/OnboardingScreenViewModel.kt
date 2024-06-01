@@ -1,15 +1,12 @@
-package dev.kigya.mindplex.feature.onboarding.presentation.component
+package dev.kigya.mindplex.feature.onboarding.presentation.ui
 
-import androidx.compose.runtime.Stable
-import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.replaceAll
 import dev.kigya.mindplex.core.domain.interactor.base.None
-import dev.kigya.mindplex.core.presentation.feature.component.BaseComponent
+import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
 import dev.kigya.mindplex.feature.onboarding.presentation.model.OnboardingScreenUiModel
-import dev.kigya.mindplex.navigation.navigator.Configuration
+import dev.kigya.mindplex.navigation.navigator.navigator.AppNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
@@ -28,15 +25,10 @@ import mindplex_multiplatform.feature.onboarding.presentation.generated.resource
 import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.onboarding_third_title
 import kotlin.time.Duration.Companion.milliseconds
 
-@Stable
-class OnboardingComponent(
-    componentContext: ComponentContext,
-    private val navigation: StackNavigation<Configuration>,
+class OnboardingScreenViewModel(
+    private val navigatorContract: AppNavigatorContract,
     private val setOnboardingCompletedUseCase: SetOnboardingCompletedUseCase,
-) : BaseComponent<OnboardingContract.State, OnboardingContract.Effect>(
-    componentContext = componentContext,
-    initialState = OnboardingContract.State(),
-),
+) : BaseViewModel<OnboardingContract.State, OnboardingContract.Effect>(OnboardingContract.State()),
     OnboardingContract {
 
     override fun handleEvent(event: OnboardingContract.Event) = withUseCaseScope {
@@ -53,14 +45,22 @@ class OnboardingComponent(
 
             is OnboardingContract.Event.OnNextClicked ->
                 if (event.currentPage == getState().onboardingData.lastIndex) {
-                    navigation.replaceAll(Configuration.HomeScreen)
+                    navigatorContract.navigateTo(
+                        route = ScreenRoute.HOME,
+                        popUpToRoute = ScreenRoute.SPLASH,
+                        inclusive = true,
+                    )
                 } else {
                     sendEffect(OnboardingContract.Effect.ScrollToPage(pageTo = event.currentPage + 1))
                 }
 
             is OnboardingContract.Event.OnSkipClicked -> {
                 setOnboardingCompletedUseCase(None)
-                navigation.replaceAll(Configuration.HomeScreen)
+                navigatorContract.navigateTo(
+                    route = ScreenRoute.HOME,
+                    popUpToRoute = ScreenRoute.SPLASH,
+                    inclusive = true,
+                )
             }
         }
     }

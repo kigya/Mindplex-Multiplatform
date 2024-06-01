@@ -5,7 +5,6 @@ import com.android.build.gradle.BaseExtension
  * Before using this plugin, ensure that necessary Android configurations have been applied.
  * Note: This script does not configure the Kotlin JVM version.
  */
-
 configure<BaseExtension> {
     val projectNameFormatted = project.path.drop(1).replace(Regex("[-:]"), ".")
     println("Namespace: ${project.path} -> $projectNameFormatted")

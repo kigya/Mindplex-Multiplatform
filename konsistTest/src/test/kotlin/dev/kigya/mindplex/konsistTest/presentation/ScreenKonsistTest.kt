@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.declaration.KoFunctionDeclaration
 import com.lemonappdev.konsist.api.verify.assertTrue
-import dev.kigya.mindplex.core.presentation.feature.component.UnidirectionalComponentContract
+import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContract
 import org.junit.jupiter.api.Test
 
 internal class ScreenKonsistTest {
@@ -30,7 +30,7 @@ internal class ScreenKonsistTest {
         koFunction.hasParameter { koParameter ->
             koParameter.hasType { koType ->
                 koType.hasInterfaceDeclaration { koInterfaceDeclaration ->
-                    koInterfaceDeclaration.hasParentInterfaceOf(UnidirectionalComponentContract::class)
+                    koInterfaceDeclaration.hasParentInterfaceOf(UnidirectionalViewModelContract::class)
                 }
             }
         }

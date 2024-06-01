@@ -9,6 +9,8 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import dev.kigya.mindplex.core.presentation.theme.color.AmericanGreen
 import dev.kigya.mindplex.core.presentation.theme.color.Crayola
 import dev.kigya.mindplex.core.presentation.theme.color.Gunmetal100
@@ -23,7 +25,6 @@ import dev.kigya.mindplex.core.presentation.theme.color.Iris50
 import dev.kigya.mindplex.core.presentation.theme.color.Iris60
 import dev.kigya.mindplex.core.presentation.theme.color.Iris70
 import dev.kigya.mindplex.core.presentation.theme.color.Iris80
-import dev.kigya.mindplex.core.presentation.theme.color.White
 import dev.kigya.mindplex.core.presentation.theme.spacing.LocalSpacing
 import dev.kigya.mindplex.core.presentation.theme.spacing.Spacing
 import dev.kigya.mindplex.core.presentation.theme.text.LocalTextSize
@@ -31,51 +32,51 @@ import dev.kigya.mindplex.core.presentation.theme.text.TextSize
 import dev.kigya.mindplex.core.presentation.theme.text.Typography
 
 internal val LightColorScheme = lightColorScheme(
-    background = Iris10,
-    onBackground = Gunmetal100,
+    background = Color.Iris10,
+    onBackground = Color.Gunmetal100,
     surface = White,
-    inverseSurface = Gunmetal80,
-    onSurface = Gunmetal100,
-    surfaceVariant = Iris20,
-    onSurfaceVariant = Gunmetal100,
-    inverseOnSurface = Gunmetal80,
-    primary = Iris10,
-    onPrimary = Gunmetal100,
-    primaryContainer = Iris70,
+    inverseSurface = Color.Gunmetal80,
+    onSurface = Color.Gunmetal100,
+    surfaceVariant = Color.Iris20,
+    onSurfaceVariant = Color.Gunmetal100,
+    inverseOnSurface = Color.Gunmetal80,
+    primary = Color.Iris10,
+    onPrimary = Color.Gunmetal100,
+    primaryContainer = Color.Iris70,
     onPrimaryContainer = White,
-    secondary = Iris80,
+    secondary = Color.Iris80,
     onSecondary = White,
     secondaryContainer = White,
-    onSecondaryContainer = Iris70,
-    tertiary = Gunmetal60,
-    tertiaryContainer = Iris40,
-    error = Crayola,
-    errorContainer = Iris10,
-    scrim = AmericanGreen,
+    onSecondaryContainer = Color.Iris70,
+    tertiary = Color.Gunmetal60,
+    tertiaryContainer = Color.Iris40,
+    error = Color.Crayola,
+    errorContainer = Color.Iris10,
+    scrim = Color.AmericanGreen,
 )
 
 internal val DarkColorScheme = darkColorScheme(
-    background = Iris80,
+    background = Color.Iris80,
     onBackground = White,
-    surface = Iris60,
-    inverseSurface = Iris30,
+    surface = Color.Iris60,
+    inverseSurface = Color.Iris30,
     onSurface = White,
-    surfaceVariant = Iris100,
+    surfaceVariant = Color.Iris100,
     onSurfaceVariant = White,
-    inverseOnSurface = Iris30,
-    primary = Iris80,
+    inverseOnSurface = Color.Iris30,
+    primary = Color.Iris80,
     onPrimary = White,
     primaryContainer = White,
-    onPrimaryContainer = Iris70,
-    secondary = Iris80,
+    onPrimaryContainer = Color.Iris70,
+    secondary = Color.Iris80,
     onSecondary = White,
     secondaryContainer = White,
-    onSecondaryContainer = Iris80,
-    tertiary = Iris50,
-    tertiaryContainer = Iris60,
-    error = Crayola,
-    errorContainer = Iris80,
-    scrim = AmericanGreen,
+    onSecondaryContainer = Color.Iris80,
+    tertiary = Color.Iris50,
+    tertiaryContainer = Color.Iris60,
+    error = Color.Crayola,
+    errorContainer = Color.Iris80,
+    scrim = Color.AmericanGreen,
 )
 
 @Composable

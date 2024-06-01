@@ -3,15 +3,15 @@ package dev.kigya.mindplex.konsistTest.presentation
 import androidx.compose.runtime.Immutable
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.verify.assertTrue
-import dev.kigya.mindplex.core.presentation.feature.component.CopyableComponentState
-import dev.kigya.mindplex.core.presentation.feature.component.UnidirectionalComponentContract
+import dev.kigya.mindplex.core.presentation.feature.CopyableComponentState
+import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContract
 import org.junit.jupiter.api.Test
 
 internal class ContractKonsistTest {
     private val contracts = Konsist
         .scopeFromProject()
         .interfaces()
-        .filter { it.hasParentInterfaceOf(UnidirectionalComponentContract::class) }
+        .filter { it.hasParentInterfaceOf(UnidirectionalViewModelContract::class) }
 
     @Test
     fun `every feature contract should have @Immutable data class State inherited from CopyableComponentState`() =

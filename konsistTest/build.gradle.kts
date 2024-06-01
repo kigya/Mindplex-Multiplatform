@@ -3,7 +3,6 @@ plugins {
         alias(config.shared.library)
         alias(bundle.shared.ui.screen.compose)
         alias(component.jvm.konsist)
-        alias(component.shared.decompose)
     }
 }
 

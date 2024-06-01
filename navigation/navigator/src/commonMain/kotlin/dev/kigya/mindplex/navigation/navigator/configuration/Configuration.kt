@@ -1,4 +1,4 @@
-package dev.kigya.mindplex.navigation.navigator
+package dev.kigya.mindplex.navigation.navigator.configuration
 
 import kotlinx.serialization.Serializable
 

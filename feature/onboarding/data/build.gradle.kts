@@ -4,14 +4,16 @@ plugins {
     }
 }
 
-kotlin.sourceSets.commonMain {
-    dependencies {
-        with(libs) {
-            implementation(coroutines.core)
-        }
-        with(projects) {
-            implementation(feature.onboarding.domain)
-            implementation(core.data.preferences)
+kotlin.sourceSets {
+    commonMain {
+        dependencies {
+            with(libs) {
+                implementation(coroutines.core)
+            }
+            with(projects) {
+                implementation(feature.onboarding.domain)
+                implementation(core.data.preferences)
+            }
         }
     }
 }

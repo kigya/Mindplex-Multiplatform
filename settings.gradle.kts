@@ -40,12 +40,10 @@ include(
     ":feature:splash:presentation",
 
     // Navigation Modules
-    ":navigation:mediator",
     ":navigation:navigator",
 
     // DI Modules
     ":di:provider",
-    ":di:core",
 
     // Application Modules
     ":androidApp",

@@ -1,29 +1,58 @@
 package dev.kigya.mindplex
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.shrinkOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import com.arkivanov.decompose.extensions.compose.stack.Children
-import com.arkivanov.decompose.extensions.compose.stack.animation.fade
-import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
-import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import dev.kigya.mindplex.core.presentation.feature.host.ScreenHost
 import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.core.util.compose.koinViewModel
+import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreenViewModel
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreen
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreenViewModel
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreen
+import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreenViewModel
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreen
-import dev.kigya.mindplex.navigation.mediator.RootComponent
+import dev.kigya.mindplex.navigation.navigator.destination.Destination
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
+import org.koin.compose.KoinContext
 
 @Composable
-fun App(root: RootComponent) {
-    val childStack by root.childStack.subscribeAsState()
+fun App() {
     MindplexTheme {
-        Children(
-            stack = childStack,
-            animation = stackAnimation(fade()),
-        ) { child ->
-            when (val instance = child.instance) {
-                is RootComponent.Child.SplashScreen -> SplashScreen(instance.component)
-                is RootComponent.Child.OnboardingScreen -> OnboardingScreen(instance.component)
-                is RootComponent.Child.HomeScreen -> HomeScreen(instance.component)
+        KoinContext {
+            val navigationController = rememberNavController()
+            ScreenHost(navigationController)
+            NavHost(
+                navController = navigationController,
+                startDestination = ScreenRoute.SPLASH,
+            ) {
+                composable(
+                    route = Destination.Splash.fullRoute,
+                    enterTransition = { fadeIn() },
+                    exitTransition = { fadeOut() },
+                ) { SplashScreen(koinViewModel<SplashScreenViewModel>()) }
+
+                composable(
+                    route = Destination.Onboarding.fullRoute,
+                    enterTransition = { fadeIn() },
+                    exitTransition = { fadeOut() },
+                ) { OnboardingScreen(koinViewModel<OnboardingScreenViewModel>()) }
+
+                composable(
+                    route = Destination.Home.fullRoute,
+                    enterTransition = { fadeIn() },
+                    exitTransition = { fadeOut() },
+                ) { HomeScreen(koinViewModel<HomeScreenViewModel>()) }
             }
         }
     }

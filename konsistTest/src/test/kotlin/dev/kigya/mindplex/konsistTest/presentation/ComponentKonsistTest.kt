@@ -5,8 +5,8 @@ import com.arkivanov.decompose.ComponentContext
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
 import com.lemonappdev.konsist.api.verify.assertTrue
-import dev.kigya.mindplex.core.presentation.feature.component.BaseComponent
-import dev.kigya.mindplex.core.presentation.feature.component.UnidirectionalComponentContract
+import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
+import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContract
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 
@@ -15,7 +15,7 @@ internal class ComponentKonsistTest {
     private val components = Konsist
         .scopeFromProject()
         .classes()
-        .filter { it.hasParentOf(BaseComponent::class) }
+        .filter { it.hasParentOf(BaseViewModel::class) }
 
     @Test
     fun `every component should end with Component`() = components.forEach {
@@ -45,7 +45,7 @@ internal class ComponentKonsistTest {
     @Test
     fun `every component implements a feature contract`() = components.assertTrue { koClass ->
         koClass.hasParentInterface { koInterface ->
-            koInterface.hasParentInterfaceOf(UnidirectionalComponentContract::class)
+            koInterface.hasParentInterfaceOf(UnidirectionalViewModelContract::class)
         }
     }
 
