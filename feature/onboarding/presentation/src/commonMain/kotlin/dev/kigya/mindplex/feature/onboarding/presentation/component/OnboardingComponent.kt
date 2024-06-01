@@ -6,7 +6,6 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.replaceAll
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.component.BaseComponent
-import dev.kigya.mindplex.core.presentation.resources.ResourceProvider
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
 import dev.kigya.mindplex.feature.onboarding.presentation.model.OnboardingScreenUiModel
@@ -14,6 +13,19 @@ import dev.kigya.mindplex.navigation.navigator.Configuration
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.Res
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.im_onboarding_first
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.im_onboarding_second
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.im_onboarding_third
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.onboarding_first_description
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.onboarding_first_title
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.onboarding_get_started_button_text
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.onboarding_next_button_text
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.onboarding_second_description
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.onboarding_second_title
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.onboarding_skip_button_text
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.onboarding_third_description
+import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.onboarding_third_title
 import kotlin.time.Duration.Companion.milliseconds
 
 @Stable
@@ -55,31 +67,31 @@ class OnboardingComponent(
 
     private fun getOnboardingData(): ImmutableList<OnboardingScreenUiModel> = persistentListOf(
         OnboardingScreenUiModel(
-            lottiePath = ResourceProvider.Lottie.ONBOARDING_FIRST,
-            lottieDrawableResource = ResourceProvider.Drawable.IMAGE_ONBOARDING_FIRST,
-            titleTextResource = ResourceProvider.Strings.ONBOARDING_FIRST_TITLE,
-            descriptionTextResource = ResourceProvider.Strings.ONBOARDING_FIRST_DESCRIPTION,
+            lottiePath = "files/onboarding_first.json",
+            lottieDrawableResource = Res.drawable.im_onboarding_first,
+            titleTextResource = Res.string.onboarding_first_title,
+            descriptionTextResource = Res.string.onboarding_first_description,
             page = 0,
-            skipButtonTextResource = ResourceProvider.Strings.ONBOARDING_SKIP_BUTTON_TEXT,
-            nextButtonTextResource = ResourceProvider.Strings.ONBOARDING_NEXT_BUTTON_TEXT,
+            skipButtonTextResource = Res.string.onboarding_skip_button_text,
+            nextButtonTextResource = Res.string.onboarding_next_button_text,
         ),
         OnboardingScreenUiModel(
-            lottiePath = ResourceProvider.Lottie.ONBOARDING_SECOND,
-            lottieDrawableResource = ResourceProvider.Drawable.IMAGE_ONBOARDING_SECOND,
-            titleTextResource = ResourceProvider.Strings.ONBOARDING_SECOND_TITLE,
-            descriptionTextResource = ResourceProvider.Strings.ONBOARDING_SECOND_DESCRIPTION,
+            lottiePath = "files/onboarding_second.json",
+            lottieDrawableResource = Res.drawable.im_onboarding_second,
+            titleTextResource = Res.string.onboarding_second_title,
+            descriptionTextResource = Res.string.onboarding_second_description,
             page = 1,
-            skipButtonTextResource = ResourceProvider.Strings.ONBOARDING_SKIP_BUTTON_TEXT,
-            nextButtonTextResource = ResourceProvider.Strings.ONBOARDING_NEXT_BUTTON_TEXT,
+            skipButtonTextResource = Res.string.onboarding_skip_button_text,
+            nextButtonTextResource = Res.string.onboarding_next_button_text,
         ),
         OnboardingScreenUiModel(
-            lottiePath = ResourceProvider.Lottie.ONBOARDING_THIRD,
-            lottieDrawableResource = ResourceProvider.Drawable.IMAGE_ONBOARDING_THIRD,
-            titleTextResource = ResourceProvider.Strings.ONBOARDING_THIRD_TITLE,
-            descriptionTextResource = ResourceProvider.Strings.ONBOARDING_THIRD_DESCRIPTION,
+            lottiePath = "files/onboarding_third.json",
+            lottieDrawableResource = Res.drawable.im_onboarding_third,
+            titleTextResource = Res.string.onboarding_third_title,
+            descriptionTextResource = Res.string.onboarding_third_description,
             page = 2,
             skipButtonTextResource = null,
-            nextButtonTextResource = ResourceProvider.Strings.ONBOARDING_GET_STARTED_BUTTON_TEXT,
+            nextButtonTextResource = Res.string.onboarding_get_started_button_text,
         ),
     )
 

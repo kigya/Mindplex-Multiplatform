@@ -12,13 +12,14 @@ plugins {
 kotlin.sourceSets.commonMain {
     dependencies {
         with(projects) {
+            with(core) {
+                implementation(util)
+                implementation(presentation.theme)
+                implementation(presentation.component)
+                api(presentation.feature)
+                api(domain.interactor)
+            }
             implementation(di.core)
-            implementation(core.util)
-            implementation(core.presentation.resources)
-            implementation(core.presentation.theme)
-            implementation(core.presentation.component)
-            api(core.presentation.feature)
-            api(core.domain.interactor)
         }
     }
 }

@@ -15,7 +15,6 @@ kotlin.sourceSets.commonMain {
             with(core) {
                 api(presentation.feature)
                 api(domain.interactor)
-                implementation(presentation.resources)
                 implementation(presentation.component)
                 api(core.util)
             }

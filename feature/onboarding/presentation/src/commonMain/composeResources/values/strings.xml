@@ -1,5 +1,4 @@
 <resources>
-    <string name="splash_title" translatable="false">Mindplex</string>
     <string name="onboarding_first_title">Unleash Your Knowledge</string>
     <string name="onboarding_first_description">Challenge yourself with a variety of questions and expand your mind.</string>
     <string name="onboarding_second_title">Think Fast, Choose Wisely</string>

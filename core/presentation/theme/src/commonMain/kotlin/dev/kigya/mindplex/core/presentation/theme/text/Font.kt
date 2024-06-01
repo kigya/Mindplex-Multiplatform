@@ -6,19 +6,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import dev.kigya.mindplex.core.presentation.resources.ResourceProvider
+import mindplex_multiplatform.core.presentation.theme.generated.resources.Res
+import mindplex_multiplatform.core.presentation.theme.generated.resources.nunito_extrabold
+import mindplex_multiplatform.core.presentation.theme.generated.resources.rubik_medium
+import mindplex_multiplatform.core.presentation.theme.generated.resources.rubik_regular
 import org.jetbrains.compose.resources.Font
 
 internal val Rubik: FontFamily
     @Composable
     get() = FontFamily(
         Font(
-            resource = ResourceProvider.Font.RUBIK_MEDIUM,
+            resource = Res.font.rubik_medium,
             weight = FontWeight.Medium,
             style = FontStyle.Normal,
         ),
         Font(
-            resource = ResourceProvider.Font.RUBIK_REGULAR,
+            resource = Res.font.rubik_regular,
             weight = FontWeight.Normal,
             style = FontStyle.Normal,
         ),
@@ -28,7 +31,7 @@ internal val Nunito
     @Composable
     get() = FontFamily(
         Font(
-            resource = ResourceProvider.Font.NUNITO_EXTRABOLD,
+            resource = Res.font.nunito_extrabold,
             weight = FontWeight.ExtraBold,
             style = FontStyle.Normal,
         ),

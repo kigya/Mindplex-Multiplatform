@@ -19,9 +19,11 @@ import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacerSize
 import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.resources.ResourceProvider
 import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
+import mindplex_multiplatform.feature.splash.presentation.generated.resources.Res
+import mindplex_multiplatform.feature.splash.presentation.generated.resources.splash_title
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 
 internal const val LOTTIE_WIDTH_PROPORTIONAL_DIVIDER = 3f
@@ -37,6 +39,7 @@ fun SplashScreen(contract: SplashContract) {
     )
 }
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun SplashScreenContent(
     state: SplashContract.State,
@@ -53,7 +56,7 @@ private fun SplashScreenContent(
     ) {
         MindplexLottie(
             modifier = Modifier.size(getLottieSplashSize()),
-            reader = { with(ResourceProvider.Lottie) { loadAsByteArray(MINDPLEX_LOGO) } },
+            reader = { Res.readBytes("files/mindplex_logo.json") },
             speed = 1.5f,
             onFinish = { event(SplashContract.Event.OnAnimationFinished) },
         )
@@ -66,7 +69,7 @@ private fun SplashScreenContent(
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 MindplexSpacer(size = MindplexSpacerSize.MEDIUM)
                 MindplexText(
-                    text = stringResource(ResourceProvider.Strings.SPLASH_TITLE),
+                    text = stringResource(Res.string.splash_title),
                     style = MaterialTheme.typography.displayLarge,
                     color = MaterialTheme.colorScheme.onSecondary,
                 )

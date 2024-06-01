@@ -4,11 +4,3 @@ plugins {
         alias(bundle.shared.ui.screen.compose)
     }
 }
-
-kotlin.sourceSets.commonMain {
-    dependencies {
-        with(projects) {
-            implementation(core.presentation.resources)
-        }
-    }
-}

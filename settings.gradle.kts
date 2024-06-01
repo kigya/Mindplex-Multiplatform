@@ -25,7 +25,6 @@ includeBuild("build-logic")
 include(
     ":core:data:preferences",
     ":core:domain:interactor",
-    ":core:presentation:resources",
     ":core:presentation:feature",
     ":core:presentation:component",
     ":core:presentation:theme",
