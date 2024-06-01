@@ -79,10 +79,7 @@ internal val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun MindplexTheme(
-    isDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit,
-) {
+fun MindplexTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colorScheme = remember(isDarkTheme) {
         if (isDarkTheme) DarkColorScheme else LightColorScheme
     }

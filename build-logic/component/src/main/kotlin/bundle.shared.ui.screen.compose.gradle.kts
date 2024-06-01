@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 plugins {
     id("component.shared.compose")
     id("component.shared.test")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 configure<KotlinMultiplatformExtension> {

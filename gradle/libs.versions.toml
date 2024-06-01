@@ -7,17 +7,16 @@ targetSdk = "34"
 
 # Gradle and Kotlin
 agp = "8.3.2"
-kotlin = "2.0.0-RC1"
-ksp = "2.0.0-RC1-1.0.20"
+kotlin = "2.0.0"
+ksp = "2.0.0-1.0.21"
 
 # Serialization and Collections
 kotlinx-serialization = "1.6.2"
 kotlinx-collections-immutable = "0.3.7"
 
 # Compose and Lifecycle Versions
-compose-compiler = "1.5.10"
 compose-activity = "1.9.0"
-compose-multiplatform = { require = "1.6.10-beta02" }
+compose-multiplatform = { require = "1.6.10" }
 compose-android = "1.6.7"
 lifecycle = { require = "2.7.0" }
 
@@ -107,6 +106,7 @@ gradle-ksp = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.
 gradle-ktorfit = { module = "de.jensklingenberg.ktorfit:ktorfit-gradle-plugin", version.ref = "ktorfit" }
 gradle-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 gradle-compose = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose-multiplatform" }
+gradle-compose-compiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 gradle-koin = { module = "io.insert-koin:koin-gradle-plugin", version.ref = "koin" }
 gradle-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 
@@ -123,6 +123,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktorfit = { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

@@ -53,7 +53,7 @@ fun MindplexButton(
         enabled = isEnabled,
         shape = CircleShape,
         contentPadding = PaddingValues(MaterialTheme.spacing.none),
-        modifier =  modifier
+        modifier = modifier
             .requiredHeightIn(min = MaterialTheme.spacing.giant)
             .shadow(
                 shape = CircleShape,

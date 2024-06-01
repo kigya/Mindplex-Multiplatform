@@ -5,7 +5,7 @@ configureIfExists(CommonExtension::class.java) {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = project.libs.versions.compose.compiler.get()
-    }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion = project.libs.versions.compose.compiler.get()
+//    }
 }
