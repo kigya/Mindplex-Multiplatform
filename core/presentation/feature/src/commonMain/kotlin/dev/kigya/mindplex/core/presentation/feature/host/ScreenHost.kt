@@ -27,21 +27,17 @@ private fun NavigationEffects(
     LaunchedEffect(navHostController, navigationChannel) {
         navigationChannel.receiveAsFlow().collect { intent ->
             when (intent) {
-                is NavigationIntent.NavigateBack -> {
-                    if (intent.route != null) {
-                        val safeRoute = enforceNonNullSmartCast(intent.route) ?: return@collect
-                        navHostController.popBackStack(safeRoute, intent.inclusive)
-                    } else {
-                        navHostController.popBackStack()
-                    }
+                is NavigationIntent.NavigateBack -> if (intent.route != null) {
+                    val safeRoute = enforceNonNullSmartCast(intent.route) ?: return@collect
+                    navHostController.popBackStack(safeRoute, intent.inclusive)
+                } else {
+                    navHostController.popBackStack()
                 }
 
-                is NavigationIntent.NavigateTo -> {
-                    navHostController.navigate(intent.route) {
-                        launchSingleTop = intent.isSingleTop
-                        intent.popUpToRoute?.let { popUpToRoute ->
-                            popUpTo(popUpToRoute) { inclusive = intent.inclusive }
-                        }
+                is NavigationIntent.NavigateTo -> navHostController.navigate(intent.route) {
+                    launchSingleTop = intent.isSingleTop
+                    intent.popUpToRoute?.let { popUpToRoute ->
+                        popUpTo(popUpToRoute) { inclusive = intent.inclusive }
                     }
                 }
             }

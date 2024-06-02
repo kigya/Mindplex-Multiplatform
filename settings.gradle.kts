@@ -23,7 +23,6 @@ includeBuild("build-logic")
 
 // Core Modules
 include(
-    ":core:data:preferences",
     ":core:domain:interactor",
     ":core:presentation:feature",
     ":core:presentation:component",

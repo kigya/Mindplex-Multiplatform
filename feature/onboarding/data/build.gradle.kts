@@ -9,10 +9,10 @@ kotlin.sourceSets {
         dependencies {
             with(libs) {
                 implementation(coroutines.core)
+                implementation(bundles.dataStore)
             }
             with(projects) {
                 implementation(feature.onboarding.domain)
-                implementation(core.data.preferences)
             }
         }
     }

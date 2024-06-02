@@ -2,20 +2,31 @@ package dev.kigya.mindplex.feature.onboarding.data
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import dev.kigya.mindplex.core.data.preferences.delegate.flowPreference
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
 import dev.kigya.mindplex.feature.onboarding.domain.contract.OnboardingRepositoryContract
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class OnboardingRepository(
-    dataStore: DataStore<Preferences>,
-    dispatcher: CoroutineDispatcher,
+    private val dataStore: DataStore<Preferences>,
+    private val dispatcher: CoroutineDispatcher,
 ) : OnboardingRepositoryContract {
 
-    override var isOnboardingCompleted by dataStore.flowPreference<Boolean>(
-        key = IS_ONBOARDING_COMPLETED_KEY,
-        defaultValue = false,
-        coroutineContext = dispatcher,
-    )
+    override val isOnboardingCompleted: Flow<Boolean>
+        get() = dataStore.data.map { preferences ->
+            preferences[booleanPreferencesKey(IS_ONBOARDING_COMPLETED_KEY)] ?: false
+        }
+
+    override suspend fun setOnboardingCompleted() {
+        withContext(dispatcher) {
+            dataStore.edit { preferences ->
+                preferences[booleanPreferencesKey(IS_ONBOARDING_COMPLETED_KEY)] = true
+            }
+        }
+    }
 
     private companion object {
         const val IS_ONBOARDING_COMPLETED_KEY = "is_onboarding_completed"
