@@ -26,10 +26,14 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.util.lerp
 import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexHorizontalPager
 import dev.kigya.mindplex.core.presentation.component.MindplexJumpingDotsIndicator
@@ -47,10 +51,12 @@ import dev.kigya.mindplex.feature.onboarding.presentation.model.OnboardingScreen
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
+import kotlin.math.abs
 
 internal const val LOTTIE_WIDTH_PROPORTIONAL_DIVIDER = 2.1f
 internal const val LOTTIE_ASPECT_RATIO = 2.24f
 private const val PAGER_SCROLL_ANIMATION_DURATION_MILLIS = 500
+private const val LOTTIE_SCALE_LERP_END = 0.5f
 
 @Composable
 fun OnboardingScreen(contract: OnboardingContract) {
@@ -123,6 +129,13 @@ private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
     pagerState: PagerState,
     state: OnboardingContract.State,
 ) {
+    val pageOffset by remember {
+        derivedStateOf { abs(pagerState.currentPageOffsetFraction) }
+    }
+    val scale by remember {
+        derivedStateOf { lerp(1f, LOTTIE_SCALE_LERP_END, pageOffset) }
+    }
+
     MindplexHorizontalPager(
         modifier = Modifier
             .fillMaxWidth()
@@ -137,6 +150,10 @@ private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
         ) {
             MindplexSpacer(size = MindplexSpacerSize.SMALL)
             OnboardingLottie(
+                modifier = Modifier.graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                },
                 drawableResource = currentOnboardingScreenData.lottieDrawableResource,
                 lottiePath = currentOnboardingScreenData.lottiePath,
             )
