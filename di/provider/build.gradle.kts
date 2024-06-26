@@ -5,20 +5,29 @@ plugins {
     }
 }
 
-kotlin.sourceSets.commonMain {
-    dependencies {
-        with(libs) {
-            implementation(bundles.dataStore)
-        }
-        with(projects) {
-            with(feature) {
-                implementation(splash.presentation)
-                implementation(onboarding.data)
-                implementation(onboarding.domain)
-                implementation(onboarding.presentation)
-                implementation(home.presentation)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            with(libs) {
+                implementation(bundles.dataStore)
+                implementation(connectivity.core)
+                implementation(connectivity.device)
             }
-            implementation(navigation.navigator)
+            with(projects) {
+                with(feature) {
+                    implementation(splash.presentation)
+                    implementation(onboarding.data)
+                    implementation(onboarding.domain)
+                    implementation(onboarding.presentation)
+                    implementation(login.data)
+                    implementation(login.domain)
+                    implementation(login.presentation)
+                    implementation(core.data.connectivity)
+                    implementation(core.domain.connectivity)
+                    implementation(home.presentation)
+                }
+                implementation(navigation.navigator)
+            }
         }
     }
 }

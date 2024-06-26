@@ -12,4 +12,7 @@ sealed class Configuration {
 
     @Serializable
     data object HomeScreen : Configuration()
+
+    @Serializable
+    data object LoginScreen : Configuration()
 }

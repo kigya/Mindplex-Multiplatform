@@ -5,9 +5,9 @@ plugins {
     }
 }
 
-kotlin.sourceSets {
-    commonMain {
-        dependencies {
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
             with(projects) {
                 implementation(core.presentation.theme)
                 implementation(core.util)

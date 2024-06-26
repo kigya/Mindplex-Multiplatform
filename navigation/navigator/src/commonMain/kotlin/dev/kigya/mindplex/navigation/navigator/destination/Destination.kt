@@ -19,5 +19,7 @@ sealed class Destination(protected val route: String, vararg params: String) {
 
     data object Onboarding : NoArgumentsDestination(route = ScreenRoute.ONBOARDING)
 
+    data object Login : NoArgumentsDestination(route = ScreenRoute.LOGIN)
+
     data object Home : NoArgumentsDestination(route = ScreenRoute.HOME)
 }

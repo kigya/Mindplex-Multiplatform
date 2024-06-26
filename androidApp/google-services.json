@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "415983434678",
+    "project_id": "mindplex-6ee2d",
+    "storage_bucket": "mindplex-6ee2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415983434678:android:f076da00f4c0dca0f51f17",
+        "android_client_info": {
+          "package_name": "dev.kigya.mindplex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "415983434678-q9cmlv7j2gn76ccpjcnqhs33kqsmgd59.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.kigya.mindplex",
+            "certificate_hash": "fa8efefc9aa1831156158de747d9a8c758dabd06"
+          }
+        },
+        {
+          "client_id": "415983434678-aid9os1bmjts7vrqup66au7slsacp4hu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5Rqwq_UmGnTGfsei5r081m3qH-z34MIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415983434678-aid9os1bmjts7vrqup66au7slsacp4hu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

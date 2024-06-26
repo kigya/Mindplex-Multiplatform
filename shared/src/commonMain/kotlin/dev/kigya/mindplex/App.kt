@@ -11,6 +11,8 @@ import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.compose.koinViewModel
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreen
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreenViewModel
+import dev.kigya.mindplex.feature.login.presentation.ui.LoginScreen
+import dev.kigya.mindplex.feature.login.presentation.ui.LoginScreenViewModel
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreen
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreenViewModel
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreen
@@ -40,6 +42,12 @@ fun App() {
                     enterTransition = { fadeIn() },
                     exitTransition = { fadeOut() },
                 ) { OnboardingScreen(koinViewModel<OnboardingScreenViewModel>()) }
+
+                composable(
+                    route = Destination.Login.fullRoute,
+                    enterTransition = { fadeIn() },
+                    exitTransition = { fadeOut() },
+                ) { LoginScreen(koinViewModel<LoginScreenViewModel>()) }
 
                 composable(
                     route = Destination.Home.fullRoute,
