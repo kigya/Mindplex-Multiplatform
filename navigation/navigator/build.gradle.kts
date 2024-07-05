@@ -5,12 +5,11 @@ plugins {
     }
 }
 
-kotlin.sourceSets {
-    commonMain {
-        dependencies {
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
             with(libs) {
                 implementation(coroutines.core)
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
             }
         }
     }

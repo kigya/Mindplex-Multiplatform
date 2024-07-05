@@ -1,0 +1,5 @@
+<resources>
+    <string name="core_error_network_text">No Internet connection</string>
+    <string name="core_error_unspecified_text">Something went wrong</string>
+    <string name="core_error_retry_button_text">Retry</string>
+</resources>

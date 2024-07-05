@@ -6,12 +6,14 @@ plugins {
     }
 }
 
-kotlin.sourceSets {
-    with(libs) {
+kotlin {
+    sourceSets {
         commonMain {
-            dependencies {
-                implementation(coroutines.core)
-                implementation(compose.navigation)
+            with(libs) {
+                dependencies {
+                    implementation(coroutines.core)
+                    implementation(compose.navigation)
+                }
             }
         }
     }

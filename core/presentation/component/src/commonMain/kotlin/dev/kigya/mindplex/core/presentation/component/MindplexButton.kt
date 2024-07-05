@@ -29,8 +29,6 @@ import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
 import dev.kigya.mindplex.core.presentation.theme.text.textSize
 import dev.kigya.mindplex.core.util.extension.empty
 
-private const val TRANSITION_ANIMATION_DURATION = 300
-
 @Composable
 @Suppress("CognitiveComplexMethod")
 fun MindplexButton(
@@ -71,8 +69,8 @@ fun MindplexButton(
             modifier = Modifier.height(MaterialTheme.spacing.giant),
             targetState = isLoading,
             transitionSpec = {
-                fadeIn(animationSpec = tween(durationMillis = TRANSITION_ANIMATION_DURATION)) togetherWith
-                    fadeOut(animationSpec = tween(durationMillis = TRANSITION_ANIMATION_DURATION))
+                fadeIn(animationSpec = tween()) togetherWith
+                    fadeOut(animationSpec = tween())
             },
         ) { showLoading ->
             if (showLoading.not()) {
@@ -88,7 +86,6 @@ fun MindplexButton(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
-                            .weight(1f)
                             .align(Alignment.CenterVertically)
                             .padding(
                                 start = if (startIcon != null) contentSpace else MaterialTheme.spacing.none,

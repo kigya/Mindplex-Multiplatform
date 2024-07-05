@@ -1,0 +1,4 @@
+<resources>
+    <string name="login_welcome_to_mindplex">Welcome to Mindplex</string>
+    <string name="login_continue_with_google">Continue with Google</string>
+</resources>

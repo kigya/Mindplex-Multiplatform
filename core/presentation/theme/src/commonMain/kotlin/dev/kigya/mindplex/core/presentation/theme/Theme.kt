@@ -18,7 +18,6 @@ import dev.kigya.mindplex.core.presentation.theme.color.Gunmetal60
 import dev.kigya.mindplex.core.presentation.theme.color.Gunmetal80
 import dev.kigya.mindplex.core.presentation.theme.color.Iris10
 import dev.kigya.mindplex.core.presentation.theme.color.Iris100
-import dev.kigya.mindplex.core.presentation.theme.color.Iris20
 import dev.kigya.mindplex.core.presentation.theme.color.Iris30
 import dev.kigya.mindplex.core.presentation.theme.color.Iris40
 import dev.kigya.mindplex.core.presentation.theme.color.Iris50
@@ -35,9 +34,9 @@ internal val LightColorScheme = lightColorScheme(
     background = Color.Iris10,
     onBackground = Color.Gunmetal100,
     surface = White,
-    inverseSurface = Color.Gunmetal80,
+    inverseSurface = Color.Iris70,
     onSurface = Color.Gunmetal100,
-    surfaceVariant = Color.Iris20,
+    surfaceVariant = White,
     onSurfaceVariant = Color.Gunmetal100,
     inverseOnSurface = Color.Gunmetal80,
     primary = Color.Iris10,
@@ -53,6 +52,7 @@ internal val LightColorScheme = lightColorScheme(
     error = Color.Crayola,
     errorContainer = Color.Iris10,
     scrim = Color.AmericanGreen,
+    surfaceContainer = Color.Gunmetal100,
 )
 
 internal val DarkColorScheme = darkColorScheme(
@@ -77,6 +77,7 @@ internal val DarkColorScheme = darkColorScheme(
     error = Color.Crayola,
     errorContainer = Color.Iris80,
     scrim = Color.AmericanGreen,
+    surfaceContainer = Color.Gunmetal100,
 )
 
 @Composable

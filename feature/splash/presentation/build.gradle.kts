@@ -8,9 +8,12 @@ plugins {
     }
 }
 
-kotlin.sourceSets {
-    commonMain {
-        dependencies {
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            with(libs) {
+                implementation(compottie)
+            }
             with(projects) {
                 with(core) {
                     api(presentation.feature)
@@ -18,11 +21,11 @@ kotlin.sourceSets {
                     api(core.util)
                     implementation(presentation.component)
                 }
-                api(feature.onboarding.domain)
+                with(feature) {
+                    implementation(onboarding.domain)
+                    implementation(login.domain)
+                }
                 implementation(navigation.navigator)
-            }
-            with(libs) {
-                implementation(compottie)
             }
         }
     }

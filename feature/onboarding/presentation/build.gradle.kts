@@ -8,9 +8,9 @@ plugins {
     }
 }
 
-kotlin.sourceSets {
-    commonMain {
-        dependencies {
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
             with(projects) {
                 with(core) {
                     api(presentation.feature)

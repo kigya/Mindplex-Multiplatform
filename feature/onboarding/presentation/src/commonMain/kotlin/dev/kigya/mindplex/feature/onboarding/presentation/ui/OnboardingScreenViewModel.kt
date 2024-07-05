@@ -46,7 +46,7 @@ class OnboardingScreenViewModel(
             is OnboardingContract.Event.OnNextClicked ->
                 if (event.currentPage == getState().onboardingData.lastIndex) {
                     navigatorContract.navigateTo(
-                        route = ScreenRoute.HOME,
+                        route = ScreenRoute.LOGIN,
                         popUpToRoute = ScreenRoute.SPLASH,
                         inclusive = true,
                     )
@@ -57,7 +57,7 @@ class OnboardingScreenViewModel(
             is OnboardingContract.Event.OnSkipClicked -> {
                 setOnboardingCompletedUseCase(None)
                 navigatorContract.navigateTo(
-                    route = ScreenRoute.HOME,
+                    route = ScreenRoute.LOGIN,
                     popUpToRoute = ScreenRoute.SPLASH,
                     inclusive = true,
                 )

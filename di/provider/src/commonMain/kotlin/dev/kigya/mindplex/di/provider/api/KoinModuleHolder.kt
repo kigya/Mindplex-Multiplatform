@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.di.provider.api
 
+import dev.kigya.mindplex.di.provider.module.dataSourceModule
 import dev.kigya.mindplex.di.provider.module.dataStoreModule
 import dev.kigya.mindplex.di.provider.module.dispatcherModule
 import dev.kigya.mindplex.di.provider.module.navigationModule
@@ -18,5 +19,6 @@ object KoinModuleHolder {
         useCaseModule,
         dispatcherModule,
         viewModelModule,
+        dataSourceModule,
     )
 }

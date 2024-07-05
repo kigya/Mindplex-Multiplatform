@@ -4,9 +4,9 @@ plugins {
     }
 }
 
-kotlin.sourceSets {
-    commonMain {
-        dependencies {
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
             with(libs) {
                 implementation(coroutines.core)
                 implementation(bundles.dataStore)

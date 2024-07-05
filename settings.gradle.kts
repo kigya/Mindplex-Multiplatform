@@ -23,6 +23,8 @@ includeBuild("build-logic")
 
 // Core Modules
 include(
+    ":core:data:connectivity",
+    ":core:domain:connectivity",
     ":core:domain:interactor",
     ":core:presentation:feature",
     ":core:presentation:component",
@@ -37,6 +39,9 @@ include(
     ":feature:onboarding:data",
     ":feature:onboarding:presentation",
     ":feature:splash:presentation",
+    ":feature:login:domain",
+    ":feature:login:data",
+    ":feature:login:presentation",
 
     // Navigation Modules
     ":navigation:navigator",
