@@ -5,7 +5,6 @@ import com.android.build.gradle.BaseExtension
  * Before using this plugin, ensure that necessary Android configurations have been applied.
  * Note: This script does not configure the Kotlin JVM version.
  */
-
 configure<BaseExtension> {
     val projectNameFormatted = project.path.drop(1).replace(Regex("[-:]"), ".")
     println("Namespace: ${project.path} -> $projectNameFormatted")
@@ -26,7 +25,18 @@ configure<BaseExtension> {
     }
 
     packagingOptions {
-        resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        resources.excludes.addAll(
+            listOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/DEPENDENCIES",
+                "META-INF/NOTICE",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/NOTICE.txt",
+                "META-INF/{AL2.0,LGPL2.1}"
+            )
+        )
     }
 }
 

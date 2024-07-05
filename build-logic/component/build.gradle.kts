@@ -6,10 +6,13 @@ dependencies {
     with(libs) {
         with(gradle) {
             implementation(kotlin)
+            implementation(kotlinx.serialization)
             implementation(ksp)
             implementation(android)
             implementation(ktorfit)
             implementation(detekt)
+            implementation(koin)
+            implementation(compose.compiler)
         }
     }
 

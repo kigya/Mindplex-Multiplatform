@@ -19,9 +19,8 @@ android {
 
 dependencies {
     with(libs) {
-        with(compose) {
-            implementation(android.activity)
-        }
+        implementation(compose.android.activity)
+        implementation(koin.core)
     }
 
     with(projects) {

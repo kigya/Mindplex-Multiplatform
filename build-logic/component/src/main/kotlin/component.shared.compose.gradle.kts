@@ -1,0 +1,22 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+
+plugins {
+    id("org.jetbrains.compose")
+    id("build-feature.compose")
+}
+
+configure<KotlinMultiplatformExtension> {
+    sourceSets {
+        commonMain.dependencies {
+            with(libs) {
+                implementation(lifecycle.viewmodel)
+            }
+            with(compose.dependencies) {
+                implementation(components.resources)
+                implementation(animation)
+                implementation(ui)
+                implementation(material3)
+            }
+        }
+    }
+}
