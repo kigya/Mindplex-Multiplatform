@@ -1,4 +1,4 @@
-package dev.kigya.mindplex.feature.login.data.repository
+package dev.kigya.mindplex.feature.login.data.repository.repository
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

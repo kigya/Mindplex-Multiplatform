@@ -12,6 +12,7 @@ kotlin {
                 implementation(bundles.dataStore)
                 implementation(connectivity.core)
                 implementation(connectivity.device)
+                implementation(jwt.parser)
             }
             with(projects) {
                 with(feature) {

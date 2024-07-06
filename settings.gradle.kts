@@ -24,6 +24,7 @@ includeBuild("build-logic")
 // Core Modules
 include(
     ":core:data:connectivity",
+    ":core:data:firebase",
     ":core:domain:connectivity",
     ":core:domain:interactor",
     ":core:presentation:feature",

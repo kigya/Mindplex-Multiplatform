@@ -18,6 +18,7 @@ plugins {
         alias(compose) apply false
 
         alias(detekt) apply false
+        alias(google.services) apply false
     }
 }
 

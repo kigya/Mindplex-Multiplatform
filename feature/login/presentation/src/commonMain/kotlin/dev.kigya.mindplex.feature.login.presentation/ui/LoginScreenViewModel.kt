@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.login.presentation.ui
 
+import androidx.annotation.CheckResult
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.feature.login.domain.model.GoogleSignInDomainResult
@@ -17,6 +18,7 @@ class LoginScreenViewModel(
     private val getIsUserSignedInUseCase: GetIsUserSignedInUseCase,
 ) : BaseViewModel<LoginContract.State, LoginContract.Effect>(LoginContract.State()), LoginContract {
 
+    @CheckResult
     override fun handleEvent(event: LoginContract.Event) = withUseCaseScope {
         when (event) {
             is LoginContract.Event.OnFirstLaunch -> handleFirstLaunch()

@@ -4,12 +4,12 @@ import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
-import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    singleOf(::GetIsOnboardingCompletedUseCase)
-    singleOf(::SetOnboardingCompletedUseCase)
-    singleOf(::SignInUseCase)
-    singleOf(::GetIsUserSignedInUseCase)
+    factoryOf(::GetIsOnboardingCompletedUseCase)
+    factoryOf(::SetOnboardingCompletedUseCase)
+    factoryOf(::SignInUseCase)
+    factoryOf(::GetIsUserSignedInUseCase)
 }
