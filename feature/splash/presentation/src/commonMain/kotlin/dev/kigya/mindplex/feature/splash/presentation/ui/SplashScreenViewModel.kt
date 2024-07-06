@@ -38,9 +38,9 @@ class SplashScreenViewModel(
                 updateState { copy(shouldDisplayText = true) }
                 delay(POST_ANIMATION_DELAY)
                 val route = when {
-                    _isOnboardingCompleted.value != true -> ScreenRoute.ONBOARDING
-                    _isUserSignedIn.value == true -> ScreenRoute.HOME
-                    else -> ScreenRoute.LOGIN
+                    _isOnboardingCompleted.value == false -> ScreenRoute.ONBOARDING
+                    _isUserSignedIn.value == false -> ScreenRoute.LOGIN
+                    else -> ScreenRoute.HOME
                 }
                 navigatorContract.navigateTo(
                     route = route,

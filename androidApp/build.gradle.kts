@@ -1,6 +1,7 @@
 plugins {
     with(libs.plugins) {
         alias(android.application)
+        alias(google.services)
 
         with(convention) {
             alias(config.android)
@@ -21,6 +22,7 @@ dependencies {
     with(libs) {
         implementation(compose.android.activity)
         implementation(koin.core)
+        implementation(firebase.common.ktx)
     }
 
     with(projects) {

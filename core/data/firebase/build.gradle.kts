@@ -9,12 +9,6 @@ kotlin {
         commonMain.dependencies {
             with(libs) {
                 implementation(coroutines.core)
-                implementation(annotation)
-            }
-            with(projects) {
-                api(core.domain.interactor)
-                api(core.domain.connectivity)
-                implementation(core.util)
             }
         }
     }

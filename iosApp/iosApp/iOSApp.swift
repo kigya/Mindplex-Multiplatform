@@ -1,6 +1,7 @@
 import SwiftUI
 import GoogleSignIn
 import shared
+import Firebase
 
 @main
 struct iOSApp: App {
@@ -9,6 +10,7 @@ struct iOSApp: App {
     
     init() {
         KoinInitializerKt.doInitKoin()
+        FirebaseApp.configure()
     }
 
 	var body: some Scene {
