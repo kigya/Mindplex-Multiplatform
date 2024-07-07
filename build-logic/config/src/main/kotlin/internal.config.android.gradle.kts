@@ -10,11 +10,11 @@ configure<BaseExtension> {
     println("Namespace: ${project.path} -> $projectNameFormatted")
     namespace = "dev.kigya.mindplex.$projectNameFormatted"
 
-    compileSdkVersion(libs.versions.compileSdk.getInt())
+    compileSdkVersion(libs.versions.compile.sdk.getInt())
 
     defaultConfig {
         minSdk = libs.versions.minSdk.getInt()
-        targetSdk = libs.versions.targetSdk.getInt()
+        targetSdk = libs.versions.target.sdk.getInt()
 
         resourceConfigurations += listOf("ru", "en")
     }
