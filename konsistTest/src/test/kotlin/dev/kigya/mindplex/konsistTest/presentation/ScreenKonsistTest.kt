@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.konsistTest.presentation
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.declaration.KoFunctionDeclaration
@@ -41,12 +42,13 @@ internal class ScreenKonsistTest {
         screens.assertTrue(function = KoFunctionDeclaration::isTopLevel)
 
     @Test
-    fun `every feature screen should have a companion private content function`() =
+    fun `every feature screen should have a companion internal content function`() =
         screens.assertTrue { koScreenFunction ->
             koScreenFunction.containingFile.hasFunction { koFunction ->
                 koFunction.hasNameEndingWith("Content") &&
                     koFunction.hasAnnotationOf(Composable::class) &&
-                    koFunction.hasPrivateModifier
+                    koFunction.hasInternalModifier &&
+                    koFunction.hasAnnotationOf(VisibleForTesting::class)
             }
         }
 }

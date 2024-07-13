@@ -16,6 +16,8 @@ configure<KotlinMultiplatformExtension> {
                 implementation(animation)
                 implementation(ui)
                 implementation(material3)
+                implementation(preview)
+                implementation(uiTooling)
             }
         }
     }

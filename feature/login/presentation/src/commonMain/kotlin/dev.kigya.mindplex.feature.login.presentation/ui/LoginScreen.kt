@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.login.presentation.ui
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +46,8 @@ fun LoginScreen(contract: LoginContract) {
 }
 
 @Composable
-private fun LoginScreenContent(state: LoginContract.State, event: (LoginContract.Event) -> Unit) {
+@VisibleForTesting
+internal fun LoginScreenContent(state: LoginContract.State, event: (LoginContract.Event) -> Unit) {
     LaunchedEffectSaveable(Unit) { event(LoginContract.Event.OnFirstLaunch) }
     Box(
         modifier = Modifier

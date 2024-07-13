@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.onboarding.presentation.ui
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.SizeTransform
@@ -69,9 +70,9 @@ fun OnboardingScreen(contract: OnboardingContract) {
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun OnboardingScreenContent(
+@VisibleForTesting
+internal fun OnboardingScreenContent(
     state: OnboardingContract.State,
     event: (OnboardingContract.Event) -> Unit,
     effect: StableFlow<OnboardingContract.Effect>,

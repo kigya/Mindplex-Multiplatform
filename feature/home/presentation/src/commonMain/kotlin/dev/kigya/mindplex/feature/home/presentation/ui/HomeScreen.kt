@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.home.presentation.ui
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +26,8 @@ fun HomeScreen(contract: HomeContract) {
 
 @Composable
 @Suppress("UnusedParameter")
-private fun HomeScreenContent(
+@VisibleForTesting
+internal fun HomeScreenContent(
     state: HomeContract.State,
     event: (HomeContract.Event) -> Unit,
     effect: StableFlow<HomeContract.Effect>,
