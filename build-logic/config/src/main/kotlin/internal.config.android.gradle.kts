@@ -13,7 +13,7 @@ configure<BaseExtension> {
     compileSdkVersion(libs.versions.compile.sdk.getInt())
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.getInt()
+        minSdk = libs.versions.min.sdk.getInt()
         targetSdk = libs.versions.target.sdk.getInt()
 
         resourceConfigurations += listOf("ru", "en")

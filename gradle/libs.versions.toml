@@ -1,7 +1,7 @@
 [versions]
 # Basic Environment Setup
 java = { strictly = "17" }
-minSdk = { strictly = "28" }
+min-sdk = { strictly = "28" }
 compile-sdk = { strictly = "34" }
 target-sdk = { strictly = "34" }
 

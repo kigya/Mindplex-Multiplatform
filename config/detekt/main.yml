@@ -719,7 +719,7 @@ style:
   UnusedPrivateClass:
     active: true
   UnusedPrivateMember:
-    ignoreAnnotated: [ 'Preview' ]
+    ignoreAnnotated: [ 'Preview', 'ScreenPreviewFactory' ]
     active: true
     allowedNames: '(_|ignored|expected|serialVersionUID)'
   UnusedPrivateProperty:

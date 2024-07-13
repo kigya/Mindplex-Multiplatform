@@ -16,6 +16,10 @@ configure<KotlinMultiplatformExtension> {
                 implementation(animation)
                 implementation(ui)
                 implementation(material3)
+            }
+        }
+        androidMain.dependencies {
+            with(compose.dependencies) {
                 implementation(preview)
                 implementation(uiTooling)
             }

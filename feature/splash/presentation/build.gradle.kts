@@ -20,6 +20,7 @@ kotlin {
                     api(domain.interactor)
                     api(core.util)
                     implementation(presentation.component)
+                    implementation(presentation.theme)
                 }
                 with(feature) {
                     implementation(onboarding.domain)
