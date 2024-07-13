@@ -1,5 +1,3 @@
-import gradle.kotlin.dsl.accessors._a38f0d40c97c1df3fbac9066a13273a7.compose
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -12,8 +10,6 @@ configure<KotlinMultiplatformExtension> {
             implementation(kotlin("test-common"))
             implementation(kotlin("test-annotations-common"))
 
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.dependencies.uiTest)
             with(libs) {
                 implementation(coroutines.test)
                 implementation(turbine)
@@ -21,6 +17,7 @@ configure<KotlinMultiplatformExtension> {
             }
         }
     }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -34,8 +31,6 @@ configure<KotlinMultiplatformExtension> {
             dependencies {
                 with(libs) {
                     implementation(core.ktx)
-                    implementation(compose.ui.test.junit4.android)
-                    debugImplementation(compose.ui.test.manifest)
                 }
             }
         }
