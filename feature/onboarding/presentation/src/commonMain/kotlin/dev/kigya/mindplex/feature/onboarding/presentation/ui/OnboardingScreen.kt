@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.util.lerp
 import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexHorizontalPager
@@ -103,7 +104,8 @@ internal fun OnboardingScreenContent(
                 .background(MaterialTheme.colorScheme.onSecondaryContainer)
                 .statusBarsPadding()
                 .navigationBarsPadding()
-                .padding(vertical = MaterialTheme.spacing.large),
+                .padding(vertical = MaterialTheme.spacing.large)
+                .testTag("onboarding_content"),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -125,7 +127,6 @@ internal fun OnboardingScreenContent(
 }
 
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
 private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
     pagerState: PagerState,
     state: OnboardingContract.State,
@@ -140,21 +141,26 @@ private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
     MindplexHorizontalPager(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.onSecondaryContainer),
+            .background(MaterialTheme.colorScheme.onSecondaryContainer)
+            .testTag("onboarding_pager"),
         pagerState = pagerState,
     ) { page ->
         val currentOnboardingScreenData = remember(page) { get(page) }
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag("onboarding_page_$page"),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
             MindplexSpacer(size = MindplexSpacerSize.SMALL)
             OnboardingLottie(
-                modifier = Modifier.graphicsLayer {
-                    scaleX = scale
-                    scaleY = scale
-                },
+                modifier = Modifier
+                    .graphicsLayer {
+                        scaleX = scale
+                        scaleY = scale
+                    }
+                    .testTag("onboarding_lottie_$page"),
                 drawableResource = currentOnboardingScreenData.lottieDrawableResource,
                 lottiePath = currentOnboardingScreenData.lottiePath,
             )
@@ -164,7 +170,8 @@ private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
                     MindplexText(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = MaterialTheme.spacing.large),
+                            .padding(horizontal = MaterialTheme.spacing.large)
+                            .testTag("onboarding_title_$page"),
                         text = stringResource(titleResource),
                         style = MaterialTheme.typography.headlineLarge,
                         color = MaterialTheme.colorScheme.onSecondary,
@@ -177,7 +184,8 @@ private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
                     MindplexText(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = MaterialTheme.spacing.large),
+                            .padding(horizontal = MaterialTheme.spacing.large)
+                            .testTag("onboarding_description_$page"),
                         text = stringResource(descriptionResource),
                         style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.onSecondary,
@@ -198,7 +206,9 @@ private fun ColumnScope.OnboardingPagerDotsIndicator(
     MindplexSpacer(size = MindplexSpacerSize.LARGE)
     AnimatedVisibility(visible = state.shouldDisplayDotsIndicator) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag("onboarding_dots_indicator"),
             horizontalArrangement = Arrangement.Center,
         ) {
             MindplexJumpingDotsIndicator(pagerState = pagerState)
@@ -207,7 +217,6 @@ private fun ColumnScope.OnboardingPagerDotsIndicator(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ColumnScope.OnboardingButtons(
     pagerState: PagerState,
@@ -249,7 +258,9 @@ private fun ColumnScope.OnboardingButtons(
                     exit = fadeOut() + slideOutHorizontally(),
                 ) {
                     MindplexButton(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag("onboarding_skip_button_$page"),
                         labelText = stringResource(skipResource),
                         contentColor = MaterialTheme.colorScheme.onSecondary,
                     ) {
@@ -263,7 +274,9 @@ private fun ColumnScope.OnboardingButtons(
             }
             onboardingScreenUiModels[page].nextButtonTextResource?.let { nextResource ->
                 MindplexButton(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .testTag("onboarding_next_button_$page"),
                     labelText = stringResource(nextResource),
                     containerColor = MaterialTheme.colorScheme.onSecondary,
                     contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
