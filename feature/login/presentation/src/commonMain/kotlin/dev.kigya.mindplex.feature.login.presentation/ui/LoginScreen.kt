@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.testTag
 import com.mmk.kmpauth.google.GoogleButtonUiContainer
 import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexErrorStub
@@ -60,12 +61,17 @@ internal fun LoginScreenContent(state: LoginContract.State, event: (LoginContrac
             transitionSpec = { fadeSlideScaleContentTransitionSpec() },
         ) { stubErrorType ->
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .testTag("login_section"),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
                 stubErrorType?.let { type ->
-                    MindplexErrorStub(stubErrorType = type) {
+                    MindplexErrorStub(
+                        modifier = Modifier.testTag("error_stub"),
+                        stubErrorType = type,
+                    ) {
                         event(LoginContract.Event.OnErrorStubClicked)
                     }
                 } ?: run {
@@ -97,7 +103,9 @@ private fun ColumnScope.LoginSection(event: (LoginContract.Event) -> Unit) {
         },
     ) {
         MindplexButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag("google_sign_in_button"),
             startIcon = { MindplexIcon(drawableResource = Res.drawable.ic_google) },
             labelText = stringResource(Res.string.login_continue_with_google),
             contentColor = MaterialTheme.colorScheme.surfaceContainer,

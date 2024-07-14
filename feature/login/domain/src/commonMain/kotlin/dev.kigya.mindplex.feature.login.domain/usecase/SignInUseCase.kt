@@ -22,11 +22,16 @@ class SignInUseCase(
     @CheckResult
     override suspend operator fun invoke(params: GoogleUserDomainModel?): GoogleSignInDomainResult =
         params?.let { googleUser ->
-            val userId = jwtHandlerContract.decodeSubject(googleUser.tokenId)
-            val user = googleUser.copy(tokenId = userId)
-            signInPreferencesRepositoryContract.signIn(user.tokenId)
-            signInNetworkRepositoryContract.signIn(user)
-            Success
+            val userIdResult = jwtHandlerContract.decodeSubject(googleUser.tokenId)
+            userIdResult.fold(
+                onSuccess = { userId ->
+                    val user = googleUser.copy(tokenId = userId)
+                    signInPreferencesRepositoryContract.signIn(user.tokenId)
+                    signInNetworkRepositoryContract.signIn(user)
+                    Success
+                },
+                onFailure = { Failure(GoogleSignInDomainFailureReason.OTHER) },
+            )
         } ?: run {
             if (connectivityRepositoryContract.isConnected()) {
                 Failure(GoogleSignInDomainFailureReason.OTHER)

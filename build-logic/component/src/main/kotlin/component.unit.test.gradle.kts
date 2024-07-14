@@ -31,6 +31,7 @@ configure<KotlinMultiplatformExtension> {
             dependencies {
                 with(libs) {
                     implementation(core.ktx)
+                    implementation(robolectric)
                 }
             }
         }

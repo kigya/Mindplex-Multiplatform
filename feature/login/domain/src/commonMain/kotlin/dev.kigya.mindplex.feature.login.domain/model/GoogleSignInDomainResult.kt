@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.login.domain.model
 
+import androidx.annotation.VisibleForTesting
 import kotlin.jvm.JvmInline
 
 sealed interface GoogleSignInDomainResult {
@@ -11,7 +12,8 @@ sealed interface GoogleSignInDomainResult {
     data object Success : GoogleSignInDomainResult
 
     @JvmInline
-    value class Failure internal constructor(
+    @VisibleForTesting
+    value class Failure(
         val reason: GoogleSignInDomainFailureReason,
     ) : GoogleSignInDomainResult
 }

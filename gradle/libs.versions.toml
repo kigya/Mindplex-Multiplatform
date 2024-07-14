@@ -46,6 +46,7 @@ turbine = { prefer = "1.1.0" }
 assertk = { prefer = "0.28.1" }
 core-ktx = { prefer = "1.6.1" }
 mockk = { prefer = "1.13.10" }
+robolectric = { prefer = "4.12" }
 
 # Detekt
 detekt = { require = "1.23.6" }
@@ -123,6 +124,7 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 compose-ui-test-junit4-android = { module = "androidx.compose.ui:ui-test-junit4-android", version.ref = "compose-test" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-test" }
 core-ktx = { module = "androidx.test:core-ktx", version.ref = "core-ktx" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 
 # Auth
 kmpAuth-google = { module = "io.github.mirzemehdi:kmpauth-google", version.ref = "kmpAuth" }
