@@ -17,7 +17,11 @@ configure<BaseExtension> {
         targetSdk = libs.versions.target.sdk.getInt()
 
         resourceConfigurations += listOf("ru", "en")
-        testOptions.unitTests.isIncludeAndroidResources = true
+
+        testOptions.unitTests.apply {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
     }
 
     compileOptions {
