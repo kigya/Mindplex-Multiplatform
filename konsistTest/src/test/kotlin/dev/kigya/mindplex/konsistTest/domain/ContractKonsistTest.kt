@@ -10,7 +10,9 @@ internal class ContractKonsistTest {
     private val contracts = Konsist
         .scopeFromProject()
         .interfaces()
-        .filter { it.resideInPackage("dev.kigya.mindplex.feature..domain..") }
+        .filter {
+            it.resideInPackage("dev.kigya.mindplex.feature..domain..") && it.hasSealedModifier.not()
+        }
 
     @Test
     fun `every contract should end with Contract`() = contracts.forEach {

@@ -1,7 +1,7 @@
 [versions]
 # Basic Environment Setup
 java = { strictly = "17" }
-minSdk = { strictly = "28" }
+min-sdk = { strictly = "28" }
 compile-sdk = { strictly = "34" }
 target-sdk = { strictly = "34" }
 
@@ -17,7 +17,7 @@ kotlinx-collections-immutable = { require = "0.3.7" }
 # Compose and Lifecycle Versions
 compose-activity = { require = "1.9.0" }
 compose-multiplatform = { require = "1.7.0-alpha01" }
-compose-android = { require = "1.6.8" }
+compose-test = { strictly = "1.7.0-beta03" }
 compose-navigation = { require = "2.8.0-alpha02" }
 lifecycle = { require = "2.8.3" }
 
@@ -43,7 +43,10 @@ coroutines = { require = "1.9.0-RC" }
 konsist = { prefer = "0.15.1" }
 junit = { prefer = "5.11.0-M1" }
 turbine = { prefer = "1.1.0" }
+assertk = { prefer = "0.28.1" }
+core-ktx = { prefer = "1.6.1" }
 mockk = { prefer = "1.13.10" }
+robolectric = { prefer = "4.12" }
 
 # Detekt
 detekt = { require = "1.23.6" }
@@ -116,9 +119,12 @@ konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assertk" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-android" }
-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-android" }
+compose-ui-test-junit4-android = { module = "androidx.compose.ui:ui-test-junit4-android", version.ref = "compose-test" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-test" }
+core-ktx = { module = "androidx.test:core-ktx", version.ref = "core-ktx" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 
 # Auth
 kmpAuth-google = { module = "io.github.mirzemehdi:kmpauth-google", version.ref = "kmpAuth" }
@@ -176,7 +182,8 @@ convention-component-android-compose = "component.android.compose:1.0"
 convention-component-shared-compose = "component.shared.compose:1.0"
 convention-component-ktorfit = "component.ktorfit:1.0"
 convention-component-koin = "component.koin:1.0"
-convention-component-shared-test = "component.shared.test:1.0"
+convention-component-ui-test = "component.ui.test:1.0"
+convention-component-unit-test = "component.unit.test:1.0"
 convention-component-jvm-konsist = "component.jvm.konsist:1.0"
 convention-component-serialization = "component.serialization:1.0"
 

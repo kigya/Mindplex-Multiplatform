@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.splash.presentation.ui
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
@@ -13,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import dev.kigya.mindplex.core.presentation.component.MindplexLottie
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
@@ -41,7 +43,8 @@ fun SplashScreen(contract: SplashContract) {
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-private fun SplashScreenContent(
+@VisibleForTesting
+internal fun SplashScreenContent(
     state: SplashContract.State,
     event: (SplashContract.Event) -> Unit,
 ) {
@@ -55,7 +58,9 @@ private fun SplashScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         MindplexLottie(
-            modifier = Modifier.size(getLottieSplashSize()),
+            modifier = Modifier
+                .size(getLottieSplashSize())
+                .testTag("splash_lottie"),
             reader = { Res.readBytes("files/mindplex_logo.json") },
             speed = 1.5f,
             onFinish = { event(SplashContract.Event.OnAnimationFinished) },
@@ -69,6 +74,7 @@ private fun SplashScreenContent(
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 MindplexSpacer(size = MindplexSpacerSize.MEDIUM)
                 MindplexText(
+                    modifier = Modifier.testTag("splash_text"),
                     text = stringResource(Res.string.splash_title),
                     style = MaterialTheme.typography.displayLarge,
                     color = MaterialTheme.colorScheme.onSecondary,

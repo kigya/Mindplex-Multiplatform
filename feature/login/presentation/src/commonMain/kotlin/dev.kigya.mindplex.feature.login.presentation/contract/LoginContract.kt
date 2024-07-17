@@ -21,8 +21,5 @@ interface LoginContract :
     }
 
     @Immutable
-    sealed class Effect {
-        data object CreateNewCredentialRequest : Effect()
-        data object ShowSomethingWentWrongStub : Effect()
-    }
+    sealed class Effect
 }

@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
@@ -8,21 +9,37 @@ configure<KotlinMultiplatformExtension> {
             implementation(kotlin("test"))
             implementation(kotlin("test-common"))
             implementation(kotlin("test-annotations-common"))
+
             with(libs) {
                 implementation(coroutines.test)
                 implementation(turbine)
+                implementation(assertk)
             }
         }
-        androidTarget {
-            @OptIn(ExperimentalKotlinGradlePluginApi::class)
-            instrumentedTestVariant {
-                sourceSetTree.set(KotlinSourceSetTree.test)
-                dependencies {
-                    with(libs) {
-                        implementation(mockk)
-                    }
+    }
+
+    androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        instrumentedTestVariant {
+            sourceSetTree.set(KotlinSourceSetTree.test)
+
+            dependencies {
+                with(libs) {
+                    implementation(core.ktx)
+                    implementation(robolectric)
                 }
             }
         }
+    }
+}
+
+dependencies {
+    with(libs) {
+        implementation(mockk)
     }
 }

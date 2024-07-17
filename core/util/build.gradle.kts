@@ -8,12 +8,10 @@ plugins {
 
 kotlin {
     sourceSets {
-        commonMain {
+        commonMain.dependencies {
             with(libs) {
-                dependencies {
-                    implementation(coroutines.core)
-                    implementation(compose.navigation)
-                }
+                implementation(coroutines.core)
+                implementation(compose.navigation)
             }
         }
     }
