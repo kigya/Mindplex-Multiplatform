@@ -5,7 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
-import dev.kigya.mindplex.core.util.compose.StableFlow
+import dev.kigya.mindplex.core.presentation.common.util.StableFlow
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
 import dev.kigya.mindplex.feature.onboarding.presentation.model.OnboardingScreenUiModel
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreenContent
