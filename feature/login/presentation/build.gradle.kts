@@ -14,14 +14,15 @@ kotlin {
             }
             with(projects) {
                 with(core) {
-                    api(presentation.feature)
                     api(domain.interactor)
-                    api(core.util)
+                    implementation(core.util)
+                    implementation(presentation.feature)
                     implementation(presentation.theme)
                     implementation(presentation.component)
+                    implementation(presentation.common)
                 }
-                api(feature.login.domain)
-                implementation(navigation.navigator)
+                implementation(feature.login.domain)
+                implementation(navigation.api)
             }
         }
     }

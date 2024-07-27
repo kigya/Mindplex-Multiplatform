@@ -32,7 +32,7 @@ class OnboardingRepositoryTest {
         Dispatchers.setMain(testDispatcher)
         dataStore = PreferenceDataStoreFactory
             .createWithPath(
-                produceFile = { "datastore/test_preferences.preferences_pb".toPath() },
+                produceFile = { "datastore/preferences.preferences_pb".toPath() },
             )
         onboardingRepository = OnboardingRepository(dataStore, testDispatcher)
     }

@@ -14,8 +14,9 @@ kotlin {
             }
             with(projects) {
                 implementation(core.util)
+                implementation(core.presentation.common)
                 implementation(core.domain.interactor)
-                implementation(navigation.navigator)
+                implementation(navigation.api)
             }
         }
     }

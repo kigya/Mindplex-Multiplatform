@@ -9,6 +9,7 @@ dependencies {
             implementation(kotlin.multiplatform)
             implementation(android)
             implementation(detekt)
+            implementation(ksp)
         }
     }
 

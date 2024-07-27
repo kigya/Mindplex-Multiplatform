@@ -3,7 +3,7 @@ package dev.kigya.mindplex.feature.login.data.repository.repository
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.firestore.firestore
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
-import dev.kigya.mindplex.feature.login.domain.model.GoogleUserDomainModel
+import dev.kigya.mindplex.feature.login.domain.model.GoogleUserSignInDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Users as UsersCollection
@@ -11,7 +11,7 @@ import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Users as
 class SignInNetworkRepository(
     private val dispatcher: CoroutineDispatcher,
 ) : SignInNetworkRepositoryContract {
-    override suspend fun signIn(googleUser: GoogleUserDomainModel) =
+    override suspend fun signIn(googleUser: GoogleUserSignInDomainModel) =
         requireNotNull(googleUser.tokenId).let { tokenId ->
             withContext(dispatcher) {
                 Firebase.firestore

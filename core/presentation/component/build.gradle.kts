@@ -11,6 +11,7 @@ kotlin {
             with(projects) {
                 implementation(core.presentation.theme)
                 implementation(core.util)
+                implementation(core.presentation.common)
             }
             with(libs) {
                 implementation(compottie)

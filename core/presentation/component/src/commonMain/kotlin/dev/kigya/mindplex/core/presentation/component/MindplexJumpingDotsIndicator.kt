@@ -20,8 +20,8 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import dev.kigya.mindplex.core.presentation.common.extension.jumpingDotTransition
 import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
-import dev.kigya.mindplex.core.util.extension.compose.jumpingDotTransition
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

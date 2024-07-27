@@ -23,13 +23,18 @@ includeBuild("build-logic")
 
 // Core Modules
 include(
+
+    // Core Modules
     ":core:data:connectivity",
     ":core:data:firebase",
+    ":core:data:profile",
     ":core:domain:connectivity",
     ":core:domain:interactor",
+    ":core:domain:profile",
     ":core:presentation:feature",
     ":core:presentation:component",
     ":core:presentation:theme",
+    ":core:presentation:common",
     ":core:util",
 
     // Feature Modules
@@ -45,15 +50,17 @@ include(
     ":feature:login:presentation",
 
     // Navigation Modules
-    ":navigation:navigator",
+    ":navigation:internal",
+    ":navigation:api",
 
     // DI Modules
-    ":di:provider",
+    ":di:internal",
+    ":di:api",
 
     // Application Modules
     ":androidApp",
     ":shared",
 
     // Test Modules
-    ":konsistTest",
+    ":test:konsist",
 )

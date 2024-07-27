@@ -3,6 +3,7 @@ package dev.kigya.mindplex.feature.login.domain.contract
 import kotlinx.coroutines.flow.Flow
 
 interface SignInPreferencesRepositoryContract {
+    val userToken: Flow<String?>
     val isSignedIn: Flow<Boolean>
 
     suspend fun signIn(googleIdToken: String)

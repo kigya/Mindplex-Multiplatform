@@ -1,4 +1,6 @@
 import detekt.DetektConfigs
+import extension.detektPlugins
+import extension.libs
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension

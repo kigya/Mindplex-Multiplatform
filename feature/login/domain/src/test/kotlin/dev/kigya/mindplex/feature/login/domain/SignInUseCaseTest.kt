@@ -5,7 +5,7 @@ import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.model.GoogleSignInDomainResult
-import dev.kigya.mindplex.feature.login.domain.model.GoogleUserDomainModel
+import dev.kigya.mindplex.feature.login.domain.model.GoogleUserSignInDomainModel
 import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import io.mockk.Ordering
 import io.mockk.coEvery
@@ -42,7 +42,7 @@ class SignInUseCaseTest {
     @Test
     fun `invoke returns Success when user is signed in successfully`() = runTest {
         // Given
-        val googleUser = GoogleUserDomainModel(tokenId = "tokenId")
+        val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
         val decodedUserId = "userId"
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
         coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
@@ -91,7 +91,7 @@ class SignInUseCaseTest {
     @Test
     fun `invoke returns Failure OTHER when jwtHandler fails`() = runTest {
         // Given
-        val googleUser = GoogleUserDomainModel(tokenId = "tokenId")
+        val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.failure(Exception("JWT decoding failed"))
         coEvery { connectivityRepositoryContract.isConnected() } returns true
 
@@ -108,7 +108,7 @@ class SignInUseCaseTest {
     @Test
     fun `invoke calls signInNetworkRepositoryContract with correct user`() = runTest {
         // Given
-        val googleUser = GoogleUserDomainModel(tokenId = "tokenId")
+        val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
         val decodedUserId = "userId"
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
         coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
@@ -124,7 +124,7 @@ class SignInUseCaseTest {
     @Test
     fun `invoke calls signInPreferencesRepositoryContract with correct token`() = runTest {
         // Given
-        val googleUser = GoogleUserDomainModel(tokenId = "tokenId")
+        val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
         val decodedUserId = "userId"
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
         coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
@@ -141,7 +141,7 @@ class SignInUseCaseTest {
     fun `invoke does not call connectivityRepositoryContract isConnected if params are not null`() =
         runTest {
             // Given
-            val googleUser = GoogleUserDomainModel(tokenId = "tokenId")
+            val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
             val decodedUserId = "userId"
             coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
             coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
@@ -170,7 +170,7 @@ class SignInUseCaseTest {
     fun `invoke calls signInPreferencesRepositoryContract and signInNetworkRepositoryContract in correct order`() =
         runTest {
             // Given
-            val googleUser = GoogleUserDomainModel(tokenId = "tokenId")
+            val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
             val decodedUserId = "userId"
             coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
             coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit

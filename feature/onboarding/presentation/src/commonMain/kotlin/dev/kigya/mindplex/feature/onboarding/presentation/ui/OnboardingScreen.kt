@@ -36,6 +36,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.util.lerp
+import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
+import dev.kigya.mindplex.core.presentation.common.util.StableFlow
+import dev.kigya.mindplex.core.presentation.common.util.performClickHapticFeedback
 import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexHorizontalPager
 import dev.kigya.mindplex.core.presentation.component.MindplexJumpingDotsIndicator
@@ -44,9 +47,6 @@ import dev.kigya.mindplex.core.presentation.component.MindplexSpacerSize
 import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
-import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
-import dev.kigya.mindplex.core.util.compose.StableFlow
-import dev.kigya.mindplex.core.util.compose.performClickHapticFeedback
 import dev.kigya.mindplex.core.util.extension.ifNotEmpty
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
 import dev.kigya.mindplex.feature.onboarding.presentation.model.OnboardingScreenUiModel

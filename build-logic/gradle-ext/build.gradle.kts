@@ -4,10 +4,7 @@ plugins {
 
 dependencies {
     with(libs) {
-        with(gradle) {
-            api(compose)
-        }
-
+        api(gradle.compose)
         api(files(javaClass.superclass.protectionDomain.codeSource.location))
     }
 }

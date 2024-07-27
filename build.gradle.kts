@@ -19,6 +19,8 @@ plugins {
 
         alias(detekt) apply false
         alias(google.services) apply false
+
+        alias(serialization) apply false
     }
 }
 

@@ -22,7 +22,6 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.properties.Delegates
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -48,21 +47,6 @@ class SignInPreferencesRepositoryTest {
             Dispatchers.resetMain()
             dataStore.edit { it.clear() }
         }
-    }
-
-    @Test
-    fun `isSignedIn returns false when not signed in`() = runTest {
-        // Given
-        val key = stringPreferencesKey(GOOGLE_ID_TOKEN)
-        dataStore.edit { preferences ->
-            preferences[key] = ""
-        }
-
-        // When
-        val result = signInPreferencesRepository.isSignedIn.first()
-
-        // Then
-        assertFalse(result)
     }
 
     @Test

@@ -3,7 +3,6 @@ package dev.kigya.mindplex.feature.login.presentation.ui
 import androidx.annotation.CheckResult
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
-import dev.kigya.mindplex.feature.login.domain.model.GoogleSignInDomainResult
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
@@ -40,13 +39,14 @@ class LoginScreenViewModel(
     }
 
     private suspend fun LoginContract.Event.OnGoogleSignInResultReceived.handleGoogleSignInResult() {
-        when (val signInResult = signInUseCase.invoke(googleUser?.toDomain())) {
-            is GoogleSignInDomainResult.Success -> Unit
-
-            is GoogleSignInDomainResult.Failure -> updateState {
-                copy(stubErrorType = signInResult.toStubErrorType())
-            }
-        }
+        signInUseCase(googleUser?.toDomain()).fold(
+            ifLeft = { error ->
+                updateState {
+                    copy(stubErrorType = error.toStubErrorType())
+                }
+            },
+            ifRight = { },
+        )
     }
 
     private fun handleErrorStubClick() = updateState { copy(stubErrorType = null) }

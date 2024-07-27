@@ -28,9 +28,7 @@ abstract class BaseViewModel<STATE, EFFECT>(
     val effect: Flow<EFFECT> = _effect.receiveAsFlow()
 
     @AnyThread
-    protected fun updateState(transform: STATE.() -> STATE) {
-        _state.update { it.transform() }
-    }
+    protected fun updateState(transform: STATE.() -> STATE) = _state.update { it.transform() }
 
     protected fun getState(): STATE = _state.value
 

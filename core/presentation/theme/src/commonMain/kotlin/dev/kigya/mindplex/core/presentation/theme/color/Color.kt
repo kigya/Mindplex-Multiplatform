@@ -42,3 +42,7 @@ val Color.Companion.Crayola: Color
 val ColorScheme.quaternary: Color
     @Composable
     get() = if (isSystemInDarkTheme().not()) Color.Iris70 else Color.Iris90
+
+val ColorScheme.shimmerPrimary: Color
+    @Composable
+    get() = if (isSystemInDarkTheme().not()) Color.Iris30 else Color.Iris40

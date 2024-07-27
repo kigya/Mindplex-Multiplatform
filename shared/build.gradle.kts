@@ -2,7 +2,10 @@ plugins {
     with(libs.plugins.convention) {
         alias(config.shared.library)
         alias(bundle.shared.ui.screen.compose)
-        alias(component.koin)
+        with(component) {
+            alias(koin)
+            alias(coil)
+        }
     }
 }
 
@@ -14,13 +17,19 @@ kotlin {
                 implementation(kmpAuth.google)
             }
             with(projects) {
-                implementation(core.presentation.theme)
-                implementation(navigation.navigator)
-                implementation(feature.splash.presentation)
-                implementation(feature.onboarding.presentation)
-                implementation(feature.login.presentation)
-                implementation(feature.home.presentation)
-                implementation(di.provider)
+                with(feature) {
+                    implementation(splash.presentation)
+                    implementation(onboarding.presentation)
+                    implementation(login.presentation)
+                    implementation(home.presentation)
+                }
+                with(core) {
+                    implementation(presentation.theme)
+                    implementation(presentation.feature)
+                    implementation(presentation.common)
+                }
+                implementation(navigation.api)
+                implementation(di.api)
             }
         }
     }
