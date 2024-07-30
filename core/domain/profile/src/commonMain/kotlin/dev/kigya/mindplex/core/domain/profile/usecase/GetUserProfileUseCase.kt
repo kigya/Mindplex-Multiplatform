@@ -7,6 +7,7 @@ import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityReposito
 import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
+import dev.kigya.mindplex.core.domain.profile.contract.UserProfileDatabaseRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileNetworkRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.model.UserProfileDomainModel
 import dev.kigya.mindplex.core.util.dsl.requireNotNullOrRaise
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.map
 
 class GetUserProfileUseCase(
     private val userProfileNetworkRepositoryContract: UserProfileNetworkRepositoryContract,
+    private val userProfileDatabaseRepositoryContract: UserProfileDatabaseRepositoryContract,
     private val signInPreferencesRepositoryContract: SignInPreferencesRepositoryContract,
     private val connectivityRepositoryContract: ConnectivityRepositoryContract,
 ) : BaseSuspendUseCase<Either<MindplexDomainError, UserProfileDomainModel>, None>() {
@@ -26,10 +28,21 @@ class GetUserProfileUseCase(
             requireNotNullOrRaise(token) { raise(MindplexDomainError.OTHER) }
 
             userProfileNetworkRepositoryContract.getUserProfile(token).fold(
-                onSuccess = { it },
+                onSuccess = { networkProfile ->
+                    userProfileDatabaseRepositoryContract.saveUserProfile(
+                        token = token,
+                        profile = networkProfile,
+                    )
+                    networkProfile
+                },
                 onFailure = {
-                    ensure(connectivityRepositoryContract.isConnected().not()) { MindplexDomainError.OTHER }
-                    raise(MindplexDomainError.NETWORK)
+                    userProfileDatabaseRepositoryContract.getUserProfile(token).fold(
+                        onSuccess = { databaseProfile -> databaseProfile },
+                        onFailure = {
+                            ensure(connectivityRepositoryContract.isConnected().not()) { MindplexDomainError.OTHER }
+                            raise(MindplexDomainError.NETWORK)
+                        },
+                    )
                 },
             )
         }.first()

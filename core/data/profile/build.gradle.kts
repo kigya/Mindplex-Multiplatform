@@ -1,7 +1,10 @@
 plugins {
     with(libs.plugins.convention) {
         alias(config.shared.library)
-        alias(component.serialization)
+        with(component) {
+            alias(serialization)
+            alias(room)
+        }
     }
 }
 

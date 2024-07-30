@@ -21,6 +21,7 @@ plugins {
         alias(google.services) apply false
 
         alias(serialization) apply false
+        alias(room) apply false
     }
 }
 

@@ -3,11 +3,11 @@ package dev.kigya.mindplex.feature.login.presentation.ui
 import androidx.annotation.CheckResult
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
+import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
 import dev.kigya.mindplex.feature.login.presentation.mapper.toDomain
-import dev.kigya.mindplex.feature.login.presentation.mapper.toStubErrorType
 import dev.kigya.mindplex.navigation.navigator.navigator.AppNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 

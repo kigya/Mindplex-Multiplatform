@@ -1,8 +1,11 @@
 plugins {
     with(libs.plugins.convention) {
         alias(config.shared.library)
-        alias(component.koin)
-        alias(component.coil)
+        with(component) {
+            alias(koin)
+            alias(coil)
+            alias(room)
+        }
     }
 }
 

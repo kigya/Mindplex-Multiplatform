@@ -33,6 +33,20 @@ inline fun <T> T?.ifPresentOrElse(ifPresent: (T) -> Unit, ifAbsent: () -> Unit) 
     }
 }
 
+@OptIn(ExperimentalContracts::class)
+inline fun <T, R> T?.ifPresentOrElseReturn(ifPresent: (T) -> R, ifAbsent: () -> R): R {
+    contract {
+        callsInPlace(ifPresent, InvocationKind.AT_MOST_ONCE)
+        callsInPlace(ifAbsent, InvocationKind.AT_MOST_ONCE)
+    }
+
+    return if (this != null) {
+        ifPresent(this)
+    } else {
+        ifAbsent()
+    }
+}
+
 @Suppress("TooGenericExceptionCaught")
 inline fun <R> runSuspendCatching(block: () -> R): Result<R> = try {
     Result.success(block())

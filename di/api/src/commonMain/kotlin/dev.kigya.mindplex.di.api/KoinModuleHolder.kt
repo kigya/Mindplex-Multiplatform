@@ -2,6 +2,7 @@ package dev.kigya.mindplex.di.api
 
 import dev.kigya.mindplex.di.internal.module.dataSourceModule
 import dev.kigya.mindplex.di.internal.module.dataStoreModule
+import dev.kigya.mindplex.di.internal.module.databaseModule
 import dev.kigya.mindplex.di.internal.module.dispatcherModule
 import dev.kigya.mindplex.di.internal.module.libsModule
 import dev.kigya.mindplex.di.internal.module.navigationModule
@@ -22,5 +23,6 @@ object KoinModuleHolder {
         viewModelModule,
         dataSourceModule,
         libsModule,
+        databaseModule,
     )
 }
