@@ -1,5 +1,8 @@
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.gradle.BaseExtension
+import extension.configureIfExists
+import extension.getInt
+import extension.libs
 
 /**
  * Before using this plugin, ensure that necessary Android configurations have been applied.

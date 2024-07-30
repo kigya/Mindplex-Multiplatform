@@ -1,12 +1,14 @@
 package dev.kigya.mindplex.feature.login.presentation
 
+import arrow.core.raise.either
+import arrow.core.right
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNull
 import com.mmk.kmpauth.google.GoogleUser
 import dev.kigya.mindplex.core.domain.interactor.base.None
+import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
 import dev.kigya.mindplex.core.presentation.component.StubErrorType
-import dev.kigya.mindplex.feature.login.domain.model.GoogleSignInDomainResult
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
@@ -110,9 +112,7 @@ class LoginScreenViewModelTest {
         testScope.runTest {
             // Given
             val googleUser = GoogleUser(idToken = "idToken")
-            coEvery { signInUseCase(any()) } returns GoogleSignInDomainResult.Failure(
-                reason = GoogleSignInDomainResult.GoogleSignInDomainFailureReason.NETWORK,
-            )
+            coEvery { signInUseCase(any()) } returns either { raise(MindplexDomainError.NETWORK) }
 
             // When
             viewModel.handleEvent(LoginContract.Event.OnGoogleSignInResultReceived(googleUser))
@@ -127,9 +127,7 @@ class LoginScreenViewModelTest {
         testScope.runTest {
             // Given
             val googleUser = GoogleUser(idToken = "idToken")
-            coEvery { signInUseCase(any()) } returns GoogleSignInDomainResult.Failure(
-                reason = GoogleSignInDomainResult.GoogleSignInDomainFailureReason.OTHER,
-            )
+            coEvery { signInUseCase(any()) } returns either { raise(MindplexDomainError.OTHER) }
 
             // When
             viewModel.handleEvent(LoginContract.Event.OnGoogleSignInResultReceived(googleUser))
@@ -144,7 +142,7 @@ class LoginScreenViewModelTest {
         testScope.runTest {
             // Given
             val googleUser = GoogleUser(idToken = "idToken")
-            coEvery { signInUseCase.invoke(googleUser.toDomain()) } returns GoogleSignInDomainResult.Success
+            coEvery { signInUseCase(googleUser.toDomain()) } returns either { Unit.right() }
 
             // When
             viewModel.handleEvent(LoginContract.Event.OnGoogleSignInResultReceived(googleUser))
@@ -158,7 +156,7 @@ class LoginScreenViewModelTest {
     fun `handleEvent updates state correctly on OnErrorStubClicked`() = testScope.runTest {
         // Given
         val googleUser = GoogleUser(idToken = "idToken")
-        coEvery { signInUseCase(googleUser.toDomain()) } returns GoogleSignInDomainResult.Success
+        coEvery { signInUseCase(googleUser.toDomain()) } returns either { Unit.right() }
         viewModel.handleEvent(LoginContract.Event.OnGoogleSignInResultReceived(googleUser))
         advanceUntilIdle()
 
@@ -203,7 +201,7 @@ class LoginScreenViewModelTest {
         testScope.runTest {
             // Given
             val googleUser: GoogleUser? = null
-            coEvery { signInUseCase(googleUser.toDomain()) } returns GoogleSignInDomainResult.Success
+            coEvery { signInUseCase(googleUser.toDomain()) } returns either { Unit.right() }
 
             // When
             viewModel.handleEvent(LoginContract.Event.OnGoogleSignInResultReceived(googleUser))
@@ -218,9 +216,7 @@ class LoginScreenViewModelTest {
         testScope.runTest {
             // Given
             val googleUser = GoogleUser(idToken = "invalidToken")
-            coEvery { signInUseCase(any()) } returns GoogleSignInDomainResult.Failure(
-                reason = GoogleSignInDomainResult.GoogleSignInDomainFailureReason.OTHER,
-            )
+            coEvery { signInUseCase(any()) } returns either { raise(MindplexDomainError.OTHER) }
 
             // When
             viewModel.handleEvent(LoginContract.Event.OnGoogleSignInResultReceived(googleUser))
@@ -255,9 +251,7 @@ class LoginScreenViewModelTest {
         testScope.runTest {
             // Given
             val googleUser = GoogleUser(idToken = "idToken")
-            coEvery { signInUseCase(googleUser.toDomain()) } returns GoogleSignInDomainResult.Failure(
-                reason = GoogleSignInDomainResult.GoogleSignInDomainFailureReason.NETWORK,
-            )
+            coEvery { signInUseCase(googleUser.toDomain()) } returns either { raise(MindplexDomainError.NETWORK) }
 
             // When
             viewModel.handleEvent(LoginContract.Event.OnGoogleSignInResultReceived(googleUser))
@@ -272,9 +266,7 @@ class LoginScreenViewModelTest {
         testScope.runTest {
             // Given
             val googleUser = GoogleUser(idToken = "idToken")
-            coEvery { signInUseCase(googleUser.toDomain()) } returns GoogleSignInDomainResult.Failure(
-                reason = GoogleSignInDomainResult.GoogleSignInDomainFailureReason.OTHER,
-            )
+            coEvery { signInUseCase(googleUser.toDomain()) } returns either { raise(MindplexDomainError.OTHER) }
 
             // When
             viewModel.handleEvent(LoginContract.Event.OnGoogleSignInResultReceived(googleUser))

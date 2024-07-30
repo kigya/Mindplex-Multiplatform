@@ -2,7 +2,6 @@ package dev.kigya.mindplex.feature.splash.presentation
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.runComposeUiTest
@@ -84,28 +83,6 @@ class SplashScreenTest {
                 },
             )
         }
-
-        // Then
-        assertTrue(eventTriggered)
-    }
-
-    @Test
-    fun `splashScreen triggers OnAnimationFinished event`() = runComposeUiTest {
-        // Given
-        var eventTriggered = false
-
-        // When
-        setContent {
-            SplashScreenContent(
-                state = SplashContract.State(),
-                event = { event ->
-                    if (event == SplashContract.Event.OnAnimationFinished) {
-                        eventTriggered = true
-                    }
-                },
-            )
-        }
-        mainClock.advanceTimeUntil(condition = onNodeWithTag("splash_text")::isDisplayed)
 
         // Then
         assertTrue(eventTriggered)

@@ -1,3 +1,4 @@
+import extension.libs
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
@@ -7,6 +8,7 @@ plugins {
     id("com.android.library")
     id("internal.config.android")
     id("internal.config.shared.detekt")
+    id("internal.config.shared.arrow")
 }
 
 configure<KotlinMultiplatformExtension> {

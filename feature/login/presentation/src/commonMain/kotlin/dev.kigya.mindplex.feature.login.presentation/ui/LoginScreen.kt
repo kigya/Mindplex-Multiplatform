@@ -17,6 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.testTag
 import com.mmk.kmpauth.google.GoogleButtonUiContainer
+import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
+import dev.kigya.mindplex.core.presentation.common.util.fadeSlideScaleContentTransitionSpec
+import dev.kigya.mindplex.core.presentation.common.util.performClickHapticFeedback
 import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexErrorStub
 import dev.kigya.mindplex.core.presentation.component.MindplexIcon
@@ -25,9 +28,7 @@ import dev.kigya.mindplex.core.presentation.component.MindplexSpacerSize
 import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
-import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
-import dev.kigya.mindplex.core.util.compose.fadeSlideScaleContentTransitionSpec
-import dev.kigya.mindplex.core.util.compose.performClickHapticFeedback
+import dev.kigya.mindplex.core.util.dsl.ifPresentOrElse
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
 import mindplex_multiplatform.feature.login.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.login.presentation.generated.resources.ic_google
@@ -67,16 +68,17 @@ internal fun LoginScreenContent(state: LoginContract.State, event: (LoginContrac
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                stubErrorType?.let { type ->
-                    MindplexErrorStub(
-                        modifier = Modifier.testTag("error_stub"),
-                        stubErrorType = type,
-                    ) {
-                        event(LoginContract.Event.OnErrorStubClicked)
-                    }
-                } ?: run {
-                    LoginSection(event)
-                }
+                stubErrorType.ifPresentOrElse(
+                    ifPresent = { type ->
+                        MindplexErrorStub(
+                            modifier = Modifier.testTag("error_stub"),
+                            stubErrorType = type,
+                        ) { event(LoginContract.Event.OnErrorStubClicked) }
+                    },
+                    ifAbsent = {
+                        LoginSection(event)
+                    },
+                )
             }
         }
     }

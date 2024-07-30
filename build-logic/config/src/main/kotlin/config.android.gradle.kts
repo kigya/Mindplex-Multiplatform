@@ -1,5 +1,8 @@
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.gradle.BaseExtension
+import extension.configureIfExists
+import extension.getInt
+import extension.libs
 
 plugins {
     kotlin("android")

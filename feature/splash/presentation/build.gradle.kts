@@ -2,9 +2,7 @@ plugins {
     with(libs.plugins.convention) {
         alias(config.shared.library)
         alias(bundle.shared.ui.screen.compose)
-        with(component) {
-            alias(koin)
-        }
+        alias(component.koin)
     }
 }
 
@@ -16,9 +14,10 @@ kotlin {
             }
             with(projects) {
                 with(core) {
-                    api(presentation.feature)
                     api(domain.interactor)
-                    api(core.util)
+                    implementation(core.util)
+                    implementation(core.presentation.common)
+                    implementation(presentation.feature)
                     implementation(presentation.component)
                     implementation(presentation.theme)
                 }
@@ -26,7 +25,7 @@ kotlin {
                     implementation(onboarding.domain)
                     implementation(login.domain)
                 }
-                implementation(navigation.navigator)
+                implementation(navigation.api)
             }
         }
     }

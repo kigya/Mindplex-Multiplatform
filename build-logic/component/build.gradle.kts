@@ -13,6 +13,7 @@ dependencies {
             implementation(detekt)
             implementation(koin)
             implementation(compose.compiler)
+            implementation(room)
         }
     }
 

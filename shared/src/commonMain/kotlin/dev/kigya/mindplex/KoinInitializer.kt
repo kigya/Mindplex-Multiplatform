@@ -2,7 +2,7 @@ package dev.kigya.mindplex
 
 import com.mmk.kmpauth.google.GoogleAuthCredentials
 import com.mmk.kmpauth.google.GoogleAuthProvider
-import dev.kigya.mindplex.di.provider.api.KoinModuleHolder
+import dev.kigya.mindplex.di.api.KoinModuleHolder
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.module

@@ -1,4 +1,8 @@
 import detekt.DetektConfigs
+import extension.compose
+import extension.detektPlugins
+import extension.implementation
+import extension.libs
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 
 plugins {

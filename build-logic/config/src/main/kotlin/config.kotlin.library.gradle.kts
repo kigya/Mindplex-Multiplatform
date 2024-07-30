@@ -1,3 +1,6 @@
+import extension.getInt
+import extension.libs
+
 plugins {
     `java-library`
     kotlin("jvm")

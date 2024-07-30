@@ -15,11 +15,13 @@ class SignInPreferencesRepository(
     private val dataStore: DataStore<Preferences>,
     private val dispatcher: CoroutineDispatcher,
 ) : SignInPreferencesRepositoryContract {
+    override val userToken: Flow<String?>
+        get() = dataStore.data.map { preferences ->
+            preferences[stringPreferencesKey(GOOGLE_ID_TOKEN)]
+        }
 
     override val isSignedIn: Flow<Boolean>
-        get() = dataStore.data.map { preferences ->
-            preferences[stringPreferencesKey(GOOGLE_ID_TOKEN)].isNullOrEmpty().not()
-        }
+        get() = userToken.map { it != null }
 
     override suspend fun signIn(googleIdToken: String) {
         withContext(dispatcher) {

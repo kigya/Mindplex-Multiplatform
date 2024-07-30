@@ -4,6 +4,7 @@ plugins {
         alias(bundle.shared.ui.screen.compose)
         with(component) {
             alias(koin)
+            alias(coil)
         }
     }
 }
@@ -13,11 +14,13 @@ kotlin {
         commonMain.dependencies {
             with(projects) {
                 with(core) {
+                    api(domain.interactor)
                     implementation(util)
+                    implementation(presentation.feature)
                     implementation(presentation.theme)
                     implementation(presentation.component)
-                    api(presentation.feature)
-                    api(domain.interactor)
+                    implementation(presentation.common)
+                    implementation(domain.profile)
                 }
             }
         }

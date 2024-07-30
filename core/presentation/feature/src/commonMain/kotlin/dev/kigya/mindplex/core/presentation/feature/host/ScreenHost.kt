@@ -3,7 +3,7 @@ package dev.kigya.mindplex.core.presentation.feature.host
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
-import dev.kigya.mindplex.core.util.compose.koinViewModel
+import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
 import dev.kigya.mindplex.core.util.contract.enforceNonNullSmartCast
 import dev.kigya.mindplex.navigation.navigator.intent.NavigationIntent
 import kotlinx.coroutines.channels.Channel

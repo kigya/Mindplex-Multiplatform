@@ -12,6 +12,7 @@ kotlin {
             with(libs) {
                 implementation(coroutines.core)
                 implementation(compose.navigation)
+                api(compose.shimmer)
             }
         }
     }

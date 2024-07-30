@@ -1,14 +1,18 @@
 package dev.kigya.mindplex.feature.onboarding.data
 
 import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import dev.kigya.mindplex.feature.onboarding.domain.contract.OnboardingRepositoryContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -22,6 +26,7 @@ import kotlin.test.assertEquals
 class OnboardingRepositoryTest {
 
     private val testDispatcher = StandardTestDispatcher()
+    private val testScope = TestScope(testDispatcher)
 
     private var dataStore by Delegates.notNull<DataStore<Preferences>>()
     private var onboardingRepository by Delegates.notNull<OnboardingRepositoryContract>()
@@ -32,61 +37,71 @@ class OnboardingRepositoryTest {
         Dispatchers.setMain(testDispatcher)
         dataStore = PreferenceDataStoreFactory
             .createWithPath(
-                produceFile = { "datastore/test_preferences.preferences_pb".toPath() },
+                produceFile = { "datastore/preferences.preferences_pb".toPath() },
             )
         onboardingRepository = OnboardingRepository(dataStore, testDispatcher)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @After
-    fun tearDown() {
-        runBlocking {
+    fun tearDown() = runTest {
+        testScope.launch {
             Dispatchers.resetMain()
+            dataStore.edit(MutablePreferences::clear)
+            cancel()
         }
     }
 
     @Test
     fun isOnboardingCompletedReturnsFalseWhenNotSet() = runTest {
-        // When
-        val result = onboardingRepository.isOnboardingCompleted.first()
+        testScope.launch {
+            // When
+            val result = onboardingRepository.isOnboardingCompleted.first()
 
-        // Then
-        assertEquals(false, result)
+            // Then
+            assertEquals(false, result)
+        }
     }
 
     @Test
     fun setOnboardingCompletedSetsIsOnboardingCompletedToTrue() = runTest {
-        // When
-        onboardingRepository.setOnboardingCompleted()
-        val result = onboardingRepository.isOnboardingCompleted.first()
+        testScope.launch {
+            // When
+            onboardingRepository.setOnboardingCompleted()
+            val result = onboardingRepository.isOnboardingCompleted.first()
 
-        // Then
-        assertEquals(true, result)
+            // Then
+            assertEquals(true, result)
+        }
     }
 
     @Test
     fun isOnboardingCompletedPersistsAcrossInstances() = runTest {
-        // Given
-        onboardingRepository.setOnboardingCompleted()
-        val initialResult = onboardingRepository.isOnboardingCompleted.first()
-        assertEquals(true, initialResult)
+        testScope.launch {
+            // Given
+            onboardingRepository.setOnboardingCompleted()
+            val initialResult = onboardingRepository.isOnboardingCompleted.first()
+            assertEquals(true, initialResult)
 
-        // When
-        onboardingRepository = OnboardingRepository(dataStore, testDispatcher)
-        val newResult = onboardingRepository.isOnboardingCompleted.first()
+            // When
+            onboardingRepository = OnboardingRepository(dataStore, testDispatcher)
+            val newResult = onboardingRepository.isOnboardingCompleted.first()
 
-        // Then
-        assertEquals(true, newResult)
+            // Then
+            assertEquals(true, newResult)
+        }
     }
 
     @Test
     fun setOnboardingCompletedIsIdempotent() = runTest {
-        // When
-        onboardingRepository.setOnboardingCompleted()
-        onboardingRepository.setOnboardingCompleted()
-        val result = onboardingRepository.isOnboardingCompleted.first()
+        testScope.launch {
+            // When
+            onboardingRepository.setOnboardingCompleted()
+            onboardingRepository.setOnboardingCompleted()
+            val result = onboardingRepository.isOnboardingCompleted.first()
 
-        // Then
-        assertEquals(true, result)
+            // Then
+            assertEquals(true, result)
+        }
     }
 }

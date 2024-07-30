@@ -16,12 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
+import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
 import dev.kigya.mindplex.core.presentation.component.MindplexLottie
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacerSize
 import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.util.compose.LaunchedEffectSaveable
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import mindplex_multiplatform.feature.splash.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.splash.presentation.generated.resources.splash_title
