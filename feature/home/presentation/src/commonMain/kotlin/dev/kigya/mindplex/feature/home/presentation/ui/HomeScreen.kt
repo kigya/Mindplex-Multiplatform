@@ -32,7 +32,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import coil3.compose.AsyncImage
 import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
-import dev.kigya.mindplex.core.presentation.common.util.StableFlow
 import dev.kigya.mindplex.core.presentation.common.util.fadeSlideScaleContentTransitionSpec
 import dev.kigya.mindplex.core.presentation.component.MindplexErrorStub
 import dev.kigya.mindplex.core.presentation.component.MindplexHorizontalPager
@@ -60,23 +59,17 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomeScreen(contract: HomeContract) {
-    val (state, event, effect) = use(contract)
+    val (state, event, _) = use(contract)
 
     HomeScreenContent(
         state = state,
         event = event,
-        effect = effect,
     )
 }
 
 @Composable
 @VisibleForTesting
-@Suppress("UnusedParameter")
-internal fun HomeScreenContent(
-    state: HomeContract.State,
-    event: (HomeContract.Event) -> Unit,
-    effect: StableFlow<HomeContract.Effect>,
-) {
+internal fun HomeScreenContent(state: HomeContract.State, event: (HomeContract.Event) -> Unit) {
     LaunchedEffectSaveable(Unit) { event(HomeContract.Event.OnFirstLaunch) }
 
     Box(
@@ -279,4 +272,4 @@ private fun ColumnScope.HomePagerDotsIndicator(state: HomeContract.State, pagerS
     }
 }
 
-expect val PAGER_PLACEHOLDER_WIDTH_DIVIDER: Int
+internal expect val PAGER_PLACEHOLDER_WIDTH_DIVIDER: Int
