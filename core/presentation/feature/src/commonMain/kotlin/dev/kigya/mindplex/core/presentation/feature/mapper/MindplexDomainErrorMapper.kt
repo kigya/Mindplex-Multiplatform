@@ -8,3 +8,10 @@ fun MindplexDomainError.toStubErrorType() = if (this == MindplexDomainError.NETW
 } else {
     StubErrorType.UNSPECIFIED
 }
+
+fun List<MindplexDomainError>.toStubErrorType() =
+    if (this.any { it == MindplexDomainError.NETWORK }) {
+        StubErrorType.NETWORK
+    } else {
+        StubErrorType.UNSPECIFIED
+    }

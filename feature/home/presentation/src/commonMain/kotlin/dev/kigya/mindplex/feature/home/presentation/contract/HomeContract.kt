@@ -5,6 +5,8 @@ import dev.kigya.mindplex.core.presentation.component.StubErrorType
 import dev.kigya.mindplex.core.presentation.feature.CopyableComponentState
 import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContract
 import dev.kigya.mindplex.core.util.extension.empty
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 interface HomeContract :
     UnidirectionalViewModelContract<HomeContract.State, HomeContract.Event, HomeContract.Effect> {
@@ -13,8 +15,10 @@ interface HomeContract :
         val stubErrorType: StubErrorType? = null,
         val userName: String = String.empty,
         val avatarUrl: String? = null,
-        val isProfileNameLoading: Boolean = false,
-        val isProfilePictureLoading: Boolean = false,
+        val isProfileNameLoading: Boolean = true,
+        val isProfilePictureLoading: Boolean = true,
+        val areFactsLoading: Boolean = true,
+        val facts: ImmutableList<String> = persistentListOf(),
     ) : CopyableComponentState
 
     @Immutable

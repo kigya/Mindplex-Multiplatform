@@ -13,6 +13,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             with(projects) {
+                implementation(feature.home.domain)
                 with(core) {
                     api(domain.interactor)
                     implementation(util)

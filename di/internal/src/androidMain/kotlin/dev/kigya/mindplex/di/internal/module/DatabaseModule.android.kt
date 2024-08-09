@@ -3,6 +3,7 @@ package dev.kigya.mindplex.di.internal.module
 import android.content.Context
 import androidx.room.Room
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import dev.kigya.mindpex.feature.home.data.database.FactsDatabase
 import dev.kigya.mindplex.core.data.profile.database.UserProfileDatabase
 import org.koin.dsl.module
 
@@ -17,4 +18,15 @@ actual val databaseModule = module {
     }
 
     single { get<UserProfileDatabase>().dao }
+
+    single {
+        with(get<Context>()) {
+            Room.databaseBuilder<FactsDatabase>(
+                context = applicationContext,
+                name = getDatabasePath(FactsDatabase.DATABASE_NAME).absolutePath,
+            ).setDriver(BundledSQLiteDriver()).build()
+        }
+    }
+
+    single { get<FactsDatabase>().dao }
 }

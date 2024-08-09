@@ -10,5 +10,17 @@ data object FirestoreConfig {
                 const val NAME = "name"
             }
         }
+
+        object Secrets {
+            const val NAME = "secrets"
+
+            object Document {
+                const val FACTS_API = "facts_api"
+
+                object FactsAPI {
+                    const val API_KEY = "api_key"
+                }
+            }
+        }
     }
 }
