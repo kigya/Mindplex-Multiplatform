@@ -18,6 +18,7 @@ import dev.kigya.mindplex.core.presentation.theme.color.Gunmetal60
 import dev.kigya.mindplex.core.presentation.theme.color.Gunmetal80
 import dev.kigya.mindplex.core.presentation.theme.color.Iris10
 import dev.kigya.mindplex.core.presentation.theme.color.Iris100
+import dev.kigya.mindplex.core.presentation.theme.color.Iris20
 import dev.kigya.mindplex.core.presentation.theme.color.Iris30
 import dev.kigya.mindplex.core.presentation.theme.color.Iris40
 import dev.kigya.mindplex.core.presentation.theme.color.Iris50
@@ -29,6 +30,8 @@ import dev.kigya.mindplex.core.presentation.theme.spacing.Spacing
 import dev.kigya.mindplex.core.presentation.theme.text.LocalTextSize
 import dev.kigya.mindplex.core.presentation.theme.text.TextSize
 import dev.kigya.mindplex.core.presentation.theme.text.Typography
+import dev.kigya.mindplex.core.presentation.theme.window.LocalWindow
+import dev.kigya.mindplex.core.presentation.theme.window.Window
 
 internal val LightColorScheme = lightColorScheme(
     background = Color.Iris10,
@@ -53,6 +56,7 @@ internal val LightColorScheme = lightColorScheme(
     errorContainer = Color.Iris10,
     scrim = Color.AmericanGreen,
     surfaceContainer = Color.Gunmetal100,
+    outline = Color.Iris20,
 )
 
 internal val DarkColorScheme = darkColorScheme(
@@ -78,6 +82,7 @@ internal val DarkColorScheme = darkColorScheme(
     errorContainer = Color.Iris80,
     scrim = Color.AmericanGreen,
     surfaceContainer = Color.Gunmetal100,
+    outline = Color.Iris100,
 )
 
 @Composable
@@ -89,6 +94,7 @@ fun MindplexTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Compos
     CompositionLocalProvider(
         LocalSpacing provides Spacing(),
         LocalTextSize provides TextSize,
+        LocalWindow provides Window,
     ) {
         MaterialTheme(
             colorScheme = colorScheme,

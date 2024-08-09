@@ -1,7 +1,6 @@
 package dev.kigya.mindplex.core.presentation.component
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -23,7 +22,6 @@ import androidx.compose.ui.unit.Dp
 import dev.kigya.mindplex.core.presentation.common.extension.jumpingDotTransition
 import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MindplexJumpingDotsIndicator(
     pagerState: PagerState,

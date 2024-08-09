@@ -4,7 +4,7 @@ import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.firestore.Source
 import dev.gitlive.firebase.firestore.firestore
 import dev.kigya.mindplex.core.data.profile.mapper.toDomain
-import dev.kigya.mindplex.core.data.profile.model.UserRemoteProfile
+import dev.kigya.mindplex.core.data.profile.model.UserRemoteProfileDto
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileNetworkRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.model.UserProfileDomainModel
 import dev.kigya.mindplex.core.util.dsl.runSuspendCatching
@@ -24,7 +24,7 @@ class UserProfileNetworkRepository(
                     .document(token)
                     .get(Source.SERVER)
 
-                documentSnapshot.data<UserRemoteProfile>().toDomain()
+                documentSnapshot.data<UserRemoteProfileDto>().toDomain()
             }.onFailure { e ->
                 println("Exception occurred: ${e.message}")
                 e.printStackTrace()

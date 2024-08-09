@@ -14,7 +14,6 @@ plugins {
         alias(compose.compiler) apply false
 
         alias(ksp) apply false
-        alias(ktorfit) apply false
         alias(compose) apply false
 
         alias(detekt) apply false

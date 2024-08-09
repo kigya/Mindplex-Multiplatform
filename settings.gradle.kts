@@ -28,6 +28,7 @@ include(
     ":core:data:connectivity",
     ":core:data:firebase",
     ":core:data:profile",
+    ":core:data:credentials",
     ":core:domain:connectivity",
     ":core:domain:interactor",
     ":core:domain:profile",
