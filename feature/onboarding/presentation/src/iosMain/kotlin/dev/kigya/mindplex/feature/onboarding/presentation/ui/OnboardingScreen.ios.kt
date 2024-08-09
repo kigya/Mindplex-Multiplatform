@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import dev.kigya.mindplex.core.presentation.common.util.getScreenWidth
 import dev.kigya.mindplex.core.presentation.component.MindplexLottie
+import dev.kigya.mindplex.core.presentation.theme.window.LocalWindow
 import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.Res
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -19,7 +19,7 @@ actual fun OnboardingLottie(
     lottiePath: String?,
 ) {
     lottiePath?.let { path ->
-        val relativeLottieWidth = getScreenWidth() / LOTTIE_WIDTH_PROPORTIONAL_DIVIDER
+        val relativeLottieWidth = LocalWindow.current.width / LOTTIE_WIDTH_PROPORTIONAL_DIVIDER
         val relativeLottieHeight = relativeLottieWidth * LOTTIE_ASPECT_RATIO
         with(LocalDensity.current) {
             MindplexLottie(

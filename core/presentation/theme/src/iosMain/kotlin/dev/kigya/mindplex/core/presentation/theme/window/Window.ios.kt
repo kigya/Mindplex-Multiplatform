@@ -1,4 +1,4 @@
-package dev.kigya.mindplex.core.presentation.common.util
+package dev.kigya.mindplex.core.presentation.theme.window
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi

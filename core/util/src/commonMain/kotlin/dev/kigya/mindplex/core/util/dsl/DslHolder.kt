@@ -57,3 +57,17 @@ inline fun <R> runSuspendCatching(block: () -> R): Result<R> = try {
 } catch (e: Throwable) {
     Result.failure(e)
 }
+
+@OptIn(ExperimentalContracts::class)
+inline fun <T> T.takeOrExecute(predicate: (T) -> Boolean, action: () -> T): T {
+    contract {
+        callsInPlace(predicate, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
+    }
+
+    return if (predicate(this)) {
+        this
+    } else {
+        action()
+    }
+}

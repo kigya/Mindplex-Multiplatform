@@ -5,6 +5,8 @@ plugins {
             alias(koin)
             alias(coil)
             alias(room)
+            alias(ktor)
+            alias(serialization)
         }
     }
 }
@@ -27,11 +29,14 @@ kotlin {
                     implementation(login.data)
                     implementation(login.domain)
                     implementation(login.presentation)
+                    implementation(home.data)
+                    implementation(home.domain)
                     implementation(home.presentation)
                 }
                 with(core) {
                     implementation(data.connectivity)
                     implementation(data.profile)
+                    implementation(data.credentials)
                     implementation(domain.connectivity)
                     implementation(domain.profile)
                     implementation(presentation.feature)

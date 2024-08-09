@@ -11,7 +11,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -198,7 +197,6 @@ private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
 }
 
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
 private fun ColumnScope.OnboardingPagerDotsIndicator(
     state: OnboardingContract.State,
     pagerState: PagerState,

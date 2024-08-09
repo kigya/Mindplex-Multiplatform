@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
@@ -66,6 +67,33 @@ fun MindplexPlaceholder(
                 .size(
                     width = measuredText.width by density,
                     height = measuredText.height by density,
+                )
+                .clip(RoundedCornerShape(cornerRadius))
+                .shimmer()
+                .background(color),
+        ) { }
+    } else {
+        content()
+    }
+}
+
+@Composable
+fun MindplexPlaceholder(
+    modifier: Modifier = Modifier,
+    size: Size = Size.Unspecified,
+    isLoading: Boolean = false,
+    color: Color = MaterialTheme.colorScheme.shimmerPrimary,
+    cornerRadius: Dp = MaterialTheme.spacing.large,
+    content: @Composable () -> Unit,
+) {
+    val density = LocalDensity.current
+
+    if (isLoading) {
+        Row(
+            modifier = modifier
+                .size(
+                    width = size.width by density,
+                    height = size.height by density,
                 )
                 .clip(RoundedCornerShape(cornerRadius))
                 .shimmer()

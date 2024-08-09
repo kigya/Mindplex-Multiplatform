@@ -32,7 +32,7 @@ val dataSourceModule = module {
 
     single {
         JwtHandler(
-            dispatcher = get(named(Dispatchers.IO::class.simpleName.orEmpty())),
+            dispatcher = get(named(Dispatchers.Default::class.simpleName.orEmpty())),
         )
     } bind JwtHandlerContract::class
 }
