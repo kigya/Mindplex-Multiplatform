@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,10 +18,13 @@ import androidx.compose.ui.unit.Dp
 import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
 import dev.kigya.mindplex.core.presentation.component.MindplexLottie
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
-import dev.kigya.mindplex.core.presentation.component.MindplexSpacerSize
 import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
+import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
+import dev.kigya.mindplex.feature.splash.presentation.ui.theme.splashBackground
+import dev.kigya.mindplex.feature.splash.presentation.ui.theme.splashHeader
+import dev.kigya.mindplex.feature.splash.presentation.ui.theme.splashTitle
 import mindplex_multiplatform.feature.splash.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.splash.presentation.generated.resources.splash_title
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -53,7 +55,7 @@ internal fun SplashScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.onSecondaryContainer),
+            .background(MindplexTheme.colorScheme.splashBackground),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -72,12 +74,12 @@ internal fun SplashScreenContent(
             ),
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                MindplexSpacer(size = MindplexSpacerSize.MEDIUM)
+                MindplexSpacer(size = MindplexTheme.dimension.dp16)
                 MindplexText(
                     modifier = Modifier.testTag("splash_text"),
                     text = stringResource(Res.string.splash_title),
-                    style = MaterialTheme.typography.displayLarge,
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    style = MindplexTheme.typography.splashHeader,
+                    color = MindplexTheme.colorScheme.splashTitle,
                 )
             }
         }

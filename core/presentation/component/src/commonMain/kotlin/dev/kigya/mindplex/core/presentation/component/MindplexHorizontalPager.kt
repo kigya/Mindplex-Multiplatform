@@ -5,17 +5,16 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
+import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 
 @Composable
 fun MindplexHorizontalPager(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    pageSpacing: Dp = MaterialTheme.spacing.none,
+    pageSpacing: Dp = MindplexTheme.dimension.dp0,
     pageContent: @Composable PagerScope.(Int) -> Unit,
 ) {
     HorizontalPager(

@@ -12,7 +12,10 @@ class AppNavigator : AppNavigatorContract {
             onBufferOverflow = BufferOverflow.DROP_LATEST,
         )
 
-    override suspend fun navigateBack(route: String?, inclusive: Boolean) {
+    override suspend fun navigateBack(
+        route: String?,
+        inclusive: Boolean,
+    ) {
         navigationChannel.send(
             NavigationIntent.NavigateBack(
                 route = route,
@@ -21,7 +24,10 @@ class AppNavigator : AppNavigatorContract {
         )
     }
 
-    override fun tryNavigateBack(route: String?, inclusive: Boolean) {
+    override fun tryNavigateBack(
+        route: String?,
+        inclusive: Boolean,
+    ) {
         navigationChannel.trySend(
             NavigationIntent.NavigateBack(
                 route = route,

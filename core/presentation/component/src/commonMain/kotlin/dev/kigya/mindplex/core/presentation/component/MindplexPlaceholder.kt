@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,15 +16,15 @@ import com.valentinilk.shimmer.shimmer
 import dev.kigya.mindplex.core.presentation.common.extension.by
 import dev.kigya.mindplex.core.presentation.common.util.DimensionSubcomposeLayout
 import dev.kigya.mindplex.core.presentation.common.util.measureText
-import dev.kigya.mindplex.core.presentation.theme.color.shimmerPrimary
-import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
+import dev.kigya.mindplex.core.presentation.component.theme.componentPlaceholderShimmer
+import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 
 @Composable
 fun MindplexPlaceholder(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
-    color: Color = MaterialTheme.colorScheme.shimmerPrimary,
-    cornerRadius: Dp = MaterialTheme.spacing.large,
+    color: Color = MindplexTheme.colorScheme.componentPlaceholderShimmer,
+    cornerRadius: Dp = MindplexTheme.dimension.dp24,
     content: @Composable () -> Unit,
 ) {
     val density = LocalDensity.current
@@ -54,8 +53,8 @@ fun MindplexPlaceholder(
     textToMeasure: String,
     textStyle: TextStyle,
     isLoading: Boolean = false,
-    color: Color = MaterialTheme.colorScheme.shimmerPrimary,
-    cornerRadius: Dp = MaterialTheme.spacing.large,
+    color: Color = MindplexTheme.colorScheme.componentPlaceholderShimmer,
+    cornerRadius: Dp = MindplexTheme.dimension.dp24,
     content: @Composable () -> Unit,
 ) {
     val density = LocalDensity.current
@@ -82,8 +81,8 @@ fun MindplexPlaceholder(
     modifier: Modifier = Modifier,
     size: Size = Size.Unspecified,
     isLoading: Boolean = false,
-    color: Color = MaterialTheme.colorScheme.shimmerPrimary,
-    cornerRadius: Dp = MaterialTheme.spacing.large,
+    color: Color = MindplexTheme.colorScheme.componentPlaceholderShimmer,
+    cornerRadius: Dp = MindplexTheme.dimension.dp24,
     content: @Composable () -> Unit,
 ) {
     val density = LocalDensity.current

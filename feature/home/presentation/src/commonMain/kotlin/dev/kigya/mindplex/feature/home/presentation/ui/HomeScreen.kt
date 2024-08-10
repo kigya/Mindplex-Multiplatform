@@ -20,8 +20,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,14 +37,20 @@ import dev.kigya.mindplex.core.presentation.component.MindplexIcon
 import dev.kigya.mindplex.core.presentation.component.MindplexJumpingDotsIndicator
 import dev.kigya.mindplex.core.presentation.component.MindplexPlaceholder
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
-import dev.kigya.mindplex.core.presentation.component.MindplexSpacerSize
 import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.component.MindplexTypewriterText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
+import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.presentation.theme.window.LocalWindow
 import dev.kigya.mindplex.core.util.dsl.ifPresentOrElse
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeFactsPagerBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeFactsPagerDescription
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeFactsPagerDotsIndicator
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeFactsPagerTitle
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeProfileNameText
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeWelcomeBackText
 import kotlinx.collections.immutable.ImmutableList
 import mindplex_multiplatform.feature.home.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_facts_title
@@ -56,6 +60,8 @@ import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_p
 import mindplex_multiplatform.feature.home.presentation.generated.resources.im_facts
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+
+private const val HOME_FACTS_PAGER_WEIGHT = 0.5f
 
 @Composable
 fun HomeScreen(contract: HomeContract) {
@@ -69,17 +75,20 @@ fun HomeScreen(contract: HomeContract) {
 
 @Composable
 @VisibleForTesting
-internal fun HomeScreenContent(state: HomeContract.State, event: (HomeContract.Event) -> Unit) {
+internal fun HomeScreenContent(
+    state: HomeContract.State,
+    event: (HomeContract.Event) -> Unit,
+) {
     LaunchedEffectSaveable(Unit) { event(HomeContract.Event.OnFirstLaunch) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(MindplexTheme.colorScheme.homeBackground)
             .statusBarsPadding()
             .padding(
-                horizontal = MaterialTheme.spacing.large,
-                vertical = MaterialTheme.spacing.medium,
+                horizontal = MindplexTheme.dimension.dp24,
+                vertical = MindplexTheme.dimension.dp16,
             ),
     ) {
         AnimatedContent(
@@ -128,14 +137,14 @@ private fun ColumnScope.HomeSection(
         isProfilePictureLoading = state.isProfilePictureLoading,
     )
 
-    MindplexSpacer(size = MindplexSpacerSize.EXTRA_LARGE)
+    MindplexSpacer(size = MindplexTheme.dimension.dp36)
 
     state.facts.FactsPager(
         state = state,
         pagerState = pagerState,
     )
 
-    MindplexSpacer(size = MindplexSpacerSize.SMALL)
+    MindplexSpacer(size = MindplexTheme.dimension.dp12)
 
     HomePagerDotsIndicator(
         state = state,
@@ -164,15 +173,15 @@ private fun HomeScreenHeader(
             MindplexPlaceholder(isLoading = isProfileNameLoading) {
                 MindplexText(
                     text = stringResource(Res.string.home_welcome_back),
-                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                    style = MaterialTheme.typography.bodyMedium,
+                    color = MindplexTheme.colorScheme.homeWelcomeBackText,
+                    style = MindplexTheme.typography.homeWelcomeBackText,
                 )
             }
-            MindplexSpacer(size = MindplexSpacerSize.EXTRA_SMALL)
+            MindplexSpacer(size = MindplexTheme.dimension.dp8)
             MindplexPlaceholder(
                 isLoading = isProfileNameLoading,
                 textToMeasure = stringResource(Res.string.home_user_name_preview),
-                textStyle = MaterialTheme.typography.headlineMedium,
+                textStyle = MindplexTheme.typography.homeProfileNameText,
             ) {
                 MindplexTypewriterText(text = name)
             }
@@ -180,7 +189,7 @@ private fun HomeScreenHeader(
         MindplexPlaceholder(isLoading = isProfilePictureLoading) {
             AsyncImage(
                 modifier = Modifier
-                    .size(MaterialTheme.spacing.extraExtraLarge)
+                    .size(MindplexTheme.dimension.dp48)
                     .clip(CircleShape),
                 model = avatarUrl,
                 contentDescription = null,
@@ -193,7 +202,10 @@ private fun HomeScreenHeader(
 }
 
 @Composable
-private fun ImmutableList<String>.FactsPager(state: HomeContract.State, pagerState: PagerState) {
+private fun ImmutableList<String>.FactsPager(
+    state: HomeContract.State,
+    pagerState: PagerState,
+) {
     val screenWidth = LocalWindow.current.width.toFloat()
 
     MindplexPlaceholder(
@@ -209,7 +221,7 @@ private fun ImmutableList<String>.FactsPager(state: HomeContract.State, pagerSta
                 .fillMaxWidth()
                 .testTag("home_pager"),
             pagerState = pagerState,
-            pageSpacing = MaterialTheme.spacing.medium,
+            pageSpacing = MindplexTheme.dimension.dp16,
         ) { page ->
             val currentFact = remember(page) { get(page) }
 
@@ -217,34 +229,33 @@ private fun ImmutableList<String>.FactsPager(state: HomeContract.State, pagerSta
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(IntrinsicSize.Min)
-                    .clip(RoundedCornerShape(MaterialTheme.spacing.medium))
-                    .background(MaterialTheme.colorScheme.outline)
-                    .padding(all = MaterialTheme.spacing.medium)
+                    .clip(MindplexTheme.shape.rounding16)
+                    .background(MindplexTheme.colorScheme.homeFactsPagerBackground)
+                    .padding(MindplexTheme.dimension.dp16)
                     .testTag("facts_page_$page"),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 MindplexIcon(drawableResource = Res.drawable.im_facts)
 
-                MindplexSpacer(size = MindplexSpacerSize.MEDIUM)
+                MindplexSpacer(size = MindplexTheme.dimension.dp16)
 
                 Column(
                     modifier = Modifier.fillMaxHeight(),
                     verticalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    @Suppress("MagicNumber")
                     MindplexText(
-                        modifier = Modifier.weight(0.5f),
+                        modifier = Modifier.weight(HOME_FACTS_PAGER_WEIGHT),
                         text = stringResource(Res.string.home_facts_title),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.inverseOnSurface,
+                        style = MindplexTheme.typography.homeFactsPagerTitle,
+                        color = MindplexTheme.colorScheme.homeFactsPagerTitle,
                     )
                     MindplexText(
                         modifier = Modifier.weight(1f),
                         text = currentFact,
                         textAlign = TextAlign.Start,
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        style = MindplexTheme.typography.homeFactsPagerDescription,
+                        color = MindplexTheme.colorScheme.homeFactsPagerDescription,
                     )
                 }
             }
@@ -253,8 +264,11 @@ private fun ImmutableList<String>.FactsPager(state: HomeContract.State, pagerSta
 }
 
 @Composable
-private fun ColumnScope.HomePagerDotsIndicator(state: HomeContract.State, pagerState: PagerState) {
-    MindplexSpacer(size = MindplexSpacerSize.LARGE)
+private fun ColumnScope.HomePagerDotsIndicator(
+    state: HomeContract.State,
+    pagerState: PagerState,
+) {
+    MindplexSpacer(size = MindplexTheme.dimension.dp24)
     AnimatedVisibility(visible = state.areFactsLoading.not()) {
         Row(
             modifier = Modifier
@@ -264,10 +278,10 @@ private fun ColumnScope.HomePagerDotsIndicator(state: HomeContract.State, pagerS
         ) {
             MindplexJumpingDotsIndicator(
                 pagerState = pagerState,
-                selectedColor = MaterialTheme.colorScheme.primaryContainer,
-                unselectedColor = MaterialTheme.colorScheme.primaryContainer,
+                selectedColor = MindplexTheme.colorScheme.homeFactsPagerDotsIndicator,
+                unselectedColor = MindplexTheme.colorScheme.homeFactsPagerDotsIndicator,
             )
-            MindplexSpacer(size = MindplexSpacerSize.GIANT)
+            MindplexSpacer(size = MindplexTheme.dimension.dp64)
         }
     }
 }

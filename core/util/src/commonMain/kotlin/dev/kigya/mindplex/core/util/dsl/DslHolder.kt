@@ -7,7 +7,10 @@ import kotlin.contracts.contract
 import kotlin.coroutines.cancellation.CancellationException
 
 @OptIn(ExperimentalContracts::class)
-inline fun <T : Any> requireNotNullOrRaise(value: T?, lazyExecute: () -> Nothing): T {
+inline fun <T : Any> requireNotNullOrRaise(
+    value: T?,
+    lazyExecute: () -> Nothing,
+): T {
     contract {
         returns() implies (value != null)
     }
@@ -20,7 +23,10 @@ inline fun <T : Any> requireNotNullOrRaise(value: T?, lazyExecute: () -> Nothing
 }
 
 @OptIn(ExperimentalContracts::class)
-inline fun <T> T?.ifPresentOrElse(ifPresent: (T) -> Unit, ifAbsent: () -> Unit) {
+inline fun <T> T?.ifPresentOrElse(
+    ifPresent: (T) -> Unit,
+    ifAbsent: () -> Unit,
+) {
     contract {
         callsInPlace(ifPresent, InvocationKind.AT_MOST_ONCE)
         callsInPlace(ifAbsent, InvocationKind.AT_MOST_ONCE)
@@ -34,7 +40,10 @@ inline fun <T> T?.ifPresentOrElse(ifPresent: (T) -> Unit, ifAbsent: () -> Unit) 
 }
 
 @OptIn(ExperimentalContracts::class)
-inline fun <T, R> T?.ifPresentOrElseReturn(ifPresent: (T) -> R, ifAbsent: () -> R): R {
+inline fun <T, R> T?.ifPresentOrElseReturn(
+    ifPresent: (T) -> R,
+    ifAbsent: () -> R,
+): R {
     contract {
         callsInPlace(ifPresent, InvocationKind.AT_MOST_ONCE)
         callsInPlace(ifAbsent, InvocationKind.AT_MOST_ONCE)
@@ -47,19 +56,21 @@ inline fun <T, R> T?.ifPresentOrElseReturn(ifPresent: (T) -> R, ifAbsent: () -> 
     }
 }
 
-@Suppress("TooGenericExceptionCaught")
 inline fun <R> runSuspendCatching(block: () -> R): Result<R> = try {
     Result.success(block())
 } catch (t: TimeoutCancellationException) {
     Result.failure(t)
 } catch (c: CancellationException) {
     throw c
-} catch (e: Throwable) {
-    Result.failure(e)
+} catch (ignore: Throwable) {
+    Result.failure(ignore)
 }
 
 @OptIn(ExperimentalContracts::class)
-inline fun <T> T.takeOrExecute(predicate: (T) -> Boolean, action: () -> T): T {
+inline fun <T> T.takeOrExecute(
+    predicate: (T) -> Boolean,
+    action: () -> T,
+): T {
     contract {
         callsInPlace(predicate, InvocationKind.EXACTLY_ONCE)
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)

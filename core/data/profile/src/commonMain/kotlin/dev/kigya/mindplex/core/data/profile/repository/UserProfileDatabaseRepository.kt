@@ -22,7 +22,10 @@ class UserProfileDatabaseRepository(
             } ?: throw UserProfileNotFoundException("User not found")
         }
 
-    override suspend fun saveUserProfile(token: String, profile: UserProfileDomainModel) {
+    override suspend fun saveUserProfile(
+        token: String,
+        profile: UserProfileDomainModel,
+    ) {
         runSuspendCatching {
             withContext(dispatcher) {
                 userProfileDao.upsert(profile.toDatabaseEntry(token))
