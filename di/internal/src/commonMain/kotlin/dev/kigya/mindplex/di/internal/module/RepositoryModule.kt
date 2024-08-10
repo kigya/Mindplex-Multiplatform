@@ -1,13 +1,13 @@
 package dev.kigya.mindplex.di.internal.module
 
-import dev.kigya.mindpex.feature.home.data.repository.FactsDatabaseRepository
-import dev.kigya.mindpex.feature.home.data.repository.FactsNetworkRepository
 import dev.kigya.mindplex.core.data.connectivity.ConnectivityRepository
 import dev.kigya.mindplex.core.data.profile.repository.UserProfileDatabaseRepository
 import dev.kigya.mindplex.core.data.profile.repository.UserProfileNetworkRepository
 import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileDatabaseRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileNetworkRepositoryContract
+import dev.kigya.mindplex.feature.home.data.repository.FactsDatabaseRepository
+import dev.kigya.mindplex.feature.home.data.repository.FactsNetworkRepository
 import dev.kigya.mindplex.feature.home.domain.contract.FactsDatabaseRepositoryContract
 import dev.kigya.mindplex.feature.home.domain.contract.FactsNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.data.repository.interceptor.ProfileImageInterceptor

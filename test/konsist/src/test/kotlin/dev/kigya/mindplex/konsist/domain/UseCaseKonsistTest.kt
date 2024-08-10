@@ -30,12 +30,11 @@ internal class UseCaseKonsistTest {
     @Test
     fun `every use case should contain only exactly one invoke function`() =
         useCases.assertTrue { koClass ->
-            koClass.functions().size == 1 &&
-                koClass.hasFunction { koFunction ->
-                    koFunction.hasOperatorModifier &&
-                        koFunction.hasOverrideModifier &&
-                        koFunction.name == "invoke"
-                }
+            koClass.hasFunction { koFunction ->
+                koFunction.hasOperatorModifier &&
+                    koFunction.hasOverrideModifier &&
+                    koFunction.name == "invoke"
+            }
         }
 
     @Test

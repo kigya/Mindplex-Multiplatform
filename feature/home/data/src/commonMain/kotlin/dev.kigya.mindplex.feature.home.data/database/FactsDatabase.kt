@@ -1,12 +1,12 @@
-package dev.kigya.mindpex.feature.home.data.database
+package dev.kigya.mindplex.feature.home.data.database
 
 import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
-import dev.kigya.mindpex.feature.home.data.dao.FactsDao
-import dev.kigya.mindpex.feature.home.data.model.FactLocal
+import dev.kigya.mindplex.feature.home.data.dao.FactsDao
+import dev.kigya.mindplex.feature.home.data.model.FactLocal
 
 expect object FactsDatabaseConstructor : RoomDatabaseConstructor<FactsDatabase>
 

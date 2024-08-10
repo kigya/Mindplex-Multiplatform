@@ -1,9 +1,9 @@
-package dev.kigya.mindpex.feature.home.data.dao
+package dev.kigya.mindplex.feature.home.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
-import dev.kigya.mindpex.feature.home.data.model.FactLocal
+import dev.kigya.mindplex.feature.home.data.model.FactLocal
 
 @Dao
 interface FactsDao {

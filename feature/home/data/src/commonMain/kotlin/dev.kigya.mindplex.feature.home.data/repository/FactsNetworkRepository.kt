@@ -1,12 +1,12 @@
-package dev.kigya.mindpex.feature.home.data.repository
+package dev.kigya.mindplex.feature.home.data.repository
 
-import dev.kigya.mindpex.feature.home.data.exception.FailedToFetchFactException
-import dev.kigya.mindpex.feature.home.data.exception.FailedToProvideApiKeyException
-import dev.kigya.mindpex.feature.home.data.mapper.toDomain
-import dev.kigya.mindpex.feature.home.data.model.FactRemoteDto
 import dev.kigya.mindplex.core.data.credentials.api.SecretsProviderContract
 import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Secrets.Document
 import dev.kigya.mindplex.core.util.dsl.runSuspendCatching
+import dev.kigya.mindplex.feature.home.data.exception.FailedToFetchFactException
+import dev.kigya.mindplex.feature.home.data.exception.FailedToProvideApiKeyException
+import dev.kigya.mindplex.feature.home.data.mapper.toDomain
+import dev.kigya.mindplex.feature.home.data.model.FactRemoteDto
 import dev.kigya.mindplex.feature.home.domain.contract.FactsNetworkRepositoryContract
 import dev.kigya.mindplex.feature.home.domain.model.FactDomainModel
 import io.ktor.client.HttpClient
