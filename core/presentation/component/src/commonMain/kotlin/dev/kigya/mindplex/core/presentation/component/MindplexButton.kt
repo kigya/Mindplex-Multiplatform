@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,24 +24,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
-import dev.kigya.mindplex.core.presentation.theme.text.textSize
+import dev.kigya.mindplex.core.presentation.component.theme.componentButtonContainer
+import dev.kigya.mindplex.core.presentation.component.theme.componentButtonContent
+import dev.kigya.mindplex.core.presentation.component.theme.componentButtonDisabledContainer
+import dev.kigya.mindplex.core.presentation.component.theme.componentButtonDisabledContent
+import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.extension.empty
 
 @Composable
-@Suppress("CognitiveComplexMethod")
 fun MindplexButton(
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
     isLoading: Boolean = false,
-    fontSize: TextUnit = MaterialTheme.textSize.medium,
+    fontSize: TextUnit = MindplexTheme.textSize.sp16,
     labelText: String = String.empty,
-    contentPadding: PaddingValues = PaddingValues(MaterialTheme.spacing.medium),
-    contentSpace: Dp = MaterialTheme.spacing.medium,
-    containerColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
-    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
-    disabledContainerColor: Color = MaterialTheme.colorScheme.onPrimary,
-    disabledContentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
+    contentPadding: PaddingValues = PaddingValues(MindplexTheme.dimension.dp16),
+    contentSpace: Dp = MindplexTheme.dimension.dp16,
+    containerColor: Color = MindplexTheme.colorScheme.componentButtonContainer,
+    contentColor: Color = MindplexTheme.colorScheme.componentButtonContent,
+    disabledContainerColor: Color = MindplexTheme.colorScheme.componentButtonDisabledContainer,
+    disabledContentColor: Color = MindplexTheme.colorScheme.componentButtonDisabledContent,
     startIcon: @Composable (() -> Unit)? = null,
     endIcon: @Composable (() -> Unit)? = null,
     onClick: () -> Unit,
@@ -50,12 +51,12 @@ fun MindplexButton(
     Button(
         enabled = isEnabled,
         shape = CircleShape,
-        contentPadding = PaddingValues(MaterialTheme.spacing.none),
+        contentPadding = PaddingValues(MindplexTheme.dimension.dp0),
         modifier = modifier
-            .requiredHeightIn(min = MaterialTheme.spacing.giant)
+            .requiredHeightIn(min = MindplexTheme.dimension.dp64)
             .shadow(
                 shape = CircleShape,
-                elevation = MaterialTheme.spacing.none,
+                elevation = MindplexTheme.dimension.dp0,
             ),
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
@@ -66,7 +67,7 @@ fun MindplexButton(
         onClick = onClick,
     ) {
         AnimatedContent(
-            modifier = Modifier.height(MaterialTheme.spacing.giant),
+            modifier = Modifier.height(MindplexTheme.dimension.dp64),
             targetState = isLoading,
             transitionSpec = {
                 fadeIn(animationSpec = tween()) togetherWith
@@ -88,8 +89,8 @@ fun MindplexButton(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(
-                                start = if (startIcon != null) contentSpace else MaterialTheme.spacing.none,
-                                end = if (endIcon != null) contentSpace else MaterialTheme.spacing.none,
+                                start = if (startIcon != null) contentSpace else MindplexTheme.dimension.dp0,
+                                end = if (endIcon != null) contentSpace else MindplexTheme.dimension.dp0,
                             ),
                         textAlign = if (startIcon == null && endIcon == null) TextAlign.Center else TextAlign.Start,
                     )

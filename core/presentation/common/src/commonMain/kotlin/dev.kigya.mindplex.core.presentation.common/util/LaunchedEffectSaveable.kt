@@ -17,7 +17,10 @@ import kotlinx.coroutines.CoroutineScope
  * @param block The suspendable block of code to be executed.
  */
 @Composable
-fun LaunchedEffectSaveable(key: Any?, block: suspend CoroutineScope.() -> Unit) {
+fun LaunchedEffectSaveable(
+    key: Any?,
+    block: suspend CoroutineScope.() -> Unit,
+) {
     var hasAlreadyExecuted by rememberSaveable { mutableStateOf(false) }
 
     if (!hasAlreadyExecuted) {

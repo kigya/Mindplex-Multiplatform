@@ -5,14 +5,13 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 
 @Immutable
-object Window {
+data object Window {
     val width: Int
         @Composable get() = getScreenWidth()
     val height: Int
         @Composable get() = getScreenHeight()
 }
 
-@Suppress("TopLevelPropertyNaming")
 val LocalWindow = staticCompositionLocalOf { Window }
 
 @Composable
