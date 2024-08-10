@@ -1,0 +1,93 @@
+name: Android CI
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  detekt:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/setup_gradle
+
+      - name: Detekt
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: detekt detektDebug
+
+  build:
+    runs-on: macos-latest
+    needs: detekt
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/setup_gradle
+
+      - name: Build
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: assembleDebug
+
+  lint:
+    runs-on: macos-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/setup_gradle
+
+      - name: Lint
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: lintDebug
+
+  test:
+    runs-on: macos-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/setup_gradle
+
+      - name: Run Unit and Instrumented Tests
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: clean test connectedAndroidTest --info
+
+      - name: Android Test Report
+        uses: asadmansr/android-test-report-action@v1.2.0
+        if: ${{ always() && runner.os == 'Linux' }}
+
+  build-ios:
+    runs-on: macos-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/setup_gradle
+
+      - name: Build iOS
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: linkIosArm64 iosArm64MainBinaries
+
+  build-simulator:
+    runs-on: macos-latest
+    needs: build-ios
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/setup_gradle
+
+      - name: Build iOS Simulator
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: linkIosSimulatorArm64 iosSimulatorArm64MainBinaries
