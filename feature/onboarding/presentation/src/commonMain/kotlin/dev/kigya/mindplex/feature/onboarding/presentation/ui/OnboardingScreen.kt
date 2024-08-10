@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -42,13 +41,18 @@ import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexHorizontalPager
 import dev.kigya.mindplex.core.presentation.component.MindplexJumpingDotsIndicator
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
-import dev.kigya.mindplex.core.presentation.component.MindplexSpacerSize
 import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
+import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.extension.ifNotEmpty
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
 import dev.kigya.mindplex.feature.onboarding.presentation.model.OnboardingScreenUiModel
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingBackground
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingDescription
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingNextButtonContainer
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingNextButtonContent
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingSkipButtonContent
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingTitle
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
@@ -100,10 +104,10 @@ internal fun OnboardingScreenContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onSecondaryContainer)
+                .background(MindplexTheme.colorScheme.onboardingBackground)
                 .statusBarsPadding()
                 .navigationBarsPadding()
-                .padding(vertical = MaterialTheme.spacing.large)
+                .padding(vertical = MindplexTheme.dimension.dp24)
                 .testTag("onboarding_content"),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
@@ -140,7 +144,7 @@ private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
     MindplexHorizontalPager(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.onSecondaryContainer)
+            .background(MindplexTheme.colorScheme.onboardingBackground)
             .testTag("onboarding_pager"),
         pagerState = pagerState,
     ) { page ->
@@ -152,7 +156,7 @@ private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            MindplexSpacer(size = MindplexSpacerSize.SMALL)
+            MindplexSpacer(size = MindplexTheme.dimension.dp12)
             OnboardingLottie(
                 modifier = Modifier
                     .graphicsLayer {
@@ -163,35 +167,35 @@ private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
                 drawableResource = currentOnboardingScreenData.lottieDrawableResource,
                 lottiePath = currentOnboardingScreenData.lottiePath,
             )
-            MindplexSpacer(size = MindplexSpacerSize.EXTRA_LARGE)
+            MindplexSpacer(size = MindplexTheme.dimension.dp36)
             AnimatedVisibility(visible = state.shouldDisplayTitle) {
                 currentOnboardingScreenData.titleTextResource?.let { titleResource ->
                     MindplexText(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = MaterialTheme.spacing.large)
+                            .padding(horizontal = MindplexTheme.dimension.dp24)
                             .testTag("onboarding_title_$page"),
                         text = stringResource(titleResource),
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = MaterialTheme.colorScheme.onSecondary,
+                        style = MindplexTheme.typography.onboardingTitle,
+                        color = MindplexTheme.colorScheme.onboardingTitle,
                     )
                 }
             }
-            MindplexSpacer(size = MindplexSpacerSize.EXTRA_SMALL)
+            MindplexSpacer(size = MindplexTheme.dimension.dp8)
             AnimatedVisibility(visible = state.shouldDisplayDescription) {
                 currentOnboardingScreenData.descriptionTextResource?.let { descriptionResource ->
                     MindplexText(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = MaterialTheme.spacing.large)
+                            .padding(horizontal = MindplexTheme.dimension.dp24)
                             .testTag("onboarding_description_$page"),
                         text = stringResource(descriptionResource),
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = MaterialTheme.colorScheme.onSecondary,
+                        style = MindplexTheme.typography.onboardingDescription,
+                        color = MindplexTheme.colorScheme.onboardingDescription,
                     )
                 }
             }
-            MindplexSpacer(size = MindplexSpacerSize.LARGE)
+            MindplexSpacer(size = MindplexTheme.dimension.dp24)
         }
     }
 }
@@ -201,7 +205,7 @@ private fun ColumnScope.OnboardingPagerDotsIndicator(
     state: OnboardingContract.State,
     pagerState: PagerState,
 ) {
-    MindplexSpacer(size = MindplexSpacerSize.LARGE)
+    MindplexSpacer(size = MindplexTheme.dimension.dp24)
     AnimatedVisibility(visible = state.shouldDisplayDotsIndicator) {
         Row(
             modifier = Modifier
@@ -210,7 +214,7 @@ private fun ColumnScope.OnboardingPagerDotsIndicator(
             horizontalArrangement = Arrangement.Center,
         ) {
             MindplexJumpingDotsIndicator(pagerState = pagerState)
-            MindplexSpacer(size = MindplexSpacerSize.GIANT)
+            MindplexSpacer(size = MindplexTheme.dimension.dp64)
         }
     }
 }
@@ -223,7 +227,7 @@ private fun ColumnScope.OnboardingButtons(
 ) {
     val hapticFeedback = LocalHapticFeedback.current
 
-    MindplexSpacer(size = MindplexSpacerSize.EXTRA_LARGE)
+    MindplexSpacer(size = MindplexTheme.dimension.dp36)
     AnimatedContent(
         targetState = pagerState.currentPage,
         transitionSpec = {
@@ -245,7 +249,7 @@ private fun ColumnScope.OnboardingButtons(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = MaterialTheme.spacing.large),
+                .padding(horizontal = MindplexTheme.dimension.dp24),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             onboardingScreenUiModels[page].skipButtonTextResource?.let { skipResource ->
@@ -260,14 +264,14 @@ private fun ColumnScope.OnboardingButtons(
                             .fillMaxWidth()
                             .testTag("onboarding_skip_button_$page"),
                         labelText = stringResource(skipResource),
-                        contentColor = MaterialTheme.colorScheme.onSecondary,
+                        contentColor = MindplexTheme.colorScheme.onboardingSkipButtonContent,
                     ) {
                         event(OnboardingContract.Event.OnSkipClicked)
                         performClickHapticFeedback(hapticFeedback)
                     }
                 }
                 if (page < onboardingScreenUiModels.size) {
-                    MindplexSpacer(size = MindplexSpacerSize.LARGE)
+                    MindplexSpacer(size = MindplexTheme.dimension.dp24)
                 }
             }
             onboardingScreenUiModels[page].nextButtonTextResource?.let { nextResource ->
@@ -276,8 +280,8 @@ private fun ColumnScope.OnboardingButtons(
                         .weight(1f)
                         .testTag("onboarding_next_button_$page"),
                     labelText = stringResource(nextResource),
-                    containerColor = MaterialTheme.colorScheme.onSecondary,
-                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    containerColor = MindplexTheme.colorScheme.onboardingNextButtonContainer,
+                    contentColor = MindplexTheme.colorScheme.onboardingNextButtonContent,
                 ) {
                     event(OnboardingContract.Event.OnNextClicked(pagerState.currentPage))
                     performClickHapticFeedback(hapticFeedback)

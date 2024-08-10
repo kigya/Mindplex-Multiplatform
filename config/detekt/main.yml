@@ -89,7 +89,7 @@ complexity:
   active: true
   CognitiveComplexMethod:
     active: false
-    threshold: 8
+    threshold: 10
   ComplexCondition:
     active: true
     threshold: 5
@@ -347,7 +347,7 @@ naming:
     active: false
     parameterPattern: '[a-z][A-Za-z0-9]*|_'
   MatchingDeclarationName:
-    active: true
+    active: false
     mustBeFirst: true
   MemberNameEqualsClassName:
     active: true
@@ -359,17 +359,16 @@ naming:
   ObjectPropertyNaming:
     active: true
     constantPattern: '[A-Z][_A-Za-z0-9]*'
-    propertyPattern: '([A-Z]+[_A-Z]*)|([a-z]+[A-Za-z]*)' #A_A or aA
-    privatePropertyPattern: '(_)?[A-Za-z][_A-Za-z0-9]*'
+    propertyPattern: '([A-Z]+[_A-Z]*)|([a-z][A-Za-z0-9]*)' # UPPER_SNAKE_CASE or camelCase
+    privatePropertyPattern: '(_)?[A-Za-z][_A-Za-z0-9]*' # Allows for private properties starting with underscore or letter
   PackageNaming:
     active: true
     packagePattern: '[a-z]+(\.[a-z][A-Za-z]*)*'
   TopLevelPropertyNaming:
     active: true
     constantPattern: '[A-Z][_A-Z0-9]*'
-    #    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
-    propertyPattern: '([A-Z]+[_A-Z]*)|([a-z]+[A-Za-z]*)' #A_A or aA
-    privatePropertyPattern: '([A-Z]+[_A-Z]*)|([a-z]+[A-Za-z]*)' #A_A or aA
+    propertyPattern: '([A-Z][a-zA-Z0-9]*)|([a-z][A-Za-z0-9]*)|([A-Z][_A-Z]*)' # PascalCase, camelCase, or UPPER_SNAKE_CASE
+    privatePropertyPattern: '([A-Z][a-zA-Z0-9]*)|([a-z][A-Za-z0-9]*)|([A-Z][_A-Z]*)' # PascalCase, camelCase, or UPPER_SNAKE_CASE
   VariableMaxLength:
     active: false
     maximumVariableNameLength: 64
@@ -868,7 +867,7 @@ formatting:
   FunctionSignature:
     active: true
     autoCorrect: true
-    forceMultilineWhenParameterCountGreaterOrEqualThan: 4
+    forceMultilineWhenParameterCountGreaterOrEqualThan: 2
     functionBodyExpressionWrapping: 'default'
     maxLineLength: 100
     indentSize: 4

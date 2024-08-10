@@ -4,12 +4,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
+import dev.kigya.mindplex.core.presentation.component.theme.componentErrorStubButtonContainer
+import dev.kigya.mindplex.core.presentation.component.theme.componentErrorStubButtonContent
+import dev.kigya.mindplex.core.presentation.component.theme.componentErrorStubTitle
+import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import mindplex_multiplatform.core.presentation.component.generated.resources.Res
 import mindplex_multiplatform.core.presentation.component.generated.resources.core_error_network_text
 import mindplex_multiplatform.core.presentation.component.generated.resources.core_error_retry_button_text
@@ -50,20 +52,20 @@ fun MindplexErrorStub(
             modifier = Modifier.size(getLottieErrorSize()),
             reader = { Res.readBytes(stubErrorType.iconLottiePath) },
         )
-        MindplexSpacer(size = MindplexSpacerSize.LARGE)
+        MindplexSpacer(size = MindplexTheme.dimension.dp24)
         MindplexText(
             text = stringResource(stubErrorType.text),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onBackground,
+            style = MindplexTheme.typography.componentErrorStubTitle,
+            color = MindplexTheme.colorScheme.componentErrorStubTitle,
         )
-        MindplexSpacer(size = MindplexSpacerSize.LARGE)
+        MindplexSpacer(size = MindplexTheme.dimension.dp24)
         MindplexButton(
             labelText = stringResource(Res.string.core_error_retry_button_text),
-            contentColor = MaterialTheme.colorScheme.primaryContainer,
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = MindplexTheme.colorScheme.componentErrorStubButtonContent,
+            containerColor = MindplexTheme.colorScheme.componentErrorStubButtonContainer,
             contentPadding = PaddingValues(
-                vertical = MaterialTheme.spacing.medium,
-                horizontal = MaterialTheme.spacing.giant,
+                vertical = MindplexTheme.dimension.dp16,
+                horizontal = MindplexTheme.dimension.dp64,
             ),
             onClick = onRetryButtonClicked,
         )

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,12 +23,16 @@ import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexErrorStub
 import dev.kigya.mindplex.core.presentation.component.MindplexIcon
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
-import dev.kigya.mindplex.core.presentation.component.MindplexSpacerSize
 import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
+import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.dsl.ifPresentOrElse
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginBackground
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginMindplexIcon
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginSignInButtonContainer
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginSignInButtonContent
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginTitle
 import mindplex_multiplatform.feature.login.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.login.presentation.generated.resources.ic_google
 import mindplex_multiplatform.feature.login.presentation.generated.resources.ic_mindplex
@@ -49,13 +52,16 @@ fun LoginScreen(contract: LoginContract) {
 
 @Composable
 @VisibleForTesting
-internal fun LoginScreenContent(state: LoginContract.State, event: (LoginContract.Event) -> Unit) {
+internal fun LoginScreenContent(
+    state: LoginContract.State,
+    event: (LoginContract.Event) -> Unit,
+) {
     LaunchedEffectSaveable(Unit) { event(LoginContract.Event.OnFirstLaunch) }
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = MaterialTheme.spacing.large),
+            .background(MindplexTheme.colorScheme.loginBackground)
+            .padding(horizontal = MindplexTheme.dimension.dp24),
     ) {
         AnimatedContent(
             targetState = state.stubErrorType,
@@ -90,15 +96,15 @@ private fun ColumnScope.LoginSection(event: (LoginContract.Event) -> Unit) {
 
     MindplexIcon(
         drawableResource = Res.drawable.ic_mindplex,
-        tintColor = MaterialTheme.colorScheme.inverseSurface,
+        tintColor = MindplexTheme.colorScheme.loginMindplexIcon,
     )
-    MindplexSpacer(size = MindplexSpacerSize.LARGE)
+    MindplexSpacer(size = MindplexTheme.dimension.dp24)
     MindplexText(
         text = stringResource(Res.string.login_welcome_to_mindplex),
-        style = MaterialTheme.typography.headlineLarge,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        style = MindplexTheme.typography.loginTitle,
+        color = MindplexTheme.colorScheme.loginTitle,
     )
-    MindplexSpacer(size = MindplexSpacerSize.GIANT)
+    MindplexSpacer(size = MindplexTheme.dimension.dp64)
     GoogleButtonUiContainer(
         onGoogleSignInResult = { googleUser ->
             event(LoginContract.Event.OnGoogleSignInResultReceived(googleUser))
@@ -110,8 +116,8 @@ private fun ColumnScope.LoginSection(event: (LoginContract.Event) -> Unit) {
                 .testTag("google_sign_in_button"),
             startIcon = { MindplexIcon(drawableResource = Res.drawable.ic_google) },
             labelText = stringResource(Res.string.login_continue_with_google),
-            contentColor = MaterialTheme.colorScheme.surfaceContainer,
-            containerColor = MaterialTheme.colorScheme.onSecondary,
+            contentColor = MindplexTheme.colorScheme.loginSignInButtonContent,
+            containerColor = MindplexTheme.colorScheme.loginSignInButtonContainer,
             onClick = {
                 onClick()
                 performClickHapticFeedback(hapticFeedback)

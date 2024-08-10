@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,19 +19,20 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import dev.kigya.mindplex.core.presentation.common.extension.jumpingDotTransition
-import dev.kigya.mindplex.core.presentation.theme.spacing.spacing
+import dev.kigya.mindplex.core.presentation.component.theme.componentJumpingDotsIndicator
+import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 
 @Composable
 fun MindplexJumpingDotsIndicator(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    selectedColor: Color = MaterialTheme.colorScheme.onSecondary,
-    unselectedColor: Color = MaterialTheme.colorScheme.onSecondary,
-    itemWidth: Dp = MaterialTheme.spacing.extraSmall,
-    itemHeight: Dp = MaterialTheme.spacing.extraSmall,
-    itemRadius: Dp = MaterialTheme.spacing.extraSmall,
-    itemSpacing: Dp = MaterialTheme.spacing.large,
-    strokeWidth: Dp = MaterialTheme.spacing.tiny,
+    selectedColor: Color = MindplexTheme.colorScheme.componentJumpingDotsIndicator,
+    unselectedColor: Color = MindplexTheme.colorScheme.componentJumpingDotsIndicator,
+    itemWidth: Dp = MindplexTheme.dimension.dp8,
+    itemHeight: Dp = MindplexTheme.dimension.dp8,
+    itemRadius: Dp = MindplexTheme.dimension.dp8,
+    itemSpacing: Dp = MindplexTheme.dimension.dp24,
+    strokeWidth: Dp = MindplexTheme.dimension.dp1,
 ) = with(LocalDensity.current) {
     Box(
         modifier = modifier,
