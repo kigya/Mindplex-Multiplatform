@@ -63,13 +63,3 @@ jobs:
         uses: gradle/gradle-build-action@v3
         with:
           arguments: clean testDebugUnitTest --info
-
-      - name: Find and Upload All Debug Test Reports
-        if: ${{ always() }}
-        run: |
-          find . -type d -path "*/build/reports/tests/testDebugUnitTest" -exec echo "Found report at {}" \;
-          find . -type d -path "*/build/reports/tests/testDebugUnitTest" -exec zip -r debug-test-reports.zip {} +
-        uses: actions/upload-artifact@v3
-        with:
-          name: debug-test-reports
-          path: debug-test-reports.zip
