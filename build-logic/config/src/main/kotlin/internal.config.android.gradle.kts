@@ -42,7 +42,8 @@ configure<BaseExtension> {
                 "META-INF/LICENSE",
                 "META-INF/LICENSE.txt",
                 "META-INF/NOTICE.txt",
-                "META-INF/{AL2.0,LGPL2.1}"
+                "META-INF/{AL2.0,LGPL2.1}",
+                "kotlin/coroutines/coroutines.kotlin_builtins",
             )
         )
     }

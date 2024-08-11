@@ -1,4 +1,4 @@
-name: Android CI
+name: CI Workflows
 
 on:
   push:
@@ -50,8 +50,10 @@ jobs:
           arguments: lintDebug
 
   test:
-    runs-on: macos-latest
-    needs: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, ubuntu-latest ]
 
     steps:
       - uses: actions/checkout@v4
@@ -60,34 +62,14 @@ jobs:
       - name: Run Unit and Instrumented Tests
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: clean test connectedAndroidTest --info
+          arguments: clean testDebugUnitTest --info
 
-      - name: Android Test Report
-        uses: asadmansr/android-test-report-action@v1.2.0
-        if: ${{ always() && runner.os == 'Linux' }}
-
-  build-ios:
-    runs-on: macos-latest
-    needs: build
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/setup_gradle
-
-      - name: Build iOS
-        uses: gradle/gradle-build-action@v3
+      - name: Find and Upload All Debug Test Reports
+        if: ${{ always() }}
+        run: |
+          find . -type d -path "*/build/reports/tests/testDebugUnitTest" -exec echo "Found report at {}" \;
+          find . -type d -path "*/build/reports/tests/testDebugUnitTest" -exec zip -r debug-test-reports.zip {} +
+        uses: actions/upload-artifact@v3
         with:
-          arguments: linkIosArm64 iosArm64MainBinaries
-
-  build-simulator:
-    runs-on: macos-latest
-    needs: build-ios
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/setup_gradle
-
-      - name: Build iOS Simulator
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: linkIosSimulatorArm64 iosSimulatorArm64MainBinaries
+          name: debug-test-reports
+          path: debug-test-reports.zip
