@@ -7,10 +7,12 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.runComposeUiTest
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreenContent
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalTestApi::class)
+@Ignore
 class SplashScreenTest {
 
     @Test

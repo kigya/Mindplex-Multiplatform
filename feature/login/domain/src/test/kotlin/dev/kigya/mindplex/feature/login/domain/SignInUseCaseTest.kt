@@ -1,10 +1,12 @@
 package dev.kigya.mindplex.feature.login.domain
 
+import arrow.core.raise.either
 import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityRepositoryContract
+import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
 import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
+import dev.kigya.mindplex.feature.login.domain.contract.ProfileImageInterceptorContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
-import dev.kigya.mindplex.feature.login.domain.model.GoogleSignInDomainResult
 import dev.kigya.mindplex.feature.login.domain.model.GoogleUserSignInDomainModel
 import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import io.mockk.Ordering
@@ -21,6 +23,7 @@ class SignInUseCaseTest {
 
     private var signInPreferencesRepositoryContract: SignInPreferencesRepositoryContract by Delegates.notNull()
     private var signInNetworkRepositoryContract: SignInNetworkRepositoryContract by Delegates.notNull()
+    private var profileImageInterceptorContract: ProfileImageInterceptorContract by Delegates.notNull()
     private var jwtHandlerContract: JwtHandlerContract by Delegates.notNull()
     private var connectivityRepositoryContract: ConnectivityRepositoryContract by Delegates.notNull()
     private var signInUseCase: SignInUseCase by Delegates.notNull()
@@ -31,11 +34,13 @@ class SignInUseCaseTest {
         signInNetworkRepositoryContract = mockk(relaxed = true)
         jwtHandlerContract = mockk()
         connectivityRepositoryContract = mockk()
+        profileImageInterceptorContract = mockk()
         signInUseCase = SignInUseCase(
-            signInPreferencesRepositoryContract,
-            signInNetworkRepositoryContract,
-            jwtHandlerContract,
-            connectivityRepositoryContract,
+            signInPreferencesRepositoryContract = signInPreferencesRepositoryContract,
+            signInNetworkRepositoryContract = signInNetworkRepositoryContract,
+            profileImageInterceptor = profileImageInterceptorContract,
+            jwtHandlerContract = jwtHandlerContract,
+            connectivityRepositoryContract = connectivityRepositoryContract,
         )
     }
 
@@ -44,31 +49,41 @@ class SignInUseCaseTest {
         // Given
         val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
         val decodedUserId = "userId"
+        val interceptedProfilePictureUrl = "intercepted"
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
         coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
         coEvery { signInNetworkRepositoryContract.signIn(any()) } returns Unit
+        coEvery { profileImageInterceptorContract.intercept(any()) } returns "intercepted"
 
         // When
         val result = signInUseCase(googleUser)
 
         // Then
-        assertEquals(GoogleSignInDomainResult.Success, result)
+        assertEquals(either { }, result)
         coVerify { jwtHandlerContract.decodeSubject(googleUser.tokenId) }
         coVerify { signInPreferencesRepositoryContract.signIn(decodedUserId) }
-        coVerify { signInNetworkRepositoryContract.signIn(googleUser.copy(tokenId = decodedUserId)) }
+        coVerify {
+            signInNetworkRepositoryContract.signIn(
+                googleUser.copy(
+                    tokenId = decodedUserId,
+                    profilePictureUrl = interceptedProfilePictureUrl,
+                ),
+            )
+        }
     }
 
     @Test
     fun `invoke returns Failure NETWORK when there is no connectivity`() = runTest {
         // Given
         coEvery { connectivityRepositoryContract.isConnected() } returns false
+        coEvery { profileImageInterceptorContract.intercept(any()) } returns "intercepted"
 
         // When
         val result = signInUseCase(null)
 
         // Then
         assertEquals(
-            GoogleSignInDomainResult.Failure(GoogleSignInDomainResult.GoogleSignInDomainFailureReason.NETWORK),
+            either { raise(MindplexDomainError.NETWORK) },
             result,
         )
     }
@@ -77,13 +92,14 @@ class SignInUseCaseTest {
     fun `invoke returns Failure OTHER when there is connectivity but params are null`() = runTest {
         // Given
         coEvery { connectivityRepositoryContract.isConnected() } returns true
+        coEvery { profileImageInterceptorContract.intercept(any()) } returns "intercepted"
 
         // When
         val result = signInUseCase(null)
 
         // Then
         assertEquals(
-            GoogleSignInDomainResult.Failure(GoogleSignInDomainResult.GoogleSignInDomainFailureReason.OTHER),
+            either { raise(MindplexDomainError.OTHER) },
             result,
         )
     }
@@ -94,13 +110,14 @@ class SignInUseCaseTest {
         val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.failure(Exception("JWT decoding failed"))
         coEvery { connectivityRepositoryContract.isConnected() } returns true
+        coEvery { profileImageInterceptorContract.intercept(any()) } returns "intercepted"
 
         // When
         val result = signInUseCase(googleUser)
 
         // Then
         assertEquals(
-            GoogleSignInDomainResult.Failure(GoogleSignInDomainResult.GoogleSignInDomainFailureReason.OTHER),
+            either { raise(MindplexDomainError.OTHER) },
             result,
         )
     }
@@ -110,15 +127,25 @@ class SignInUseCaseTest {
         // Given
         val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
         val decodedUserId = "userId"
+        val interceptedProfilePictureUrl = "intercepted"
+
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
         coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
         coEvery { signInNetworkRepositoryContract.signIn(any()) } returns Unit
+        coEvery { profileImageInterceptorContract.intercept(any()) } returns interceptedProfilePictureUrl
 
         // When
         signInUseCase(googleUser)
 
         // Then
-        coVerify { signInNetworkRepositoryContract.signIn(googleUser.copy(tokenId = decodedUserId)) }
+        coVerify {
+            signInNetworkRepositoryContract.signIn(
+                googleUser.copy(
+                    tokenId = decodedUserId,
+                    profilePictureUrl = interceptedProfilePictureUrl,
+                ),
+            )
+        }
     }
 
     @Test
@@ -129,6 +156,7 @@ class SignInUseCaseTest {
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
         coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
         coEvery { signInNetworkRepositoryContract.signIn(any()) } returns Unit
+        coEvery { profileImageInterceptorContract.intercept(any()) } returns "intercepted"
 
         // When
         signInUseCase(googleUser)
@@ -146,6 +174,7 @@ class SignInUseCaseTest {
             coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
             coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
             coEvery { signInNetworkRepositoryContract.signIn(any()) } returns Unit
+            coEvery { profileImageInterceptorContract.intercept(any()) } returns "intercepted"
 
             // When
             signInUseCase(googleUser)
@@ -158,6 +187,7 @@ class SignInUseCaseTest {
     fun `invoke calls connectivityRepositoryContract isConnected if params are null`() = runTest {
         // Given
         coEvery { connectivityRepositoryContract.isConnected() } returns true
+        coEvery { profileImageInterceptorContract.intercept(any()) } returns "intercepted"
 
         // When
         signInUseCase(null)
@@ -172,9 +202,11 @@ class SignInUseCaseTest {
             // Given
             val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
             val decodedUserId = "userId"
+            val interceptedProfilePictureUrl = "intercepted"
             coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
             coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
             coEvery { signInNetworkRepositoryContract.signIn(any()) } returns Unit
+            coEvery { profileImageInterceptorContract.intercept(any()) } returns "intercepted"
 
             // When
             signInUseCase(googleUser)
@@ -182,7 +214,12 @@ class SignInUseCaseTest {
             // Then
             coVerify(ordering = Ordering.ORDERED) {
                 signInPreferencesRepositoryContract.signIn(decodedUserId)
-                signInNetworkRepositoryContract.signIn(googleUser.copy(tokenId = decodedUserId))
+                signInNetworkRepositoryContract.signIn(
+                    googleUser.copy(
+                        tokenId = decodedUserId,
+                        profilePictureUrl = interceptedProfilePictureUrl,
+                    ),
+                )
             }
         }
 }

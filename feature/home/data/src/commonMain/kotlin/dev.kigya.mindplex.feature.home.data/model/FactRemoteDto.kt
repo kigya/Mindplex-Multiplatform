@@ -1,4 +1,4 @@
-package dev.kigya.mindpex.feature.home.data.model
+package dev.kigya.mindplex.feature.home.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

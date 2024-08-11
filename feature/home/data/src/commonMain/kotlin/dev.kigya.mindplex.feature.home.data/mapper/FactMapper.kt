@@ -1,7 +1,7 @@
-package dev.kigya.mindpex.feature.home.data.mapper
+package dev.kigya.mindplex.feature.home.data.mapper
 
-import dev.kigya.mindpex.feature.home.data.model.FactLocal
-import dev.kigya.mindpex.feature.home.data.model.FactRemoteDto
+import dev.kigya.mindplex.feature.home.data.model.FactLocal
+import dev.kigya.mindplex.feature.home.data.model.FactRemoteDto
 import dev.kigya.mindplex.feature.home.domain.model.FactDomainModel
 import kotlin.jvm.JvmName
 

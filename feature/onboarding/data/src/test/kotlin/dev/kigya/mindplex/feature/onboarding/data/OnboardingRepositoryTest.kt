@@ -16,10 +16,11 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import okio.Path.Companion.toPath
+import okio.Path.Companion.toOkioPath
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.nio.file.Files
 import kotlin.properties.Delegates
 import kotlin.test.assertEquals
 
@@ -35,10 +36,10 @@ class OnboardingRepositoryTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        dataStore = PreferenceDataStoreFactory
-            .createWithPath(
-                produceFile = { "datastore/preferences.preferences_pb".toPath() },
-            )
+        val tempDir = Files.createTempDirectory("datastore_test")
+        dataStore = PreferenceDataStoreFactory.createWithPath(
+            produceFile = { tempDir.resolve("test_preferences.preferences_pb").toFile().toOkioPath() },
+        )
         onboardingRepository = OnboardingRepository(dataStore, testDispatcher)
     }
 
@@ -46,8 +47,8 @@ class OnboardingRepositoryTest {
     @After
     fun tearDown() = runTest {
         testScope.launch {
-            Dispatchers.resetMain()
             dataStore.edit(MutablePreferences::clear)
+            Dispatchers.resetMain()
             cancel()
         }
     }

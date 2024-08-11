@@ -1,4 +1,4 @@
-package dev.kigya.mindpex.feature.home.data.database
+package dev.kigya.mindplex.feature.home.data.database
 
 import androidx.room.TypeConverter
 import kotlinx.datetime.LocalDate
