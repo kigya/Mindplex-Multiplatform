@@ -1,5 +1,7 @@
 package dev.kigya.mindplex.core.util.extension
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -10,4 +12,15 @@ inline fun <C : Collection<*>> C.ifNotEmpty(block: C.() -> Unit): Any {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     return if (isNotEmpty()) block() else this
+}
+
+fun <T> ImmutableList<T>.update(
+    index: Int,
+    transform: (T) -> T,
+): ImmutableList<T> {
+    if (index !in 0 until size) return this
+
+    return mapIndexed { i, item ->
+        if (i == index) transform(item) else item
+    }.toImmutableList()
 }

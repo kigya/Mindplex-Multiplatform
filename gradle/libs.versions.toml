@@ -2,25 +2,25 @@
 # Basic Environment Setup
 java = { strictly = "17" }
 min-sdk = { strictly = "28" }
-compile-sdk = { strictly = "34" }
-target-sdk = { strictly = "34" }
+compile-sdk = { strictly = "35" }
+target-sdk = { strictly = "35" }
 
 # Gradle and Kotlin
-agp = { require = "8.4.1" }
-kotlin = { strictly = "2.0.20-Beta1" }
-ksp = { strictly = "2.0.20-Beta1-1.0.22" }
+agp = { require = "8.5.0" }
+kotlin = { strictly = "2.0.20" }
+ksp = { strictly = "2.0.20-1.0.24" }
 
 # Serialization and Collections
 kotlinx-serialization = { require = "1.7.1" }
 kotlinx-collections-immutable = { require = "0.3.7" }
 
 # Compose and Lifecycle Versions
-compose-activity = { require = "1.9.0" }
-compose-multiplatform = { require = "1.7.0-alpha01" }
-compose-test = { strictly = "1.7.0-beta03" }
+compose-activity = { require = "1.9.1" }
+compose-multiplatform = { require = "1.7.0-alpha03" }
+compose-test = { strictly = "1.7.0-rc01" }
 compose-navigation = { require = "2.8.0-alpha02" }
 compose-shimmer = { require = "1.3.0" }
-lifecycle = { require = "2.8.3" }
+lifecycle = { require = "2.9.0-alpha01" }
 
 # Compottie
 compottie = { require = "1.1.2" }
@@ -36,8 +36,8 @@ napier = { prefer = "2.7.1" }
 
 # Local Storage
 data-store = { require = "1.1.1" }
-room = { strictly = "2.7.0-alpha06" }
-sqlite = { strictly = "2.5.0-alpha06" }
+room = { strictly = "2.7.0-alpha07" }
+sqlite = { strictly = "2.5.0-alpha07" }
 
 # Coroutines for Async Programming
 coroutines = { require = "1.9.0-RC" }
@@ -62,18 +62,18 @@ kmpAuth = { require = "2.0.0" }
 connectivity = { require = "1.1.2" }
 
 #Annotation
-annotation = { strictly = "1.9.0-alpha01" }
+annotation = { strictly = "1.9.0-alpha02" }
 
 # Firebase
 google-services = { require = "4.4.2" }
 firebase-extension = { require = "21.0.0" }
-gitlive = { require = "1.13.0" }
+gitlive = { require = "2.0.0" }
 
 # Parser
 jwt-parser = { require = "1.0.0" }
 
 # Image
-coil = { prefer = "3.0.0-alpha08" }
+coil = { prefer = "3.0.0-alpha10" }
 
 # Arrow
 arrow = { require = "2.0.0-alpha.3" }
@@ -163,13 +163,12 @@ jwt-parser = { module = "io.github.jmseb3:simpleJwtParser", version.ref = "jwt-p
 # Image
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 coil-multiplatform = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
 
 # Arrow
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
-arrow-optics = { module = "io.arrow-kt:arrow-optics", version.ref = "arrow" }
 arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref = "arrow" }
 
 # Time
@@ -190,7 +189,7 @@ gradle-room = { module = "androidx.room:room-gradle-plugin", version.ref = "room
 [bundles]
 # Bundles Grouping Related Libraries
 dataStore = ["dataStore-core", "dataStore-preferences", "dataStore-preferences-core"]
-arrow = ["arrow-core", "arrow-optics", "arrow-fx-coroutines"]
+arrow = ["arrow-core", "arrow-fx-coroutines"]
 konsist = ["konsist", "junit-jupiter-engine"]
 coilCommon = ["coil-compose", "coil-compose-core", "coil-multiplatform", "coil-network-ktor", "ktor-client-core"]
 room = ["room-runtime", "sqlite-bundled"]

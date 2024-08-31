@@ -1,9 +1,17 @@
 package dev.kigya.mindplex.core.util.dsl
 
+import arrow.core.Either
+import arrow.core.Either.Companion.zipOrAccumulate
+import arrow.core.NonEmptyList
+import arrow.fx.coroutines.parZip
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.coroutineScope
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.cancellation.CancellationException
 
 @OptIn(ExperimentalContracts::class)
@@ -81,4 +89,23 @@ inline fun <T> T.takeOrExecute(
     } else {
         action()
     }
+}
+
+suspend fun <E, A, B, Z> parZipOrAccumulate(
+    ctx: CoroutineContext = EmptyCoroutineContext,
+    fa: suspend CoroutineScope.() -> Either<E, A>,
+    fb: suspend CoroutineScope.() -> Either<E, B>,
+    onSuccess: (A, B) -> Z,
+    onError: (NonEmptyList<E>) -> Unit,
+) = coroutineScope {
+    parZip(
+        ctx = ctx,
+        fa = { fa() },
+        fb = { fb().mapLeft { it } },
+    ) { eitherA, eitherB ->
+        zipOrAccumulate(eitherA, eitherB, onSuccess)
+    }.fold(
+        ifLeft = { errorList -> onError(errorList) },
+        ifRight = { },
+    )
 }

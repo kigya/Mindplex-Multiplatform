@@ -16,7 +16,6 @@ import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
@@ -27,12 +26,12 @@ class FactsNetworkRepository(
     private val dispatcher: CoroutineDispatcher,
 ) : FactsNetworkRepositoryContract {
     override suspend fun fetchFacts(amount: Int): Result<List<FactDomainModel>> =
-        withContext(dispatcher) {
-            runSuspendCatching {
+        runSuspendCatching {
+            withContext(dispatcher) {
                 secretsProviderContract.provideApiKey(Document.FACTS_API).fold(
                     onSuccess = { apiKey ->
                         List(amount) {
-                            async(Job()) {
+                            async {
                                 val response: HttpResponse = httpClient.get(FACTS_SOURCE) {
                                     header("X-Api-Key", apiKey)
                                 }

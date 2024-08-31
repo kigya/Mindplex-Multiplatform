@@ -7,12 +7,14 @@ import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContr
 interface SplashContract :
     UnidirectionalViewModelContract<SplashContract.State, SplashContract.Event, SplashContract.Effect> {
     @Immutable
-    data class State(val shouldDisplayText: Boolean = false) : CopyableComponentState
+    data class State internal constructor(
+        val shouldDisplayText: Boolean = false,
+    ) : CopyableComponentState
 
     @Immutable
     sealed class Event {
-        data object OnFirstLaunch : Event()
-        data object OnAnimationFinished : Event()
+        internal data object OnFirstLaunch : Event()
+        internal data object OnAnimationFinished : Event()
     }
 
     @Immutable

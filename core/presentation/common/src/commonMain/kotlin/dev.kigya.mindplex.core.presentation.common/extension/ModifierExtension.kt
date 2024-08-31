@@ -1,7 +1,18 @@
 package dev.kigya.mindplex.core.presentation.common.extension
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.math.absoluteValue
 
 private const val DOUBLE_SCALE = 2.0f
@@ -34,4 +45,43 @@ fun Modifier.jumpingDotTransition(
 
     scaleX = scale
     scaleY = scale
+}
+
+private const val SHIFT_CLICK_TARGET_TRANSLATION = 20f
+private const val SHIFT_CLICK_DEFAULT_TRANSLATION = 0f
+
+enum class ShiftClickButtonState { Pressed, Idle }
+
+fun Modifier.shiftClickEffect(
+    onChangeState: (ShiftClickButtonState) -> Unit = { },
+    onClick: () -> Unit,
+) = composed {
+    var shiftClickButtonState by remember { mutableStateOf(ShiftClickButtonState.Idle) }
+    val tx by animateFloatAsState(
+        if (shiftClickButtonState == ShiftClickButtonState.Pressed) {
+            SHIFT_CLICK_TARGET_TRANSLATION
+        } else {
+            SHIFT_CLICK_DEFAULT_TRANSLATION
+        },
+    )
+
+    this
+        .graphicsLayer { translationX = tx }
+        .clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = null,
+            onClick = { onClick() },
+        )
+        .pointerInput(shiftClickButtonState) {
+            awaitPointerEventScope {
+                shiftClickButtonState = if (shiftClickButtonState == ShiftClickButtonState.Pressed) {
+                    waitForUpOrCancellation()
+                    ShiftClickButtonState.Idle
+                } else {
+                    awaitFirstDown(false)
+                    ShiftClickButtonState.Pressed
+                }
+                onChangeState(shiftClickButtonState)
+            }
+        }
 }

@@ -7,7 +7,6 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import dev.kigya.mindplex.core.presentation.common.util.StableFlow
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
-import dev.kigya.mindplex.feature.onboarding.presentation.model.OnboardingScreenUiModel
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreenContent
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.emptyFlow
@@ -46,11 +45,11 @@ class OnboardingScreenTest {
     fun `onboardingScreen displays onboarding data`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_first_title,
                 descriptionTextResource = Res.string.onboarding_first_description
             ),
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_second_title,
                 descriptionTextResource = Res.string.onboarding_second_description
             ),
@@ -97,7 +96,7 @@ class OnboardingScreenTest {
         // Given
         var eventTriggered = false
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(skipButtonTextResource = Res.string.onboarding_skip_button_text)
+            OnboardingContract.State.OnboardingScreenData(skipButtonTextResource = Res.string.onboarding_skip_button_text)
         )
 
         // When
@@ -123,7 +122,7 @@ class OnboardingScreenTest {
         // Given
         var eventTriggered = false
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(nextButtonTextResource = Res.string.onboarding_next_button_text)
+            OnboardingContract.State.OnboardingScreenData(nextButtonTextResource = Res.string.onboarding_next_button_text)
         )
 
         // When
@@ -148,8 +147,8 @@ class OnboardingScreenTest {
     fun `onboardingScreen scrolls to next page on ScrollToPage effect`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(nextButtonTextResource = Res.string.onboarding_next_button_text),
-            OnboardingScreenUiModel(nextButtonTextResource = Res.string.onboarding_next_button_text),
+            OnboardingContract.State.OnboardingScreenData(nextButtonTextResource = Res.string.onboarding_next_button_text),
+            OnboardingContract.State.OnboardingScreenData(nextButtonTextResource = Res.string.onboarding_next_button_text),
         )
 
         // When
@@ -169,7 +168,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen displays title when shouldDisplayTitle is true`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_first_title,
                 descriptionTextResource = Res.string.onboarding_first_description
             )
@@ -195,7 +194,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen hides title when shouldDisplayTitle is false`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_first_title,
                 descriptionTextResource = Res.string.onboarding_first_description
             )
@@ -221,7 +220,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen displays description when shouldDisplayDescription is true`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_first_title,
                 descriptionTextResource = Res.string.onboarding_first_description
             )
@@ -247,7 +246,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen hides description when shouldDisplayDescription is false`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_first_title,
                 descriptionTextResource = Res.string.onboarding_first_description
             )
@@ -273,7 +272,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen displays dots indicator when shouldDisplayDotsIndicator is true`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_first_title,
                 descriptionTextResource = Res.string.onboarding_first_description
             )
@@ -299,7 +298,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen hides dots indicator when shouldDisplayDotsIndicator is false`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_first_title,
                 descriptionTextResource = Res.string.onboarding_first_description
             )
@@ -325,7 +324,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen displays skip and next buttons correctly on first page`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 skipButtonTextResource = Res.string.onboarding_skip_button_text,
                 nextButtonTextResource = Res.string.onboarding_next_button_text
             )
@@ -349,7 +348,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen displays only next button correctly on last page`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 nextButtonTextResource = Res.string.onboarding_next_button_text
             )
         )
@@ -372,7 +371,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen toggles shouldDisplayTitle correctly`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_first_title,
                 descriptionTextResource = Res.string.onboarding_first_description
             )
@@ -413,7 +412,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen toggles shouldDisplayDescription correctly`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_first_title,
                 descriptionTextResource = Res.string.onboarding_first_description
             )
@@ -454,7 +453,7 @@ class OnboardingScreenTest {
     fun `onboardingScreen toggles shouldDisplayDotsIndicator correctly`() = runComposeUiTest {
         // Given
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 titleTextResource = Res.string.onboarding_first_title,
                 descriptionTextResource = Res.string.onboarding_first_description
             )
@@ -496,10 +495,10 @@ class OnboardingScreenTest {
         // Given
         var currentPage = 0
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 nextButtonTextResource = Res.string.onboarding_next_button_text
             ),
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 nextButtonTextResource = Res.string.onboarding_next_button_text
             )
         )
@@ -546,7 +545,7 @@ class OnboardingScreenTest {
         // Given
         var eventTriggered = false
         val onboardingData = persistentListOf(
-            OnboardingScreenUiModel(
+            OnboardingContract.State.OnboardingScreenData(
                 skipButtonTextResource = Res.string.onboarding_skip_button_text
             )
         )

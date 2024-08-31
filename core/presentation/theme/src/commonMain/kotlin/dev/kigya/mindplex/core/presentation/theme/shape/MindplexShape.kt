@@ -8,6 +8,10 @@ import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 
 @Immutable
 data object MindplexShape {
+
+    val rounding8: RoundedCornerShape
+        @Composable get() = RoundedCornerShape(MindplexTheme.dimension.dp8)
+
     val rounding16: RoundedCornerShape
         @Composable get() = RoundedCornerShape(MindplexTheme.dimension.dp16)
 }

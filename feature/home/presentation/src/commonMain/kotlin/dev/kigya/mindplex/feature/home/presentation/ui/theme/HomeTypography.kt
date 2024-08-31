@@ -37,3 +37,19 @@ internal val MindplexTypography.homeFactsPagerDescription
         fontWeight = FontWeight.Normal,
         fontFamily = MindplexTheme.font.rubik,
     )
+
+internal val MindplexTypography.homeModesCardTitle
+    @Composable
+    get() = TextStyle(
+        fontSize = MindplexTheme.textSize.sp16,
+        fontWeight = FontWeight.Medium,
+        fontFamily = MindplexTheme.font.rubik,
+    )
+
+internal val MindplexTypography.homeModesCardDescription
+    @Composable
+    get() = TextStyle(
+        fontSize = MindplexTheme.textSize.sp12,
+        fontWeight = FontWeight.Normal,
+        fontFamily = MindplexTheme.font.rubik,
+    )
