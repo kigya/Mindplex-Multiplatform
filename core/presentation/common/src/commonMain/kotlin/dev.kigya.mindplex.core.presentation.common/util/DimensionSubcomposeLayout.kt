@@ -7,6 +7,7 @@ import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.util.fastForEach
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 
@@ -59,11 +60,11 @@ fun DimensionSubcomposeLayout(
 
         layout(maxWidth, maxHeight) {
             if (shouldPlaceMainContent) {
-                mainPlaceables.forEach { placeable: Placeable ->
+                mainPlaceables.fastForEach { placeable: Placeable ->
                     placeable.placeRelative(0, 0)
                 }
             } else {
-                dependentPlaceables.forEach { placeable: Placeable ->
+                dependentPlaceables.fastForEach { placeable: Placeable ->
                     placeable.placeRelative(0, 0)
                 }
             }

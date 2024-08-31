@@ -7,28 +7,72 @@ import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContr
 import dev.kigya.mindplex.core.util.extension.empty
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 
 interface HomeContract :
     UnidirectionalViewModelContract<HomeContract.State, HomeContract.Event, HomeContract.Effect> {
     @Immutable
-    data class State(
+    data class State internal constructor(
         val stubErrorType: StubErrorType? = null,
-        val userName: String = String.empty,
-        val avatarUrl: String? = null,
-        val isProfileNameLoading: Boolean = true,
-        val isProfilePictureLoading: Boolean = true,
-        val areFactsLoading: Boolean = true,
-        val facts: ImmutableList<String> = persistentListOf(),
-    ) : CopyableComponentState
+        val headerData: HeaderData = HeaderData(),
+        val pagerData: PagerData = PagerData(),
+        val modesData: ModesData = ModesData(),
+    ) : CopyableComponentState {
+        @Immutable
+        data class HeaderData internal constructor(
+            val userName: String = String.empty,
+            val avatarUrl: String? = null,
+            val isProfileNameLoading: Boolean = true,
+            val isProfilePictureLoading: Boolean = true,
+        )
 
-    @Immutable
-    sealed class Event {
-        data object OnFirstLaunch : Event()
-        data object OnProfilePictureLoaded : Event()
-        data object OnProfilePictureErrorReceived : Event()
-        data object OnErrorStubClicked : Event()
+        @Immutable
+        data class PagerData internal constructor(
+            val areFactsLoading: Boolean = true,
+            val facts: ImmutableList<String> = persistentListOf(),
+        )
+
+        @Immutable
+        data class ModesData internal constructor(
+            val areModesLoading: Boolean = true,
+            val modes: ImmutableList<Mode> = persistentListOf(),
+        ) {
+            data class Mode internal constructor(
+                val type: Type = Type.RANDOM,
+                val icon: DrawableResource? = null,
+                val title: StringResource? = null,
+                val description: StringResource? = null,
+                val shouldScaleIcon: Boolean = false,
+                val shouldDisplayDelimiter: Boolean = false,
+            ) {
+                enum class Type { PICK_ANSWER, TRUE_OR_FALSE, RANDOM }
+            }
+        }
     }
 
     @Immutable
-    sealed class Effect
+    sealed class Event {
+        internal data object OnFirstLaunch : Event()
+
+        internal data object OnProfilePictureLoaded : Event()
+
+        internal data object OnProfilePictureErrorReceived : Event()
+
+        internal data object OnErrorStubClicked : Event()
+
+        internal data class OnModeClicked(
+            val type: State.ModesData.Mode.Type,
+        ) : Event()
+
+        internal data class OnModeClickStateChanged(
+            val index: Int,
+            val shouldScaleIcon: Boolean,
+        ) : Event()
+    }
+
+    @Immutable
+    sealed class Effect {
+        internal data object ScrollToNextPage : Effect()
+    }
 }

@@ -9,15 +9,15 @@ import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContr
 interface LoginContract :
     UnidirectionalViewModelContract<LoginContract.State, LoginContract.Event, LoginContract.Effect> {
     @Immutable
-    data class State(
+    data class State internal constructor(
         val stubErrorType: StubErrorType? = null,
     ) : CopyableComponentState
 
     @Immutable
     sealed class Event {
-        data object OnFirstLaunch : Event()
-        data class OnGoogleSignInResultReceived(val googleUser: GoogleUser?) : Event()
-        data object OnErrorStubClicked : Event()
+        internal data object OnFirstLaunch : Event()
+        internal data class OnGoogleSignInResultReceived(val googleUser: GoogleUser?) : Event()
+        internal data object OnErrorStubClicked : Event()
     }
 
     @Immutable

@@ -19,8 +19,7 @@ val dataSourceModule = module {
     factory {
         ConnectivityManager(
             connectivity = get(),
-            scope =
-            CoroutineScope(
+            scope = CoroutineScope(
                 context = get<CoroutineDispatcher>(
                     qualifier = named(Dispatchers.IO::class.simpleName.orEmpty()),
                 ),

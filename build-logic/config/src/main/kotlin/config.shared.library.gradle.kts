@@ -16,7 +16,6 @@ configure<KotlinMultiplatformExtension> {
         tasks.withType<KotlinJvmCompile>().configureEach {
             compilerOptions {
                 jvmTarget.set(JvmTarget.fromTarget(libs.versions.java.get()))
-                freeCompilerArgs.add("-Xcontext-receivers")
             }
         }
     }

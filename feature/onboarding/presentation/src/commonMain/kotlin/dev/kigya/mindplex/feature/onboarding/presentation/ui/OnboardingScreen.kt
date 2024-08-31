@@ -46,7 +46,6 @@ import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.extension.ifNotEmpty
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
-import dev.kigya.mindplex.feature.onboarding.presentation.model.OnboardingScreenUiModel
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingBackground
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingDescription
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingNextButtonContainer
@@ -122,7 +121,7 @@ internal fun OnboardingScreenContent(
             )
             OnboardingButtons(
                 pagerState = pagerState,
-                onboardingScreenUiModels = this@ifNotEmpty,
+                onboardingScreenData = this@ifNotEmpty,
                 event = event,
             )
         }
@@ -130,7 +129,7 @@ internal fun OnboardingScreenContent(
 }
 
 @Composable
-private fun ImmutableList<OnboardingScreenUiModel>.OnboardingPager(
+private fun ImmutableList<OnboardingContract.State.OnboardingScreenData>.OnboardingPager(
     pagerState: PagerState,
     state: OnboardingContract.State,
 ) {
@@ -222,7 +221,7 @@ private fun ColumnScope.OnboardingPagerDotsIndicator(
 @Composable
 private fun ColumnScope.OnboardingButtons(
     pagerState: PagerState,
-    onboardingScreenUiModels: ImmutableList<OnboardingScreenUiModel>,
+    onboardingScreenData: ImmutableList<OnboardingContract.State.OnboardingScreenData>,
     event: (OnboardingContract.Event) -> Unit,
 ) {
     val hapticFeedback = LocalHapticFeedback.current
@@ -252,10 +251,10 @@ private fun ColumnScope.OnboardingButtons(
                 .padding(horizontal = MindplexTheme.dimension.dp24),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            onboardingScreenUiModels[page].skipButtonTextResource?.let { skipResource ->
+            onboardingScreenData[page].skipButtonTextResource?.let { skipResource ->
                 AnimatedVisibility(
                     modifier = Modifier.weight(1f),
-                    visible = page < onboardingScreenUiModels.size,
+                    visible = page < onboardingScreenData.size,
                     enter = fadeIn() + slideInHorizontally(),
                     exit = fadeOut() + slideOutHorizontally(),
                 ) {
@@ -270,11 +269,11 @@ private fun ColumnScope.OnboardingButtons(
                         performClickHapticFeedback(hapticFeedback)
                     }
                 }
-                if (page < onboardingScreenUiModels.size) {
+                if (page < onboardingScreenData.size) {
                     MindplexSpacer(size = MindplexTheme.dimension.dp24)
                 }
             }
-            onboardingScreenUiModels[page].nextButtonTextResource?.let { nextResource ->
+            onboardingScreenData[page].nextButtonTextResource?.let { nextResource ->
                 MindplexButton(
                     modifier = Modifier
                         .weight(1f)

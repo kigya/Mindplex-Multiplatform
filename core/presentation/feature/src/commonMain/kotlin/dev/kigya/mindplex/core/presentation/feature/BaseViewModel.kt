@@ -2,10 +2,8 @@ package dev.kigya.mindplex.core.presentation.feature
 
 import androidx.annotation.AnyThread
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dev.kigya.mindplex.core.domain.interactor.runner.CoroutineUseCaseRunner
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +17,7 @@ interface CopyableComponentState
 abstract class BaseViewModel<STATE, EFFECT>(
     initialState: STATE,
 ) : ViewModel(), CoroutineUseCaseRunner where STATE : Any, STATE : CopyableComponentState {
-    override val useCaseCoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    override val useCaseCoroutineScope = viewModelScope
 
     private val _state = MutableStateFlow(initialState)
     val state: StateFlow<STATE> = _state

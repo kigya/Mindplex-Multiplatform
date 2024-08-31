@@ -47,3 +47,45 @@ internal val MindplexColorScheme.homeFactsPagerDotsIndicator
         light = MindplexTheme.color.iris70,
         dark = MindplexTheme.color.white,
     )
+
+internal val MindplexColorScheme.homeModesCardBackground
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.white,
+        dark = MindplexTheme.color.iris60,
+    )
+
+internal val MindplexColorScheme.homeModesIconBackground
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.iris10,
+        dark = MindplexTheme.color.iris80,
+    )
+
+internal val MindplexColorScheme.homeModesCardTitle
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.gunmetal100,
+        dark = MindplexTheme.color.white,
+    )
+
+internal val MindplexColorScheme.homeModesCardDescription
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.gunmetal80,
+        dark = MindplexTheme.color.iris30,
+    )
+
+internal val MindplexColorScheme.homeModesCardArrow
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.iris70,
+        dark = MindplexTheme.color.white,
+    )
+
+internal val MindplexColorScheme.homeModesDelimiter
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.iris10,
+        dark = MindplexTheme.color.iris80,
+    )
