@@ -21,3 +21,11 @@ internal val MindplexTypography.onboardingDescription
         fontWeight = FontWeight.Normal,
         fontFamily = MindplexTheme.font.rubik,
     )
+
+internal val MindplexTypography.onboardingButton
+    @Composable
+    get() = TextStyle(
+        fontSize = MindplexTheme.textSize.sp16,
+        fontWeight = FontWeight.Medium,
+        fontFamily = MindplexTheme.font.rubik,
+    )

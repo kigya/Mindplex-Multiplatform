@@ -16,6 +16,7 @@ kotlin {
                 implementation(core.util)
                 implementation(core.presentation.common)
                 implementation(core.presentation.component)
+                implementation(core.presentation.theme)
                 implementation(core.domain.interactor)
                 implementation(navigation.api)
             }

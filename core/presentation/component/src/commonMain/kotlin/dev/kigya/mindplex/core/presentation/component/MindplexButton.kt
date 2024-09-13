@@ -14,16 +14,15 @@ import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import dev.kigya.mindplex.core.presentation.component.theme.componentButtonContainer
 import dev.kigya.mindplex.core.presentation.component.theme.componentButtonContent
 import dev.kigya.mindplex.core.presentation.component.theme.componentButtonDisabledContainer
@@ -36,7 +35,7 @@ fun MindplexButton(
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
     isLoading: Boolean = false,
-    fontSize: TextUnit = MindplexTheme.textSize.sp16,
+    textStyle: TextStyle = TextStyle.Default,
     labelText: String = String.empty,
     contentPadding: PaddingValues = PaddingValues(MindplexTheme.dimension.dp16),
     contentSpace: Dp = MindplexTheme.dimension.dp16,
@@ -81,18 +80,18 @@ fun MindplexButton(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     startIcon?.invoke()
-                    Text(
-                        text = labelText,
-                        fontSize = fontSize,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
+                    MindplexText(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(
                                 start = if (startIcon != null) contentSpace else MindplexTheme.dimension.dp0,
                                 end = if (endIcon != null) contentSpace else MindplexTheme.dimension.dp0,
                             ),
+                        text = labelText,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         textAlign = if (startIcon == null && endIcon == null) TextAlign.Center else TextAlign.Start,
+                        style = textStyle,
                     )
                     endIcon?.invoke()
                 }
