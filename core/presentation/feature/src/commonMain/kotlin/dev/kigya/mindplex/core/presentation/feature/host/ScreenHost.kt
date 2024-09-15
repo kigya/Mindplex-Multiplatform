@@ -1,5 +1,9 @@
 package dev.kigya.mindplex.core.presentation.feature.host
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,7 +42,11 @@ fun ScreenHost(
         event = event,
     )
 
-    if (state.shouldDisplayNavigationBar) {
+    AnimatedVisibility(
+        visible = state.shouldDisplayNavigationBar,
+        enter = fadeIn(animationSpec = tween()),
+        exit = fadeOut(animationSpec = tween()),
+    ) {
         AnimatedNavigationBar(
             modifier = Modifier.padding(
                 vertical = MindplexTheme.dimension.dp16,
@@ -48,7 +56,7 @@ fun ScreenHost(
         ) {
             MindplexIconButton(
                 modifier = Modifier.padding(vertical = MindplexTheme.dimension.dp12),
-                drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.HOME) {
+                drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.Home) {
                     Res.drawable.ic_home_active
                 } else {
                     Res.drawable.ic_home_inactive
@@ -57,7 +65,7 @@ fun ScreenHost(
 
             MindplexIconButton(
                 modifier = Modifier.padding(vertical = MindplexTheme.dimension.dp12),
-                drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.LEADERBOARD) {
+                drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.Leaderboard) {
                     Res.drawable.ic_leaderboard_active
                 } else {
                     Res.drawable.ic_leaderboard_inactive
@@ -66,7 +74,7 @@ fun ScreenHost(
 
             MindplexIconButton(
                 modifier = Modifier.padding(vertical = MindplexTheme.dimension.dp12),
-                drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.PROFILE) {
+                drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.Profile) {
                     Res.drawable.ic_profile_active
                 } else {
                     Res.drawable.ic_profile_inactive

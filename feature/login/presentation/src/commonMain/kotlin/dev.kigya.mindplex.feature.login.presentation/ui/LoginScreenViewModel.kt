@@ -27,7 +27,7 @@ class LoginScreenViewModel(
     }
 
     private suspend fun handleFirstLaunch() {
-        getIsUserSignedInUseCase.invoke(None).collect { isSignedIn ->
+        getIsUserSignedInUseCase(None).collect { isSignedIn ->
             if (isSignedIn) {
                 navigatorContract.navigateTo(
                     route = ScreenRoute.HOME,

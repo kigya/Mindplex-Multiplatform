@@ -3,20 +3,27 @@ package dev.kigya.mindplex.core.presentation.feature.contract
 import androidx.compose.runtime.Immutable
 import dev.kigya.mindplex.core.presentation.feature.CopyableComponentState
 import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContract
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 
 interface ScreenHostContract :
     UnidirectionalViewModelContract<ScreenHostContract.State, ScreenHostContract.Event, ScreenHostContract.Effect> {
     @Immutable
     data class State internal constructor(
         val shouldDisplayNavigationBar: Boolean = false,
-        val activeVertical: Vertical = Vertical.HOME,
+        val activeVertical: Vertical = Vertical.Home,
     ) : CopyableComponentState {
 
         @Immutable
-        enum class Vertical(val index: Int) {
-            HOME(HOME_INDEX),
-            LEADERBOARD(LEADERBOARD_INDEX),
-            PROFILE(PROFILE_INDEX),
+        sealed class Vertical(val index: Int) {
+            internal data object Home : Vertical(HOME_INDEX)
+            internal data object Leaderboard : Vertical(LEADERBOARD_INDEX)
+            internal data object Profile : Vertical(PROFILE_INDEX)
+
+            internal fun mapToRoute(): String = when (this) {
+                Home -> ScreenRoute.HOME
+                Leaderboard -> ScreenRoute.LEADERBOARD
+                Profile -> ScreenRoute.PROFILE
+            }
         }
     }
 
