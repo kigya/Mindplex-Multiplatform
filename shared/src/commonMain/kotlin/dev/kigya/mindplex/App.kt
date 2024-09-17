@@ -2,8 +2,10 @@ package dev.kigya.mindplex
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -13,13 +15,18 @@ import coil3.compose.LocalPlatformContext
 import coil3.compose.setSingletonImageLoaderFactory
 import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
 import dev.kigya.mindplex.core.presentation.feature.host.ScreenHost
+import dev.kigya.mindplex.core.presentation.feature.host.ScreenHostViewModel
 import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreen
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreenViewModel
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.LeaderboardScreen
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.LeaderboardScreenViewModel
 import dev.kigya.mindplex.feature.login.presentation.ui.LoginScreen
 import dev.kigya.mindplex.feature.login.presentation.ui.LoginScreenViewModel
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreen
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreenViewModel
+import dev.kigya.mindplex.feature.profile.presentation.ui.ProfileScreen
+import dev.kigya.mindplex.feature.profile.presentation.ui.ProfileScreenViewModel
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreen
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreenViewModel
 import dev.kigya.mindplex.navigation.navigator.destination.Destination
@@ -38,35 +45,52 @@ fun App() {
             val imageLoader = rememberCoilImageLoader()
             setSingletonImageLoaderFactory { imageLoader }
 
-            ScreenHost(navigationController)
+            Box(contentAlignment = Alignment.BottomCenter) {
+                NavHost(
+                    navController = navigationController,
+                    startDestination = ScreenRoute.SPLASH,
+                ) {
+                    composable(
+                        route = Destination.Splash.fullRoute,
+                        enterTransition = { fadeIn() },
+                        exitTransition = { fadeOut() },
+                    ) { SplashScreen(koinViewModel<SplashScreenViewModel>()) }
 
-            NavHost(
-                navController = navigationController,
-                startDestination = ScreenRoute.SPLASH,
-            ) {
-                composable(
-                    route = Destination.Splash.fullRoute,
-                    enterTransition = { fadeIn() },
-                    exitTransition = { fadeOut() },
-                ) { SplashScreen(koinViewModel<SplashScreenViewModel>()) }
+                    composable(
+                        route = Destination.Onboarding.fullRoute,
+                        enterTransition = { fadeIn() },
+                        exitTransition = { fadeOut() },
+                    ) { OnboardingScreen(koinViewModel<OnboardingScreenViewModel>()) }
 
-                composable(
-                    route = Destination.Onboarding.fullRoute,
-                    enterTransition = { fadeIn() },
-                    exitTransition = { fadeOut() },
-                ) { OnboardingScreen(koinViewModel<OnboardingScreenViewModel>()) }
+                    composable(
+                        route = Destination.Login.fullRoute,
+                        enterTransition = { fadeIn() },
+                        exitTransition = { fadeOut() },
+                    ) { LoginScreen(koinViewModel<LoginScreenViewModel>()) }
 
-                composable(
-                    route = Destination.Login.fullRoute,
-                    enterTransition = { fadeIn() },
-                    exitTransition = { fadeOut() },
-                ) { LoginScreen(koinViewModel<LoginScreenViewModel>()) }
+                    composable(
+                        route = Destination.Home.fullRoute,
+                        enterTransition = { fadeIn() },
+                        exitTransition = { fadeOut() },
+                    ) { HomeScreen(koinViewModel<HomeScreenViewModel>()) }
 
-                composable(
-                    route = Destination.Home.fullRoute,
-                    enterTransition = { fadeIn() },
-                    exitTransition = { fadeOut() },
-                ) { HomeScreen(koinViewModel<HomeScreenViewModel>()) }
+                    composable(
+                        route = Destination.Leaderboard.fullRoute,
+                        enterTransition = { fadeIn() },
+                        exitTransition = { fadeOut() },
+                    ) { LeaderboardScreen(koinViewModel<LeaderboardScreenViewModel>()) }
+
+                    composable(
+                        route = Destination.Profile.fullRoute,
+                        enterTransition = { fadeIn() },
+                        exitTransition = { fadeOut() },
+                    ) { ProfileScreen(koinViewModel<ProfileScreenViewModel>()) }
+                }
+
+                ScreenHost(
+                    navigationController = navigationController,
+                    contract = koinViewModel<ScreenHostViewModel>(),
+                )
             }
         }
     }

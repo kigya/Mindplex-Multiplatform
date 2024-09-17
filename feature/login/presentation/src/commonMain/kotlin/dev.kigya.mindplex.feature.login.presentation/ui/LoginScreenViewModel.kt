@@ -1,6 +1,5 @@
 package dev.kigya.mindplex.feature.login.presentation.ui
 
-import androidx.annotation.CheckResult
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
@@ -17,17 +16,18 @@ class LoginScreenViewModel(
     private val getIsUserSignedInUseCase: GetIsUserSignedInUseCase,
 ) : BaseViewModel<LoginContract.State, LoginContract.Effect>(LoginContract.State()), LoginContract {
 
-    @CheckResult
     override fun handleEvent(event: LoginContract.Event) = withUseCaseScope {
-        when (event) {
-            is LoginContract.Event.OnFirstLaunch -> handleFirstLaunch()
-            is LoginContract.Event.OnGoogleSignInResultReceived -> event.handleGoogleSignInResult()
-            is LoginContract.Event.OnErrorStubClicked -> handleErrorStubClick()
+        event.run {
+            when (this) {
+                is LoginContract.Event.OnFirstLaunch -> handleFirstLaunch()
+                is LoginContract.Event.OnGoogleSignInResultReceived -> handleGoogleSignInResult()
+                is LoginContract.Event.OnErrorStubClicked -> handleErrorStubClick()
+            }
         }
     }
 
     private suspend fun handleFirstLaunch() {
-        getIsUserSignedInUseCase.invoke(None).collect { isSignedIn ->
+        getIsUserSignedInUseCase(None).collect { isSignedIn ->
             if (isSignedIn) {
                 navigatorContract.navigateTo(
                     route = ScreenRoute.HOME,

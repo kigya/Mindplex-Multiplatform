@@ -1,15 +1,18 @@
 package dev.kigya.mindplex.navigation.navigator.intent
 
-sealed class NavigationIntent {
+sealed class NavigationIntent(
+    open val route: String?,
+    open val inclusive: Boolean,
+) {
     data class NavigateBack(
-        val route: String? = null,
-        val inclusive: Boolean = false,
-    ) : NavigationIntent()
+        override val route: String? = null,
+        override val inclusive: Boolean = false,
+    ) : NavigationIntent(route, inclusive)
 
     data class NavigateTo(
-        val route: String,
+        override val route: String,
+        override val inclusive: Boolean = false,
         val popUpToRoute: String? = null,
-        val inclusive: Boolean = false,
         val isSingleTop: Boolean = false,
-    ) : NavigationIntent()
+    ) : NavigationIntent(route, inclusive)
 }

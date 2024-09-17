@@ -1,9 +1,11 @@
 package dev.kigya.mindplex.core.presentation.feature
 
 import androidx.annotation.AnyThread
+import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.kigya.mindplex.core.domain.interactor.runner.CoroutineUseCaseRunner
+import dev.kigya.mindplex.core.util.annotation.MarkerInterface
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.Flow
@@ -12,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 
+@MarkerInterface
 interface CopyableComponentState
 
 abstract class BaseViewModel<STATE, EFFECT>(
@@ -28,6 +31,7 @@ abstract class BaseViewModel<STATE, EFFECT>(
     @AnyThread
     protected fun updateState(transform: STATE.() -> STATE) = _state.update { it.transform() }
 
+    @AnyThread
     protected fun getState(): STATE = _state.value
 
     @AnyThread
@@ -35,7 +39,9 @@ abstract class BaseViewModel<STATE, EFFECT>(
         _effect.trySend(effect)
     }
 
+    @CallSuper
     override fun onCleared() {
         _effect.cancel()
+        super.onCleared()
     }
 }

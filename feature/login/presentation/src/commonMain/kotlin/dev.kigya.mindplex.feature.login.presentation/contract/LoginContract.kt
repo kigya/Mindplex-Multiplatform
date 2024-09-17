@@ -16,7 +16,9 @@ interface LoginContract :
     @Immutable
     sealed class Event {
         internal data object OnFirstLaunch : Event()
+
         internal data class OnGoogleSignInResultReceived(val googleUser: GoogleUser?) : Event()
+
         internal data object OnErrorStubClicked : Event()
     }
 

@@ -49,6 +49,12 @@ include(
     ":feature:login:domain",
     ":feature:login:data",
     ":feature:login:presentation",
+    ":feature:leaderboard:domain",
+    ":feature:leaderboard:data",
+    ":feature:leaderboard:presentation",
+    ":feature:profile:domain",
+    ":feature:profile:data",
+    ":feature:profile:presentation",
 
     // Navigation Modules
     ":navigation:internal",

@@ -15,8 +15,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.math.absoluteValue
 
-private const val DOUBLE_SCALE = 2.0f
-private const val DEFAULT_SCALE = 1.0f
+private const val DOUBLE_JUMPING_SCALE = 2.0f
+private const val DEFAULT_JUMPING_SCALE = 1.0f
+private const val SHIFT_CLICK_TARGET_TRANSLATION = 20f
+private const val SHIFT_CLICK_DEFAULT_TRANSLATION = 0f
 
 /**
  * Adds a jumping dot transition effect to a modifier.
@@ -35,20 +37,17 @@ fun Modifier.jumpingDotTransition(
     val scrollPosition = currentPage + currentPageOffsetFraction
     translationX = scrollPosition * distance
 
-    val targetScale = jumpScale - DEFAULT_SCALE
-    val currentPageOffsetFractionAbs = currentPageOffsetFraction.absoluteValue * DOUBLE_SCALE
-    val scale = if (currentPageOffsetFractionAbs < DEFAULT_SCALE) {
-        DEFAULT_SCALE + currentPageOffsetFractionAbs * targetScale
+    val targetScale = jumpScale - DEFAULT_JUMPING_SCALE
+    val currentPageOffsetFractionAbs = currentPageOffsetFraction.absoluteValue * DOUBLE_JUMPING_SCALE
+    val scale = if (currentPageOffsetFractionAbs < DEFAULT_JUMPING_SCALE) {
+        DEFAULT_JUMPING_SCALE + currentPageOffsetFractionAbs * targetScale
     } else {
-        jumpScale + (DEFAULT_SCALE - currentPageOffsetFractionAbs) * targetScale
+        jumpScale + (DEFAULT_JUMPING_SCALE - currentPageOffsetFractionAbs) * targetScale
     }
 
     scaleX = scale
     scaleY = scale
 }
-
-private const val SHIFT_CLICK_TARGET_TRANSLATION = 20f
-private const val SHIFT_CLICK_DEFAULT_TRANSLATION = 0f
 
 enum class ShiftClickButtonState { Pressed, Idle }
 

@@ -16,6 +16,7 @@ data class MindplexDimension internal constructor(
     val dp8: Dp = 8.dp,
     val dp12: Dp = 12.dp,
     val dp16: Dp = 16.dp,
+    val dp20: Dp = 20.dp,
     val dp24: Dp = 24.dp,
     val dp36: Dp = 36.dp,
     val dp48: Dp = 48.dp,

@@ -32,6 +32,12 @@ kotlin {
                     implementation(home.data)
                     implementation(home.domain)
                     implementation(home.presentation)
+                    implementation(profile.data)
+                    implementation(profile.domain)
+                    implementation(profile.presentation)
+                    implementation(leaderboard.data)
+                    implementation(leaderboard.domain)
+                    implementation(leaderboard.presentation)
                 }
                 with(core) {
                     implementation(data.connectivity)

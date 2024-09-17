@@ -59,7 +59,7 @@ class HomeScreenViewModel(
 
         parZipOrAccumulate(
             fa = { getUserProfileUseCase(None) },
-            fb = { getFactsUseCase(GetFactsUseCase.Params(FACTS_AMOUNT)) },
+            fb = { getFactsUseCase(GetFactsUseCase.Params(HomeContract.FACTS_AMOUNT)) },
             onSuccess = { profile, facts ->
                 updateState {
                     copy(
@@ -148,7 +148,6 @@ class HomeScreenViewModel(
     }
 
     private companion object {
-        const val FACTS_AMOUNT = 3
         const val PAGER_AUTOSCROLL_DELAY = 5000L
     }
 }

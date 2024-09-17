@@ -1,7 +1,9 @@
 package dev.kigya.mindplex.core.util.extension
 
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -24,3 +26,6 @@ fun <T> ImmutableList<T>.update(
         if (i == index) transform(item) else item
     }.toImmutableList()
 }
+
+fun <T, R> ImmutableList<T>.mapPersistent(transform: (T) -> R): PersistentList<R> =
+    this.map(transform).toPersistentList()

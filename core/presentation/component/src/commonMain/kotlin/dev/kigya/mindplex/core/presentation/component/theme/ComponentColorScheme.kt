@@ -75,3 +75,17 @@ internal val MindplexColorScheme.componentButtonDisabledContent
         light = MindplexTheme.color.iris70,
         dark = MindplexTheme.color.iris80,
     )
+
+internal val MindplexColorScheme.componentNavigationBarBackground
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.white,
+        dark = MindplexTheme.color.white,
+    )
+
+internal val MindplexColorScheme.componentNavigationBarBall
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.iris70,
+        dark = MindplexTheme.color.white,
+    )

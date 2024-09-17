@@ -47,6 +47,7 @@ import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.extension.ifNotEmpty
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingBackground
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingButton
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingDescription
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingNextButtonContainer
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingNextButtonContent
@@ -263,6 +264,7 @@ private fun ColumnScope.OnboardingButtons(
                             .fillMaxWidth()
                             .testTag("onboarding_skip_button_$page"),
                         labelText = stringResource(skipResource),
+                        textStyle = MindplexTheme.typography.onboardingButton,
                         contentColor = MindplexTheme.colorScheme.onboardingSkipButtonContent,
                     ) {
                         event(OnboardingContract.Event.OnSkipClicked)
@@ -279,6 +281,7 @@ private fun ColumnScope.OnboardingButtons(
                         .weight(1f)
                         .testTag("onboarding_next_button_$page"),
                     labelText = stringResource(nextResource),
+                    textStyle = MindplexTheme.typography.onboardingButton,
                     containerColor = MindplexTheme.colorScheme.onboardingNextButtonContainer,
                     contentColor = MindplexTheme.colorScheme.onboardingNextButtonContent,
                 ) {

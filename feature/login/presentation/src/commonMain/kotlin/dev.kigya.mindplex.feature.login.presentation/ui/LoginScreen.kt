@@ -29,6 +29,7 @@ import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.dsl.ifPresentOrElse
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
 import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginBackground
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginButton
 import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginMindplexIcon
 import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginSignInButtonContainer
 import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginSignInButtonContent
@@ -116,6 +117,7 @@ private fun ColumnScope.LoginSection(event: (LoginContract.Event) -> Unit) {
                 .testTag("google_sign_in_button"),
             startIcon = { MindplexIcon(drawableResource = Res.drawable.ic_google) },
             labelText = stringResource(Res.string.login_continue_with_google),
+            textStyle = MindplexTheme.typography.loginButton,
             contentColor = MindplexTheme.colorScheme.loginSignInButtonContent,
             containerColor = MindplexTheme.colorScheme.loginSignInButtonContainer,
             onClick = {

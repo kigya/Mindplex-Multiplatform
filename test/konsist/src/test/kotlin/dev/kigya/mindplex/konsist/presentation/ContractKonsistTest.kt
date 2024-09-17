@@ -56,7 +56,7 @@ internal class ContractKonsistTest {
     @Test
     fun `every feature contract should be placed inside contract package`() =
         contracts.assertTrue { koClassContract ->
-            koClassContract.resideInPackage("dev.kigya.mindplex.feature..contract")
+            koClassContract.resideInPackage("dev.kigya.mindplex..feature..contract")
         }
 
     @Test

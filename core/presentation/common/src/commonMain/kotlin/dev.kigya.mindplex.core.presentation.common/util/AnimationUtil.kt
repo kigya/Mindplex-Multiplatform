@@ -24,3 +24,9 @@ fun fadeSlideScaleContentTransitionSpec(): ContentTransform =
         targetScale = 0.8f,
         animationSpec = tween(),
     )
+
+fun lerp(
+    start: Float,
+    stop: Float,
+    fraction: Float,
+) = start * (1 - fraction) + stop * fraction
