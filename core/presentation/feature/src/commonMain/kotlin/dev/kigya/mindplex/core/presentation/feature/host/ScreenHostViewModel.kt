@@ -48,7 +48,7 @@ class ScreenHostViewModel(
             updateState {
                 val targetRoute = this@handleNewRouteReceive.route
                 copy(
-                    shouldDisplayNavigationBar = targetRoute.isNullOrEmpty().not() &&
+                    shouldDisplayNavigationBar = targetRoute != null &&
                         targetRoute in ALLOWED_NAVIGATION_BAR_ROUTES,
                 )
             }
@@ -57,9 +57,9 @@ class ScreenHostViewModel(
 
     private companion object {
         val ALLOWED_NAVIGATION_BAR_ROUTES = setOf(
-            ScreenRoute.HOME,
-            ScreenRoute.LEADERBOARD,
-            ScreenRoute.PROFILE,
+            ScreenRoute.Home,
+            ScreenRoute.Leaderboard,
+            ScreenRoute.Profile,
         )
         const val NAVIGATION_BAR_DELAY = 1000L
     }

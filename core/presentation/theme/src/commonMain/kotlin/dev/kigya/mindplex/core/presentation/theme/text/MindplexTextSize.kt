@@ -18,4 +18,4 @@ data class MindplexTextSize internal constructor(
     val sp36: TextUnit = 36.sp,
 )
 
-internal val LocalTextSize = staticCompositionLocalOf { MindplexTextSize() }
+internal val LocalTextSize = staticCompositionLocalOf(::MindplexTextSize)

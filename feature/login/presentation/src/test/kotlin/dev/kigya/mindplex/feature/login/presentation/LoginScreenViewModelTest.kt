@@ -84,8 +84,8 @@ class LoginScreenViewModelTest {
             // Then
             coVerify {
                 navigatorContract.navigateTo(
-                    route = ScreenRoute.HOME,
-                    popUpToRoute = ScreenRoute.SPLASH,
+                    route = ScreenRoute.Home,
+                    popUpToRoute = ScreenRoute.Splash,
                     inclusive = true,
                 )
             }
@@ -239,8 +239,8 @@ class LoginScreenViewModelTest {
             // Then
             coVerify {
                 navigatorContract.navigateTo(
-                    route = ScreenRoute.HOME,
-                    popUpToRoute = ScreenRoute.SPLASH,
+                    route = ScreenRoute.Home,
+                    popUpToRoute = ScreenRoute.Splash,
                     inclusive = true,
                 )
             }
@@ -303,8 +303,8 @@ class LoginScreenViewModelTest {
             // Then
             coVerify(exactly = 0) {
                 navigatorContract.navigateTo(
-                    route = ScreenRoute.HOME,
-                    popUpToRoute = ScreenRoute.SPLASH,
+                    route = ScreenRoute.Home,
+                    popUpToRoute = ScreenRoute.Splash,
                     inclusive = true,
                 )
             }

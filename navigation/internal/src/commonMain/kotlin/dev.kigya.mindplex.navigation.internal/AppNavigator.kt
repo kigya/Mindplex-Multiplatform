@@ -2,6 +2,7 @@ package dev.kigya.mindplex.navigation.internal
 
 import dev.kigya.mindplex.navigation.navigator.intent.NavigationIntent
 import dev.kigya.mindplex.navigation.navigator.navigator.AppNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 
@@ -13,7 +14,7 @@ class AppNavigator : AppNavigatorContract {
         )
 
     override suspend fun navigateBack(
-        route: String?,
+        route: ScreenRoute?,
         inclusive: Boolean,
     ) {
         navigationChannel.send(
@@ -25,7 +26,7 @@ class AppNavigator : AppNavigatorContract {
     }
 
     override fun tryNavigateBack(
-        route: String?,
+        route: ScreenRoute?,
         inclusive: Boolean,
     ) {
         navigationChannel.trySend(
@@ -37,8 +38,8 @@ class AppNavigator : AppNavigatorContract {
     }
 
     override suspend fun navigateTo(
-        route: String,
-        popUpToRoute: String?,
+        route: ScreenRoute,
+        popUpToRoute: ScreenRoute?,
         inclusive: Boolean,
         isSingleTop: Boolean,
     ) {
@@ -53,8 +54,8 @@ class AppNavigator : AppNavigatorContract {
     }
 
     override fun tryNavigateTo(
-        route: String,
-        popUpToRoute: String?,
+        route: ScreenRoute,
+        popUpToRoute: ScreenRoute?,
         inclusive: Boolean,
         isSingleTop: Boolean,
     ) {

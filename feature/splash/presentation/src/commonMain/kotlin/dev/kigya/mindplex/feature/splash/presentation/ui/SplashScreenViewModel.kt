@@ -38,13 +38,13 @@ class SplashScreenViewModel(
                 updateState { copy(shouldDisplayText = true) }
                 delay(POST_ANIMATION_DELAY)
                 val route = when {
-                    _isOnboardingCompleted.value == false -> ScreenRoute.ONBOARDING
-                    _isUserSignedIn.value == false -> ScreenRoute.LOGIN
-                    else -> ScreenRoute.HOME
+                    _isOnboardingCompleted.value == false -> ScreenRoute.Onboarding
+                    _isUserSignedIn.value == false -> ScreenRoute.Login
+                    else -> ScreenRoute.Home
                 }
                 navigatorContract.navigateTo(
                     route = route,
-                    popUpToRoute = ScreenRoute.SPLASH,
+                    popUpToRoute = ScreenRoute.Splash,
                     inclusive = true,
                 )
             }

@@ -143,8 +143,8 @@ class OnboardingScreenViewModelTest {
             coVerify { setOnboardingCompletedUseCase(None) }
             coVerify {
                 navigatorContract.navigateTo(
-                    route = ScreenRoute.LOGIN,
-                    popUpToRoute = ScreenRoute.SPLASH,
+                    route = ScreenRoute.Login,
+                    popUpToRoute = ScreenRoute.Splash,
                     inclusive = true,
                 )
             }
@@ -166,8 +166,8 @@ class OnboardingScreenViewModelTest {
             coVerify { setOnboardingCompletedUseCase(None) }
             coVerify {
                 navigatorContract.navigateTo(
-                    route = ScreenRoute.LOGIN,
-                    popUpToRoute = ScreenRoute.SPLASH,
+                    route = ScreenRoute.Login,
+                    popUpToRoute = ScreenRoute.Splash,
                     inclusive = true,
                 )
             }

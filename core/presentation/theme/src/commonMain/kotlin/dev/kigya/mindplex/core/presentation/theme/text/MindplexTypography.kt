@@ -8,4 +8,4 @@ import androidx.compose.runtime.staticCompositionLocalOf
 @Immutable
 class MindplexTypography internal constructor()
 
-internal val LocalTypography = staticCompositionLocalOf { MindplexTypography() }
+internal val LocalTypography = staticCompositionLocalOf(::MindplexTypography)

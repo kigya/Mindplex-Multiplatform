@@ -23,4 +23,4 @@ data class MindplexDimension internal constructor(
     val dp64: Dp = 64.dp,
 )
 
-internal val LocalDimension = staticCompositionLocalOf { MindplexDimension() }
+internal val LocalDimension = staticCompositionLocalOf(::MindplexDimension)

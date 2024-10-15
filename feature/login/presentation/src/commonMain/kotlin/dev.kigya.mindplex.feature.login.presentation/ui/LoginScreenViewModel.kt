@@ -30,8 +30,8 @@ class LoginScreenViewModel(
         getIsUserSignedInUseCase(None).collect { isSignedIn ->
             if (isSignedIn) {
                 navigatorContract.navigateTo(
-                    route = ScreenRoute.HOME,
-                    popUpToRoute = ScreenRoute.SPLASH,
+                    route = ScreenRoute.Home,
+                    popUpToRoute = ScreenRoute.Splash,
                     inclusive = true,
                 )
             }

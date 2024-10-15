@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -267,6 +268,7 @@ private fun FactsPager(
         MindplexHorizontalPager(
             modifier = Modifier
                 .fillMaxWidth()
+                .wrapContentHeight()
                 .testTag("home_pager"),
             pagerState = pagerState,
             pageSpacing = MindplexTheme.dimension.dp16,
