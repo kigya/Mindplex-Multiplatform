@@ -19,10 +19,10 @@ interface ScreenHostContract :
             internal data object Leaderboard : Vertical(LEADERBOARD_INDEX)
             internal data object Profile : Vertical(PROFILE_INDEX)
 
-            internal fun mapToRoute(): String = when (this) {
-                Home -> ScreenRoute.HOME
-                Leaderboard -> ScreenRoute.LEADERBOARD
-                Profile -> ScreenRoute.PROFILE
+            internal fun mapToRoute(): ScreenRoute = when (this) {
+                Home -> ScreenRoute.Home
+                Leaderboard -> ScreenRoute.Leaderboard
+                Profile -> ScreenRoute.Profile
             }
         }
     }
@@ -35,7 +35,7 @@ interface ScreenHostContract :
 
         internal data object OnProfileVerticalClicked : Event()
 
-        internal data class OnNewRouteReceived(val route: String?) : Event()
+        internal data class OnNewRouteReceived(val route: ScreenRoute?) : Event()
     }
 
     @Immutable

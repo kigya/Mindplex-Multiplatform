@@ -122,8 +122,8 @@ class SplashScreenViewModelTest {
         // Then
         coVerify {
             navigatorContract.navigateTo(
-                route = ScreenRoute.ONBOARDING,
-                popUpToRoute = ScreenRoute.SPLASH,
+                route = ScreenRoute.Onboarding,
+                popUpToRoute = ScreenRoute.Splash,
                 inclusive = true,
             )
         }
@@ -147,8 +147,8 @@ class SplashScreenViewModelTest {
             // Then
             coVerify {
                 navigatorContract.navigateTo(
-                    route = ScreenRoute.LOGIN,
-                    popUpToRoute = ScreenRoute.SPLASH,
+                    route = ScreenRoute.Login,
+                    popUpToRoute = ScreenRoute.Splash,
                     inclusive = true,
                 )
             }
@@ -172,8 +172,8 @@ class SplashScreenViewModelTest {
             // Then
             coVerify {
                 navigatorContract.navigateTo(
-                    route = ScreenRoute.HOME,
-                    popUpToRoute = ScreenRoute.SPLASH,
+                    route = ScreenRoute.Home,
+                    popUpToRoute = ScreenRoute.Splash,
                     inclusive = true,
                 )
             }

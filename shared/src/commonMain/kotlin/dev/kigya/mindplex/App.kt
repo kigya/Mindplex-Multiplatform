@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -29,10 +30,9 @@ import dev.kigya.mindplex.feature.profile.presentation.ui.ProfileScreen
 import dev.kigya.mindplex.feature.profile.presentation.ui.ProfileScreenViewModel
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreen
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreenViewModel
-import dev.kigya.mindplex.navigation.navigator.destination.Destination
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import org.koin.compose.KoinContext
-import org.koin.compose.rememberCurrentKoinScope
+import org.koin.compose.currentKoinScope
 import org.koin.core.parameter.parametersOf
 
 @OptIn(ExperimentalCoilApi::class)
@@ -48,43 +48,31 @@ fun App() {
             Box(contentAlignment = Alignment.BottomCenter) {
                 NavHost(
                     navController = navigationController,
-                    startDestination = ScreenRoute.SPLASH,
+                    startDestination = ScreenRoute.Splash,
                 ) {
-                    composable(
-                        route = Destination.Splash.fullRoute,
-                        enterTransition = { fadeIn() },
-                        exitTransition = { fadeOut() },
-                    ) { SplashScreen(koinViewModel<SplashScreenViewModel>()) }
+                    animatedComposable<ScreenRoute.Splash> {
+                        SplashScreen(koinViewModel<SplashScreenViewModel>())
+                    }
 
-                    composable(
-                        route = Destination.Onboarding.fullRoute,
-                        enterTransition = { fadeIn() },
-                        exitTransition = { fadeOut() },
-                    ) { OnboardingScreen(koinViewModel<OnboardingScreenViewModel>()) }
+                    animatedComposable<ScreenRoute.Onboarding> {
+                        OnboardingScreen(koinViewModel<OnboardingScreenViewModel>())
+                    }
 
-                    composable(
-                        route = Destination.Login.fullRoute,
-                        enterTransition = { fadeIn() },
-                        exitTransition = { fadeOut() },
-                    ) { LoginScreen(koinViewModel<LoginScreenViewModel>()) }
+                    animatedComposable<ScreenRoute.Login> {
+                        LoginScreen(koinViewModel<LoginScreenViewModel>())
+                    }
 
-                    composable(
-                        route = Destination.Home.fullRoute,
-                        enterTransition = { fadeIn() },
-                        exitTransition = { fadeOut() },
-                    ) { HomeScreen(koinViewModel<HomeScreenViewModel>()) }
+                    animatedComposable<ScreenRoute.Home> {
+                        HomeScreen(koinViewModel<HomeScreenViewModel>())
+                    }
 
-                    composable(
-                        route = Destination.Leaderboard.fullRoute,
-                        enterTransition = { fadeIn() },
-                        exitTransition = { fadeOut() },
-                    ) { LeaderboardScreen(koinViewModel<LeaderboardScreenViewModel>()) }
+                    animatedComposable<ScreenRoute.Leaderboard> {
+                        LeaderboardScreen(koinViewModel<LeaderboardScreenViewModel>())
+                    }
 
-                    composable(
-                        route = Destination.Profile.fullRoute,
-                        enterTransition = { fadeIn() },
-                        exitTransition = { fadeOut() },
-                    ) { ProfileScreen(koinViewModel<ProfileScreenViewModel>()) }
+                    animatedComposable<ScreenRoute.Profile> {
+                        ProfileScreen(koinViewModel<ProfileScreenViewModel>())
+                    }
                 }
 
                 ScreenHost(
@@ -96,9 +84,16 @@ fun App() {
     }
 }
 
+private inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
+    crossinline screen: @Composable () -> Unit,
+) = composable<T>(
+    enterTransition = { fadeIn() },
+    exitTransition = { fadeOut() },
+) { screen() }
+
 @Composable
 private fun rememberCoilImageLoader(): ImageLoader {
-    val koinScope = rememberCurrentKoinScope()
+    val koinScope = currentKoinScope()
     val context = LocalPlatformContext.current
     return remember { koinScope.getKoin().get<ImageLoader> { parametersOf(context) } }
 }

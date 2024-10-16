@@ -26,4 +26,4 @@ data class MindplexColor internal constructor(
     val crayola: Color = Color(0xFFFF4B4F),
 )
 
-internal val LocalColor = staticCompositionLocalOf { MindplexColor() }
+internal val LocalColor = staticCompositionLocalOf(::MindplexColor)

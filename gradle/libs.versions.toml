@@ -1,76 +1,74 @@
 [versions]
 # Basic Environment Setup
 java = { strictly = "17" }
-min-sdk = { strictly = "28" }
-compile-sdk = { strictly = "35" }
-target-sdk = { strictly = "35" }
+minSdk = { strictly = "28" }
+compileSdk = { strictly = "35" }
+targetSdk = { strictly = "35" }
 
 # Gradle and Kotlin
-agp = { require = "8.5.0" }
-kotlin = { strictly = "2.0.20" }
-ksp = { strictly = "2.0.20-1.0.24" }
+agp = { require = "8.5.2" }
+kotlin = { strictly = "2.0.21" }
+ksp = { strictly = "2.0.21-1.0.25" }
 
 # Serialization and Collections
-kotlinx-serialization = { require = "1.7.1" }
-kotlinx-collections-immutable = { require = "0.3.7" }
+kotlinxSerialization = { require = "1.7.1" }
+kotlinxCollectionsImmutable = { require = "0.3.7" }
 
 # Compose and Lifecycle Versions
-compose-activity = { require = "1.9.1" }
-compose-multiplatform = { require = "1.7.0-alpha03" }
-compose-test = { strictly = "1.7.0-rc01" }
-compose-navigation = { require = "2.8.0-alpha02" }
-compose-shimmer = { require = "1.3.0" }
-lifecycle = { require = "2.9.0-alpha01" }
+composeActivity = { require = "1.9.2" }
+composeMultiplatform = { require = "1.7.0-alpha03" }
+composeTest = { strictly = "1.7.3" }
+composeNavigation = { require = "2.8.0-alpha08" }
+composeShimmer = { require = "1.3.0" }
+lifecycle = { require = "2.9.0-alpha04" }
 
 # Compottie
 compottie = { require = "1.1.2" }
 
 # DI and Service Frameworks
-koin = { strictly = "3.5.6" }
-koin-compose = { require = "3.6.0-alpha3" }
-koin-compose-multiplatform = { strictly = "1.1.5" }
+koin = { strictly = "4.0.0" }
 
 # Network
 ktor = { require = "3.0.0-beta-2" }
 napier = { prefer = "2.7.1" }
 
 # Local Storage
-data-store = { require = "1.1.1" }
-room = { strictly = "2.7.0-alpha07" }
-sqlite = { strictly = "2.5.0-alpha07" }
+dataStore = { require = "1.1.1" }
+room = { strictly = "2.7.0-alpha09" }
+sqlite = { strictly = "2.5.0-alpha09" }
 
 # Coroutines for Async Programming
-coroutines = { require = "1.9.0-RC" }
+coroutines = { require = "1.9.0" }
 
 # Tests
 konsist = { prefer = "0.15.1" }
 junit = { prefer = "5.11.0-M1" }
 turbine = { prefer = "1.1.0" }
 assertk = { prefer = "0.28.1" }
-core-ktx = { prefer = "1.6.1" }
+coreKtx = { prefer = "1.6.1" }
 mockk = { prefer = "1.13.10" }
 robolectric = { prefer = "4.12" }
 
 # Detekt
 detekt = { require = "1.23.6" }
-detekt-compose = { require = "1.3.0" }
+detektCompose = { require = "1.3.0" }
 
 # Auth
-kmpAuth = { require = "2.0.0" }
+kmpAuth = { require = "2.1.0" }
 
 # Connectivity
 connectivity = { require = "1.1.2" }
 
 #Annotation
-annotation = { strictly = "1.9.0-alpha02" }
+annotation = { strictly = "1.9.0-rc01" }
 
 # Firebase
-google-services = { require = "4.4.2" }
-firebase-extension = { require = "21.0.0" }
-gitlive = { require = "2.0.0" }
+googleServices = { require = "4.4.2" }
+firebaseExtension = { require = "21.0.0" }
+gitlive = { require = "2.1.0" }
 
 # Parser
-jwt-parser = { require = "1.0.0" }
+jwtParser = { require = "1.0.0" }
 
 # Image
 coil = { prefer = "3.0.0-alpha10" }
@@ -79,13 +77,13 @@ coil = { prefer = "3.0.0-alpha10" }
 arrow = { require = "2.0.0-alpha.3" }
 
 # Time
-kotlinx-datetime = { prefer = "0.6.0" }
+kotlinxDatetime = { prefer = "0.6.1" }
 
 [libraries]
 # Compose Libraries
-compose-android-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
-compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
-compose-shimmer = { module = "com.valentinilk.shimmer:compose-shimmer", version.ref = "compose-shimmer" }
+compose-android-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
+compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
+compose-shimmer = { module = "com.valentinilk.shimmer:compose-shimmer", version.ref = "composeShimmer" }
 lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
@@ -95,9 +93,9 @@ lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", versi
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 
 # Storage Libraries
-dataStore-core = { module = "androidx.datastore:datastore-core", version.ref = "data-store" }
-dataStore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "data-store" }
-dataStore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "data-store" }
+dataStore-core = { module = "androidx.datastore:datastore-core", version.ref = "dataStore" }
+dataStore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
+dataStore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "dataStore" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
@@ -108,8 +106,8 @@ compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "comp
 # Koin Dependency Injection Libraries
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-compose" }
-koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose-multiplatform" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 
 # Network Libraries
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -127,8 +125,8 @@ detekt-plugins-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-forma
 detekt-plugins-compose = { module = "io.nlopez.compose.rules:detekt", version = "0.3.13" }
 
 # Serialization and Immutable Collections Libraries
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 
 # Test Libraries
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
@@ -137,9 +135,9 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assertk" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-compose-ui-test-junit4-android = { module = "androidx.compose.ui:ui-test-junit4-android", version.ref = "compose-test" }
-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-test" }
-core-ktx = { module = "androidx.test:core-ktx", version.ref = "core-ktx" }
+compose-ui-test-junit4-android = { module = "androidx.compose.ui:ui-test-junit4-android", version.ref = "composeTest" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "composeTest" }
+core-ktx = { module = "androidx.test:core-ktx", version.ref = "coreKtx" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 
 # Auth
@@ -153,12 +151,12 @@ connectivity-device = { module = "dev.jordond.connectivity:connectivity-device",
 annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
 
 # Firebase
-firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx", version.ref = "firebase-extension" }
+firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx", version.ref = "firebaseExtension" }
 firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = "gitlive" }
 firebase-common = { module = "dev.gitlive:firebase-common", version.ref = "gitlive" }
 
 # Encoding
-jwt-parser = { module = "io.github.jmseb3:simpleJwtParser", version.ref = "jwt-parser" }
+jwt-parser = { module = "io.github.jmseb3:simpleJwtParser", version.ref = "jwtParser" }
 
 # Image
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
@@ -172,7 +170,7 @@ arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref = "arrow" }
 
 # Time
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 
 # Gradle Plugins
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -180,7 +178,7 @@ gradle-kotlin-multiplatform = { module = "org.jetbrains.kotlin.multiplatform:org
 gradle-kotlinx-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 gradle-ksp = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 gradle-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-gradle-compose = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose-multiplatform" }
+gradle-compose = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "composeMultiplatform" }
 gradle-compose-compiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 gradle-koin = { module = "io.insert-koin:koin-gradle-plugin", version.ref = "koin" }
 gradle-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
@@ -201,11 +199,11 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-compose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+compose = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 room = { id = "androidx.room", version.ref = "room" }
 

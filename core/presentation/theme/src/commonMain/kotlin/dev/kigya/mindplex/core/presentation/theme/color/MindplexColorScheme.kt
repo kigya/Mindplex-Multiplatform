@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 @Immutable
 class MindplexColorScheme internal constructor()
 
-internal val LocalColorScheme = staticCompositionLocalOf { MindplexColorScheme() }
+internal val LocalColorScheme = staticCompositionLocalOf(::MindplexColorScheme)
 
 @Immutable
 data class MindplexDynamicColor(
