@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import dev.kigya.mindplex.core.presentation.component.theme.componentErrorStubButton
 import dev.kigya.mindplex.core.presentation.component.theme.componentErrorStubButtonContainer
 import dev.kigya.mindplex.core.presentation.component.theme.componentErrorStubButtonContent
 import dev.kigya.mindplex.core.presentation.component.theme.componentErrorStubTitle
@@ -61,6 +62,7 @@ fun MindplexErrorStub(
         MindplexSpacer(size = MindplexTheme.dimension.dp24)
         MindplexButton(
             labelText = stringResource(Res.string.core_error_retry_button_text),
+            textStyle = MindplexTheme.typography.componentErrorStubButton,
             contentColor = MindplexTheme.colorScheme.componentErrorStubButtonContent,
             containerColor = MindplexTheme.colorScheme.componentErrorStubButtonContainer,
             contentPadding = PaddingValues(

@@ -21,7 +21,7 @@ dependencyResolutionManagement {
 
 includeBuild("build-logic")
 
-// Core Modules
+// Modules
 include(
 
     // Core Modules

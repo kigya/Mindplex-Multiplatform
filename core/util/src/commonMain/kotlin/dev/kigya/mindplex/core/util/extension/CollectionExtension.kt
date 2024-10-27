@@ -1,7 +1,6 @@
 package dev.kigya.mindplex.core.util.extension
 
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlin.contracts.ExperimentalContracts
@@ -27,5 +26,12 @@ fun <T> ImmutableList<T>.update(
     }.toImmutableList()
 }
 
-fun <T, R> ImmutableList<T>.mapPersistent(transform: (T) -> R): PersistentList<R> =
+fun <T, R> ImmutableList<T>.mapPersistent(transform: (T) -> R): ImmutableList<R> =
     this.map(transform).toPersistentList()
+
+fun <T> ImmutableList<T>.getPagingData(
+    page: Int,
+    itemsPerPage: Int,
+): ImmutableList<T> = drop(page * itemsPerPage)
+    .take(itemsPerPage)
+    .toImmutableList()

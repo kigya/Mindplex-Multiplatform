@@ -109,3 +109,20 @@ suspend fun <E, A, B, Z> parZipOrAccumulate(
         ifRight = { },
     )
 }
+
+@OptIn(ExperimentalContracts::class)
+inline fun <T1, T2, R> invokeIfPresent(
+    p1: T1?,
+    p2: T2?,
+    block: (T1, T2) -> R,
+): R? {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        returnsNotNull() implies (p1 != null && p2 != null)
+    }
+    return if (p1 != null && p2 != null) {
+        block(p1, p2)
+    } else {
+        null
+    }
+}

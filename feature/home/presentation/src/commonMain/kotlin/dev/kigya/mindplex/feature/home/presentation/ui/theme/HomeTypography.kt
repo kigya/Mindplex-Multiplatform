@@ -53,3 +53,27 @@ internal val MindplexTypography.homeModesCardDescription
         fontWeight = FontWeight.Normal,
         fontFamily = MindplexTheme.font.rubik,
     )
+
+internal val MindplexTypography.categorySelectionTitle
+    @Composable
+    get() = TextStyle(
+        fontSize = MindplexTheme.textSize.sp12,
+        fontWeight = FontWeight.Medium,
+        fontFamily = MindplexTheme.font.rubik,
+    )
+
+internal val MindplexTypography.categorySelectionItem
+    @Composable
+    get() = TextStyle(
+        fontSize = MindplexTheme.textSize.sp14,
+        fontWeight = FontWeight.Medium,
+        fontFamily = MindplexTheme.font.rubik,
+    )
+
+internal val MindplexTypography.categorySelectionButton
+    @Composable
+    get() = TextStyle(
+        fontSize = MindplexTheme.textSize.sp16,
+        fontWeight = FontWeight.Medium,
+        fontFamily = MindplexTheme.font.rubik,
+    )

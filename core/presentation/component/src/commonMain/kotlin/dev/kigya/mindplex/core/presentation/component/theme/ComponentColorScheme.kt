@@ -89,3 +89,10 @@ internal val MindplexColorScheme.componentNavigationBarBall
         light = MindplexTheme.color.iris70,
         dark = MindplexTheme.color.white,
     )
+
+internal val MindplexColorScheme.componentCircleIndicator
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.iris70,
+        dark = MindplexTheme.color.white,
+    )

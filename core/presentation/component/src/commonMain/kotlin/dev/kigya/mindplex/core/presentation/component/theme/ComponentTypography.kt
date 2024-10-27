@@ -21,3 +21,11 @@ internal val MindplexTypography.componentErrorStubTitle
         fontWeight = FontWeight.Medium,
         fontFamily = MindplexTheme.font.rubik,
     )
+
+internal val MindplexTypography.componentErrorStubButton
+    @Composable
+    get() = TextStyle(
+        fontSize = MindplexTheme.textSize.sp16,
+        fontWeight = FontWeight.Medium,
+        fontFamily = MindplexTheme.font.rubik,
+    )
