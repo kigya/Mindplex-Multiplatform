@@ -43,7 +43,7 @@ class HomeScreenPreviewParameterProvider : PreviewParameterProvider<HomeContract
                 isProfileNameLoading = false,
                 isProfilePictureLoading = false,
             ),
-            pagerData = HomeContract.State.PagerData(
+            factsPagerData = HomeContract.State.FactsPagerData(
                 areFactsLoading = false,
                 facts = persistentListOf(
                     "The term arbitrary refers to the standard of review used by courts when reviewing a variety of " +
@@ -86,7 +86,7 @@ class HomeScreenPreviewParameterProvider : PreviewParameterProvider<HomeContract
                 isProfileNameLoading = true,
                 isProfilePictureLoading = true,
             ),
-            pagerData = HomeContract.State.PagerData(
+            factsPagerData = HomeContract.State.FactsPagerData(
                 areFactsLoading = true,
                 facts = persistentListOf(
                     "The term arbitrary refers to the standard of review used by courts when reviewing a variety of " +

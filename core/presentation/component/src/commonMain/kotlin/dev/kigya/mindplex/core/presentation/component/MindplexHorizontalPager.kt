@@ -15,6 +15,7 @@ fun MindplexHorizontalPager(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     pageSpacing: Dp = MindplexTheme.dimension.dp0,
+    beyondViewportPageCount: Int = PagerDefaults.BeyondViewportPageCount,
     pageContent: @Composable PagerScope.(Int) -> Unit,
 ) {
     HorizontalPager(
@@ -26,5 +27,6 @@ fun MindplexHorizontalPager(
         ),
         pageContent = pageContent,
         pageSpacing = pageSpacing,
+        beyondViewportPageCount = beyondViewportPageCount,
     )
 }

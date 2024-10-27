@@ -89,3 +89,45 @@ internal val MindplexColorScheme.homeModesDelimiter
         light = MindplexTheme.color.iris10,
         dark = MindplexTheme.color.iris80,
     )
+
+internal val MindplexColorScheme.categorySelectionPopupBackground
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.white,
+        dark = MindplexTheme.color.iris60,
+    )
+
+internal val MindplexColorScheme.categorySelectionTitle
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.gunmetal80,
+        dark = MindplexTheme.color.iris30,
+    )
+
+internal val MindplexColorScheme.categorySelectionItem
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.gunmetal100,
+        dark = MindplexTheme.color.white,
+    )
+
+internal val MindplexColorScheme.categorySelectionDifficultyBackground
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.iris60,
+        dark = MindplexTheme.color.white,
+    )
+
+internal val MindplexColorScheme.categorySelectionDifficultyText
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.white,
+        dark = MindplexTheme.color.iris60,
+    )
+
+internal val MindplexColorScheme.categorySelectionRipple
+    @Composable
+    get() = this provides MindplexDynamicColor(
+        light = MindplexTheme.color.iris70,
+        dark = MindplexTheme.color.white,
+    )

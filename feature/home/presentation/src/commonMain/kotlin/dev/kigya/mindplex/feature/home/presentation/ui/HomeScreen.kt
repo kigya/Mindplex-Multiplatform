@@ -6,6 +6,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,13 +21,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -33,9 +39,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastForEachIndexed
 import coil3.compose.AsyncImage
 import dev.kigya.mindplex.core.presentation.common.extension.ShiftClickButtonState
@@ -43,6 +52,10 @@ import dev.kigya.mindplex.core.presentation.common.extension.shiftClickEffect
 import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
 import dev.kigya.mindplex.core.presentation.common.util.StableFlow
 import dev.kigya.mindplex.core.presentation.common.util.fadeSlideScaleContentTransitionSpec
+import dev.kigya.mindplex.core.presentation.common.util.performClickHapticFeedback
+import dev.kigya.mindplex.core.presentation.component.MindplexChip
+import dev.kigya.mindplex.core.presentation.component.MindplexCircleIndicator
+import dev.kigya.mindplex.core.presentation.component.MindplexDialog
 import dev.kigya.mindplex.core.presentation.component.MindplexErrorStub
 import dev.kigya.mindplex.core.presentation.component.MindplexHorizontalPager
 import dev.kigya.mindplex.core.presentation.component.MindplexIcon
@@ -56,7 +69,16 @@ import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.presentation.theme.window.LocalWindow
 import dev.kigya.mindplex.core.util.dsl.ifPresentOrElse
+import dev.kigya.mindplex.core.util.dsl.invokeIfPresent
+import dev.kigya.mindplex.core.util.extension.getPagingData
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionButton
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionDifficultyBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionDifficultyText
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionItem
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionPopupBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionRipple
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionTitle
 import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeBackground
 import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeFactsPagerBackground
 import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeFactsPagerDescription
@@ -78,14 +100,19 @@ import mindplex_multiplatform.feature.home.presentation.generated.resources.home
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_mode_arrow
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_profile_fallback
 import mindplex_multiplatform.feature.home.presentation.generated.resources.im_facts
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-private const val HOME_FACTS_PAGER_WEIGHT = 0.5f
-private const val HOME_MODES_ICON_INITIAL_SCALE = 1f
-private const val HOME_MODES_ICON_TARGET_SCALE = 1.5f
 internal expect val PAGER_PLACEHOLDER_WIDTH_DIVIDER: Int
 internal expect val MODES_PLACEHOLDER_WIDTH_DIVIDER: Float
+
+private const val CIRCLE_INDICATOR_WEIGHT = 0.5f
+private const val HOME_MODES_ICON_INITIAL_SCALE = 1f
+private const val HOME_MODES_ICON_TARGET_SCALE = 1.5f
+private const val HOME_CATEGORIES_ITEMS_PER_PAGE = 4
+private const val CHUNKED_CATEGORIES_GRID = 2
 
 @Composable
 fun HomeScreen(contract: HomeContract) {
@@ -154,12 +181,12 @@ private fun ColumnScope.HomeSection(
     event: (HomeContract.Event) -> Unit,
     effect: StableFlow<HomeContract.Effect>,
 ) {
-    val pagerState = rememberPagerState(pageCount = state.pagerData.facts::size)
+    val pagerState = rememberPagerState(pageCount = state.factsPagerData.facts::size)
 
     LaunchedEffect(effect) {
         effect.value.collect { homeEffect ->
             when (homeEffect) {
-                is HomeContract.Effect.ScrollToNextPage ->
+                is HomeContract.Effect.ScrollFactsToNextPage ->
                     pagerState.animateScrollToPage(
                         page = (pagerState.currentPage + 1) % pagerState.pageCount,
                         animationSpec = tween(
@@ -180,16 +207,16 @@ private fun ColumnScope.HomeSection(
 
     FactsPager(
         modifier = Modifier.fillMaxWidth(),
-        state = state.pagerData,
+        state = state.factsPagerData,
         pagerState = pagerState,
-        facts = state.pagerData.facts,
+        facts = state.factsPagerData.facts,
     )
 
     MindplexSpacer(size = MindplexTheme.dimension.dp12)
 
     HomePagerDotsIndicator(
         modifier = Modifier.fillMaxWidth(),
-        state = state.pagerData,
+        state = state.factsPagerData,
         pagerState = pagerState,
     )
 
@@ -198,6 +225,11 @@ private fun ColumnScope.HomeSection(
     ModesCard(
         modifier = Modifier.fillMaxWidth(),
         state = state.modesData,
+        event = event,
+    )
+
+    CategorySelectionPopup(
+        state = state.categorySelectionData,
         event = event,
     )
 }
@@ -224,7 +256,9 @@ private fun HomeScreenHeader(
                     style = MindplexTheme.typography.homeWelcomeBackText,
                 )
             }
+
             MindplexSpacer(size = MindplexTheme.dimension.dp8)
+
             MindplexPlaceholder(
                 isLoading = state.isProfileNameLoading,
                 textToMeasure = stringResource(Res.string.home_user_name_preview),
@@ -233,7 +267,8 @@ private fun HomeScreenHeader(
                 MindplexTypewriterText(text = state.userName)
             }
         }
-        MindplexPlaceholder(isLoading = state.isProfilePictureLoading) {
+
+        MindplexPlaceholder(isLoading = state.isProfilePictureLoading && state.isProfileNameLoading) {
             AsyncImage(
                 modifier = Modifier
                     .size(MindplexTheme.dimension.dp48)
@@ -241,8 +276,11 @@ private fun HomeScreenHeader(
                 model = state.avatarUrl,
                 contentDescription = null,
                 error = painterResource(Res.drawable.ic_profile_fallback),
+                fallback = painterResource(
+                    resource = Res.drawable.ic_profile_fallback,
+                ).takeIf { state.isProfileNameLoading.not() },
                 onError = { event(HomeContract.Event.OnProfilePictureErrorReceived) },
-                onSuccess = { event(HomeContract.Event.OnProfilePictureErrorReceived) },
+                onSuccess = { event(HomeContract.Event.OnProfilePictureLoaded) },
             )
         }
     }
@@ -251,7 +289,7 @@ private fun HomeScreenHeader(
 @Composable
 private fun FactsPager(
     modifier: Modifier = Modifier,
-    state: HomeContract.State.PagerData,
+    state: HomeContract.State.FactsPagerData,
     pagerState: PagerState,
     facts: ImmutableList<String>,
 ) {
@@ -272,6 +310,7 @@ private fun FactsPager(
                 .testTag("home_pager"),
             pagerState = pagerState,
             pageSpacing = MindplexTheme.dimension.dp16,
+            beyondViewportPageCount = pagerState.pageCount,
         ) { page ->
             val currentFact = remember(page) { facts[page] }
 
@@ -285,7 +324,9 @@ private fun FactsPager(
                     .testTag("facts_page_$page"),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                MindplexIcon(drawableResource = Res.drawable.im_facts)
+                MindplexIcon(
+                    drawableResource = Res.drawable.im_facts,
+                )
 
                 MindplexSpacer(size = MindplexTheme.dimension.dp16)
 
@@ -294,17 +335,22 @@ private fun FactsPager(
                     verticalArrangement = Arrangement.SpaceBetween,
                 ) {
                     MindplexText(
-                        modifier = Modifier.weight(HOME_FACTS_PAGER_WEIGHT),
                         text = stringResource(Res.string.home_facts_title),
                         style = MindplexTheme.typography.homeFactsPagerTitle,
                         color = MindplexTheme.colorScheme.homeFactsPagerTitle,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
+
+                    MindplexSpacer(size = MindplexTheme.dimension.dp16)
+
                     MindplexText(
                         modifier = Modifier.weight(1f),
                         text = currentFact,
                         textAlign = TextAlign.Start,
                         style = MindplexTheme.typography.homeFactsPagerDescription,
                         color = MindplexTheme.colorScheme.homeFactsPagerDescription,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
             }
@@ -315,10 +361,11 @@ private fun FactsPager(
 @Composable
 private fun ColumnScope.HomePagerDotsIndicator(
     modifier: Modifier = Modifier,
-    state: HomeContract.State.PagerData,
+    state: HomeContract.State.FactsPagerData,
     pagerState: PagerState,
 ) {
     MindplexSpacer(size = MindplexTheme.dimension.dp24)
+
     AnimatedVisibility(
         visible = state.areFactsLoading.not(),
     ) {
@@ -344,6 +391,7 @@ private fun ModesCard(
 ) {
     val screenWidth = LocalWindow.current.width.dp
     val screenHeight = LocalWindow.current.height.toFloat()
+    val haptic = LocalHapticFeedback.current
 
     MindplexPlaceholder(
         modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Max),
@@ -366,6 +414,7 @@ private fun ModesCard(
                         Surface(
                             modifier = Modifier.shiftClickEffect(
                                 onChangeState = { buttonState ->
+                                    performClickHapticFeedback(haptic)
                                     event(
                                         HomeContract.Event.OnModeClickStateChanged(
                                             index = index,
@@ -438,6 +487,189 @@ private fun ModesCard(
                             )
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CategorySelectionPopup(
+    modifier: Modifier = Modifier,
+    state: HomeContract.State.CategorySelectionData,
+    event: (HomeContract.Event) -> Unit,
+) {
+    MindplexDialog(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = MindplexTheme.dimension.dp16),
+        shouldShowDialog = state.shouldDisplayPopup,
+        backgroundColor = MindplexTheme.colorScheme.categorySelectionPopupBackground,
+        onDismissRequest = { event(HomeContract.Event.OnPopupDismissed) },
+    ) {
+        Column(
+            modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            MindplexSpacer(size = MindplexTheme.dimension.dp24)
+
+            state.modeTitle?.let { mode ->
+                MindplexText(
+                    text = stringResource(mode),
+                    style = MindplexTheme.typography.categorySelectionTitle,
+                    color = MindplexTheme.colorScheme.categorySelectionTitle,
+                )
+            }
+
+            MindplexSpacer(size = MindplexTheme.dimension.dp36)
+
+            CategorySelectionPager(
+                state = state,
+                event = event,
+            )
+
+            MindplexSpacer(size = MindplexTheme.dimension.dp48)
+
+            DifficultySectionList(
+                state = state,
+                event = event,
+            )
+
+            MindplexSpacer(size = MindplexTheme.dimension.dp24)
+        }
+    }
+}
+
+@Composable
+private fun CategorySelectionPager(
+    modifier: Modifier = Modifier,
+    state: HomeContract.State.CategorySelectionData,
+    event: (HomeContract.Event) -> Unit,
+) {
+    val pagerState = rememberPagerState(pageCount = { state.categories.size / 4 })
+
+    MindplexHorizontalPager(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .testTag("category_pager"),
+        pagerState = pagerState,
+        pageSpacing = MindplexTheme.dimension.dp16,
+        beyondViewportPageCount = pagerState.pageCount,
+    ) { page ->
+        val currentCategories = remember(page) {
+            state.categories.getPagingData(
+                page = page,
+                itemsPerPage = HOME_CATEGORIES_ITEMS_PER_PAGE,
+            )
+        }
+        CategorySelectionPage(
+            items = currentCategories,
+            event = event,
+        )
+    }
+
+    MindplexCircleIndicator(
+        modifier = Modifier.fillMaxWidth(CIRCLE_INDICATOR_WEIGHT),
+        pagerState = pagerState,
+    )
+}
+
+@Composable
+private fun CategorySelectionPage(
+    modifier: Modifier = Modifier,
+    items: ImmutableList<HomeContract.State.CategorySelectionData.CategoryData>,
+    event: (HomeContract.Event) -> Unit,
+) {
+    val haptic = LocalHapticFeedback.current
+
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Fixed(CHUNKED_CATEGORIES_GRID),
+        horizontalArrangement = Arrangement.spacedBy(MindplexTheme.dimension.dp16),
+        verticalArrangement = Arrangement.spacedBy(MindplexTheme.dimension.dp16),
+    ) {
+        items.forEachIndexed { index, categoryData ->
+            item {
+                invokeIfPresent(
+                    p1 = items[index].icon,
+                    p2 = items[index].text,
+                ) { iconResource, textResource ->
+                    CategoryGridItem(
+                        icon = iconResource,
+                        name = textResource,
+                    ) {
+                        performClickHapticFeedback(haptic)
+                        event(HomeContract.Event.OnCategoryClicked(categoryData))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CategoryGridItem(
+    modifier: Modifier = Modifier,
+    icon: DrawableResource,
+    name: StringResource,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .padding(horizontal = MindplexTheme.dimension.dp8)
+            .clip(shape = MindplexTheme.shape.rounding16)
+            .clickable(
+                onClick = onClick,
+                interactionSource = remember(::MutableInteractionSource),
+                indication = ripple(color = MindplexTheme.colorScheme.categorySelectionRipple),
+            )
+            .padding(vertical = MindplexTheme.dimension.dp8)
+            .width(intrinsicSize = IntrinsicSize.Min),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween,
+    ) {
+        MindplexIcon(
+            drawableResource = icon,
+            modifier = Modifier.size(MindplexTheme.dimension.dp64),
+        )
+
+        MindplexSpacer(size = MindplexTheme.dimension.dp16)
+
+        MindplexText(
+            text = stringResource(name),
+            style = MindplexTheme.typography.categorySelectionItem,
+            color = MindplexTheme.colorScheme.categorySelectionItem,
+            modifier = Modifier.width(IntrinsicSize.Min),
+        )
+    }
+}
+
+@Composable
+private fun DifficultySectionList(
+    modifier: Modifier = Modifier,
+    state: HomeContract.State.CategorySelectionData,
+    event: (HomeContract.Event) -> Unit,
+) {
+    val haptic = LocalHapticFeedback.current
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = MindplexTheme.dimension.dp24),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        state.difficulties.fastForEach { difficulty ->
+            difficulty.textResource?.let { textResource ->
+                MindplexChip(
+                    labelText = stringResource(textResource),
+                    textStyle = MindplexTheme.typography.categorySelectionButton,
+                    isSelected = difficulty.isSelected,
+                    textColor = MindplexTheme.colorScheme.categorySelectionDifficultyText,
+                    backgroundColor = MindplexTheme.colorScheme.categorySelectionDifficultyBackground,
+                ) {
+                    performClickHapticFeedback(haptic)
+                    event(HomeContract.Event.OnDifficultyClicked(difficulty))
                 }
             }
         }
