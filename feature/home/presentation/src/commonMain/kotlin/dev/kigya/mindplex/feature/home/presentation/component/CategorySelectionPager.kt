@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.home.presentation.component
 
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.rememberPagerState
@@ -9,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import dev.kigya.mindplex.core.presentation.component.MindplexCircleIndicator
 import dev.kigya.mindplex.core.presentation.component.MindplexHorizontalPager
+import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.extension.getPagingData
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
@@ -17,7 +19,7 @@ private const val CIRCLE_INDICATOR_WEIGHT = 0.5f
 private const val HOME_CATEGORIES_ITEMS_PER_PAGE = 4
 
 @Composable
-internal fun CategorySelectionPager(
+internal fun ColumnScope.CategorySelectionPager(
     modifier: Modifier = Modifier,
     state: HomeContract.State.CategorySelectionData,
     event: (HomeContract.Event) -> Unit,
@@ -44,6 +46,8 @@ internal fun CategorySelectionPager(
             event = event,
         )
     }
+
+    MindplexSpacer(size = MindplexTheme.dimension.dp8)
 
     MindplexCircleIndicator(
         modifier = Modifier.fillMaxWidth(CIRCLE_INDICATOR_WEIGHT),

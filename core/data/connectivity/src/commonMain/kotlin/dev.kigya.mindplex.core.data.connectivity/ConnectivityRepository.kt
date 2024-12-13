@@ -6,5 +6,5 @@ class ConnectivityRepository(
     private val connectivityManager: ConnectivityManager,
 ) : ConnectivityRepositoryContract {
 
-    override fun isConnected() = connectivityManager.status.value.isConnected
+    override fun isConnected(): Boolean = connectivityManager.status.value.isConnected
 }

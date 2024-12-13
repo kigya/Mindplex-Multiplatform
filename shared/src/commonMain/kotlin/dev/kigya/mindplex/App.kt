@@ -18,6 +18,8 @@ import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
 import dev.kigya.mindplex.core.presentation.feature.host.ScreenHost
 import dev.kigya.mindplex.core.presentation.feature.host.ScreenHostViewModel
 import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.feature.game.presentation.ui.GameScreen
+import dev.kigya.mindplex.feature.game.presentation.ui.GameScreenViewModel
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreen
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreenViewModel
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.LeaderboardScreen
@@ -72,6 +74,10 @@ fun App() {
 
                     animatedComposable<ScreenRoute.Profile> {
                         ProfileScreen(koinViewModel<ProfileScreenViewModel>())
+                    }
+
+                    animatedComposable<ScreenRoute.Game> {
+                        GameScreen(koinViewModel<GameScreenViewModel>())
                     }
                 }
 

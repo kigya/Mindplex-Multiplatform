@@ -23,7 +23,9 @@ data class MindplexColor internal constructor(
     val gunmetal80: Color = Color(0xFF707070),
     val gunmetal60: Color = Color(0xFFC1BFD3),
     val americanGreen: Color = Color(0xFF32A83E),
+    val lightCarminePink: Color = Color(0xFFEB5D60),
     val crayola: Color = Color(0xFFFF4B4F),
+    val transparent: Color = Color(0x00000000),
 )
 
 internal val LocalColor = staticCompositionLocalOf(::MindplexColor)

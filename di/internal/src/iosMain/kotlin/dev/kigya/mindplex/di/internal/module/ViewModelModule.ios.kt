@@ -1,6 +1,7 @@
 package dev.kigya.mindplex.di.internal.module
 
 import dev.kigya.mindplex.core.presentation.feature.host.ScreenHostViewModel
+import dev.kigya.mindplex.feature.game.presentation.ui.GameScreenViewModel
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreenViewModel
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.LeaderboardScreenViewModel
 import dev.kigya.mindplex.feature.login.presentation.ui.LoginScreenViewModel
@@ -18,4 +19,5 @@ actual val viewModelModule = module {
     singleOf(::LoginScreenViewModel)
     singleOf(::LeaderboardScreenViewModel)
     singleOf(::ProfileScreenViewModel)
+    singleOf(::GameScreenViewModel)
 }

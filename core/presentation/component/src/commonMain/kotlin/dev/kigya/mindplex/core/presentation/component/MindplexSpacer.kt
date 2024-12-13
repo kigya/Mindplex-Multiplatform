@@ -20,24 +20,30 @@ fun MindplexSpacer(
     modifier: Modifier = Modifier,
     orientation: MindplexSpacerOrientation,
     size: Dp = MindplexTheme.dimension.dp0,
-) = drawSpacer(modifier, orientation, size)
+) = drawOrientedSpacer(modifier, orientation, size)
 
 @Composable
 fun ColumnScope.MindplexSpacer(
     modifier: Modifier = Modifier,
     orientation: MindplexSpacerOrientation = MindplexSpacerOrientation.VERTICAL,
     size: Dp = MindplexTheme.dimension.dp0,
-) = drawSpacer(modifier, orientation, size)
+) = drawOrientedSpacer(modifier, orientation, size)
 
 @Composable
 fun RowScope.MindplexSpacer(
     modifier: Modifier = Modifier,
     orientation: MindplexSpacerOrientation = MindplexSpacerOrientation.HORIZONTAL,
     size: Dp = MindplexTheme.dimension.dp0,
-) = drawSpacer(modifier, orientation, size)
+) = drawOrientedSpacer(modifier, orientation, size)
 
 @Composable
-private fun drawSpacer(
+fun RowScope.MindplexFillSpacer(modifier: Modifier = Modifier) = Spacer(modifier.weight(1f))
+
+@Composable
+fun ColumnScope.MindplexFillSpacer(modifier: Modifier = Modifier) = Spacer(modifier.weight(1f))
+
+@Composable
+private fun drawOrientedSpacer(
     modifier: Modifier,
     orientation: MindplexSpacerOrientation,
     size: Dp,

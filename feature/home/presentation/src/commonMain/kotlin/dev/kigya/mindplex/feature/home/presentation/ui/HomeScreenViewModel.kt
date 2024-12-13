@@ -16,6 +16,8 @@ import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.State.
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.State.CategorySelectionData.DifficultyChipData
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.State.ModesData
 import dev.kigya.mindplex.feature.home.presentation.mapper.toUi
+import dev.kigya.mindplex.navigation.navigator.navigator.AppNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
@@ -36,6 +38,7 @@ import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_r
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_true_or_false_mode
 
 class HomeScreenViewModel(
+    private val navigatorContract: AppNavigatorContract,
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val getFactsUseCase: GetFactsUseCase,
 ) : BaseViewModel<State, Effect>(State()), HomeContract {
@@ -142,27 +145,23 @@ class HomeScreenViewModel(
     }
 
     @Suppress("ForbiddenComment")
-    private fun Event.OnModeClicked.handleModeClick() {
-        updateState {
-            copy(
-                categorySelectionData = categorySelectionData.copy(
-                    modeTitle = modesData.getTitleByType(type),
-                    shouldDisplayPopup = true,
-                ),
-            )
-        }
+    private fun Event.OnModeClicked.handleModeClick() = updateState {
+        copy(
+            categorySelectionData = categorySelectionData.copy(
+                modeTitle = modesData.getTitleByType(type),
+                shouldDisplayPopup = true,
+            ),
+        )
     }
 
-    private fun Event.OnModeClickStateChanged.handleModeClickStateChange() {
-        updateState {
-            copy(
-                modesData = modesData.copy(
-                    modes = modesData.modes.update(index) { mode ->
-                        mode.copy(shouldScaleIcon = shouldScaleIcon)
-                    },
-                ),
-            )
-        }
+    private fun Event.OnModeClickStateChanged.handleModeClickStateChange() = updateState {
+        copy(
+            modesData = modesData.copy(
+                modes = modesData.modes.update(index) { mode ->
+                    mode.copy(shouldScaleIcon = shouldScaleIcon)
+                },
+            ),
+        )
     }
 
     private fun Event.OnPopupDismissed.handlePopupDismiss() = updateState {
@@ -174,25 +173,23 @@ class HomeScreenViewModel(
         )
     }
 
-    private fun Event.OnCategoryClicked.handleCategoryClick() = updateState {
+    private suspend fun Event.OnCategoryClicked.handleCategoryClick() = updateState {
         copy(
             categorySelectionData = categorySelectionData.copy(
                 shouldDisplayPopup = false,
                 modeTitle = null,
             ),
         )
-    }
+    }.also { navigatorContract.navigateTo(route = ScreenRoute.Game) }
 
-    private fun Event.OnDifficultyClicked.handleDifficultyClick() {
-        updateState {
-            copy(
-                categorySelectionData = categorySelectionData.copy(
-                    difficulties = categorySelectionData.difficulties.mapPersistent { difficulty ->
-                        difficulty.copy(isSelected = difficulty == selectedChip)
-                    },
-                ),
-            )
-        }
+    private fun Event.OnDifficultyClicked.handleDifficultyClick() = updateState {
+        copy(
+            categorySelectionData = categorySelectionData.copy(
+                difficulties = categorySelectionData.difficulties.mapPersistent { difficulty ->
+                    difficulty.copy(isSelected = difficulty == selectedChip)
+                },
+            ),
+        )
     }
 
     private fun getCategories() = CategoryData.entries.toImmutableList()

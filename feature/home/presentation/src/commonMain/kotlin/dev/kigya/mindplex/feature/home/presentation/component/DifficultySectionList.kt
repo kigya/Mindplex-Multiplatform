@@ -34,7 +34,7 @@ internal fun DifficultySectionList(
         state.difficulties.fastForEach { difficulty ->
             difficulty.textResource?.let { textResource ->
                 MindplexChip(
-                    labelText = stringResource(textResource),
+                    text = stringResource(textResource),
                     textStyle = MindplexTheme.typography.categorySelectionButton,
                     isSelected = difficulty.isSelected,
                     textColor = MindplexTheme.colorScheme.categorySelectionDifficultyText,

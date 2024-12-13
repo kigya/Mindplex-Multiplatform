@@ -2,28 +2,29 @@ plugins {
     with(libs.plugins.convention) {
         alias(config.shared.library)
         alias(bundle.shared.ui.screen.compose)
-        with(component) {
-            alias(koin)
-            alias(coil)
-        }
     }
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            with(libs) {
+                implementation(compottie)
+            }
             with(projects) {
-                implementation(feature.home.domain)
-                implementation(navigation.api)
                 with(core) {
                     api(domain.interactor)
-                    implementation(util)
+                    implementation(core.util)
+                    implementation(core.presentation.common)
                     implementation(presentation.feature)
-                    implementation(presentation.theme)
                     implementation(presentation.component)
-                    implementation(presentation.common)
-                    implementation(domain.profile)
+                    implementation(presentation.theme)
                 }
+                with(feature) {
+                    implementation(onboarding.domain)
+                    implementation(login.domain)
+                }
+                implementation(navigation.api)
             }
         }
     }

@@ -20,4 +20,7 @@ sealed interface ScreenRoute {
 
     @Serializable
     data object Profile : ScreenRoute
+
+    @Serializable
+    data object Game : ScreenRoute
 }

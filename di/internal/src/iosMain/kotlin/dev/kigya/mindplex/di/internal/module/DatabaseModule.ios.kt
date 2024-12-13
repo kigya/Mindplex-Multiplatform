@@ -11,9 +11,7 @@ actual val databaseModule = module {
     single {
         Room.databaseBuilder<UserProfileDatabase>(
             name = NSHomeDirectory() + "/${UserProfileDatabase.DATABASE_NAME}.db",
-        )
-            .setDriver(BundledSQLiteDriver())
-            .build()
+        ).setDriver(BundledSQLiteDriver()).build()
     }
 
     single { get<UserProfileDatabase>().dao }
@@ -21,9 +19,7 @@ actual val databaseModule = module {
     single {
         Room.databaseBuilder<FactsDatabase>(
             name = NSHomeDirectory() + "/${FactsDatabase.DATABASE_NAME}.db",
-        )
-            .setDriver(BundledSQLiteDriver())
-            .build()
+        ).setDriver(BundledSQLiteDriver()).build()
     }
 
     single { get<FactsDatabase>().dao }

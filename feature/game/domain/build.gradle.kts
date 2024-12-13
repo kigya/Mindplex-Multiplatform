@@ -7,14 +7,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            with(libs) {
-                implementation(kotlinx.datetime)
-            }
             with(projects) {
-                implementation(feature.login.domain)
                 implementation(core.util)
             }
         }
     }
 }
-
