@@ -10,11 +10,11 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.util.fastForEach
 import dev.kigya.mindplex.core.presentation.common.util.performClickHapticFeedback
 import dev.kigya.mindplex.core.presentation.component.MindplexChip
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionButton
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionDifficultyBackground
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionDifficultyText
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionButton
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionDifficultyBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionDifficultyText
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -28,17 +28,17 @@ internal fun DifficultySectionList(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = MindplexTheme.dimension.dp24),
+            .padding(horizontal = HomeTheme.dimension.dp24),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         state.difficulties.fastForEach { difficulty ->
             difficulty.textResource?.let { textResource ->
                 MindplexChip(
                     text = stringResource(textResource),
-                    textStyle = MindplexTheme.typography.categorySelectionButton,
+                    textStyle = HomeTheme.typography.categorySelectionButton,
                     isSelected = difficulty.isSelected,
-                    textColor = MindplexTheme.colorScheme.categorySelectionDifficultyText,
-                    backgroundColor = MindplexTheme.colorScheme.categorySelectionDifficultyBackground,
+                    textColor = HomeTheme.colorScheme.categorySelectionDifficultyText,
+                    backgroundColor = HomeTheme.colorScheme.categorySelectionDifficultyBackground,
                 ) {
                     performClickHapticFeedback(haptic)
                     event(HomeContract.Event.OnDifficultyClicked(difficulty))

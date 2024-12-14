@@ -29,16 +29,16 @@ import dev.kigya.mindplex.core.presentation.component.MindplexPlaceholder
 import dev.kigya.mindplex.core.presentation.component.MindplexScaleIcon
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.component.MindplexText
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.presentation.theme.window.LocalWindow
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
 import dev.kigya.mindplex.feature.home.presentation.ui.MODES_PLACEHOLDER_WIDTH_DIVIDER
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeModesCardArrow
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeModesCardBackground
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeModesCardDescription
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeModesCardTitle
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeModesDelimiter
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeModesIconBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeModesCardArrow
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeModesCardBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeModesCardDescription
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeModesCardTitle
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeModesDelimiter
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeModesIconBackground
 import mindplex_multiplatform.feature.home.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_mode_arrow
 import org.jetbrains.compose.resources.stringResource
@@ -66,9 +66,9 @@ internal fun ModesCard(
     ) {
         Card(
             modifier = modifier,
-            shape = MindplexTheme.shape.rounding16,
+            shape = HomeTheme.shape.rounding16,
             colors = CardDefaults.cardColors(
-                containerColor = MindplexTheme.colorScheme.homeModesDelimiter,
+                containerColor = HomeTheme.colorScheme.homeModesDelimiter,
             ),
         ) {
             state.modes.fastForEachIndexed { index, mode ->
@@ -87,17 +87,17 @@ internal fun ModesCard(
                                 },
                                 onClick = { event(HomeContract.Event.OnModeClicked(mode.type)) },
                             ),
-                            color = MindplexTheme.colorScheme.homeModesCardBackground,
+                            color = HomeTheme.colorScheme.homeModesCardBackground,
                         ) {
                             Row(
-                                modifier = Modifier.padding(all = MindplexTheme.dimension.dp16),
+                                modifier = Modifier.padding(all = HomeTheme.dimension.dp16),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween,
                             ) {
                                 Box(
                                     modifier = Modifier
-                                        .clip(MindplexTheme.shape.rounding8)
-                                        .background(MindplexTheme.colorScheme.homeModesIconBackground),
+                                        .clip(HomeTheme.shape.rounding8)
+                                        .background(HomeTheme.colorScheme.homeModesIconBackground),
                                     contentAlignment = Alignment.BottomCenter,
                                 ) {
                                     MindplexIcon(
@@ -105,7 +105,7 @@ internal fun ModesCard(
                                     )
                                 }
 
-                                MindplexSpacer(size = MindplexTheme.dimension.dp16)
+                                MindplexSpacer(size = HomeTheme.dimension.dp16)
 
                                 Column(
                                     modifier = Modifier.weight(1f),
@@ -114,19 +114,19 @@ internal fun ModesCard(
                                     mode.title?.let { titleRes ->
                                         MindplexText(
                                             text = stringResource(titleRes),
-                                            style = MindplexTheme.typography.homeModesCardTitle,
-                                            color = MindplexTheme.colorScheme.homeModesCardTitle,
+                                            style = HomeTheme.typography.homeModesCardTitle,
+                                            color = HomeTheme.colorScheme.homeModesCardTitle,
                                             textAlign = TextAlign.Start,
                                         )
                                     }
 
-                                    MindplexSpacer(size = MindplexTheme.dimension.dp12)
+                                    MindplexSpacer(size = HomeTheme.dimension.dp12)
 
                                     mode.description?.let { descriptionRes ->
                                         MindplexText(
                                             text = stringResource(descriptionRes),
-                                            style = MindplexTheme.typography.homeModesCardDescription,
-                                            color = MindplexTheme.colorScheme.homeModesCardDescription,
+                                            style = HomeTheme.typography.homeModesCardDescription,
+                                            color = HomeTheme.colorScheme.homeModesCardDescription,
                                             textAlign = TextAlign.Start,
                                         )
                                     }
@@ -139,14 +139,14 @@ internal fun ModesCard(
                                         HOME_MODES_ICON_INITIAL_SCALE
                                     },
                                     drawableResource = Res.drawable.ic_mode_arrow,
-                                    tintColor = MindplexTheme.colorScheme.homeModesCardArrow,
+                                    tintColor = HomeTheme.colorScheme.homeModesCardArrow,
                                 )
                             }
                         }
                         if (mode.shouldDisplayDelimiter) {
                             MindplexSpacer(
-                                modifier = Modifier.background(MindplexTheme.colorScheme.homeModesDelimiter),
-                                size = MindplexTheme.dimension.dp1,
+                                modifier = Modifier.background(HomeTheme.colorScheme.homeModesDelimiter),
+                                size = HomeTheme.dimension.dp1,
                             )
                         }
                     }

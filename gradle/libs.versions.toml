@@ -84,6 +84,9 @@ kotlinxDatetime = { prefer = "0.6.1" }
 # Immutable Collections
 kotlinxCollectionsImmutable = { require = "0.3.8" }
 
+# Kotlin Poet
+kotlinPoet = { prefer = "2.0.0" }
+
 [libraries]
 # Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
@@ -176,6 +179,8 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 # Immutable Collections
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 
+# Kotlin Poet
+kotlin-poet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinPoet" }
 # Gradle Plugins
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-kotlin-multiplatform = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }

@@ -17,7 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme
 
 private const val RIPPLE_ALPHA = .3f
 
@@ -39,8 +39,8 @@ fun MindplexChip(
     fun TextComponent(text: String) {
         MindplexText(
             modifier = Modifier.padding(
-                vertical = MindplexTheme.dimension.dp8,
-                horizontal = MindplexTheme.dimension.dp4,
+                vertical = ComponentTheme.dimension.dp8,
+                horizontal = ComponentTheme.dimension.dp4,
             ),
             text = text,
             color = if (isSelected) textColor else backgroundColor,
@@ -83,7 +83,7 @@ fun MindplexChip(
                     TextComponent(text)
                 }
             },
-            shape = MindplexTheme.shape.rounding16,
+            shape = ComponentTheme.shape.rounding16,
             colors = FilterChipDefaults.filterChipColors().copy(
                 containerColor = textColor,
                 disabledContainerColor = textColor,
@@ -95,8 +95,8 @@ fun MindplexChip(
                 selected = isSelected,
                 borderColor = backgroundColor,
                 selectedBorderColor = Color.Transparent,
-                borderWidth = MindplexTheme.dimension.dp2,
-                selectedBorderWidth = MindplexTheme.dimension.dp2,
+                borderWidth = ComponentTheme.dimension.dp2,
+                selectedBorderWidth = ComponentTheme.dimension.dp2,
             ),
             leadingIcon = leadingIcon,
             onClick = onClick,

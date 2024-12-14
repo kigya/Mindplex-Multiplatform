@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import dev.kigya.mindplex.core.presentation.component.MindplexJumpingDotsIndicator
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeFactsPagerDotsIndicator
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeFactsPagerDotsIndicator
 
 @Composable
 internal fun ColumnScope.HomePagerDotsIndicator(
@@ -20,7 +20,7 @@ internal fun ColumnScope.HomePagerDotsIndicator(
     state: HomeContract.State.FactsPagerData,
     pagerState: PagerState,
 ) {
-    MindplexSpacer(size = MindplexTheme.dimension.dp24)
+    MindplexSpacer(size = HomeTheme.dimension.dp24)
 
     AnimatedVisibility(
         visible = state.areFactsLoading.not(),
@@ -31,10 +31,10 @@ internal fun ColumnScope.HomePagerDotsIndicator(
         ) {
             MindplexJumpingDotsIndicator(
                 pagerState = pagerState,
-                selectedColor = MindplexTheme.colorScheme.homeFactsPagerDotsIndicator,
-                unselectedColor = MindplexTheme.colorScheme.homeFactsPagerDotsIndicator,
+                selectedColor = HomeTheme.colorScheme.homeFactsPagerDotsIndicator,
+                unselectedColor = HomeTheme.colorScheme.homeFactsPagerDotsIndicator,
             )
-            MindplexSpacer(size = MindplexTheme.dimension.dp64)
+            MindplexSpacer(size = HomeTheme.dimension.dp64)
         }
     }
 }

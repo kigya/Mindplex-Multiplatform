@@ -17,9 +17,9 @@ import androidx.compose.ui.draw.clip
 import dev.kigya.mindplex.core.presentation.component.MindplexIcon
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.component.MindplexText
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionItem
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.categorySelectionRipple
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionItem
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionRipple
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -33,29 +33,29 @@ internal fun CategoryGridItem(
 ) {
     Column(
         modifier = modifier
-            .padding(horizontal = MindplexTheme.dimension.dp8)
-            .clip(shape = MindplexTheme.shape.rounding16)
+            .padding(horizontal = HomeTheme.dimension.dp8)
+            .clip(shape = HomeTheme.shape.rounding16)
             .clickable(
                 onClick = onClick,
                 interactionSource = remember(::MutableInteractionSource),
-                indication = ripple(color = MindplexTheme.colorScheme.categorySelectionRipple),
+                indication = ripple(color = HomeTheme.colorScheme.categorySelectionRipple),
             )
-            .padding(vertical = MindplexTheme.dimension.dp8)
+            .padding(vertical = HomeTheme.dimension.dp8)
             .width(intrinsicSize = IntrinsicSize.Min),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
         MindplexIcon(
             drawableResource = icon,
-            modifier = Modifier.size(MindplexTheme.dimension.dp64),
+            modifier = Modifier.size(HomeTheme.dimension.dp64),
         )
 
-        MindplexSpacer(size = MindplexTheme.dimension.dp16)
+        MindplexSpacer(size = HomeTheme.dimension.dp16)
 
         MindplexText(
             text = stringResource(name),
-            style = MindplexTheme.typography.categorySelectionItem,
-            color = MindplexTheme.colorScheme.categorySelectionItem,
+            style = HomeTheme.typography.categorySelectionItem,
+            color = HomeTheme.colorScheme.categorySelectionItem,
             modifier = Modifier.width(IntrinsicSize.Min),
         )
     }

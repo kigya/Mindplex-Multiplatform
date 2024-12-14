@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.kigya.mindplex.core.presentation.common.extension.toPx
 import dev.kigya.mindplex.core.presentation.component.MindplexText
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameTimerBackgroundArc
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameTimerCounter
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameTimerProgressArc
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameTimerText
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameTimerBackgroundArc
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameTimerCounter
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameTimerProgressArc
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameTimerText
 
 private const val TOTAL_ANGLE = 360f
 private const val START_ANGLE = -90f
@@ -37,18 +37,18 @@ internal fun GameTimer(
     )
 
     BoxWithConstraints(
-        modifier = modifier.padding(MindplexTheme.dimension.dp36),
+        modifier = modifier.padding(GameTheme.dimension.dp36),
         contentAlignment = Alignment.Center,
     ) {
-        val textSize = MindplexTheme.typography.gameTimerCounter.fontSize.toPx()
-        val circleSize = textSize.dp + MindplexTheme.dimension.dp36 * 2
+        val textSize = GameTheme.typography.gameTimerCounter.fontSize.toPx()
+        val circleSize = textSize.dp + GameTheme.dimension.dp36 * 2
 
         Box(
             modifier = Modifier.size(circleSize),
             contentAlignment = Alignment.Center,
         ) {
-            val backgroundColor = MindplexTheme.colorScheme.gameTimerBackgroundArc
-            val progressColor = MindplexTheme.colorScheme.gameTimerProgressArc
+            val backgroundColor = GameTheme.colorScheme.gameTimerBackgroundArc
+            val progressColor = GameTheme.colorScheme.gameTimerProgressArc
 
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val totalAngle = TOTAL_ANGLE
@@ -71,8 +71,8 @@ internal fun GameTimer(
 
             MindplexText(
                 text = remainingTime.toString(),
-                style = MindplexTheme.typography.gameTimerCounter,
-                color = MindplexTheme.colorScheme.gameTimerText,
+                style = GameTheme.typography.gameTimerCounter,
+                color = GameTheme.colorScheme.gameTimerText,
             )
         }
     }

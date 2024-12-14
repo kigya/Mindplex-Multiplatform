@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme
 
 enum class MindplexSpacerOrientation {
     VERTICAL,
@@ -19,21 +19,21 @@ enum class MindplexSpacerOrientation {
 fun MindplexSpacer(
     modifier: Modifier = Modifier,
     orientation: MindplexSpacerOrientation,
-    size: Dp = MindplexTheme.dimension.dp0,
+    size: Dp = ComponentTheme.dimension.dp0,
 ) = drawOrientedSpacer(modifier, orientation, size)
 
 @Composable
 fun ColumnScope.MindplexSpacer(
     modifier: Modifier = Modifier,
     orientation: MindplexSpacerOrientation = MindplexSpacerOrientation.VERTICAL,
-    size: Dp = MindplexTheme.dimension.dp0,
+    size: Dp = ComponentTheme.dimension.dp0,
 ) = drawOrientedSpacer(modifier, orientation, size)
 
 @Composable
 fun RowScope.MindplexSpacer(
     modifier: Modifier = Modifier,
     orientation: MindplexSpacerOrientation = MindplexSpacerOrientation.HORIZONTAL,
-    size: Dp = MindplexTheme.dimension.dp0,
+    size: Dp = ComponentTheme.dimension.dp0,
 ) = drawOrientedSpacer(modifier, orientation, size)
 
 @Composable

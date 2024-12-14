@@ -22,12 +22,12 @@ import androidx.compose.ui.platform.testTag
 import dev.kigya.mindplex.core.presentation.common.util.performClickHapticFeedback
 import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
-import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingButton
-import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingNextButtonContainer
-import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingNextButtonContent
-import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingSkipButtonContent
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme.onboardingButton
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme.onboardingNextButtonContainer
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme.onboardingNextButtonContent
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme.onboardingSkipButtonContent
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 
@@ -39,7 +39,7 @@ internal fun ColumnScope.OnboardingButtons(
 ) {
     val hapticFeedback = LocalHapticFeedback.current
 
-    MindplexSpacer(size = MindplexTheme.dimension.dp36)
+    MindplexSpacer(size = OnboardingTheme.dimension.dp36)
 
     AnimatedContent(
         targetState = pagerState.currentPage,
@@ -62,7 +62,7 @@ internal fun ColumnScope.OnboardingButtons(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = MindplexTheme.dimension.dp24),
+                .padding(horizontal = OnboardingTheme.dimension.dp24),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             onboardingScreenData[page].skipButtonTextResource?.let { skipResource ->
@@ -77,15 +77,15 @@ internal fun ColumnScope.OnboardingButtons(
                             .fillMaxWidth()
                             .testTag("onboarding_skip_button_$page"),
                         labelText = stringResource(skipResource),
-                        textStyle = MindplexTheme.typography.onboardingButton,
-                        contentColor = MindplexTheme.colorScheme.onboardingSkipButtonContent,
+                        textStyle = OnboardingTheme.typography.onboardingButton,
+                        contentColor = OnboardingTheme.colorScheme.onboardingSkipButtonContent,
                     ) {
                         event(OnboardingContract.Event.OnSkipClicked)
                         performClickHapticFeedback(hapticFeedback)
                     }
                 }
                 if (page < onboardingScreenData.size) {
-                    MindplexSpacer(size = MindplexTheme.dimension.dp24)
+                    MindplexSpacer(size = OnboardingTheme.dimension.dp24)
                 }
             }
             onboardingScreenData[page].nextButtonTextResource?.let { nextResource ->
@@ -94,9 +94,9 @@ internal fun ColumnScope.OnboardingButtons(
                         .weight(1f)
                         .testTag("onboarding_next_button_$page"),
                     labelText = stringResource(nextResource),
-                    textStyle = MindplexTheme.typography.onboardingButton,
-                    containerColor = MindplexTheme.colorScheme.onboardingNextButtonContainer,
-                    contentColor = MindplexTheme.colorScheme.onboardingNextButtonContent,
+                    textStyle = OnboardingTheme.typography.onboardingButton,
+                    containerColor = OnboardingTheme.colorScheme.onboardingNextButtonContainer,
+                    contentColor = OnboardingTheme.colorScheme.onboardingNextButtonContent,
                 ) {
                     event(OnboardingContract.Event.OnNextClicked(pagerState.currentPage))
                     performClickHapticFeedback(hapticFeedback)

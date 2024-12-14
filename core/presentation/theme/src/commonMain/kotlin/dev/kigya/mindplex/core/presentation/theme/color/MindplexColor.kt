@@ -3,7 +3,6 @@
 package dev.kigya.mindplex.core.presentation.theme.color
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 @Immutable
@@ -22,10 +21,8 @@ data class MindplexColor internal constructor(
     val gunmetal100: Color = Color(0xFF263238),
     val gunmetal80: Color = Color(0xFF707070),
     val gunmetal60: Color = Color(0xFFC1BFD3),
-    val americanGreen: Color = Color(0xFF32A83E),
-    val lightCarminePink: Color = Color(0xFFEB5D60),
+    val apple: Color = Color(0xFF32A83E),
+    val mandy: Color = Color(0xFFEB5D60),
     val crayola: Color = Color(0xFFFF4B4F),
     val transparent: Color = Color(0x00000000),
 )
-
-internal val LocalColor = staticCompositionLocalOf(::MindplexColor)

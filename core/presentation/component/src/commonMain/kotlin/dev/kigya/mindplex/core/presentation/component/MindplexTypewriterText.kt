@@ -8,8 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import dev.kigya.mindplex.core.presentation.component.theme.componentTypewriterText
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme.componentTypewriterText
 import dev.kigya.mindplex.core.util.extension.empty
 import kotlinx.coroutines.delay
 import kotlin.random.Random
@@ -35,8 +35,8 @@ fun MindplexTypewriterText(
     maxDelayInMillis: Long = 50,
     minCharacterChunk: Int = 1,
     maxCharacterChunk: Int = 5,
-    color: Color = MindplexTheme.colorScheme.componentTypewriterText,
-    style: TextStyle = MindplexTheme.typography.componentTypewriterText,
+    color: Color = ComponentTheme.colorScheme.componentTypewriterText,
+    style: TextStyle = ComponentTheme.typography.componentTypewriterText,
     onEffectCompleted: () -> Unit = {},
 ) {
     require(minDelayInMillis <= maxDelayInMillis) {

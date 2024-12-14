@@ -25,13 +25,13 @@ import dev.kigya.mindplex.core.presentation.component.MindplexIcon
 import dev.kigya.mindplex.core.presentation.component.MindplexPlaceholder
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.component.MindplexText
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.presentation.theme.window.LocalWindow
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
 import dev.kigya.mindplex.feature.home.presentation.ui.PAGER_PLACEHOLDER_WIDTH_DIVIDER
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeFactsPagerBackground
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeFactsPagerDescription
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeFactsPagerTitle
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeFactsPagerBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeFactsPagerDescription
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeFactsPagerTitle
 import kotlinx.collections.immutable.ImmutableList
 import mindplex_multiplatform.feature.home.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_facts_title
@@ -61,7 +61,7 @@ internal fun FactsPager(
                 .wrapContentHeight()
                 .testTag("home_pager"),
             pagerState = pagerState,
-            pageSpacing = MindplexTheme.dimension.dp16,
+            pageSpacing = HomeTheme.dimension.dp16,
             beyondViewportPageCount = pagerState.pageCount,
         ) { page ->
             val currentFact = remember(page) { facts[page] }
@@ -70,9 +70,9 @@ internal fun FactsPager(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(IntrinsicSize.Min)
-                    .clip(MindplexTheme.shape.rounding16)
-                    .background(MindplexTheme.colorScheme.homeFactsPagerBackground)
-                    .padding(MindplexTheme.dimension.dp16)
+                    .clip(HomeTheme.shape.rounding16)
+                    .background(HomeTheme.colorScheme.homeFactsPagerBackground)
+                    .padding(HomeTheme.dimension.dp16)
                     .testTag("facts_page_$page"),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -80,7 +80,7 @@ internal fun FactsPager(
                     drawableResource = Res.drawable.im_facts,
                 )
 
-                MindplexSpacer(size = MindplexTheme.dimension.dp16)
+                MindplexSpacer(size = HomeTheme.dimension.dp16)
 
                 Column(
                     modifier = Modifier.fillMaxHeight(),
@@ -88,20 +88,20 @@ internal fun FactsPager(
                 ) {
                     MindplexText(
                         text = stringResource(Res.string.home_facts_title),
-                        style = MindplexTheme.typography.homeFactsPagerTitle,
-                        color = MindplexTheme.colorScheme.homeFactsPagerTitle,
+                        style = HomeTheme.typography.homeFactsPagerTitle,
+                        color = HomeTheme.colorScheme.homeFactsPagerTitle,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
 
-                    MindplexSpacer(size = MindplexTheme.dimension.dp16)
+                    MindplexSpacer(size = HomeTheme.dimension.dp16)
 
                     MindplexText(
                         modifier = Modifier.weight(1f),
                         text = currentFact,
                         textAlign = TextAlign.Start,
-                        style = MindplexTheme.typography.homeFactsPagerDescription,
-                        color = MindplexTheme.colorScheme.homeFactsPagerDescription,
+                        style = HomeTheme.typography.homeFactsPagerDescription,
+                        color = HomeTheme.colorScheme.homeFactsPagerDescription,
                         overflow = TextOverflow.Ellipsis,
                     )
                 }

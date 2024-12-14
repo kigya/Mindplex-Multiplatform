@@ -20,11 +20,11 @@ import dev.kigya.mindplex.core.presentation.component.MindplexLottie
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
-import dev.kigya.mindplex.feature.splash.presentation.ui.theme.splashBackground
-import dev.kigya.mindplex.feature.splash.presentation.ui.theme.splashHeader
-import dev.kigya.mindplex.feature.splash.presentation.ui.theme.splashTitle
+import dev.kigya.mindplex.feature.splash.presentation.ui.theme.SplashTheme
+import dev.kigya.mindplex.feature.splash.presentation.ui.theme.SplashTheme.splashBackground
+import dev.kigya.mindplex.feature.splash.presentation.ui.theme.SplashTheme.splashHeader
+import dev.kigya.mindplex.feature.splash.presentation.ui.theme.SplashTheme.splashTitle
 import mindplex_multiplatform.feature.splash.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.splash.presentation.generated.resources.splash_title
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -55,7 +55,7 @@ internal fun SplashScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MindplexTheme.colorScheme.splashBackground),
+            .background(SplashTheme.colorScheme.splashBackground),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -74,12 +74,12 @@ internal fun SplashScreenContent(
             ),
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                MindplexSpacer(size = MindplexTheme.dimension.dp16)
+                MindplexSpacer(size = SplashTheme.dimension.dp16)
                 MindplexText(
                     modifier = Modifier.testTag("splash_text"),
                     text = stringResource(Res.string.splash_title),
-                    style = MindplexTheme.typography.splashHeader,
-                    color = MindplexTheme.colorScheme.splashTitle,
+                    style = SplashTheme.typography.splashHeader,
+                    color = SplashTheme.colorScheme.splashTitle,
                 )
             }
         }

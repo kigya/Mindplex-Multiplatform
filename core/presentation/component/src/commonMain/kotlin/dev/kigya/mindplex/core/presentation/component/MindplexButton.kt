@@ -23,11 +23,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import dev.kigya.mindplex.core.presentation.component.theme.componentButtonContainer
-import dev.kigya.mindplex.core.presentation.component.theme.componentButtonContent
-import dev.kigya.mindplex.core.presentation.component.theme.componentButtonDisabledContainer
-import dev.kigya.mindplex.core.presentation.component.theme.componentButtonDisabledContent
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme.componentButtonContainer
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme.componentButtonContent
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme.componentButtonDisabledContainer
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme.componentButtonDisabledContent
 import dev.kigya.mindplex.core.util.extension.empty
 
 @Composable
@@ -37,12 +37,12 @@ fun MindplexButton(
     isLoading: Boolean = false,
     textStyle: TextStyle = TextStyle.Default,
     labelText: String = String.empty,
-    contentPadding: PaddingValues = PaddingValues(MindplexTheme.dimension.dp16),
-    contentSpace: Dp = MindplexTheme.dimension.dp16,
-    containerColor: Color = MindplexTheme.colorScheme.componentButtonContainer,
-    contentColor: Color = MindplexTheme.colorScheme.componentButtonContent,
-    disabledContainerColor: Color = MindplexTheme.colorScheme.componentButtonDisabledContainer,
-    disabledContentColor: Color = MindplexTheme.colorScheme.componentButtonDisabledContent,
+    contentPadding: PaddingValues = PaddingValues(ComponentTheme.dimension.dp16),
+    contentSpace: Dp = ComponentTheme.dimension.dp16,
+    containerColor: Color = ComponentTheme.colorScheme.componentButtonContainer,
+    contentColor: Color = ComponentTheme.colorScheme.componentButtonContent,
+    disabledContainerColor: Color = ComponentTheme.colorScheme.componentButtonDisabledContainer,
+    disabledContentColor: Color = ComponentTheme.colorScheme.componentButtonDisabledContent,
     startIcon: @Composable (() -> Unit)? = null,
     endIcon: @Composable (() -> Unit)? = null,
     onClick: () -> Unit,
@@ -50,12 +50,12 @@ fun MindplexButton(
     Button(
         enabled = isEnabled,
         shape = CircleShape,
-        contentPadding = PaddingValues(MindplexTheme.dimension.dp0),
+        contentPadding = PaddingValues(ComponentTheme.dimension.dp0),
         modifier = modifier
-            .requiredHeightIn(min = MindplexTheme.dimension.dp64)
+            .requiredHeightIn(min = ComponentTheme.dimension.dp64)
             .shadow(
                 shape = CircleShape,
-                elevation = MindplexTheme.dimension.dp0,
+                elevation = ComponentTheme.dimension.dp0,
             ),
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
@@ -66,7 +66,7 @@ fun MindplexButton(
         onClick = onClick,
     ) {
         AnimatedContent(
-            modifier = Modifier.height(MindplexTheme.dimension.dp64),
+            modifier = Modifier.height(ComponentTheme.dimension.dp64),
             targetState = isLoading,
             transitionSpec = {
                 fadeIn(animationSpec = tween()) togetherWith
@@ -84,8 +84,8 @@ fun MindplexButton(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(
-                                start = if (startIcon != null) contentSpace else MindplexTheme.dimension.dp0,
-                                end = if (endIcon != null) contentSpace else MindplexTheme.dimension.dp0,
+                                start = if (startIcon != null) contentSpace else ComponentTheme.dimension.dp0,
+                                end = if (endIcon != null) contentSpace else ComponentTheme.dimension.dp0,
                             ),
                         text = labelText,
                         maxLines = 1,

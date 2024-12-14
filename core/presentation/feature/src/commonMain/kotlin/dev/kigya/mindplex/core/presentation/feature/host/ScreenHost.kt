@@ -14,7 +14,7 @@ import dev.kigya.mindplex.core.presentation.component.AnimatedNavigationBar
 import dev.kigya.mindplex.core.presentation.component.MindplexIconButton
 import dev.kigya.mindplex.core.presentation.feature.contract.ScreenHostContract
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.core.presentation.feature.host.theme.HostTheme
 import dev.kigya.mindplex.core.util.contract.enforceNonNullSmartCast
 import dev.kigya.mindplex.navigation.navigator.intent.NavigationIntent
 import kotlinx.coroutines.channels.Channel
@@ -49,13 +49,13 @@ fun ScreenHost(
     ) {
         AnimatedNavigationBar(
             modifier = Modifier.padding(
-                vertical = MindplexTheme.dimension.dp16,
-                horizontal = MindplexTheme.dimension.dp16,
+                vertical = HostTheme.dimension.dp16,
+                horizontal = HostTheme.dimension.dp16,
             ),
             selectedIndex = state.activeVertical.index,
         ) {
             MindplexIconButton(
-                modifier = Modifier.padding(vertical = MindplexTheme.dimension.dp12),
+                modifier = Modifier.padding(vertical = HostTheme.dimension.dp12),
                 drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.Home) {
                     Res.drawable.ic_home_active
                 } else {
@@ -64,7 +64,7 @@ fun ScreenHost(
             ) { event(ScreenHostContract.Event.OnHomeVerticalClicked) }
 
             MindplexIconButton(
-                modifier = Modifier.padding(vertical = MindplexTheme.dimension.dp12),
+                modifier = Modifier.padding(vertical = HostTheme.dimension.dp12),
                 drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.Leaderboard) {
                     Res.drawable.ic_leaderboard_active
                 } else {
@@ -73,7 +73,7 @@ fun ScreenHost(
             ) { event(ScreenHostContract.Event.OnLeaderboardVerticalClicked) }
 
             MindplexIconButton(
-                modifier = Modifier.padding(vertical = MindplexTheme.dimension.dp12),
+                modifier = Modifier.padding(vertical = HostTheme.dimension.dp12),
                 drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.Profile) {
                     Res.drawable.ic_profile_active
                 } else {

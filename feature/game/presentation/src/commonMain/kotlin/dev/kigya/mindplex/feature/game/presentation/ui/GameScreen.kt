@@ -25,13 +25,13 @@ import dev.kigya.mindplex.core.presentation.component.MindplexErrorStub
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.dsl.ifPresentOrElse
 import dev.kigya.mindplex.feature.game.presentation.component.GameTimer
 import dev.kigya.mindplex.feature.game.presentation.component.GameTopBar
 import dev.kigya.mindplex.feature.game.presentation.contract.GameContract
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameBackground
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameQuestion
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameBackground
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameQuestion
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -58,11 +58,11 @@ internal fun GameScreenContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MindplexTheme.colorScheme.gameBackground)
+            .background(GameTheme.colorScheme.gameBackground)
             .statusBarsPadding()
             .padding(
-                horizontal = MindplexTheme.dimension.dp24,
-                vertical = MindplexTheme.dimension.dp16,
+                horizontal = GameTheme.dimension.dp24,
+                vertical = GameTheme.dimension.dp16,
             ),
     ) {
         AnimatedContent(
@@ -121,19 +121,19 @@ private fun ColumnScope.HomeSection(
         onIconBackClick = { },
     )
 
-    MindplexSpacer(size = MindplexTheme.dimension.dp64)
+    MindplexSpacer(size = GameTheme.dimension.dp64)
 
     GameTimer(
         remainingTime = 20,
         initialTime = 60,
     )
 
-    MindplexSpacer(size = MindplexTheme.dimension.dp64)
+    MindplexSpacer(size = GameTheme.dimension.dp64)
 
     MindplexText(
         text = "Silhouette — a song performed by the group “KANA-BOON” is featured as the sixteenth opening " +
             "of which anime?",
-        color = MindplexTheme.colorScheme.gameQuestion,
-        style = MindplexTheme.typography.gameQuestion,
+        color = GameTheme.colorScheme.gameQuestion,
+        style = GameTheme.typography.gameQuestion,
     )
 }

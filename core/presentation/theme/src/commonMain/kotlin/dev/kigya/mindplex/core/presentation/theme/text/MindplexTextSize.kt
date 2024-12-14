@@ -3,7 +3,6 @@
 package dev.kigya.mindplex.core.presentation.theme.text
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
@@ -17,5 +16,3 @@ data class MindplexTextSize internal constructor(
     val sp24: TextUnit = 24.sp,
     val sp36: TextUnit = 36.sp,
 )
-
-internal val LocalTextSize = staticCompositionLocalOf(::MindplexTextSize)

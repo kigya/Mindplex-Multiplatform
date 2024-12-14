@@ -7,9 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalHapticFeedback
 import dev.kigya.mindplex.core.presentation.common.util.performClickHapticFeedback
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.dsl.invokeIfPresent
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
 import kotlinx.collections.immutable.ImmutableList
 
 private const val CHUNKED_CATEGORIES_GRID = 2
@@ -25,8 +25,8 @@ internal fun CategorySelectionPage(
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(CHUNKED_CATEGORIES_GRID),
-        horizontalArrangement = Arrangement.spacedBy(MindplexTheme.dimension.dp16),
-        verticalArrangement = Arrangement.spacedBy(MindplexTheme.dimension.dp16),
+        horizontalArrangement = Arrangement.spacedBy(HomeTheme.dimension.dp16),
+        verticalArrangement = Arrangement.spacedBy(HomeTheme.dimension.dp16),
     ) {
         items.forEachIndexed { index, categoryData ->
             item {

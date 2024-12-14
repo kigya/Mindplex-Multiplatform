@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme
 
 private const val BACKGROUND_SHADOW_ALPHA = .56f
 private const val SCALE_IN_INITIAL_STATE = .8f
@@ -95,11 +95,11 @@ fun MindplexDialog(
                         Modifier
                             .pointerInput(Unit) { detectTapGestures { } }
                             .shadow(
-                                elevation = MindplexTheme.dimension.dp8,
-                                shape = MindplexTheme.shape.rounding16,
+                                elevation = ComponentTheme.dimension.dp8,
+                                shape = ComponentTheme.shape.rounding16,
                             )
                             .then(modifier)
-                            .clip(MindplexTheme.shape.rounding16)
+                            .clip(ComponentTheme.shape.rounding16)
                             .background(backgroundColor),
                         contentAlignment = Alignment.Center,
                     ) { content() }

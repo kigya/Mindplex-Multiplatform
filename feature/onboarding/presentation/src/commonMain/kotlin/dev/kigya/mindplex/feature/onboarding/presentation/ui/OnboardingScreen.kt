@@ -19,13 +19,13 @@ import androidx.compose.ui.platform.testTag
 import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
 import dev.kigya.mindplex.core.presentation.common.util.StableFlow
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.extension.ifNotEmpty
 import dev.kigya.mindplex.feature.onboarding.presentation.component.OnboardingButtons
 import dev.kigya.mindplex.feature.onboarding.presentation.component.OnboardingPager
 import dev.kigya.mindplex.feature.onboarding.presentation.component.OnboardingPagerDotsIndicator
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
-import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingBackground
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme.onboardingBackground
 import org.jetbrains.compose.resources.DrawableResource
 
 internal const val LOTTIE_WIDTH_PROPORTIONAL_DIVIDER = 2.1f
@@ -73,10 +73,10 @@ internal fun OnboardingScreenContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MindplexTheme.colorScheme.onboardingBackground)
+                .background(OnboardingTheme.colorScheme.onboardingBackground)
                 .statusBarsPadding()
                 .navigationBarsPadding()
-                .padding(vertical = MindplexTheme.dimension.dp24)
+                .padding(vertical = OnboardingTheme.dimension.dp24)
                 .testTag("onboarding_content"),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,

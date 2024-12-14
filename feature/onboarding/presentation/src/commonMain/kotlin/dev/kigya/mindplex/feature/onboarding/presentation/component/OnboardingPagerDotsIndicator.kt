@@ -11,15 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import dev.kigya.mindplex.core.presentation.component.MindplexJumpingDotsIndicator
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme
 
 @Composable
 internal fun ColumnScope.OnboardingPagerDotsIndicator(
     state: OnboardingContract.State,
     pagerState: PagerState,
 ) {
-    MindplexSpacer(size = MindplexTheme.dimension.dp24)
+    MindplexSpacer(size = OnboardingTheme.dimension.dp24)
     AnimatedVisibility(visible = state.shouldDisplayDotsIndicator) {
         Row(
             modifier = Modifier
@@ -28,7 +28,7 @@ internal fun ColumnScope.OnboardingPagerDotsIndicator(
             horizontalArrangement = Arrangement.Center,
         ) {
             MindplexJumpingDotsIndicator(pagerState = pagerState)
-            MindplexSpacer(size = MindplexTheme.dimension.dp64)
+            MindplexSpacer(size = OnboardingTheme.dimension.dp64)
         }
     }
 }

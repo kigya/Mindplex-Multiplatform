@@ -46,9 +46,9 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.kigya.mindplex.core.presentation.common.extension.by
 import dev.kigya.mindplex.core.presentation.common.util.lerp
-import dev.kigya.mindplex.core.presentation.component.theme.componentNavigationBarBackground
-import dev.kigya.mindplex.core.presentation.component.theme.componentNavigationBarBall
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme.componentNavigationBarBackground
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme.componentNavigationBarBall
 
 private const val BALL_TRANSFORM_PIVOT_FRACTION_X = 0.5f
 private const val BALL_TRANSFORM_PIVOT_FRACTION_Y = 0f
@@ -57,10 +57,10 @@ private const val BALL_TRANSFORM_PIVOT_FRACTION_Y = 0f
 fun AnimatedNavigationBar(
     modifier: Modifier = Modifier,
     selectedIndex: Int,
-    backgroundColor: Color = MindplexTheme.colorScheme.componentNavigationBarBackground,
-    ballColor: Color = MindplexTheme.colorScheme.componentNavigationBarBall,
-    cornerRadius: Dp = MindplexTheme.dimension.dp64,
-    ballSize: Dp = MindplexTheme.dimension.dp8,
+    backgroundColor: Color = ComponentTheme.colorScheme.componentNavigationBarBackground,
+    ballColor: Color = ComponentTheme.colorScheme.componentNavigationBarBall,
+    cornerRadius: Dp = ComponentTheme.dimension.dp64,
+    ballSize: Dp = ComponentTheme.dimension.dp8,
     content: @Composable () -> Unit,
 ) {
     val density = LocalDensity.current
@@ -266,7 +266,7 @@ private class Parabolic(
 
         val verticalOffset = remember { 2.dp by density }
         val ballSizePx = remember { ballSize by density }
-        val ballPadding = MindplexTheme.dimension.dp8
+        val ballPadding = ComponentTheme.dimension.dp8
 
         return produceState(
             initialValue = BallAnimInfo(),

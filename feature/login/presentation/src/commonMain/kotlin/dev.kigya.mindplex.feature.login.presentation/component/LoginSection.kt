@@ -12,13 +12,13 @@ import dev.kigya.mindplex.core.presentation.component.MindplexButton
 import dev.kigya.mindplex.core.presentation.component.MindplexIcon
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.component.MindplexText
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
-import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginButton
-import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginMindplexIcon
-import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginSignInButtonContainer
-import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginSignInButtonContent
-import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginTitle
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.LoginTheme
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.LoginTheme.loginButton
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.LoginTheme.loginMindplexIcon
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.LoginTheme.loginSignInButtonContainer
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.LoginTheme.loginSignInButtonContent
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.LoginTheme.loginTitle
 import mindplex_multiplatform.feature.login.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.login.presentation.generated.resources.ic_google
 import mindplex_multiplatform.feature.login.presentation.generated.resources.ic_mindplex
@@ -32,15 +32,15 @@ internal fun ColumnScope.LoginSection(event: (LoginContract.Event) -> Unit) {
 
     MindplexIcon(
         drawableResource = Res.drawable.ic_mindplex,
-        tintColor = MindplexTheme.colorScheme.loginMindplexIcon,
+        tintColor = LoginTheme.colorScheme.loginMindplexIcon,
     )
-    MindplexSpacer(size = MindplexTheme.dimension.dp24)
+    MindplexSpacer(size = LoginTheme.dimension.dp24)
     MindplexText(
         text = stringResource(Res.string.login_welcome_to_mindplex),
-        style = MindplexTheme.typography.loginTitle,
-        color = MindplexTheme.colorScheme.loginTitle,
+        style = LoginTheme.typography.loginTitle,
+        color = LoginTheme.colorScheme.loginTitle,
     )
-    MindplexSpacer(size = MindplexTheme.dimension.dp64)
+    MindplexSpacer(size = LoginTheme.dimension.dp64)
     GoogleButtonUiContainer(
         onGoogleSignInResult = { googleUser ->
             event(LoginContract.Event.OnGoogleSignInResultReceived(googleUser))
@@ -52,9 +52,9 @@ internal fun ColumnScope.LoginSection(event: (LoginContract.Event) -> Unit) {
                 .testTag("google_sign_in_button"),
             startIcon = { MindplexIcon(drawableResource = Res.drawable.ic_google) },
             labelText = stringResource(Res.string.login_continue_with_google),
-            textStyle = MindplexTheme.typography.loginButton,
-            contentColor = MindplexTheme.colorScheme.loginSignInButtonContent,
-            containerColor = MindplexTheme.colorScheme.loginSignInButtonContainer,
+            textStyle = LoginTheme.typography.loginButton,
+            contentColor = LoginTheme.colorScheme.loginSignInButtonContent,
+            containerColor = LoginTheme.colorScheme.loginSignInButtonContainer,
             onClick = {
                 onClick()
                 performClickHapticFeedback(hapticFeedback)

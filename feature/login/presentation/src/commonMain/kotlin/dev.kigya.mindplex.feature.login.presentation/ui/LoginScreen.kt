@@ -16,11 +16,11 @@ import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
 import dev.kigya.mindplex.core.presentation.common.util.fadeSlideScaleContentTransitionSpec
 import dev.kigya.mindplex.core.presentation.component.MindplexErrorStub
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.dsl.ifPresentOrElse
 import dev.kigya.mindplex.feature.login.presentation.component.LoginSection
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
-import dev.kigya.mindplex.feature.login.presentation.ui.theme.loginBackground
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.LoginTheme
+import dev.kigya.mindplex.feature.login.presentation.ui.theme.LoginTheme.loginBackground
 
 @Composable
 fun LoginScreen(contract: LoginContract) {
@@ -42,8 +42,8 @@ internal fun LoginScreenContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MindplexTheme.colorScheme.loginBackground)
-            .padding(horizontal = MindplexTheme.dimension.dp24),
+            .background(LoginTheme.colorScheme.loginBackground)
+            .padding(horizontal = LoginTheme.dimension.dp24),
     ) {
         AnimatedContent(
             targetState = state.stubErrorType,

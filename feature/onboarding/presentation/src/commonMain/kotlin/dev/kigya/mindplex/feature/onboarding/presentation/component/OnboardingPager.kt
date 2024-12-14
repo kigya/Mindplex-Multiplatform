@@ -19,12 +19,12 @@ import androidx.compose.ui.util.lerp
 import dev.kigya.mindplex.core.presentation.component.MindplexHorizontalPager
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.component.MindplexText
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingLottie
-import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingBackground
-import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingDescription
-import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.onboardingTitle
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme.onboardingBackground
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme.onboardingDescription
+import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme.onboardingTitle
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.abs
@@ -46,7 +46,7 @@ internal fun ImmutableList<OnboardingContract.State.OnboardingScreenData>.Onboar
     MindplexHorizontalPager(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MindplexTheme.colorScheme.onboardingBackground)
+            .background(OnboardingTheme.colorScheme.onboardingBackground)
             .testTag("onboarding_pager"),
         pagerState = pagerState,
     ) { page ->
@@ -58,7 +58,7 @@ internal fun ImmutableList<OnboardingContract.State.OnboardingScreenData>.Onboar
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            MindplexSpacer(size = MindplexTheme.dimension.dp12)
+            MindplexSpacer(size = OnboardingTheme.dimension.dp12)
             OnboardingLottie(
                 modifier = Modifier
                     .graphicsLayer {
@@ -69,35 +69,35 @@ internal fun ImmutableList<OnboardingContract.State.OnboardingScreenData>.Onboar
                 drawableResource = currentOnboardingScreenData.lottieDrawableResource,
                 lottiePath = currentOnboardingScreenData.lottiePath,
             )
-            MindplexSpacer(size = MindplexTheme.dimension.dp36)
+            MindplexSpacer(size = OnboardingTheme.dimension.dp36)
             AnimatedVisibility(visible = state.shouldDisplayTitle) {
                 currentOnboardingScreenData.titleTextResource?.let { titleResource ->
                     MindplexText(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = MindplexTheme.dimension.dp24)
+                            .padding(horizontal = OnboardingTheme.dimension.dp24)
                             .testTag("onboarding_title_$page"),
                         text = stringResource(titleResource),
-                        style = MindplexTheme.typography.onboardingTitle,
-                        color = MindplexTheme.colorScheme.onboardingTitle,
+                        style = OnboardingTheme.typography.onboardingTitle,
+                        color = OnboardingTheme.colorScheme.onboardingTitle,
                     )
                 }
             }
-            MindplexSpacer(size = MindplexTheme.dimension.dp8)
+            MindplexSpacer(size = OnboardingTheme.dimension.dp8)
             AnimatedVisibility(visible = state.shouldDisplayDescription) {
                 currentOnboardingScreenData.descriptionTextResource?.let { descriptionResource ->
                     MindplexText(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = MindplexTheme.dimension.dp24)
+                            .padding(horizontal = OnboardingTheme.dimension.dp24)
                             .testTag("onboarding_description_$page"),
                         text = stringResource(descriptionResource),
-                        style = MindplexTheme.typography.onboardingDescription,
-                        color = MindplexTheme.colorScheme.onboardingDescription,
+                        style = OnboardingTheme.typography.onboardingDescription,
+                        color = OnboardingTheme.colorScheme.onboardingDescription,
                     )
                 }
             }
-            MindplexSpacer(size = MindplexTheme.dimension.dp24)
+            MindplexSpacer(size = OnboardingTheme.dimension.dp24)
         }
     }
 }

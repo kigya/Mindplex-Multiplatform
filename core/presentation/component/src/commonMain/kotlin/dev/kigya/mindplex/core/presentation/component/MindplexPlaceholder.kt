@@ -16,15 +16,15 @@ import com.valentinilk.shimmer.shimmer
 import dev.kigya.mindplex.core.presentation.common.extension.by
 import dev.kigya.mindplex.core.presentation.common.util.DimensionSubcomposeLayout
 import dev.kigya.mindplex.core.presentation.common.util.measureText
-import dev.kigya.mindplex.core.presentation.component.theme.componentPlaceholderShimmer
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme
+import dev.kigya.mindplex.core.presentation.component.theme.ComponentTheme.componentPlaceholderShimmer
 
 @Composable
 fun MindplexPlaceholder(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
-    color: Color = MindplexTheme.colorScheme.componentPlaceholderShimmer,
-    cornerRadius: Dp = MindplexTheme.dimension.dp24,
+    color: Color = ComponentTheme.colorScheme.componentPlaceholderShimmer,
+    cornerRadius: Dp = ComponentTheme.dimension.dp24,
     content: @Composable () -> Unit,
 ) {
     val density = LocalDensity.current
@@ -53,8 +53,8 @@ fun MindplexPlaceholder(
     textToMeasure: String,
     textStyle: TextStyle,
     isLoading: Boolean = false,
-    color: Color = MindplexTheme.colorScheme.componentPlaceholderShimmer,
-    cornerRadius: Dp = MindplexTheme.dimension.dp24,
+    color: Color = ComponentTheme.colorScheme.componentPlaceholderShimmer,
+    cornerRadius: Dp = ComponentTheme.dimension.dp24,
     content: @Composable () -> Unit,
 ) {
     val density = LocalDensity.current
@@ -81,8 +81,8 @@ fun MindplexPlaceholder(
     modifier: Modifier = Modifier,
     size: Size = Size.Unspecified,
     isLoading: Boolean = false,
-    color: Color = MindplexTheme.colorScheme.componentPlaceholderShimmer,
-    cornerRadius: Dp = MindplexTheme.dimension.dp24,
+    color: Color = ComponentTheme.colorScheme.componentPlaceholderShimmer,
+    cornerRadius: Dp = ComponentTheme.dimension.dp24,
     content: @Composable () -> Unit,
 ) {
     val density = LocalDensity.current

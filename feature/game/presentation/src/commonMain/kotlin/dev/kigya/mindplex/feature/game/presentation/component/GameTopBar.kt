@@ -13,14 +13,14 @@ import dev.kigya.mindplex.core.presentation.component.MindplexIcon
 import dev.kigya.mindplex.core.presentation.component.MindplexIconButton
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.component.MindplexText
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameBackground
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameIconBack
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameScoreLabel
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameScoreLabelBackground
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameScoreLabelIcon
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameScoreLabelText
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.gameTitle
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameBackground
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameIconBack
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameScoreLabel
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameScoreLabelBackground
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameScoreLabelIcon
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameScoreLabelText
+import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameTitle
 import mindplex_multiplatform.feature.game.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.game.presentation.generated.resources.ic_game_arrow_back
 import mindplex_multiplatform.feature.game.presentation.generated.resources.ic_game_score_label
@@ -35,22 +35,22 @@ internal fun GameTopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(MindplexTheme.colorScheme.gameBackground),
+            .background(GameTheme.colorScheme.gameBackground),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         MindplexIconButton(
             drawableResource = Res.drawable.ic_game_arrow_back,
-            tintColor = MindplexTheme.colorScheme.gameIconBack,
+            tintColor = GameTheme.colorScheme.gameIconBack,
             onClick = onIconBackClick,
         )
 
-        MindplexSpacer(size = MindplexTheme.dimension.dp4)
+        MindplexSpacer(size = GameTheme.dimension.dp4)
 
         MindplexText(
             text = title,
-            style = MindplexTheme.typography.gameTitle,
-            color = MindplexTheme.colorScheme.gameTitle,
+            style = GameTheme.typography.gameTitle,
+            color = GameTheme.colorScheme.gameTitle,
         )
 
         MindplexFillSpacer()
@@ -69,13 +69,13 @@ private fun GameScoreLabel(
         leadingIcon = {
             MindplexIcon(
                 drawableResource = Res.drawable.ic_game_score_label,
-                tintColor = MindplexTheme.colorScheme.gameScoreLabelIcon,
+                tintColor = GameTheme.colorScheme.gameScoreLabelIcon,
             )
         },
         text = scoreText,
-        textStyle = MindplexTheme.typography.gameScoreLabel,
-        textColor = MindplexTheme.colorScheme.gameScoreLabelText,
-        backgroundColor = MindplexTheme.colorScheme.gameScoreLabelBackground,
+        textStyle = GameTheme.typography.gameScoreLabel,
+        textColor = GameTheme.colorScheme.gameScoreLabelText,
+        backgroundColor = GameTheme.colorScheme.gameScoreLabelBackground,
         isSelected = true,
         isEnabled = false,
         shouldAnimateText = true,

@@ -23,7 +23,6 @@ import dev.kigya.mindplex.core.presentation.common.util.fadeSlideScaleContentTra
 import dev.kigya.mindplex.core.presentation.component.MindplexErrorStub
 import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.util.dsl.ifPresentOrElse
 import dev.kigya.mindplex.feature.home.presentation.component.CategorySelectionPopup
 import dev.kigya.mindplex.feature.home.presentation.component.FactsPager
@@ -31,7 +30,8 @@ import dev.kigya.mindplex.feature.home.presentation.component.HomePagerDotsIndic
 import dev.kigya.mindplex.feature.home.presentation.component.HomeScreenHeader
 import dev.kigya.mindplex.feature.home.presentation.component.ModesCard
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.homeBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeBackground
 
 internal expect val PAGER_PLACEHOLDER_WIDTH_DIVIDER: Int
 internal expect val MODES_PLACEHOLDER_WIDTH_DIVIDER: Float
@@ -59,11 +59,11 @@ internal fun HomeScreenContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MindplexTheme.colorScheme.homeBackground)
+            .background(HomeTheme.colorScheme.homeBackground)
             .statusBarsPadding()
             .padding(
-                horizontal = MindplexTheme.dimension.dp24,
-                vertical = MindplexTheme.dimension.dp16,
+                horizontal = HomeTheme.dimension.dp24,
+                vertical = HomeTheme.dimension.dp16,
             ),
     ) {
         AnimatedContent(
@@ -125,7 +125,7 @@ private fun ColumnScope.HomeSection(
         event = event,
     )
 
-    MindplexSpacer(size = MindplexTheme.dimension.dp36)
+    MindplexSpacer(size = HomeTheme.dimension.dp36)
 
     FactsPager(
         modifier = Modifier.fillMaxWidth(),
@@ -134,7 +134,7 @@ private fun ColumnScope.HomeSection(
         facts = state.factsPagerData.facts,
     )
 
-    MindplexSpacer(size = MindplexTheme.dimension.dp12)
+    MindplexSpacer(size = HomeTheme.dimension.dp12)
 
     HomePagerDotsIndicator(
         modifier = Modifier.fillMaxWidth(),
@@ -142,7 +142,7 @@ private fun ColumnScope.HomeSection(
         pagerState = pagerState,
     )
 
-    MindplexSpacer(size = MindplexTheme.dimension.dp36)
+    MindplexSpacer(size = HomeTheme.dimension.dp36)
 
     ModesCard(
         modifier = Modifier.fillMaxWidth(),
