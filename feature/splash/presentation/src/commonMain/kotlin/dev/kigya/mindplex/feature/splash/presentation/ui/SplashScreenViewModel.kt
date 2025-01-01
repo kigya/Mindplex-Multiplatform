@@ -5,7 +5,7 @@ import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
-import dev.kigya.mindplex.navigation.navigator.navigator.AppNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,28 +15,33 @@ import kotlinx.coroutines.flow.update
 import kotlin.time.Duration.Companion.milliseconds
 
 class SplashScreenViewModel(
-    private val navigatorContract: AppNavigatorContract,
     private val getIsOnboardingCompletedUseCase: GetIsOnboardingCompletedUseCase,
     private val getIsUserSignedInUseCase: GetIsUserSignedInUseCase,
-) : BaseViewModel<SplashContract.State, SplashContract.Effect>(SplashContract.State()),
+    navigatorContract: MindplexNavigatorContract,
+) : BaseViewModel<SplashContract.State, SplashContract.Effect>(
+    navigatorContract = navigatorContract,
+    initialState = SplashContract.State(),
+),
     SplashContract {
 
     private val _isOnboardingCompleted = MutableStateFlow<Boolean?>(null)
     private val _isUserSignedIn = MutableStateFlow<Boolean?>(null)
 
+    override fun executeStartAction() {
+        combine(
+            getIsOnboardingCompletedUseCase(None),
+            getIsUserSignedInUseCase(None),
+        ) { isOnboardingCompleted, isUserSignedIn ->
+            _isOnboardingCompleted.update { isOnboardingCompleted }
+            _isUserSignedIn.update { isUserSignedIn }
+        }.launchIn(useCaseCoroutineScope)
+    }
+
     override fun handleEvent(event: SplashContract.Event) = withUseCaseScope {
         when (event) {
-            SplashContract.Event.OnFirstLaunch -> combine(
-                getIsOnboardingCompletedUseCase(None),
-                getIsUserSignedInUseCase(None),
-            ) { isOnboardingCompleted, isUserSignedIn ->
-                _isOnboardingCompleted.update { isOnboardingCompleted }
-                _isUserSignedIn.update { isUserSignedIn }
-            }.launchIn(this)
-
             SplashContract.Event.OnAnimationFinished -> {
                 updateState { copy(shouldDisplayText = true) }
-                delay(POST_ANIMATION_DELAY)
+                delay(postAnimationDelay)
                 val route = when {
                     _isOnboardingCompleted.value == false -> ScreenRoute.Onboarding
                     _isUserSignedIn.value == false -> ScreenRoute.Login
@@ -52,6 +57,6 @@ class SplashScreenViewModel(
     }
 
     private companion object {
-        val POST_ANIMATION_DELAY = 700.milliseconds
+        val postAnimationDelay = 700.milliseconds
     }
 }

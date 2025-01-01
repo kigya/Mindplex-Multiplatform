@@ -7,6 +7,7 @@ import dev.kigya.mindplex.feature.onboarding.domain.contract.OnboardingRepositor
 class SetOnboardingCompletedUseCase(
     private val onboardingRepositoryContract: OnboardingRepositoryContract,
 ) : BaseSuspendUseCase<Unit, None>() {
+
     override suspend operator fun invoke(params: None) =
         onboardingRepositoryContract.setOnboardingCompleted()
 }

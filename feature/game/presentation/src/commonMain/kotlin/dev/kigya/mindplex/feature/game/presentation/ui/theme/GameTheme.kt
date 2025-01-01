@@ -1,12 +1,13 @@
 package dev.kigya.mindplex.feature.game.presentation.ui.theme
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.TextStyle
 import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.presentation.theme.color.MindplexColorScheme
 import dev.kigya.mindplex.core.presentation.theme.color.MindplexDynamicColor
 import dev.kigya.mindplex.core.presentation.theme.color.provides
+import dev.kigya.mindplex.core.presentation.theme.text.MindplexTextStyle
 import dev.kigya.mindplex.core.presentation.theme.text.MindplexTypography
+import dev.kigya.mindplex.core.presentation.theme.text.provides
 
 internal object GameTheme : MindplexTheme() {
 
@@ -148,7 +149,7 @@ internal object GameTheme : MindplexTheme() {
     // region Typography
     val MindplexTypography.gameTitle
         @Composable
-        get() = TextStyle(
+        get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp16,
             fontWeight = super.fontWeight.medium,
             fontFamily = super.font.rubik,
@@ -156,7 +157,7 @@ internal object GameTheme : MindplexTheme() {
 
     val MindplexTypography.gameScoreLabel
         @Composable
-        get() = TextStyle(
+        get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp16,
             fontWeight = super.fontWeight.medium,
             fontFamily = super.font.rubik,
@@ -164,7 +165,7 @@ internal object GameTheme : MindplexTheme() {
 
     val MindplexTypography.gameTimerCounter
         @Composable
-        get() = TextStyle(
+        get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp18,
             fontWeight = super.fontWeight.medium,
             fontFamily = super.font.rubik,
@@ -172,7 +173,7 @@ internal object GameTheme : MindplexTheme() {
 
     val MindplexTypography.gameQuestion
         @Composable
-        get() = TextStyle(
+        get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp20,
             fontWeight = super.fontWeight.medium,
             fontFamily = super.font.rubik,
@@ -180,7 +181,7 @@ internal object GameTheme : MindplexTheme() {
 
     val MindplexTypography.gameButton
         @Composable
-        get() = TextStyle(
+        get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp16,
             fontWeight = super.fontWeight.medium,
             fontFamily = super.font.rubik,

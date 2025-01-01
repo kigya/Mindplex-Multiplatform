@@ -14,7 +14,7 @@ import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
 import dev.kigya.mindplex.feature.login.presentation.mapper.toDomain
 import dev.kigya.mindplex.feature.login.presentation.ui.LoginScreenViewModel
-import dev.kigya.mindplex.navigation.navigator.navigator.AppNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -40,7 +40,7 @@ class LoginScreenViewModelTest {
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testScope = TestScope(testDispatcher)
 
-    private val navigatorContract = mockk<AppNavigatorContract>(relaxed = true)
+    private val navigatorContract = mockk<MindplexNavigatorContract>(relaxed = true)
     private val signInUseCase = mockk<SignInUseCase>()
     private val getIsUserSignedInUseCase = mockk<GetIsUserSignedInUseCase>()
 

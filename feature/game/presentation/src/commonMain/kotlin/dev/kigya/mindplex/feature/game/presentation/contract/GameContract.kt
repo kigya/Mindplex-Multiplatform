@@ -1,9 +1,9 @@
 package dev.kigya.mindplex.feature.game.presentation.contract
 
 import androidx.compose.runtime.Immutable
-import dev.kigya.mindplex.core.presentation.component.StubErrorType
 import dev.kigya.mindplex.core.presentation.feature.CopyableComponentState
 import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContract
+import dev.kigya.mindplex.core.presentation.uikit.StubErrorType
 
 interface GameContract :
     UnidirectionalViewModelContract<GameContract.State, GameContract.Event, GameContract.Effect> {

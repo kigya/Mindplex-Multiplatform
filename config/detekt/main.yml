@@ -603,6 +603,7 @@ style:
       - '0'
       - '1'
       - '2'
+      - '0.5'
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false
     ignoreLocalVariableDeclaration: false
@@ -719,7 +720,7 @@ style:
   UnusedPrivateClass:
     active: true
   UnusedPrivateMember:
-    ignoreAnnotated: [ 'Preview', 'ScreenPreviewFactory' ]
+    ignoreAnnotated: [ 'Preview', 'PreviewScreensFactory' ]
     active: true
     allowedNames: '(_|ignored|expected|serialVersionUID)'
   UnusedPrivateProperty:

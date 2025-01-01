@@ -20,7 +20,7 @@ kotlin {
                     implementation(util)
                     implementation(presentation.feature)
                     implementation(presentation.theme)
-                    implementation(presentation.component)
+                    implementation(presentation.uikit)
                     implementation(presentation.common)
                     implementation(domain.profile)
                 }

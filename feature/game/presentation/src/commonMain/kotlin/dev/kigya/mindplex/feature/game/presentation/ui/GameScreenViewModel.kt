@@ -2,12 +2,16 @@ package dev.kigya.mindplex.feature.game.presentation.ui
 
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.feature.game.presentation.contract.GameContract
-import dev.kigya.mindplex.feature.game.presentation.contract.GameContract.Effect
-import dev.kigya.mindplex.feature.game.presentation.contract.GameContract.Event
-import dev.kigya.mindplex.feature.game.presentation.contract.GameContract.State
+import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 
-class GameScreenViewModel : BaseViewModel<State, Effect>(State()), GameContract {
+class GameScreenViewModel(
+    navigatorContract: MindplexNavigatorContract,
+) : BaseViewModel<GameContract.State, GameContract.Effect>(
+    navigatorContract = navigatorContract,
+    initialState = GameContract.State(),
+),
+    GameContract {
 
-    override fun handleEvent(event: Event) = withUseCaseScope {
+    override fun handleEvent(event: GameContract.Event) = withUseCaseScope {
     }
 }

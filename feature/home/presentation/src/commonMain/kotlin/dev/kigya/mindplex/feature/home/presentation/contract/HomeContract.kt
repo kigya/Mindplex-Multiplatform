@@ -2,9 +2,9 @@ package dev.kigya.mindplex.feature.home.presentation.contract
 
 import androidx.annotation.Size
 import androidx.compose.runtime.Immutable
-import dev.kigya.mindplex.core.presentation.component.StubErrorType
 import dev.kigya.mindplex.core.presentation.feature.CopyableComponentState
 import dev.kigya.mindplex.core.presentation.feature.UnidirectionalViewModelContract
+import dev.kigya.mindplex.core.presentation.uikit.StubErrorType
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.Companion.MAX_MODES_AMOUNT
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.Companion.MIN_MODES_AMOUNT
@@ -35,6 +35,12 @@ import mindplex_multiplatform.feature.home.presentation.generated.resources.home
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_categories_television
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_categories_vehicles
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_categories_video_games
+import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_pick_answer_description
+import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_pick_answer_title
+import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_random_description
+import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_random_title
+import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_true_of_false_description
+import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_true_of_false_title
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_animals
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_art
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_celebrities
@@ -52,12 +58,15 @@ import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_g
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_geography
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_history
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_mythology
+import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_pick_answer_mode
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_politics
+import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_random_mode
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_science_computers
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_science_gadgets
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_science_mathematics
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_science_nature
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_sports
+import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_true_or_false_mode
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_vehicles
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
@@ -68,7 +77,7 @@ interface HomeContract :
     data class State internal constructor(
         val stubErrorType: StubErrorType? = null,
         val headerData: HeaderData = HeaderData(),
-        val factsPagerData: FactsPagerData = FactsPagerData(),
+        val factsData: FactsData = FactsData(),
         val modesData: ModesData = ModesData(),
         val categorySelectionData: CategorySelectionData = CategorySelectionData(),
     ) : CopyableComponentState {
@@ -81,16 +90,17 @@ interface HomeContract :
         )
 
         @Immutable
-        data class FactsPagerData internal constructor(
+        data class FactsData internal constructor(
             val areFactsLoading: Boolean = true,
             @Size(value = FACTS_AMOUNT.toLong())
             val facts: ImmutableList<String> = persistentListOf(),
+            val currentIndex: Int = 0,
         )
 
         @Immutable
         data class ModesData internal constructor(
             val areModesLoading: Boolean = true,
-            @HomeModesSize val modes: ImmutableList<Mode> = persistentListOf(),
+            @HomeModesSize val modes: ImmutableList<Mode> = defaultModes,
         ) {
             data class Mode internal constructor(
                 val type: Type = Type.RANDOM,
@@ -106,6 +116,32 @@ interface HomeContract :
             @Suppress("DataClassContainsFunctions")
             fun getTitleByType(type: Mode.Type): StringResource? =
                 modes.firstOrNull { it.type == type }?.title
+
+            private companion object {
+                val defaultModes = persistentListOf(
+                    Mode(
+                        type = ModesData.Mode.Type.PICK_ANSWER,
+                        icon = Res.drawable.ic_pick_answer_mode,
+                        title = Res.string.home_modes_pick_answer_title,
+                        description = Res.string.home_modes_pick_answer_description,
+                        shouldDisplayDelimiter = true,
+                    ),
+                    Mode(
+                        type = ModesData.Mode.Type.TRUE_OR_FALSE,
+                        icon = Res.drawable.ic_true_or_false_mode,
+                        title = Res.string.home_modes_true_of_false_title,
+                        description = Res.string.home_modes_true_of_false_description,
+                        shouldDisplayDelimiter = true,
+                    ),
+                    Mode(
+                        type = ModesData.Mode.Type.RANDOM,
+                        icon = Res.drawable.ic_random_mode,
+                        title = Res.string.home_modes_random_title,
+                        description = Res.string.home_modes_random_description,
+                        shouldDisplayDelimiter = false,
+                    ),
+                )
+            }
         }
 
         @Immutable
@@ -255,7 +291,8 @@ interface HomeContract :
 
     @Immutable
     sealed class Event {
-        internal data object OnFirstLaunch : Event()
+
+        internal data object OnStopLifecycleEventReceived : Event()
 
         internal data object OnProfilePictureLoaded : Event()
 
@@ -284,9 +321,7 @@ interface HomeContract :
     }
 
     @Immutable
-    sealed class Effect {
-        internal data object ScrollFactsToNextPage : Effect()
-    }
+    sealed class Effect
 
     companion object {
         internal const val FACTS_AMOUNT = 3

@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import dev.kigya.mindplex.core.presentation.component.MindplexChip
-import dev.kigya.mindplex.core.presentation.component.MindplexFillSpacer
-import dev.kigya.mindplex.core.presentation.component.MindplexIcon
-import dev.kigya.mindplex.core.presentation.component.MindplexIconButton
-import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
-import dev.kigya.mindplex.core.presentation.component.MindplexText
+import dev.kigya.mindplex.core.presentation.uikit.MindplexChip
+import dev.kigya.mindplex.core.presentation.uikit.MindplexFillSpacer
+import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
+import dev.kigya.mindplex.core.presentation.uikit.MindplexIconButton
+import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
+import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameBackground
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameIconBack
@@ -35,22 +35,22 @@ internal fun GameTopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(GameTheme.colorScheme.gameBackground),
+            .background(GameTheme.colorScheme.gameBackground.value),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         MindplexIconButton(
-            drawableResource = Res.drawable.ic_game_arrow_back,
-            tintColor = GameTheme.colorScheme.gameIconBack,
+            resource = Res.drawable.ic_game_arrow_back,
+            color = GameTheme.colorScheme.gameIconBack,
             onClick = onIconBackClick,
         )
 
         MindplexSpacer(size = GameTheme.dimension.dp4)
 
         MindplexText(
-            text = title,
-            style = GameTheme.typography.gameTitle,
+            value = title,
             color = GameTheme.colorScheme.gameTitle,
+            typography = GameTheme.typography.gameTitle,
         )
 
         MindplexFillSpacer()
@@ -68,8 +68,8 @@ private fun GameScoreLabel(
         modifier = modifier,
         leadingIcon = {
             MindplexIcon(
-                drawableResource = Res.drawable.ic_game_score_label,
-                tintColor = GameTheme.colorScheme.gameScoreLabelIcon,
+                resource = Res.drawable.ic_game_score_label,
+                color = GameTheme.colorScheme.gameScoreLabelIcon,
             )
         },
         text = scoreText,

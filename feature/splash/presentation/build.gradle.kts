@@ -18,7 +18,7 @@ kotlin {
                     implementation(core.util)
                     implementation(core.presentation.common)
                     implementation(presentation.feature)
-                    implementation(presentation.component)
+                    implementation(presentation.uikit)
                     implementation(presentation.theme)
                 }
                 with(feature) {

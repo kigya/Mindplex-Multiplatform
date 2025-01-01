@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlin.coroutines.CoroutineContext
 
 @Composable
-actual fun <T> StateFlow<T>.collectAsStateMultiplatform(context: CoroutineContext): State<T> =
+actual fun <T> StateFlow<T>.collectAsPlatformState(context: CoroutineContext): State<T> =
     collectAsState(context)

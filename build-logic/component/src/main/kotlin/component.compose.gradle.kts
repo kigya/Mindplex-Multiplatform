@@ -11,6 +11,8 @@ configure<KotlinMultiplatformExtension> {
         commonMain.dependencies {
             with(libs) {
                 implementation(lifecycle.viewmodel)
+                implementation(lifecycle.runtime.compose)
+                implementation(compose.adaptive)
             }
             with(compose.dependencies) {
                 implementation(components.resources)

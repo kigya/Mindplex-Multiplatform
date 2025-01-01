@@ -21,10 +21,10 @@ import androidx.compose.ui.platform.testTag
 import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
 import dev.kigya.mindplex.core.presentation.common.util.StableFlow
 import dev.kigya.mindplex.core.presentation.common.util.fadeSlideScaleContentTransitionSpec
-import dev.kigya.mindplex.core.presentation.component.MindplexErrorStub
-import dev.kigya.mindplex.core.presentation.component.MindplexSpacer
-import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
+import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStub
+import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
+import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.util.dsl.ifPresentOrElse
 import dev.kigya.mindplex.feature.game.presentation.component.GameTimer
 import dev.kigya.mindplex.feature.game.presentation.component.GameTopBar
@@ -58,11 +58,11 @@ internal fun GameScreenContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(GameTheme.colorScheme.gameBackground)
+            .background(GameTheme.colorScheme.gameBackground.value)
             .statusBarsPadding()
             .padding(
-                horizontal = GameTheme.dimension.dp24,
-                vertical = GameTheme.dimension.dp16,
+                horizontal = GameTheme.dimension.dp24.value,
+                vertical = GameTheme.dimension.dp16.value,
             ),
     ) {
         AnimatedContent(
@@ -131,9 +131,9 @@ private fun ColumnScope.HomeSection(
     MindplexSpacer(size = GameTheme.dimension.dp64)
 
     MindplexText(
-        text = "Silhouette — a song performed by the group “KANA-BOON” is featured as the sixteenth opening " +
+        value = "Silhouette — a song performed by the group “KANA-BOON” is featured as the sixteenth opening " +
             "of which anime?",
         color = GameTheme.colorScheme.gameQuestion,
-        style = GameTheme.typography.gameQuestion,
+        typography = GameTheme.typography.gameQuestion,
     )
 }

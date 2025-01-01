@@ -1,12 +1,13 @@
 package dev.kigya.mindplex.feature.splash.presentation.ui.theme
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.TextStyle
 import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.core.presentation.theme.color.MindplexColorScheme
 import dev.kigya.mindplex.core.presentation.theme.color.MindplexDynamicColor
 import dev.kigya.mindplex.core.presentation.theme.color.provides
+import dev.kigya.mindplex.core.presentation.theme.text.MindplexTextStyle
 import dev.kigya.mindplex.core.presentation.theme.text.MindplexTypography
+import dev.kigya.mindplex.core.presentation.theme.text.provides
 
 internal object SplashTheme : MindplexTheme() {
 
@@ -29,7 +30,7 @@ internal object SplashTheme : MindplexTheme() {
     // region Typography
     val MindplexTypography.splashHeader
         @Composable
-        get() = TextStyle(
+        get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp36,
             fontWeight = super.fontWeight.extraBold,
             fontFamily = super.font.nunito,

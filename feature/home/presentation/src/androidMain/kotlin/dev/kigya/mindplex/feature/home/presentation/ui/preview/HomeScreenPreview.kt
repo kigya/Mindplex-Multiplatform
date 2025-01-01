@@ -5,12 +5,11 @@ package dev.kigya.mindplex.feature.home.presentation.ui.preview
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import dev.kigya.mindplex.core.presentation.common.util.StableFlow
-import dev.kigya.mindplex.core.presentation.component.preview.ScreenPreviewFactory
+import dev.kigya.mindplex.core.presentation.uikit.preview.factory.PreviewScreensFactory
+import dev.kigya.mindplex.core.util.extension.Lambda
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreenContent
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.flow.flowOf
 import mindplex_multiplatform.feature.home.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_pick_answer_description
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_pick_answer_title
@@ -22,15 +21,14 @@ import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_p
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_random_mode
 import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_true_or_false_mode
 
-@ScreenPreviewFactory
+@PreviewScreensFactory
 @Composable
 private fun HomeScreenPreview(
     @PreviewParameter(HomeScreenPreviewParameterProvider::class) state: HomeContract.State,
 ) {
     HomeScreenContent(
         state = state,
-        event = {},
-        effect = StableFlow(flowOf()),
+        event = Lambda.noOpConsumer(),
     )
 }
 
@@ -43,7 +41,7 @@ class HomeScreenPreviewParameterProvider : PreviewParameterProvider<HomeContract
                 isProfileNameLoading = false,
                 isProfilePictureLoading = false,
             ),
-            factsPagerData = HomeContract.State.FactsPagerData(
+            factsData = HomeContract.State.FactsData(
                 areFactsLoading = false,
                 facts = persistentListOf(
                     "The term arbitrary refers to the standard of review used by courts when reviewing a variety of " +
@@ -86,7 +84,7 @@ class HomeScreenPreviewParameterProvider : PreviewParameterProvider<HomeContract
                 isProfileNameLoading = true,
                 isProfilePictureLoading = true,
             ),
-            factsPagerData = HomeContract.State.FactsPagerData(
+            factsData = HomeContract.State.FactsData(
                 areFactsLoading = true,
                 facts = persistentListOf(
                     "The term arbitrary refers to the standard of review used by courts when reviewing a variety of " +

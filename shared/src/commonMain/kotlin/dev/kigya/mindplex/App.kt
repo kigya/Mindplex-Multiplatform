@@ -11,9 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
-import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.LocalPlatformContext
 import coil3.compose.setSingletonImageLoaderFactory
+import dev.kigya.mindplex.core.presentation.common.util.SystemBarsColor
 import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
 import dev.kigya.mindplex.core.presentation.feature.host.ScreenHost
 import dev.kigya.mindplex.core.presentation.feature.host.ScreenHostViewModel
@@ -37,7 +37,6 @@ import org.koin.compose.KoinContext
 import org.koin.compose.currentKoinScope
 import org.koin.core.parameter.parametersOf
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun App() {
     MindplexTheme {
@@ -53,30 +52,37 @@ fun App() {
                     startDestination = ScreenRoute.Splash,
                 ) {
                     animatedComposable<ScreenRoute.Splash> {
+                        SystemBarsColor(SystemBarsColor.LIGHT)
                         SplashScreen(koinViewModel<SplashScreenViewModel>())
                     }
 
                     animatedComposable<ScreenRoute.Onboarding> {
+                        SystemBarsColor(SystemBarsColor.LIGHT)
                         OnboardingScreen(koinViewModel<OnboardingScreenViewModel>())
                     }
 
                     animatedComposable<ScreenRoute.Login> {
+                        SystemBarsColor(SystemBarsColor.AUTO)
                         LoginScreen(koinViewModel<LoginScreenViewModel>())
                     }
 
                     animatedComposable<ScreenRoute.Home> {
+                        SystemBarsColor(SystemBarsColor.AUTO)
                         HomeScreen(koinViewModel<HomeScreenViewModel>())
                     }
 
                     animatedComposable<ScreenRoute.Leaderboard> {
+                        SystemBarsColor(SystemBarsColor.AUTO)
                         LeaderboardScreen(koinViewModel<LeaderboardScreenViewModel>())
                     }
 
                     animatedComposable<ScreenRoute.Profile> {
+                        SystemBarsColor(SystemBarsColor.AUTO)
                         ProfileScreen(koinViewModel<ProfileScreenViewModel>())
                     }
 
                     animatedComposable<ScreenRoute.Game> {
+                        SystemBarsColor(SystemBarsColor.AUTO)
                         GameScreen(koinViewModel<GameScreenViewModel>())
                     }
                 }

@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 
 @Stable
-infix fun Float.by(density: Density) = with(density) { this@by.toDp() }
+infix fun Float.by(density: Density): Dp = with(density) { this@by.toDp() }
 
 @Stable
 infix fun Dp.by(density: Density): Float = with(density) { this@by.toPx() }

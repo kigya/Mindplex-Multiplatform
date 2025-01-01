@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.kigya.mindplex.core.presentation.common.extension.toPx
-import dev.kigya.mindplex.core.presentation.component.MindplexText
+import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameTimerBackgroundArc
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameTimerCounter
@@ -37,11 +37,11 @@ internal fun GameTimer(
     )
 
     BoxWithConstraints(
-        modifier = modifier.padding(GameTheme.dimension.dp36),
+        modifier = modifier.padding(GameTheme.dimension.dp36.value),
         contentAlignment = Alignment.Center,
     ) {
-        val textSize = GameTheme.typography.gameTimerCounter.fontSize.toPx()
-        val circleSize = textSize.dp + GameTheme.dimension.dp36 * 2
+        val textSize = GameTheme.typography.gameTimerCounter.value.fontSize.toPx()
+        val circleSize = textSize.dp + GameTheme.dimension.dp36.value * 2
 
         Box(
             modifier = Modifier.size(circleSize),
@@ -55,14 +55,14 @@ internal fun GameTimer(
                 val sweepAngle = totalAngle * animatedProgress
 
                 drawArc(
-                    color = backgroundColor,
+                    color = backgroundColor.value,
                     startAngle = START_ANGLE,
                     sweepAngle = totalAngle,
                     useCenter = true,
                 )
 
                 drawArc(
-                    color = progressColor,
+                    color = progressColor.value,
                     startAngle = START_ANGLE,
                     sweepAngle = sweepAngle,
                     useCenter = true,
@@ -70,8 +70,8 @@ internal fun GameTimer(
             }
 
             MindplexText(
-                text = remainingTime.toString(),
-                style = GameTheme.typography.gameTimerCounter,
+                value = remainingTime.toString(),
+                typography = GameTheme.typography.gameTimerCounter,
                 color = GameTheme.colorScheme.gameTimerText,
             )
         }
