@@ -67,7 +67,7 @@ internal fun FactsSection(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(HomeTheme.colorScheme.homeFactsPagerTextShadow.value.copy(alpha = 0.4f))
+                    .background(HomeTheme.colorScheme.homeFactsPagerTextShadow.value.copy(alpha = 0.5f))
                     .padding(
                         horizontal = HomeTheme.dimension.dp16.value,
                         vertical = HomeTheme.dimension.dp36.value,
