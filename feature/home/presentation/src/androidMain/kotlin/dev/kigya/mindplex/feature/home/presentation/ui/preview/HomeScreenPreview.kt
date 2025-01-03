@@ -24,7 +24,8 @@ import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_t
 @PreviewScreensFactory
 @Composable
 private fun HomeScreenPreview(
-    @PreviewParameter(HomeScreenPreviewParameterProvider::class) state: HomeContract.State,
+    @PreviewParameter(HomeScreenPreviewParameterProvider::class)
+    state: HomeContract.State,
 ) {
     HomeScreenContent(
         state = state,
