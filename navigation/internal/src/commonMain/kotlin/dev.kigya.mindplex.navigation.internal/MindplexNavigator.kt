@@ -13,13 +13,17 @@ class MindplexNavigator : MindplexNavigatorContract {
             onBufferOverflow = BufferOverflow.DROP_LATEST,
         )
 
+    private var _routeHistory: List<ScreenRoute> = emptyList()
+    override val routeHistory: List<ScreenRoute> get() = _routeHistory
+
     override suspend fun navigateBack(
         route: ScreenRoute?,
         inclusive: Boolean,
     ) {
+        val newCurrent = popRouteHistory(route, inclusive)
         navigationChannel.send(
             NavigationIntent.NavigateBack(
-                route = route,
+                route = newCurrent,
                 inclusive = inclusive,
             ),
         )
@@ -29,10 +33,11 @@ class MindplexNavigator : MindplexNavigatorContract {
         route: ScreenRoute?,
         inclusive: Boolean,
     ) {
+        val newCurrent = popRouteHistory(route, inclusive)
         navigationChannel.trySend(
             NavigationIntent.NavigateBack(
-                route = route,
-                inclusive = inclusive,
+                route = newCurrent,
+                inclusive = false,
             ),
         )
     }
@@ -43,6 +48,7 @@ class MindplexNavigator : MindplexNavigatorContract {
         inclusive: Boolean,
         isSingleTop: Boolean,
     ) {
+        pushRouteHistory(route, popUpToRoute, inclusive, isSingleTop)
         navigationChannel.send(
             NavigationIntent.NavigateTo(
                 route = route,
@@ -59,6 +65,7 @@ class MindplexNavigator : MindplexNavigatorContract {
         inclusive: Boolean,
         isSingleTop: Boolean,
     ) {
+        pushRouteHistory(route, popUpToRoute, inclusive, isSingleTop)
         navigationChannel.trySend(
             NavigationIntent.NavigateTo(
                 route = route,
@@ -67,5 +74,51 @@ class MindplexNavigator : MindplexNavigatorContract {
                 isSingleTop = isSingleTop,
             ),
         )
+    }
+
+    private fun popRouteHistory(
+        targetRoute: ScreenRoute?,
+        inclusive: Boolean,
+    ): ScreenRoute? {
+        val oldHistory = _routeHistory
+
+        val newHistory = if (targetRoute == null) {
+            if (oldHistory.isNotEmpty()) oldHistory.dropLast(1) else oldHistory
+        } else {
+            val idx = oldHistory.indexOfLast { it == targetRoute }
+            if (idx >= 0) {
+                oldHistory.take(idx + if (inclusive) 0 else 1)
+            } else {
+                emptyList()
+            }
+        }
+
+        _routeHistory = newHistory
+        return newHistory.lastOrNull()
+    }
+
+    private fun pushRouteHistory(
+        newRoute: ScreenRoute,
+        popUpToRoute: ScreenRoute?,
+        inclusive: Boolean,
+        isSingleTop: Boolean,
+    ) {
+        var newHistory = _routeHistory
+
+        if (isSingleTop && newHistory.lastOrNull() == newRoute) {
+            return
+        }
+
+        if (popUpToRoute != null) {
+            val idx = newHistory.indexOfLast { it == popUpToRoute }
+            newHistory = if (idx >= 0) {
+                newHistory.take(idx + if (inclusive) 0 else 1)
+            } else {
+                emptyList()
+            }
+        }
+
+        newHistory = newHistory + newRoute
+        _routeHistory = newHistory
     }
 }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -25,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import dev.kigya.mindplex.core.presentation.theme.MindplexDsToken
@@ -95,6 +97,7 @@ fun MindplexDialog(
                     Box(
                         Modifier
                             .pointerInput(Unit) { detectTapGestures { } }
+                            .widthIn(min = 320.dp, max = 520.dp)
                             .shadow(
                                 elevation = UiKitTheme.dimension.dp8.value,
                                 shape = UiKitTheme.shape.rounding16.value,

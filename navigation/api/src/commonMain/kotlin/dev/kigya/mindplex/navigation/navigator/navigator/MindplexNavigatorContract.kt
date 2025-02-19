@@ -6,6 +6,7 @@ import kotlinx.coroutines.channels.Channel
 
 interface MindplexNavigatorContract {
     val navigationChannel: Channel<NavigationIntent>
+    val routeHistory: List<ScreenRoute>
 
     suspend fun navigateBack(
         route: ScreenRoute? = null,

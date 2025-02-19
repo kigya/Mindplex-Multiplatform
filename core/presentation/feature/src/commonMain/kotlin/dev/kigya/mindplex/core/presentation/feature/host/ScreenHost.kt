@@ -7,7 +7,9 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.navigation.NavHostController
 import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
 import dev.kigya.mindplex.core.presentation.feature.contract.ScreenHostContract
@@ -27,6 +29,7 @@ import mindplex_multiplatform.core.presentation.feature.generated.resources.ic_l
 import mindplex_multiplatform.core.presentation.feature.generated.resources.ic_profile_active
 import mindplex_multiplatform.core.presentation.feature.generated.resources.ic_profile_inactive
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ScreenHost(
     navigationController: NavHostController,
@@ -35,6 +38,8 @@ fun ScreenHost(
     val hostViewModel = koinViewModel<ScreenHostViewModel>()
 
     val (state, event, _) = use(contract)
+
+    BackHandler(onBack = hostViewModel::onBackPressed)
 
     NavigationEffects(
         navigationChannel = hostViewModel.navigationChannel,

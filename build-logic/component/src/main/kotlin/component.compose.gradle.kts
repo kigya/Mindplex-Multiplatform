@@ -13,6 +13,7 @@ configure<KotlinMultiplatformExtension> {
                 implementation(lifecycle.viewmodel)
                 implementation(lifecycle.runtime.compose)
                 implementation(compose.adaptive)
+                implementation(compose.backhandler)
             }
             with(compose.dependencies) {
                 implementation(components.resources)

@@ -33,7 +33,7 @@ private fun HomeScreenPreview(
     )
 }
 
-class HomeScreenPreviewParameterProvider : PreviewParameterProvider<HomeContract.State> {
+private class HomeScreenPreviewParameterProvider : PreviewParameterProvider<HomeContract.State> {
     override val values = sequenceOf(
         HomeContract.State(
             headerData = HomeContract.State.HeaderData(

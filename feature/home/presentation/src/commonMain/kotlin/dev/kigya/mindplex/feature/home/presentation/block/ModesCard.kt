@@ -50,7 +50,9 @@ internal fun ModesCard(
     val haptic = LocalHapticFeedback.current
 
     MindplexMeasurablePlaceholder(
-        modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Max),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Max),
         isLoading = state.areModesLoading,
     ) {
         ModesCardContent(

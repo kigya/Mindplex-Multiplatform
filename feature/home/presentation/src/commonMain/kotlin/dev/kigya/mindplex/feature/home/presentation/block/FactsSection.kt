@@ -25,6 +25,8 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexPlaceholder
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindplexUiKitApi
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
+import dev.kigya.mindplex.feature.home.presentation.ui.provider.HomeAdaptiveMetrics.LocalHomeLottieAspectRatio
+import dev.kigya.mindplex.feature.home.presentation.ui.provider.HomeAdaptiveMetrics.LocalHomeLottieContentScale
 import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
 import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeFactsPagerBackground
 import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeFactsPagerDescription
@@ -34,8 +36,6 @@ import mindplex_multiplatform.feature.home.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_facts_title
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-
-private const val LOTTIE_ASPECT_RATIO = 2f
 
 @OptIn(ExperimentalMindplexUiKitApi::class, ExperimentalResourceApi::class)
 @Composable
@@ -47,12 +47,12 @@ internal fun FactsSection(
         isLoading = state.areFactsLoading,
         modifier = modifier
             .fillMaxWidth()
-            .aspectRatio(LOTTIE_ASPECT_RATIO),
+            .aspectRatio(LocalHomeLottieAspectRatio.current),
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(LOTTIE_ASPECT_RATIO)
+                .aspectRatio(LocalHomeLottieAspectRatio.current)
                 .clip(HomeTheme.shape.rounding16.value)
                 .background(HomeTheme.colorScheme.homeFactsPagerBackground.value),
         ) {
@@ -62,6 +62,7 @@ internal fun FactsSection(
                 shouldBeReversedOnRepeat = true,
                 isRestartable = true,
                 iterations = Int.MAX_VALUE,
+                contentScale = LocalHomeLottieContentScale.current,
             )
 
             Column(

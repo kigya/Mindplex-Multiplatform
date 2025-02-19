@@ -13,6 +13,7 @@ import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStubContainer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.feature.home.presentation.block.FactsSection
+import dev.kigya.mindplex.feature.home.presentation.block.HomeLandscapeContainer
 import dev.kigya.mindplex.feature.home.presentation.block.HomeScreenHeader
 import dev.kigya.mindplex.feature.home.presentation.block.ModesCard
 import dev.kigya.mindplex.feature.home.presentation.block.category.CategorySelectionPopup
@@ -53,7 +54,7 @@ internal fun HomeScreenContent(
                 )
             },
             landscape = {
-                HomePortraitSection(
+                HomeLandscapeSection(
                     state = state,
                     event = event,
                 )
@@ -75,10 +76,7 @@ private fun ColumnScope.HomePortraitSection(
 
     MindplexSpacer(size = HomeTheme.dimension.dp36)
 
-    FactsSection(
-        state = state.factsData,
-        modifier = Modifier.fillMaxWidth(),
-    )
+    FactsSection(state = state.factsData)
 
     MindplexSpacer(size = HomeTheme.dimension.dp36)
 
@@ -91,4 +89,34 @@ private fun ColumnScope.HomePortraitSection(
         state = state.categorySelectionData,
         event = event,
     )
+}
+
+@Composable
+private fun ColumnScope.HomeLandscapeSection(
+    state: HomeContract.State,
+    event: (HomeContract.Event) -> Unit,
+) {
+    HomeLandscapeContainer {
+        HomeScreenHeader(
+            state = state.headerData,
+            modifier = Modifier.fillMaxWidth(),
+            event = event,
+        )
+
+        MindplexSpacer(size = HomeTheme.dimension.dp36)
+
+        FactsSection(state = state.factsData)
+
+        MindplexSpacer(size = HomeTheme.dimension.dp36)
+
+        ModesCard(
+            state = state.modesData,
+            event = event,
+        )
+
+        CategorySelectionPopup(
+            state = state.categorySelectionData,
+            event = event,
+        )
+    }
 }

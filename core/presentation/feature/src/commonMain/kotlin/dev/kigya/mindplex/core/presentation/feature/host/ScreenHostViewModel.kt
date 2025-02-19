@@ -23,23 +23,31 @@ class ScreenHostViewModel(
                 is ScreenHostContract.Event.OnHomeVerticalClicked -> handleVerticalClick(
                     ScreenHostContract.State.Vertical.Home,
                 )
+
                 is ScreenHostContract.Event.OnLeaderboardVerticalClicked -> handleVerticalClick(
                     ScreenHostContract.State.Vertical.Leaderboard,
                 )
+
                 is ScreenHostContract.Event.OnProfileVerticalClicked -> handleVerticalClick(
                     ScreenHostContract.State.Vertical.Profile,
                 )
+
                 is ScreenHostContract.Event.OnNewRouteReceived -> handleNewRouteReceive()
             }
         }
     }
 
+    fun onBackPressed() = withUseCaseScope {
+        navigatorContract.navigateBack()
+    }
+
     private suspend fun handleVerticalClick(selectedVertical: ScreenHostContract.State.Vertical) {
         val activeVertical = getState().activeVertical
+        val newRoute = selectedVertical.mapToRoute()
 
         if (activeVertical != selectedVertical) {
             navigatorContract.navigateTo(
-                route = selectedVertical.mapToRoute(),
+                route = newRoute,
                 popUpToRoute = activeVertical.mapToRoute(),
                 inclusive = true,
                 isSingleTop = true,
@@ -52,9 +60,9 @@ class ScreenHostViewModel(
         withUseCaseScope {
             launch {
                 if (getState().shouldDisplayNavigationBar.not()) delay(NAVIGATION_BAR_DELAY)
+                val targetRoute = this@handleNewRouteReceive.route
 
                 updateState {
-                    val targetRoute = this@handleNewRouteReceive.route
                     copy(
                         shouldDisplayNavigationBar = targetRoute != null &&
                             targetRoute in ALLOWED_NAVIGATION_BAR_ROUTES,

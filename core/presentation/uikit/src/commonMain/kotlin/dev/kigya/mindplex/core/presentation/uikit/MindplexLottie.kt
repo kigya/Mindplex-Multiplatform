@@ -26,6 +26,7 @@ fun MindplexLottie(
     shouldBeReversedOnRepeat: Boolean = false,
     speed: Float = 1f,
     iterations: Int = 1,
+    contentScale: ContentScale = ContentScale.FillBounds,
     onFinish: () -> Unit = {},
 ) {
     var json by remember { mutableStateOf<String?>(null) }
@@ -49,6 +50,6 @@ fun MindplexLottie(
         ),
         contentDescription = null,
         modifier = modifier,
-        contentScale = ContentScale.FillBounds,
+        contentScale = contentScale,
     )
 }

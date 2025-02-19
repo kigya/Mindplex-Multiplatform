@@ -17,15 +17,6 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
     name = "Phone",
     device = "id:Nexus 5X",
 )
-@Preview
-@Preview(
-    name = "Phone",
-    device = "spec:width=411dp,height=891dp,orientation=landscape",
-)
-@Preview(
-    name = "Phone - Landscape",
-    device = "spec:width=411dp,height=891dp,orientation=landscape,dpi=420",
-)
 @Preview(
     name = "Unfolded Foldable",
     device = FOLDABLE,
