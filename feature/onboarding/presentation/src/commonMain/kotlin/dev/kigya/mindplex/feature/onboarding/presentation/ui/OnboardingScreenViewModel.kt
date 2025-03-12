@@ -30,37 +30,41 @@ class OnboardingScreenViewModel(
 ),
     OnboardingContract {
 
-    override fun executeStartAction() = withUseCaseScope {
-        updateState { copy(onboardingData = getOnboardingData()) }
-        delay(STATE_FIRST_LAUNCH_UPDATES_DELAYED_TRANSITION)
-        updateState { copy(shouldDisplayTitle = true) }
-        delay(STATE_FIRST_LAUNCH_UPDATES_DELAYED_TRANSITION)
-        updateState { copy(shouldDisplayDescription = true) }
-        delay(STATE_FIRST_LAUNCH_UPDATES_DELAYED_TRANSITION)
-        updateState { copy(shouldDisplayDotsIndicator = true) }
+    override fun executeStartAction() {
+        withUseCaseScope {
+            updateState { copy(onboardingData = getOnboardingData()) }
+            delay(STATE_FIRST_LAUNCH_UPDATES_DELAYED_TRANSITION)
+            updateState { copy(shouldDisplayTitle = true) }
+            delay(STATE_FIRST_LAUNCH_UPDATES_DELAYED_TRANSITION)
+            updateState { copy(shouldDisplayDescription = true) }
+            delay(STATE_FIRST_LAUNCH_UPDATES_DELAYED_TRANSITION)
+            updateState { copy(shouldDisplayDotsIndicator = true) }
+        }
     }
 
-    override fun handleEvent(event: OnboardingContract.Event) = withUseCaseScope {
-        when (event) {
-            is OnboardingContract.Event.OnNextClicked ->
-                if (event.currentPage == getState().onboardingData.lastIndex) {
+    override fun handleEvent(event: OnboardingContract.Event) {
+        withUseCaseScope {
+            when (event) {
+                is OnboardingContract.Event.OnNextClicked ->
+                    if (event.currentPage == getState().onboardingData.lastIndex) {
+                        setOnboardingCompletedUseCase(None)
+                        navigatorContract.navigateTo(
+                            route = ScreenRoute.Login,
+                            popUpToRoute = ScreenRoute.Onboarding,
+                            inclusive = true,
+                        )
+                    } else {
+                        sendEffect(OnboardingContract.Effect.ScrollToPage(pageTo = event.currentPage + 1))
+                    }
+
+                is OnboardingContract.Event.OnSkipClicked -> {
                     setOnboardingCompletedUseCase(None)
                     navigatorContract.navigateTo(
                         route = ScreenRoute.Login,
                         popUpToRoute = ScreenRoute.Onboarding,
                         inclusive = true,
                     )
-                } else {
-                    sendEffect(OnboardingContract.Effect.ScrollToPage(pageTo = event.currentPage + 1))
                 }
-
-            is OnboardingContract.Event.OnSkipClicked -> {
-                setOnboardingCompletedUseCase(None)
-                navigatorContract.navigateTo(
-                    route = ScreenRoute.Login,
-                    popUpToRoute = ScreenRoute.Onboarding,
-                    inclusive = true,
-                )
             }
         }
     }

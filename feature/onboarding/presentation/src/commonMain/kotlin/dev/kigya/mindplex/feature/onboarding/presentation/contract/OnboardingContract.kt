@@ -13,6 +13,7 @@ import org.jetbrains.compose.resources.StringResource
 
 interface OnboardingContract :
     UnidirectionalViewModelContract<OnboardingContract.State, OnboardingContract.Event, OnboardingContract.Effect> {
+    @ConsistentCopyVisibility
     @Immutable
     data class State internal constructor(
         @Size(
@@ -24,6 +25,7 @@ interface OnboardingContract :
         val shouldDisplayDescription: Boolean = false,
         val shouldDisplayDotsIndicator: Boolean = false,
     ) : CopyableComponentState {
+        @ConsistentCopyVisibility
         @Immutable
         data class OnboardingScreenData internal constructor(
             val lottiePath: String? = null,
@@ -58,7 +60,11 @@ interface OnboardingContract :
 
     @Immutable
     sealed class Effect {
-        data class ScrollToPage internal constructor(@OnboardingIndexRange val pageTo: Int) : Effect()
+        @ConsistentCopyVisibility
+        data class ScrollToPage internal constructor(
+            @OnboardingIndexRange
+            val pageTo: Int,
+        ) : Effect()
     }
 }
 

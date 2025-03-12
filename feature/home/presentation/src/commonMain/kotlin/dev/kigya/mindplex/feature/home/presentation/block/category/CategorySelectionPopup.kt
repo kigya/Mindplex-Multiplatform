@@ -36,7 +36,7 @@ internal fun CategorySelectionPopup(
         ) {
             MindplexSpacer(size = HomeTheme.dimension.dp24)
 
-            state.modeTitle?.let { mode ->
+            state.typeTitle?.let { mode ->
                 MindplexText(
                     value = stringResource(mode),
                     typography = HomeTheme.typography.categorySelectionTitle,

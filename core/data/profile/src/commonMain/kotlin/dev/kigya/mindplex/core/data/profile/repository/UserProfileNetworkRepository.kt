@@ -30,4 +30,16 @@ class UserProfileNetworkRepository(
                 e.printStackTrace()
             }
         }
+
+    override suspend fun updateUserScore(
+        token: String,
+        score: Int,
+    ) {
+        withContext(dispatcher) {
+            Firebase.firestore
+                .collection(UsersCollection.NAME)
+                .document(token)
+                .update(hashMapOf(UsersCollection.Document.SCORE to score))
+        }
+    }
 }

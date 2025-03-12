@@ -10,6 +10,8 @@ kotlin {
         commonMain.dependencies {
             with(libs) {
                 implementation(coroutines.core)
+                implementation(compose.navigation)
+                implementation(uriKmp)
             }
         }
     }

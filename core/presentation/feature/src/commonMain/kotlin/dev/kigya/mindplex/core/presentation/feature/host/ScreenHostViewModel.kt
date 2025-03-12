@@ -17,22 +17,24 @@ class ScreenHostViewModel(
 
     val navigationChannel = navigatorContract.navigationChannel
 
-    override fun handleEvent(event: ScreenHostContract.Event) = withUseCaseScope {
-        event.run {
-            when (this) {
-                is ScreenHostContract.Event.OnHomeVerticalClicked -> handleVerticalClick(
-                    ScreenHostContract.State.Vertical.Home,
-                )
+    override fun handleEvent(event: ScreenHostContract.Event) {
+        withUseCaseScope {
+            event.run {
+                when (this) {
+                    is ScreenHostContract.Event.OnHomeVerticalClicked -> handleVerticalClick(
+                        ScreenHostContract.State.Vertical.Home,
+                    )
 
-                is ScreenHostContract.Event.OnLeaderboardVerticalClicked -> handleVerticalClick(
-                    ScreenHostContract.State.Vertical.Leaderboard,
-                )
+                    is ScreenHostContract.Event.OnLeaderboardVerticalClicked -> handleVerticalClick(
+                        ScreenHostContract.State.Vertical.Leaderboard,
+                    )
 
-                is ScreenHostContract.Event.OnProfileVerticalClicked -> handleVerticalClick(
-                    ScreenHostContract.State.Vertical.Profile,
-                )
+                    is ScreenHostContract.Event.OnProfileVerticalClicked -> handleVerticalClick(
+                        ScreenHostContract.State.Vertical.Profile,
+                    )
 
-                is ScreenHostContract.Event.OnNewRouteReceived -> handleNewRouteReceive()
+                    is ScreenHostContract.Event.OnNewRouteReceived -> handleNewRouteReceive()
+                }
             }
         }
     }

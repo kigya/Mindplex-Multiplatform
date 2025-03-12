@@ -7,6 +7,7 @@ import dev.kigya.mindplex.core.domain.profile.model.UserProfileDomainModel
 internal fun UserLocalProfile.toDomain(): UserProfileDomainModel = UserProfileDomainModel(
     displayName = userLocalData?.name.orEmpty(),
     profilePictureUrl = userLocalData?.name.orEmpty(),
+    score = userLocalData?.score ?: 0,
 )
 
 internal fun UserProfileDomainModel.toDatabaseEntry(token: String): UserLocalProfile =
@@ -15,5 +16,6 @@ internal fun UserProfileDomainModel.toDatabaseEntry(token: String): UserLocalPro
         userLocalData = UserLocalData(
             name = displayName,
             avatar = profilePictureUrl.orEmpty(),
+            score = score,
         ),
     )

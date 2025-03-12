@@ -3,8 +3,10 @@ plugins {
         alias(config.shared.library)
         alias(bundle.shared.ui.screen.compose)
         with(component) {
+            alias(koin)
             alias(serialization)
             alias(ktor)
+            alias(room)
         }
     }
 }
@@ -12,9 +14,13 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            with(libs) {
+                implementation(ksoup)
+            }
             with(projects) {
-                implementation(feature.home.domain)
+                implementation(feature.game.domain)
                 implementation(core.util)
+                implementation(core.data.firebase)
             }
         }
     }

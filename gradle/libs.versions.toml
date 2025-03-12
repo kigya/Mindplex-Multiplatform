@@ -19,7 +19,7 @@ kotlinxSerialization = { require = "1.7.3" }
 composeActivity = { require = "1.9.3" }
 composeMultiplatform = { require = "1.8.0-alpha03" }
 composeTest = { strictly = "1.8.0-beta02" }
-composeNavigation = { require = "2.8.0-alpha08" }
+composeNavigation = { require = "2.8.0-alpha13" }
 composeShimmer = { require = "1.3.1" }
 composeAdaptive = { require = "1.0.1" }
 
@@ -30,7 +30,7 @@ lifecycle = { require = "2.9.0-alpha07" }
 compottie = { require = "2.0.0-rc02" }
 
 # DI
-koin = { strictly = "4.1.0-Beta1" }
+koin = { strictly = "4.0.2" }
 
 # Network
 ktor = { require = "3.0.2" }
@@ -88,6 +88,12 @@ kotlinxCollectionsImmutable = { require = "0.3.8" }
 # Kotlin Poet
 kotlinPoet = { prefer = "2.0.0" }
 
+# Json Parsing
+ksoup = { require = "0.5.0" }
+
+# Uri
+uriKmp = { require = "0.0.19" }
+
 [libraries]
 # Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
@@ -101,7 +107,7 @@ compose-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", vers
 
 # Lifecycle
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycle" }
-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 
 # Compottie
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
@@ -185,6 +191,12 @@ kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collec
 
 # Kotlin Poet
 kotlin-poet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinPoet" }
+
+# Ksoup
+ksoup = { module = "com.mohamedrejeb.ksoup:ksoup-entities", version.ref = "ksoup" }
+
+# Uri
+uriKmp = { module = "com.eygraber:uri-kmp", version.ref = "uriKmp" }
 
 # Gradle Plugins
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }

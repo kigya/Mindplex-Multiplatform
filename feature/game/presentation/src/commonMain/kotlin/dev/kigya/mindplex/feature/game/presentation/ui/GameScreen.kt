@@ -1,48 +1,47 @@
 package dev.kigya.mindplex.feature.game.presentation.ui
 
 import androidx.annotation.VisibleForTesting
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
-import dev.kigya.mindplex.core.presentation.common.util.StableFlow
-import dev.kigya.mindplex.core.presentation.common.util.fadeSlideScaleContentTransitionSpec
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStub
+import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStubContainer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
-import dev.kigya.mindplex.core.presentation.uikit.MindplexText
-import dev.kigya.mindplex.core.util.dsl.ifPresentOrElse
-import dev.kigya.mindplex.feature.game.presentation.component.GameTimer
-import dev.kigya.mindplex.feature.game.presentation.component.GameTopBar
+import dev.kigya.mindplex.feature.game.presentation.block.GameAnswers
+import dev.kigya.mindplex.feature.game.presentation.block.GameContainer
+import dev.kigya.mindplex.feature.game.presentation.block.GameQuestion
+import dev.kigya.mindplex.feature.game.presentation.block.GameTimer
+import dev.kigya.mindplex.feature.game.presentation.block.GameTopBar
 import dev.kigya.mindplex.feature.game.presentation.contract.GameContract
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameBackground
-import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameQuestion
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute.Game.CategoryPresentationModel
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute.Game.DifficultyPresentationModel
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute.Game.TypePresentationModel
 
 @Composable
-fun GameScreen(contract: GameContract) {
-    val (state, event, effect) = use(contract)
+fun GameScreen(
+    contract: GameContract,
+    type: TypePresentationModel,
+    category: CategoryPresentationModel? = null,
+    difficulty: DifficultyPresentationModel? = null,
+) {
+    val (state, event, _) = use(contract)
+
+    LaunchedEffectSaveable(Unit) {
+        event(
+            GameContract.Event.OnFirstLaunch(
+                type = type,
+                category = category,
+                difficulty = difficulty,
+            ),
+        )
+    }
 
     GameScreenContent(
         state = state,
         event = event,
-        effect = effect,
     )
 }
 
@@ -51,89 +50,41 @@ fun GameScreen(contract: GameContract) {
 internal fun GameScreenContent(
     state: GameContract.State,
     event: (GameContract.Event) -> Unit,
-    effect: StableFlow<GameContract.Effect>,
 ) {
-    LaunchedEffectSaveable(Unit) { event(GameContract.Event.OnFirstLaunch) }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(GameTheme.colorScheme.gameBackground.value)
-            .statusBarsPadding()
-            .padding(
-                horizontal = GameTheme.dimension.dp24.value,
-                vertical = GameTheme.dimension.dp16.value,
-            ),
+    MindplexErrorStubContainer(
+        background = GameTheme.colorScheme.gameBackground,
+        stubErrorType = state.stubErrorType,
+        verticalArrangement = Arrangement.Top,
+        onRetryButtonClicked = { event(GameContract.Event.OnErrorStubClicked) },
     ) {
-        AnimatedContent(
-            targetState = state.stubErrorType,
-            transitionSpec = { fadeSlideScaleContentTransitionSpec() },
-        ) { stubErrorType ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .testTag("game_section"),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                stubErrorType.ifPresentOrElse(
-                    ifPresent = { type ->
-                        MindplexErrorStub(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .testTag("error_stub"),
-                            stubErrorType = type,
-                        ) { event(GameContract.Event.OnErrorStubClicked) }
-                    },
-                    ifAbsent = {
-                        HomeSection(
-                            state = state,
-                            event = event,
-                            effect = effect,
-                        )
-                    },
-                )
-            }
+        GameContainer {
+            GameSection(
+                state = state,
+                event = event,
+            )
         }
     }
 }
 
-@Suppress("UnusedParameter")
 @Composable
-private fun ColumnScope.HomeSection(
+private fun ColumnScope.GameSection(
     state: GameContract.State,
     event: (GameContract.Event) -> Unit,
-    effect: StableFlow<GameContract.Effect>,
 ) {
-    val textToDisplay = remember { mutableIntStateOf(0) }
-    val coroutineScope = rememberCoroutineScope()
-
-    LaunchedEffect(Unit) {
-        coroutineScope.launch {
-            delay(1)
-            textToDisplay.value = 1
-        }
-    }
-
     GameTopBar(
-        modifier = Modifier.fillMaxWidth(),
-        title = "True or false Mastery",
-        scoreText = textToDisplay.value.toString(),
-        onIconBackClick = { },
+        state = state,
+        event = event,
     )
 
     MindplexSpacer(size = GameTheme.dimension.dp64)
 
-    GameTimer(
-        remainingTime = 20,
-        initialTime = 60,
-    )
+    GameTimer(state = state)
 
     MindplexSpacer(size = GameTheme.dimension.dp64)
 
-    MindplexText(
-        value = "Silhouette — a song performed by the group “KANA-BOON” is featured as the sixteenth opening " +
-            "of which anime?",
-        color = GameTheme.colorScheme.gameQuestion,
-        typography = GameTheme.typography.gameQuestion,
-    )
+    GameQuestion(state = state)
+
+    GameAnswers(
+        state = state,
+    ) { event(GameContract.Event.OnQuestionAnswered(it)) }
 }

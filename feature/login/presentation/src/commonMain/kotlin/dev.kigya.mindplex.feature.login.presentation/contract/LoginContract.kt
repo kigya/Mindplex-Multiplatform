@@ -8,6 +8,7 @@ import dev.kigya.mindplex.core.presentation.uikit.StubErrorType
 
 interface LoginContract :
     UnidirectionalViewModelContract<LoginContract.State, LoginContract.Event, LoginContract.Effect> {
+    @ConsistentCopyVisibility
     @Immutable
     data class State internal constructor(
         val stubErrorType: StubErrorType? = null,

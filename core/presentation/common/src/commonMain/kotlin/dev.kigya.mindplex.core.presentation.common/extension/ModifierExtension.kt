@@ -1,53 +1,30 @@
 package dev.kigya.mindplex.core.presentation.common.extension
 
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.offset
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import kotlin.math.absoluteValue
+import androidx.compose.ui.unit.IntOffset
+import kotlin.math.roundToInt
 
-private const val DOUBLE_JUMPING_SCALE = 2.0f
-private const val DEFAULT_JUMPING_SCALE = 1.0f
 private const val SHIFT_CLICK_TARGET_TRANSLATION = 20f
 private const val SHIFT_CLICK_DEFAULT_TRANSLATION = 0f
-
-/**
- * Adds a jumping dot transition effect to a modifier.
- * @param distance The distance each dot should move.
- * @param currentPage The current page index.
- * @param currentPageOffsetFraction The fraction of the page offset.
- * @param jumpScale The scale factor when the dot is at the peak of the jump.
- * @return The modified [Modifier] with the transition applied.
- */
-fun Modifier.jumpingDotTransition(
-    distance: Float,
-    currentPage: Int,
-    currentPageOffsetFraction: Float,
-    jumpScale: Float,
-) = graphicsLayer {
-    val scrollPosition = currentPage + currentPageOffsetFraction
-    translationX = scrollPosition * distance
-
-    val targetScale = jumpScale - DEFAULT_JUMPING_SCALE
-    val currentPageOffsetFractionAbs = currentPageOffsetFraction.absoluteValue * DOUBLE_JUMPING_SCALE
-    val scale = if (currentPageOffsetFractionAbs < DEFAULT_JUMPING_SCALE) {
-        DEFAULT_JUMPING_SCALE + currentPageOffsetFractionAbs * targetScale
-    } else {
-        jumpScale + (DEFAULT_JUMPING_SCALE - currentPageOffsetFractionAbs) * targetScale
-    }
-
-    scaleX = scale
-    scaleY = scale
-}
 
 enum class ShiftClickButtonState { Pressed, Idle }
 
@@ -73,14 +50,79 @@ fun Modifier.shiftClickEffect(
         )
         .pointerInput(shiftClickButtonState) {
             awaitPointerEventScope {
-                shiftClickButtonState = if (shiftClickButtonState == ShiftClickButtonState.Pressed) {
-                    waitForUpOrCancellation()
-                    ShiftClickButtonState.Idle
-                } else {
-                    awaitFirstDown(false)
-                    ShiftClickButtonState.Pressed
-                }
+                shiftClickButtonState =
+                    if (shiftClickButtonState == ShiftClickButtonState.Pressed) {
+                        waitForUpOrCancellation()
+                        ShiftClickButtonState.Idle
+                    } else {
+                        awaitFirstDown(false)
+                        ShiftClickButtonState.Pressed
+                    }
                 onChangeState(shiftClickButtonState)
             }
         }
+}
+
+data class ShakeConfig(
+    val iterations: Int,
+    val intensity: Float = 100_000f,
+    val rotate: Float = 0f,
+    val rotateX: Float = 0f,
+    val rotateY: Float = 0f,
+    val scaleX: Float = 0f,
+    val scaleY: Float = 0f,
+    val translateX: Float = 0f,
+    val translateY: Float = 0f,
+)
+
+@Composable
+fun rememberShakeController(): ShakeController = remember { ShakeController() }
+
+class ShakeController {
+    var shakeConfig: ShakeConfig? by mutableStateOf(null)
+        private set
+
+    fun shake(shakeConfig: ShakeConfig) {
+        this.shakeConfig = shakeConfig
+    }
+
+    fun reset() {
+        shakeConfig = null
+    }
+}
+
+fun Modifier.shake(shakeController: ShakeController) = composed {
+    shakeController.shakeConfig?.let { shakeConfig ->
+        val shake = remember { Animatable(0f) }
+
+        LaunchedEffect(shakeController.shakeConfig) {
+            val config = shakeController.shakeConfig ?: return@LaunchedEffect
+            for (i in 0..config.iterations) {
+                if (i % 2 == 0) {
+                    shake.animateTo(1f, spring(stiffness = config.intensity))
+                } else {
+                    shake.animateTo(-1f, spring(stiffness = config.intensity))
+                }
+            }
+            shake.animateTo(0f)
+            shakeController.reset()
+        }
+
+        this
+            .rotate(shake.value * shakeConfig.rotate)
+            .graphicsLayer {
+                rotationX = shake.value * shakeConfig.rotateX
+                rotationY = shake.value * shakeConfig.rotateY
+            }
+            .scale(
+                scaleX = 1f + (shake.value * shakeConfig.scaleX),
+                scaleY = 1f + (shake.value * shakeConfig.scaleY),
+            )
+            .offset {
+                IntOffset(
+                    (shake.value * shakeConfig.translateX).roundToInt(),
+                    (shake.value * shakeConfig.translateY).roundToInt(),
+                )
+            }
+    } ?: this
 }

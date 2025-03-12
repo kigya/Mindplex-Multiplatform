@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import coil3.ImageLoader
 import coil3.compose.LocalPlatformContext
 import coil3.compose.setSingletonImageLoaderFactory
@@ -33,9 +36,13 @@ import dev.kigya.mindplex.feature.profile.presentation.ui.ProfileScreenViewModel
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreen
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreenViewModel
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
+import dev.kigya.mindplex.navigation.navigator.type.enumNavTypeEntry
+import dev.kigya.mindplex.navigation.navigator.type.nullableEnumNavType
 import org.koin.compose.KoinContext
 import org.koin.compose.currentKoinScope
 import org.koin.core.parameter.parametersOf
+import kotlin.reflect.KType
+import kotlin.reflect.typeOf
 
 @Composable
 fun App() {
@@ -81,9 +88,26 @@ fun App() {
                         ProfileScreen(koinViewModel<ProfileScreenViewModel>())
                     }
 
-                    animatedComposable<ScreenRoute.Game> {
+                    animatedComposable<ScreenRoute.Game>(
+                        typeMap = mapOf(
+                            enumNavTypeEntry(ScreenRoute.Game.TypePresentationModel::valueOf),
+                            enumNavTypeEntry(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
+                            enumNavTypeEntry(ScreenRoute.Game.CategoryPresentationModel::valueOf),
+                            typeOf<ScreenRoute.Game.CategoryPresentationModel?>() to
+                                nullableEnumNavType(ScreenRoute.Game.CategoryPresentationModel::valueOf),
+                            typeOf<ScreenRoute.Game.DifficultyPresentationModel?>() to
+                                nullableEnumNavType(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
+                        ),
+                    ) { backStackEntry ->
                         SystemBarsColor(SystemBarsColor.AUTO)
-                        GameScreen(koinViewModel<GameScreenViewModel>())
+
+                        val arguments = backStackEntry.toRoute<ScreenRoute.Game>()
+                        GameScreen(
+                            contract = koinViewModel<GameScreenViewModel>(),
+                            type = arguments.type,
+                            category = arguments.category,
+                            difficulty = arguments.difficulty,
+                        )
                     }
                 }
 
@@ -97,11 +121,13 @@ fun App() {
 }
 
 private inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
-    crossinline screen: @Composable () -> Unit,
+    typeMap: Map<KType, NavType<*>> = emptyMap(),
+    crossinline screen: @Composable (NavBackStackEntry) -> Unit,
 ) = composable<T>(
     enterTransition = { fadeIn() },
     exitTransition = { fadeOut() },
-) { screen() }
+    typeMap = typeMap,
+) { screen(it) }
 
 @Composable
 private fun rememberCoilImageLoader(): ImageLoader {

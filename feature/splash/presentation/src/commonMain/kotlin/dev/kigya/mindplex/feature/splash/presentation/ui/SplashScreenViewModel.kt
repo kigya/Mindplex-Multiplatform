@@ -37,21 +37,23 @@ class SplashScreenViewModel(
         }.launchIn(useCaseCoroutineScope)
     }
 
-    override fun handleEvent(event: SplashContract.Event) = withUseCaseScope {
-        when (event) {
-            SplashContract.Event.OnAnimationFinished -> {
-                updateState { copy(shouldDisplayText = true) }
-                delay(postAnimationDelay)
-                val route = when {
-                    _isOnboardingCompleted.value == false -> ScreenRoute.Onboarding
-                    _isUserSignedIn.value == false -> ScreenRoute.Login
-                    else -> ScreenRoute.Home
+    override fun handleEvent(event: SplashContract.Event) {
+        withUseCaseScope {
+            when (event) {
+                SplashContract.Event.OnAnimationFinished -> {
+                    updateState { copy(shouldDisplayText = true) }
+                    delay(postAnimationDelay)
+                    val route = when {
+                        _isOnboardingCompleted.value == false -> ScreenRoute.Onboarding
+                        _isUserSignedIn.value == false -> ScreenRoute.Login
+                        else -> ScreenRoute.Home
+                    }
+                    navigatorContract.navigateTo(
+                        route = route,
+                        popUpToRoute = ScreenRoute.Splash,
+                        inclusive = true,
+                    )
                 }
-                navigatorContract.navigateTo(
-                    route = route,
-                    popUpToRoute = ScreenRoute.Splash,
-                    inclusive = true,
-                )
             }
         }
     }

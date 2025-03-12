@@ -22,23 +22,27 @@ class LoginScreenViewModel(
 ),
     LoginContract {
 
-    override fun executeStartAction() = withUseCaseScope {
-        getIsUserSignedInUseCase(None).collect { isSignedIn ->
-            if (isSignedIn) {
-                navigatorContract.navigateTo(
-                    route = ScreenRoute.Home,
-                    popUpToRoute = ScreenRoute.Login,
-                    inclusive = true,
-                )
+    override fun executeStartAction() {
+        withUseCaseScope {
+            getIsUserSignedInUseCase(None).collect { isSignedIn ->
+                if (isSignedIn) {
+                    navigatorContract.navigateTo(
+                        route = ScreenRoute.Home,
+                        popUpToRoute = ScreenRoute.Login,
+                        inclusive = true,
+                    )
+                }
             }
         }
     }
 
-    override fun handleEvent(event: LoginContract.Event) = withUseCaseScope {
-        event.run {
-            when (this) {
-                is LoginContract.Event.OnGoogleSignInResultReceived -> handleGoogleSignInResult()
-                is LoginContract.Event.OnErrorStubClicked -> handleErrorStubClick()
+    override fun handleEvent(event: LoginContract.Event) {
+        withUseCaseScope {
+            event.run {
+                when (this) {
+                    is LoginContract.Event.OnGoogleSignInResultReceived -> handleGoogleSignInResult()
+                    is LoginContract.Event.OnErrorStubClicked -> handleErrorStubClick()
+                }
             }
         }
     }

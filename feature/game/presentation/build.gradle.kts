@@ -20,10 +20,7 @@ kotlin {
                     implementation(presentation.uikit)
                     implementation(presentation.theme)
                 }
-                with(feature) {
-                    implementation(onboarding.domain)
-                    implementation(login.domain)
-                }
+                implementation(feature.game.domain)
                 implementation(navigation.api)
             }
         }

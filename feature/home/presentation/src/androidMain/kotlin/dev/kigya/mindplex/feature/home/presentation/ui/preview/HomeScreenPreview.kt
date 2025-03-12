@@ -51,25 +51,25 @@ private class HomeScreenPreviewParameterProvider : PreviewParameterProvider<Home
                     "Some random fact to display in preview",
                 ),
             ),
-            modesData = HomeContract.State.ModesData(
-                areModesLoading = false,
-                modes = persistentListOf(
-                    HomeContract.State.ModesData.Mode(
-                        type = HomeContract.State.ModesData.Mode.Type.PICK_ANSWER,
+            typesData = HomeContract.State.TypesData(
+                areTypesLoading = false,
+                types = persistentListOf(
+                    HomeContract.State.TypesData.TypeConfig(
+                        type = HomeContract.State.TypesData.TypeConfig.Type.MULTIPLE,
                         icon = Res.drawable.ic_pick_answer_mode,
                         title = Res.string.home_modes_pick_answer_title,
                         description = Res.string.home_modes_pick_answer_description,
                         shouldDisplayDelimiter = true,
                     ),
-                    HomeContract.State.ModesData.Mode(
-                        type = HomeContract.State.ModesData.Mode.Type.TRUE_OR_FALSE,
+                    HomeContract.State.TypesData.TypeConfig(
+                        type = HomeContract.State.TypesData.TypeConfig.Type.BOOLEAN,
                         icon = Res.drawable.ic_true_or_false_mode,
                         title = Res.string.home_modes_true_of_false_title,
                         description = Res.string.home_modes_true_of_false_description,
                         shouldDisplayDelimiter = true,
                     ),
-                    HomeContract.State.ModesData.Mode(
-                        type = HomeContract.State.ModesData.Mode.Type.RANDOM,
+                    HomeContract.State.TypesData.TypeConfig(
+                        type = HomeContract.State.TypesData.TypeConfig.Type.RANDOM,
                         icon = Res.drawable.ic_random_mode,
                         title = Res.string.home_modes_random_title,
                         description = Res.string.home_modes_random_description,
@@ -94,8 +94,8 @@ private class HomeScreenPreviewParameterProvider : PreviewParameterProvider<Home
                     "Some random fact to display in preview",
                 ),
             ),
-            modesData = HomeContract.State.ModesData(
-                areModesLoading = true,
+            typesData = HomeContract.State.TypesData(
+                areTypesLoading = true,
             ),
         ),
     )

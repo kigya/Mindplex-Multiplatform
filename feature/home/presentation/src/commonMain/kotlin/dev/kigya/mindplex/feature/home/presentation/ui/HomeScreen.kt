@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import dev.kigya.mindplex.core.presentation.common.extension.listenToLifecycleEvents
 import dev.kigya.mindplex.core.presentation.common.util.MindplexAdaptiveContainer
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStubContainer
@@ -44,8 +42,6 @@ internal fun HomeScreenContent(
         verticalArrangement = Arrangement.Top,
         onRetryButtonClicked = { event(HomeContract.Event.OnErrorStubClicked) },
     ) {
-        LocalLifecycleOwner.current.listenToLifecycleEvents()
-
         MindplexAdaptiveContainer(
             portrait = {
                 HomePortraitSection(
@@ -81,7 +77,7 @@ private fun ColumnScope.HomePortraitSection(
     MindplexSpacer(size = HomeTheme.dimension.dp36)
 
     ModesCard(
-        state = state.modesData,
+        state = state.typesData,
         event = event,
     )
 
@@ -110,7 +106,7 @@ private fun ColumnScope.HomeLandscapeSection(
         MindplexSpacer(size = HomeTheme.dimension.dp36)
 
         ModesCard(
-            state = state.modesData,
+            state = state.typesData,
             event = event,
         )
 

@@ -15,4 +15,5 @@ data class UserLocalProfile(
 data class UserLocalData(
     @ColumnInfo("name") val name: String = String.empty,
     @ColumnInfo("avatar_url") val avatar: String = String.empty,
+    @ColumnInfo("score") val score: Int = 0,
 )

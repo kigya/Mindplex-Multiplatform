@@ -9,6 +9,10 @@ kotlin {
         commonMain.dependencies {
             with(projects) {
                 implementation(core.util)
+                implementation(core.domain.interactor)
+                implementation(core.domain.connectivity)
+                implementation(core.domain.profile)
+                implementation(feature.login.domain)
             }
         }
     }

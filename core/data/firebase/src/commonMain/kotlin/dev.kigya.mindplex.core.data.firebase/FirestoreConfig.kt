@@ -8,6 +8,7 @@ data object FirestoreConfig {
             object Document {
                 const val AVATAR_URL = "avatarUrl"
                 const val NAME = "name"
+                const val SCORE = "score"
             }
         }
 

@@ -44,7 +44,7 @@ private const val HOME_MODES_ICON_TARGET_SCALE = 1.5f
 
 @Composable
 internal fun ModesCard(
-    state: HomeContract.State.ModesData,
+    state: HomeContract.State.TypesData,
     event: (HomeContract.Event) -> Unit,
 ) {
     val haptic = LocalHapticFeedback.current
@@ -53,7 +53,7 @@ internal fun ModesCard(
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Max),
-        isLoading = state.areModesLoading,
+        isLoading = state.areTypesLoading,
     ) {
         ModesCardContent(
             state = state,
@@ -65,7 +65,7 @@ internal fun ModesCard(
 
 @Composable
 private fun ModesCardContent(
-    state: HomeContract.State.ModesData,
+    state: HomeContract.State.TypesData,
     haptic: HapticFeedback,
     event: (HomeContract.Event) -> Unit,
 ) {
@@ -75,7 +75,7 @@ private fun ModesCardContent(
             containerColor = HomeTheme.colorScheme.homeModesDelimiter.value,
         ),
     ) {
-        state.modes.fastForEachIndexed { index, mode ->
+        state.types.fastForEachIndexed { index, mode ->
             mode.icon?.let { iconRes ->
                 Surface(
                     modifier = Modifier.shiftClickEffect(

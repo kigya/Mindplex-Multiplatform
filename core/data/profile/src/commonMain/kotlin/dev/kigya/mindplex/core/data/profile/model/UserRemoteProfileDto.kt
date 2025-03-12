@@ -8,4 +8,5 @@ import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Users.Do
 internal data class UserRemoteProfileDto(
     @SerialName(UsersDocument.AVATAR_URL) val avatarUrl: String,
     @SerialName(UsersDocument.NAME) val name: String,
+    @SerialName(UsersDocument.SCORE) val score: Int,
 )

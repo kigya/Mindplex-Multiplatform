@@ -29,6 +29,7 @@ import dev.kigya.mindplex.feature.onboarding.presentation.ui.provider.Onboarding
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.theme.OnboardingTheme
 
 private const val PAGER_SCROLL_ANIMATION_DURATION_MILLIS = 500
+internal const val FADE_ANIMATION_DURATION_MILLIS = 500
 
 @Composable
 fun OnboardingScreen(contract: OnboardingContract) {

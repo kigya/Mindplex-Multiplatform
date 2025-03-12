@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "63e401b34862aae8e5c1558f6efff24f",
+    "identityHash": "73b989ed7befbd0438968886260e9647",
     "entities": [
       {
         "tableName": "user_profile",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `avatar_url` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `avatar_url` TEXT, `score` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -20,9 +20,14 @@
             "affinity": "TEXT"
           },
           {
-            "fieldPath": "userLocalData.avatarUrl",
+            "fieldPath": "userLocalData.avatar",
             "columnName": "avatar_url",
             "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "userLocalData.score",
+            "columnName": "score",
+            "affinity": "INTEGER"
           }
         ],
         "primaryKey": {
@@ -35,7 +40,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '63e401b34862aae8e5c1558f6efff24f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '73b989ed7befbd0438968886260e9647')"
     ]
   }
 }
