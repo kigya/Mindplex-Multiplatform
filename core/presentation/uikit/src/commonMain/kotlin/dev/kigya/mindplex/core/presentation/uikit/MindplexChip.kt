@@ -45,6 +45,7 @@ fun MindplexChip(
             ),
             value = text,
             color = if (isSelected) textColor else backgroundColor,
+            maxLines = 1,
             typography = textStyle,
         )
     }

@@ -6,14 +6,13 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.kigya.mindplex.core.presentation.uikit.MindplexChip
-import dev.kigya.mindplex.core.presentation.uikit.MindplexFillSpacer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIconButton
 import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
@@ -43,18 +42,13 @@ internal fun GameTopBar(
 ) {
     AnimatedVisibility(
         visible = !state.isLoading,
-        enter = slideInVertically(
-            initialOffsetY = { fullHeight -> -fullHeight },
-        ) + fadeIn(),
-        exit = slideOutVertically(
-            targetOffsetY = { fullHeight -> -fullHeight },
-        ) + fadeOut(),
+        enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
+        exit = slideOutVertically(targetOffsetY = { -it }) + fadeOut(),
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(GameTheme.colorScheme.gameBackground.value),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             MindplexIconButton(
@@ -63,25 +57,31 @@ internal fun GameTopBar(
                 onClick = { event(GameContract.Event.OnBackPressed) },
             )
 
-            MindplexSpacer(size = GameTheme.dimension.dp4)
+            MindplexSpacer(size = GameTheme.dimension.dp8)
 
-            MindplexMeasurablePlaceholder(
-                isLoading = state.isLoading,
-                textToMeasure = stringResource(Res.string.game_modes_pick_answer_title),
-                textStyle = GameTheme.typography.gameTitle,
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.CenterStart,
             ) {
-                state.typeTitle?.let { textResource ->
-                    MindplexText(
-                        value = stringResource(textResource),
-                        color = GameTheme.colorScheme.gameTitle,
-                        typography = GameTheme.typography.gameTitle,
-                    )
+                MindplexMeasurablePlaceholder(
+                    isLoading = state.isLoading,
+                    textToMeasure = stringResource(Res.string.game_modes_pick_answer_title),
+                    textStyle = GameTheme.typography.gameTitle,
+                ) {
+                    state.typeTitle?.let { textResource ->
+                        MindplexText(
+                            value = stringResource(textResource),
+                            color = GameTheme.colorScheme.gameTitle,
+                            typography = GameTheme.typography.gameTitle,
+                            maxLines = 1,
+                        )
+                    }
                 }
             }
 
-            MindplexFillSpacer()
+            MindplexSpacer(size = GameTheme.dimension.dp8)
 
-            MindplexMeasurablePlaceholder(state.isLoading) {
+            MindplexMeasurablePlaceholder(isLoading = state.isLoading) {
                 GameScoreLabel(scoreText = state.score.toString())
             }
         }

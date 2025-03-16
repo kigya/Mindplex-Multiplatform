@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import dev.kigya.mindplex.core.presentation.common.util.LaunchedEffectSaveable
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStubContainer
-import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.feature.game.presentation.block.GameAnswers
 import dev.kigya.mindplex.feature.game.presentation.block.GameContainer
 import dev.kigya.mindplex.feature.game.presentation.block.GameQuestion
@@ -76,11 +75,7 @@ private fun ColumnScope.GameSection(
         event = event,
     )
 
-    MindplexSpacer(size = GameTheme.dimension.dp64)
-
     GameTimer(state = state)
-
-    MindplexSpacer(size = GameTheme.dimension.dp64)
 
     GameQuestion(state = state)
 

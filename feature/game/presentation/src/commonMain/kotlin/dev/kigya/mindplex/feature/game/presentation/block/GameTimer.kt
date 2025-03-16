@@ -33,52 +33,62 @@ internal fun GameTimer(
     modifier: Modifier = Modifier,
 ) {
     MindplexMeasurablePlaceholder(state.isLoading) {
-        val progress = remember(state.currentTime) {
-            state.currentTime / GameContract.TIME_LIMIT.toFloat()
-        }
-        val animatedProgress by animateFloatAsState(
-            targetValue = progress,
-            animationSpec = tween(),
-        )
-
         BoxWithConstraints(
-            modifier = modifier.padding(GameTheme.dimension.dp36.value),
+            modifier = modifier,
             contentAlignment = Alignment.Center,
         ) {
-            val textSize = GameTheme.typography.gameTimerCounter.value.fontSize.toPx()
-            val circleSize = textSize.dp + GameTheme.dimension.dp36.value * 2
+            val adaptivePadding = when {
+                maxWidth < 300.dp -> 16.dp
+                maxWidth < 360.dp -> 24.dp
+                else -> 36.dp
+            }
+
+            val progress = remember(state.currentTime) {
+                state.currentTime / GameContract.TIME_LIMIT.toFloat()
+            }
+            val animatedProgress by animateFloatAsState(
+                targetValue = progress,
+                animationSpec = tween(),
+            )
 
             Box(
-                modifier = Modifier.size(circleSize),
+                modifier = Modifier.padding(adaptivePadding),
                 contentAlignment = Alignment.Center,
             ) {
-                val backgroundColor = GameTheme.colorScheme.gameTimerBackgroundArc
-                val progressColor = GameTheme.colorScheme.gameTimerProgressArc
+                val textSize = GameTheme.typography.gameTimerCounter.value.fontSize.toPx()
+                val circleSize = textSize.dp + adaptivePadding * 2
 
-                Canvas(modifier = Modifier.fillMaxSize()) {
-                    val totalAngle = TOTAL_ANGLE
-                    val sweepAngle = totalAngle * animatedProgress
+                Box(
+                    modifier = Modifier.size(circleSize),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    val backgroundColor = GameTheme.colorScheme.gameTimerBackgroundArc
+                    val progressColor = GameTheme.colorScheme.gameTimerProgressArc
 
-                    drawArc(
-                        color = backgroundColor.value,
-                        startAngle = START_ANGLE,
-                        sweepAngle = totalAngle,
-                        useCenter = true,
-                    )
+                    Canvas(modifier = Modifier.fillMaxSize()) {
+                        val totalAngle = TOTAL_ANGLE
+                        val sweepAngle = totalAngle * animatedProgress
 
-                    drawArc(
-                        color = progressColor.value,
-                        startAngle = START_ANGLE,
-                        sweepAngle = sweepAngle,
-                        useCenter = true,
+                        drawArc(
+                            color = backgroundColor.value,
+                            startAngle = START_ANGLE,
+                            sweepAngle = totalAngle,
+                            useCenter = true,
+                        )
+                        drawArc(
+                            color = progressColor.value,
+                            startAngle = START_ANGLE,
+                            sweepAngle = sweepAngle,
+                            useCenter = true,
+                        )
+                    }
+
+                    MindplexText(
+                        value = state.currentTime.toString(),
+                        typography = GameTheme.typography.gameTimerCounter,
+                        color = GameTheme.colorScheme.gameTimerText,
                     )
                 }
-
-                MindplexText(
-                    value = state.currentTime.toString(),
-                    typography = GameTheme.typography.gameTimerCounter,
-                    color = GameTheme.colorScheme.gameTimerText,
-                )
             }
         }
     }

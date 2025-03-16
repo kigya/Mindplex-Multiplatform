@@ -2,6 +2,7 @@ package dev.kigya.mindplex.feature.game.presentation.block
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalInspectionMode
 import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.presentation.uikit.MindplexTextAnimation
@@ -29,7 +30,11 @@ internal fun GameQuestion(
             value = text,
             color = GameTheme.colorScheme.gameQuestion,
             typography = GameTheme.typography.gameQuestion,
-            animation = MindplexTextAnimation.Typewriter,
+            animation = if (LocalInspectionMode.current) {
+                MindplexTextAnimation.None
+            } else {
+                MindplexTextAnimation.Typewriter
+            },
         )
     }
 }
