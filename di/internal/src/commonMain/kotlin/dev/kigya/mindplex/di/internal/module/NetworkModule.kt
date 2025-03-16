@@ -26,6 +26,7 @@ val networkModule = module {
                         prettyPrint = true
                         isLenient = true
                         ignoreUnknownKeys = true
+                        coerceInputValues = true
                     },
                 )
             }

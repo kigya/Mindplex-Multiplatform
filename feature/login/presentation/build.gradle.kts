@@ -18,7 +18,7 @@ kotlin {
                     implementation(core.util)
                     implementation(presentation.feature)
                     implementation(presentation.theme)
-                    implementation(presentation.component)
+                    implementation(presentation.uikit)
                     implementation(presentation.common)
                 }
                 implementation(feature.login.domain)

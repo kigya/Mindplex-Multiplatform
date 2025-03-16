@@ -6,4 +6,5 @@ import dev.kigya.mindplex.core.domain.profile.model.UserProfileDomainModel
 internal fun UserRemoteProfileDto.toDomain(): UserProfileDomainModel = UserProfileDomainModel(
     displayName = name,
     profilePictureUrl = avatarUrl,
+    score = score,
 )

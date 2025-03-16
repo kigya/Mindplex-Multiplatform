@@ -7,7 +7,7 @@ import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreenViewModel
-import dev.kigya.mindplex.navigation.navigator.navigator.AppNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -34,7 +34,7 @@ class SplashScreenViewModelTest {
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testScope = TestScope(testDispatcher)
 
-    private val navigatorContract = mockk<AppNavigatorContract>(relaxed = true)
+    private val navigatorContract = mockk<MindplexNavigatorContract>(relaxed = true)
     private val getIsOnboardingCompletedUseCase = mockk<GetIsOnboardingCompletedUseCase>()
     private val getIsUserSignedInUseCase = mockk<GetIsUserSignedInUseCase>()
 

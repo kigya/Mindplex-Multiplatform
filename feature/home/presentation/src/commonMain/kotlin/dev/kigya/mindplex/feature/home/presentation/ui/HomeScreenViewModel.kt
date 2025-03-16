@@ -5,17 +5,19 @@ import dev.kigya.mindplex.core.domain.profile.usecase.GetUserProfileUseCase
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
 import dev.kigya.mindplex.core.util.dsl.parZipOrAccumulate
+import dev.kigya.mindplex.core.util.dsl.safeValueOf
 import dev.kigya.mindplex.core.util.extension.mapPersistent
 import dev.kigya.mindplex.core.util.extension.update
 import dev.kigya.mindplex.feature.home.domain.usecase.GetFactsUseCase
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
-import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.Effect
-import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.Event
-import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.State
+import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.Companion.FACTS_AMOUNT
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.State.CategorySelectionData.CategoryData
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.State.CategorySelectionData.DifficultyChipData
-import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.State.ModesData
-import dev.kigya.mindplex.feature.home.presentation.mapper.toUi
+import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract.State.CategorySelectionData.DifficultyChipData.DifficultyType
+import dev.kigya.mindplex.feature.home.presentation.mapper.FactsPresentationMapper
+import dev.kigya.mindplex.feature.home.presentation.mapper.FactsPresentationMapper.mappedBy
+import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
@@ -25,38 +27,40 @@ import mindplex_multiplatform.feature.home.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_categories_difficulty_easy
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_categories_difficulty_hard
 import mindplex_multiplatform.feature.home.presentation.generated.resources.home_categories_difficulty_medium
-import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_pick_answer_description
-import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_pick_answer_title
-import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_random_description
-import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_random_title
-import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_true_of_false_description
-import mindplex_multiplatform.feature.home.presentation.generated.resources.home_modes_true_of_false_title
-import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_pick_answer_mode
-import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_random_mode
-import mindplex_multiplatform.feature.home.presentation.generated.resources.ic_true_or_false_mode
 
 class HomeScreenViewModel(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val getFactsUseCase: GetFactsUseCase,
-) : BaseViewModel<State, Effect>(State()), HomeContract {
+    navigatorContract: MindplexNavigatorContract,
+) : BaseViewModel<HomeContract.State, HomeContract.Effect>(
+    navigatorContract = navigatorContract,
+    initialState = HomeContract.State(),
+),
+    HomeContract {
 
-    override fun handleEvent(event: Event) = withUseCaseScope {
-        event.run {
-            when (this) {
-                is Event.OnFirstLaunch -> handleFirstLaunch()
-                is Event.OnProfilePictureLoaded -> handleProfilePictureLoading()
-                is Event.OnProfilePictureErrorReceived -> handleProfilePictureError()
-                is Event.OnErrorStubClicked -> handleErrorStubClick()
-                is Event.OnModeClicked -> handleModeClick()
-                is Event.OnModeClickStateChanged -> handleModeClickStateChange()
-                is Event.OnPopupDismissed -> handlePopupDismiss()
-                is Event.OnCategoryClicked -> handleCategoryClick()
-                is Event.OnDifficultyClicked -> handleDifficultyClick()
-            }
+    override fun executeStartAction() {
+        withUseCaseScope {
+            fetchScreenData()
         }
     }
 
-    private suspend fun handleFirstLaunch() = fetchScreenData()
+    override fun handleEvent(event: HomeContract.Event) {
+        withUseCaseScope {
+            event.run {
+                when (this) {
+                    is HomeContract.Event.OnStopLifecycleEventReceived -> handleProfilePictureLoading()
+                    is HomeContract.Event.OnProfilePictureLoaded -> handleProfilePictureLoading()
+                    is HomeContract.Event.OnProfilePictureErrorReceived -> handleProfilePictureError()
+                    is HomeContract.Event.OnErrorStubClicked -> handleErrorStubClick()
+                    is HomeContract.Event.OnModeClicked -> handleModeClick()
+                    is HomeContract.Event.OnModeClickStateChanged -> handleModeClickStateChange()
+                    is HomeContract.Event.OnPopupDismissed -> handlePopupDismiss()
+                    is HomeContract.Event.OnCategoryClicked -> handleCategoryClick()
+                    is HomeContract.Event.OnDifficultyClicked -> handleDifficultyClick()
+                }
+            }
+        }
+    }
 
     private fun handleProfilePictureLoading() = updateState {
         copy(headerData = headerData.copy(isProfilePictureLoading = false))
@@ -69,11 +73,11 @@ class HomeScreenViewModel(
     private suspend fun handleErrorStubClick() = fetchScreenData()
 
     private suspend fun fetchScreenData() = supervisorScope {
-        updateState { State() }
+        updateState { HomeContract.State() }
 
         parZipOrAccumulate(
             fa = { getUserProfileUseCase(None) },
-            fb = { getFactsUseCase(GetFactsUseCase.Params(HomeContract.FACTS_AMOUNT)) },
+            fb = { getFactsUseCase(GetFactsUseCase.Params(FACTS_AMOUNT)) },
             onSuccess = { profile, facts ->
                 updateState {
                     copy(
@@ -84,13 +88,12 @@ class HomeScreenViewModel(
                             isProfileNameLoading = false,
                             isProfilePictureLoading = false,
                         ),
-                        factsPagerData = factsPagerData.copy(
+                        factsData = factsData.copy(
                             areFactsLoading = false,
-                            facts = facts.toUi(),
+                            facts = facts mappedBy FactsPresentationMapper,
                         ),
-                        modesData = modesData.copy(
-                            areModesLoading = false,
-                            modes = getModes(),
+                        typesData = typesData.copy(
+                            areTypesLoading = false,
                         ),
                         categorySelectionData = categorySelectionData.copy(
                             categories = getCategories(),
@@ -98,7 +101,7 @@ class HomeScreenViewModel(
                         ),
                     )
                 }
-                launch { enableAutoScrollEffect() }
+                launch { enableFactsAutoChangeEffect() }
             },
             onError = { errorList ->
                 updateState {
@@ -110,109 +113,120 @@ class HomeScreenViewModel(
         )
     }
 
-    private fun getModes() = persistentListOf(
-        ModesData.Mode(
-            type = ModesData.Mode.Type.PICK_ANSWER,
-            icon = Res.drawable.ic_pick_answer_mode,
-            title = Res.string.home_modes_pick_answer_title,
-            description = Res.string.home_modes_pick_answer_description,
-            shouldDisplayDelimiter = true,
-        ),
-        ModesData.Mode(
-            type = ModesData.Mode.Type.TRUE_OR_FALSE,
-            icon = Res.drawable.ic_true_or_false_mode,
-            title = Res.string.home_modes_true_of_false_title,
-            description = Res.string.home_modes_true_of_false_description,
-            shouldDisplayDelimiter = true,
-        ),
-        ModesData.Mode(
-            type = ModesData.Mode.Type.RANDOM,
-            icon = Res.drawable.ic_random_mode,
-            title = Res.string.home_modes_random_title,
-            description = Res.string.home_modes_random_description,
-            shouldDisplayDelimiter = false,
-        ),
-    )
-
-    private suspend fun enableAutoScrollEffect() {
+    private suspend fun enableFactsAutoChangeEffect() {
         while (true) {
-            delay(PAGER_AUTOSCROLL_DELAY)
-            sendEffect(Effect.ScrollFactsToNextPage)
+            delay(FACTS_CHANGE_DELAY)
+            updateState {
+                copy(
+                    factsData = factsData.copy(
+                        currentIndex = (getState().factsData.currentIndex + 1) % FACTS_AMOUNT,
+                    ),
+                )
+            }
         }
     }
 
-    @Suppress("ForbiddenComment")
-    private fun Event.OnModeClicked.handleModeClick() {
-        updateState {
-            copy(
-                categorySelectionData = categorySelectionData.copy(
-                    modeTitle = modesData.getTitleByType(type),
-                    shouldDisplayPopup = true,
-                ),
+    private fun HomeContract.Event.OnModeClicked.handleModeClick() = withUseCaseScope {
+        if (type == HomeContract.State.TypesData.TypeConfig.Type.RANDOM) {
+            navigatorContract.navigateTo(
+                route = ScreenRoute.Game(type = ScreenRoute.Game.TypePresentationModel.RANDOM),
             )
+        } else {
+            updateState {
+                copy(
+                    categorySelectionData = categorySelectionData.copy(
+                        typeTitle = typesData.getTitleByType(type),
+                        type = type,
+                        shouldDisplayPopup = true,
+                    ),
+                )
+            }
         }
     }
 
-    private fun Event.OnModeClickStateChanged.handleModeClickStateChange() {
+    private fun HomeContract.Event.OnModeClickStateChanged.handleModeClickStateChange() =
         updateState {
             copy(
-                modesData = modesData.copy(
-                    modes = modesData.modes.update(index) { mode ->
+                typesData = typesData.copy(
+                    types = typesData.types.update(index) { mode ->
                         mode.copy(shouldScaleIcon = shouldScaleIcon)
                     },
                 ),
             )
         }
-    }
 
-    private fun Event.OnPopupDismissed.handlePopupDismiss() = updateState {
+    private fun HomeContract.Event.OnPopupDismissed.handlePopupDismiss() = updateState {
         copy(
             categorySelectionData = categorySelectionData.copy(
                 shouldDisplayPopup = false,
-                modeTitle = null,
+                typeTitle = null,
+                type = null,
             ),
         )
     }
 
-    private fun Event.OnCategoryClicked.handleCategoryClick() = updateState {
+    private suspend fun HomeContract.Event.OnCategoryClicked.handleCategoryClick() = updateState {
         copy(
             categorySelectionData = categorySelectionData.copy(
                 shouldDisplayPopup = false,
-                modeTitle = null,
             ),
         )
-    }
-
-    private fun Event.OnDifficultyClicked.handleDifficultyClick() {
-        updateState {
-            copy(
-                categorySelectionData = categorySelectionData.copy(
-                    difficulties = categorySelectionData.difficulties.mapPersistent { difficulty ->
-                        difficulty.copy(isSelected = difficulty == selectedChip)
-                    },
+    }.also {
+        navigatorContract.navigateTo(
+            route = ScreenRoute.Game(
+                category = safeValueOf(
+                    name = category.name,
+                    default = ScreenRoute.Game.CategoryPresentationModel.GENERAL_KNOWLEDGE,
                 ),
-            )
-        }
+                difficulty = safeValueOf(
+                    name = getState()
+                        .categorySelectionData
+                        .difficulties
+                        .find { it.isSelected == true }
+                        ?.type
+                        ?.name
+                        .toString(),
+                    default = ScreenRoute.Game.DifficultyPresentationModel.EASY,
+                ),
+                type = safeValueOf(
+                    name = getState().categorySelectionData.type?.name.orEmpty(),
+                    default = ScreenRoute.Game.TypePresentationModel.MULTIPLE,
+                ),
+            ),
+        )
+    }
+
+    private fun HomeContract.Event.OnDifficultyClicked.handleDifficultyClick() = updateState {
+        copy(
+            categorySelectionData = categorySelectionData.copy(
+                difficulties = categorySelectionData.difficulties.mapPersistent { difficulty ->
+                    difficulty.copy(isSelected = difficulty == selectedChip)
+                },
+            ),
+        )
     }
 
     private fun getCategories() = CategoryData.entries.toImmutableList()
 
     private fun getDifficulties() = persistentListOf(
         DifficultyChipData(
+            type = DifficultyType.EASY,
             textResource = Res.string.home_categories_difficulty_easy,
             isSelected = true,
         ),
         DifficultyChipData(
+            type = DifficultyType.MEDIUM,
             textResource = Res.string.home_categories_difficulty_medium,
             isSelected = false,
         ),
         DifficultyChipData(
+            type = DifficultyType.HARD,
             textResource = Res.string.home_categories_difficulty_hard,
             isSelected = false,
         ),
     )
 
     private companion object {
-        const val PAGER_AUTOSCROLL_DELAY = 5000L
+        const val FACTS_CHANGE_DELAY = 5000L
     }
 }

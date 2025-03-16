@@ -24,6 +24,7 @@ kotlin {
                     implementation(home.presentation)
                     implementation(leaderboard.presentation)
                     implementation(profile.presentation)
+                    implementation(game.presentation)
                 }
                 with(core) {
                     implementation(presentation.theme)

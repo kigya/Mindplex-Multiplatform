@@ -8,7 +8,7 @@ import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreenViewModel
-import dev.kigya.mindplex.navigation.navigator.navigator.AppNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -36,7 +36,7 @@ class OnboardingScreenViewModelTest {
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testScope = TestScope(testDispatcher)
 
-    private val navigatorContract = mockk<AppNavigatorContract>(relaxed = true)
+    private val navigatorContract = mockk<MindplexNavigatorContract>(relaxed = true)
     private val setOnboardingCompletedUseCase = mockk<SetOnboardingCompletedUseCase>()
 
     private var viewModel by Delegates.notNull<OnboardingScreenViewModel>()

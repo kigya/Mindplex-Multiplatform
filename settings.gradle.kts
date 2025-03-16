@@ -33,7 +33,7 @@ include(
     ":core:domain:interactor",
     ":core:domain:profile",
     ":core:presentation:feature",
-    ":core:presentation:component",
+    ":core:presentation:uikit",
     ":core:presentation:theme",
     ":core:presentation:common",
     ":core:util",
@@ -55,6 +55,9 @@ include(
     ":feature:profile:domain",
     ":feature:profile:data",
     ":feature:profile:presentation",
+    ":feature:game:data",
+    ":feature:game:domain",
+    ":feature:game:presentation",
 
     // Navigation Modules
     ":navigation:internal",

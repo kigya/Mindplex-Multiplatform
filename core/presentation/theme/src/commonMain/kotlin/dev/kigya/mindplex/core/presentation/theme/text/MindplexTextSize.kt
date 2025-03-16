@@ -2,20 +2,39 @@
 
 package dev.kigya.mindplex.core.presentation.theme.text
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import dev.kigya.mindplex.core.presentation.theme.MindplexDsToken
 
 @Immutable
-data class MindplexTextSize internal constructor(
-    val sp12: TextUnit = 12.sp,
-    val sp14: TextUnit = 14.sp,
-    val sp16: TextUnit = 16.sp,
-    val sp18: TextUnit = 18.sp,
-    val sp20: TextUnit = 20.sp,
-    val sp24: TextUnit = 24.sp,
-    val sp36: TextUnit = 36.sp,
-)
+data object MindplexTextSize {
 
-internal val LocalTextSize = staticCompositionLocalOf(::MindplexTextSize)
+    val sp12: MindplexDsToken<TextUnit>
+        @Composable
+        get() = MindplexDsToken(12.sp.nonScaledSp)
+    val sp14: MindplexDsToken<TextUnit>
+        @Composable
+        get() = MindplexDsToken(14.sp.nonScaledSp)
+    val sp16: MindplexDsToken<TextUnit>
+        @Composable
+        get() = MindplexDsToken(16.sp.nonScaledSp)
+    val sp18: MindplexDsToken<TextUnit>
+        @Composable
+        get() = MindplexDsToken(18.sp.nonScaledSp)
+    val sp20: MindplexDsToken<TextUnit>
+        @Composable
+        get() = MindplexDsToken(20.sp.nonScaledSp)
+    val sp24: MindplexDsToken<TextUnit>
+        @Composable
+        get() = MindplexDsToken(24.sp.nonScaledSp)
+    val sp36: MindplexDsToken<TextUnit>
+        @Composable
+        get() = MindplexDsToken(36.sp.nonScaledSp)
+}
+
+private val TextUnit.nonScaledSp: TextUnit
+    @Composable
+    get() = (this.value / LocalDensity.current.fontScale).sp

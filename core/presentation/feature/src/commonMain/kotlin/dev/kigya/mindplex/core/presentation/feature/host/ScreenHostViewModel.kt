@@ -2,37 +2,54 @@ package dev.kigya.mindplex.core.presentation.feature.host
 
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.contract.ScreenHostContract
-import dev.kigya.mindplex.core.presentation.feature.contract.ScreenHostContract.Effect
-import dev.kigya.mindplex.core.presentation.feature.contract.ScreenHostContract.Event
-import dev.kigya.mindplex.core.presentation.feature.contract.ScreenHostContract.State
-import dev.kigya.mindplex.navigation.navigator.navigator.AppNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ScreenHostViewModel(
-    private val navigatorContract: AppNavigatorContract,
-) : BaseViewModel<State, Effect>(State()), ScreenHostContract {
+    navigatorContract: MindplexNavigatorContract,
+) : BaseViewModel<ScreenHostContract.State, ScreenHostContract.Effect>(
+    navigatorContract = navigatorContract,
+    initialState = ScreenHostContract.State(),
+),
+    ScreenHostContract {
 
     val navigationChannel = navigatorContract.navigationChannel
 
-    override fun handleEvent(event: Event) = withUseCaseScope {
-        event.run {
-            when (this) {
-                is Event.OnHomeVerticalClicked -> handleVerticalClick(State.Vertical.Home)
-                is Event.OnLeaderboardVerticalClicked -> handleVerticalClick(State.Vertical.Leaderboard)
-                is Event.OnProfileVerticalClicked -> handleVerticalClick(State.Vertical.Profile)
-                is Event.OnNewRouteReceived -> handleNewRouteReceive()
+    override fun handleEvent(event: ScreenHostContract.Event) {
+        withUseCaseScope {
+            event.run {
+                when (this) {
+                    is ScreenHostContract.Event.OnHomeVerticalClicked -> handleVerticalClick(
+                        ScreenHostContract.State.Vertical.Home,
+                    )
+
+                    is ScreenHostContract.Event.OnLeaderboardVerticalClicked -> handleVerticalClick(
+                        ScreenHostContract.State.Vertical.Leaderboard,
+                    )
+
+                    is ScreenHostContract.Event.OnProfileVerticalClicked -> handleVerticalClick(
+                        ScreenHostContract.State.Vertical.Profile,
+                    )
+
+                    is ScreenHostContract.Event.OnNewRouteReceived -> handleNewRouteReceive()
+                }
             }
         }
     }
 
-    private suspend fun handleVerticalClick(selectedVertical: State.Vertical) {
+    fun onBackPressed() = withUseCaseScope {
+        navigatorContract.navigateBack()
+    }
+
+    private suspend fun handleVerticalClick(selectedVertical: ScreenHostContract.State.Vertical) {
         val activeVertical = getState().activeVertical
+        val newRoute = selectedVertical.mapToRoute()
 
         if (activeVertical != selectedVertical) {
             navigatorContract.navigateTo(
-                route = selectedVertical.mapToRoute(),
+                route = newRoute,
                 popUpToRoute = activeVertical.mapToRoute(),
                 inclusive = true,
                 isSingleTop = true,
@@ -41,19 +58,20 @@ class ScreenHostViewModel(
         }
     }
 
-    private fun Event.OnNewRouteReceived.handleNewRouteReceive() = withUseCaseScope {
-        launch {
-            if (getState().shouldDisplayNavigationBar.not()) delay(NAVIGATION_BAR_DELAY)
-
-            updateState {
+    private fun ScreenHostContract.Event.OnNewRouteReceived.handleNewRouteReceive() =
+        withUseCaseScope {
+            launch {
+                if (getState().shouldDisplayNavigationBar.not()) delay(NAVIGATION_BAR_DELAY)
                 val targetRoute = this@handleNewRouteReceive.route
-                copy(
-                    shouldDisplayNavigationBar = targetRoute != null &&
-                        targetRoute in ALLOWED_NAVIGATION_BAR_ROUTES,
-                )
+
+                updateState {
+                    copy(
+                        shouldDisplayNavigationBar = targetRoute != null &&
+                            targetRoute in ALLOWED_NAVIGATION_BAR_ROUTES,
+                    )
+                }
             }
         }
-    }
 
     private companion object {
         val ALLOWED_NAVIGATION_BAR_ROUTES = setOf(

@@ -38,6 +38,9 @@ kotlin {
                     implementation(leaderboard.data)
                     implementation(leaderboard.domain)
                     implementation(leaderboard.presentation)
+                    implementation(game.data)
+                    implementation(game.domain)
+                    implementation(game.presentation)
                 }
                 with(core) {
                     implementation(data.connectivity)

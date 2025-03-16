@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import dev.kigya.mindplex.core.presentation.component.MindplexText
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
 
@@ -32,9 +30,5 @@ internal fun LeaderboardScreenContent(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        MindplexText(
-            text = "Leaderboard Screen",
-            color = Color.White,
-        )
     }
 }

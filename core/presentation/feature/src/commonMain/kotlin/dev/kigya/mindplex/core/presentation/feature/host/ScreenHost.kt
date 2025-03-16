@@ -7,14 +7,16 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.navigation.NavHostController
 import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
-import dev.kigya.mindplex.core.presentation.component.AnimatedNavigationBar
-import dev.kigya.mindplex.core.presentation.component.MindplexIconButton
 import dev.kigya.mindplex.core.presentation.feature.contract.ScreenHostContract
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
+import dev.kigya.mindplex.core.presentation.feature.host.theme.HostTheme
+import dev.kigya.mindplex.core.presentation.uikit.AnimatedNavigationBar
+import dev.kigya.mindplex.core.presentation.uikit.MindplexIconButton
 import dev.kigya.mindplex.core.util.contract.enforceNonNullSmartCast
 import dev.kigya.mindplex.navigation.navigator.intent.NavigationIntent
 import kotlinx.coroutines.channels.Channel
@@ -27,6 +29,7 @@ import mindplex_multiplatform.core.presentation.feature.generated.resources.ic_l
 import mindplex_multiplatform.core.presentation.feature.generated.resources.ic_profile_active
 import mindplex_multiplatform.core.presentation.feature.generated.resources.ic_profile_inactive
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ScreenHost(
     navigationController: NavHostController,
@@ -35,6 +38,8 @@ fun ScreenHost(
     val hostViewModel = koinViewModel<ScreenHostViewModel>()
 
     val (state, event, _) = use(contract)
+
+    BackHandler(onBack = hostViewModel::onBackPressed)
 
     NavigationEffects(
         navigationChannel = hostViewModel.navigationChannel,
@@ -49,14 +54,14 @@ fun ScreenHost(
     ) {
         AnimatedNavigationBar(
             modifier = Modifier.padding(
-                vertical = MindplexTheme.dimension.dp16,
-                horizontal = MindplexTheme.dimension.dp16,
+                vertical = HostTheme.dimension.dp16.value,
+                horizontal = HostTheme.dimension.dp16.value,
             ),
             selectedIndex = state.activeVertical.index,
         ) {
             MindplexIconButton(
-                modifier = Modifier.padding(vertical = MindplexTheme.dimension.dp12),
-                drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.Home) {
+                modifier = Modifier.padding(vertical = HostTheme.dimension.dp12.value),
+                resource = if (state.activeVertical == ScreenHostContract.State.Vertical.Home) {
                     Res.drawable.ic_home_active
                 } else {
                     Res.drawable.ic_home_inactive
@@ -64,8 +69,8 @@ fun ScreenHost(
             ) { event(ScreenHostContract.Event.OnHomeVerticalClicked) }
 
             MindplexIconButton(
-                modifier = Modifier.padding(vertical = MindplexTheme.dimension.dp12),
-                drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.Leaderboard) {
+                modifier = Modifier.padding(vertical = HostTheme.dimension.dp12.value),
+                resource = if (state.activeVertical == ScreenHostContract.State.Vertical.Leaderboard) {
                     Res.drawable.ic_leaderboard_active
                 } else {
                     Res.drawable.ic_leaderboard_inactive
@@ -73,8 +78,8 @@ fun ScreenHost(
             ) { event(ScreenHostContract.Event.OnLeaderboardVerticalClicked) }
 
             MindplexIconButton(
-                modifier = Modifier.padding(vertical = MindplexTheme.dimension.dp12),
-                drawableResource = if (state.activeVertical == ScreenHostContract.State.Vertical.Profile) {
+                modifier = Modifier.padding(vertical = HostTheme.dimension.dp12.value),
+                resource = if (state.activeVertical == ScreenHostContract.State.Vertical.Profile) {
                     Res.drawable.ic_profile_active
                 } else {
                     Res.drawable.ic_profile_inactive

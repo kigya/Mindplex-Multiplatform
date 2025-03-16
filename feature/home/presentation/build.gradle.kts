@@ -14,12 +14,13 @@ kotlin {
         commonMain.dependencies {
             with(projects) {
                 implementation(feature.home.domain)
+                implementation(navigation.api)
                 with(core) {
                     api(domain.interactor)
                     implementation(util)
                     implementation(presentation.feature)
                     implementation(presentation.theme)
-                    implementation(presentation.component)
+                    implementation(presentation.uikit)
                     implementation(presentation.common)
                     implementation(domain.profile)
                 }

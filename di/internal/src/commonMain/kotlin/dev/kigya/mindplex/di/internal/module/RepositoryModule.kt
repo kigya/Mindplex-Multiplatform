@@ -1,11 +1,17 @@
 package dev.kigya.mindplex.di.internal.module
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import dev.kigya.mindplex.core.data.connectivity.ConnectivityRepository
 import dev.kigya.mindplex.core.data.profile.repository.UserProfileDatabaseRepository
 import dev.kigya.mindplex.core.data.profile.repository.UserProfileNetworkRepository
 import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileDatabaseRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileNetworkRepositoryContract
+import dev.kigya.mindplex.feature.game.data.repository.QuestionsDatabaseRepository
+import dev.kigya.mindplex.feature.game.data.repository.QuestionsNetworkRepository
+import dev.kigya.mindplex.feature.game.domain.contract.QuestionsDatabaseRepositoryContract
+import dev.kigya.mindplex.feature.game.domain.contract.QuestionsNetworkRepositoryContract
 import dev.kigya.mindplex.feature.home.data.repository.FactsDatabaseRepository
 import dev.kigya.mindplex.feature.home.data.repository.FactsNetworkRepository
 import dev.kigya.mindplex.feature.home.domain.contract.FactsDatabaseRepositoryContract
@@ -27,14 +33,14 @@ import org.koin.dsl.module
 val repositoryModule = module {
     single {
         OnboardingRepository(
-            dataStore = get(),
+            dataStore = get<DataStore<Preferences>>(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind OnboardingRepositoryContract::class
 
     single {
         SignInPreferencesRepository(
-            dataStore = get(),
+            dataStore = get<DataStore<Preferences>>(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind SignInPreferencesRepositoryContract::class
@@ -76,6 +82,20 @@ val repositoryModule = module {
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind FactsDatabaseRepositoryContract::class
+
+    single {
+        QuestionsDatabaseRepository(
+            questionDao = get(),
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
+        )
+    } bind QuestionsDatabaseRepositoryContract::class
+
+    single {
+        QuestionsNetworkRepository(
+            httpClient = get(),
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
+        )
+    } bind QuestionsNetworkRepositoryContract::class
 
     single {
         ProfileImageInterceptor()

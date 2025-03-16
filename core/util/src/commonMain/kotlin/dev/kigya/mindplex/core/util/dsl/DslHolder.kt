@@ -126,3 +126,8 @@ inline fun <T1, T2, R> invokeIfPresent(
         null
     }
 }
+
+inline fun <reified T : Enum<T>> safeValueOf(
+    name: String,
+    default: T,
+): T = runCatching { enumValueOf<T>(name) }.getOrDefault(default)

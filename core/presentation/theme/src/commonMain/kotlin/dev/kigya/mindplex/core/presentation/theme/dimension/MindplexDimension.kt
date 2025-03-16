@@ -3,25 +3,21 @@
 package dev.kigya.mindplex.core.presentation.theme.dimension
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.kigya.mindplex.core.presentation.theme.MindplexDsToken
 
 @Immutable
-data class MindplexDimension internal constructor(
-    val dp0: Dp = 0.dp,
-    val dp1: Dp = 1.dp,
-    val dp2: Dp = 2.dp,
-    val dp4: Dp = 4.dp,
-    val dp8: Dp = 8.dp,
-    val dp12: Dp = 12.dp,
-    val dp16: Dp = 16.dp,
-    val dp20: Dp = 20.dp,
-    val dp24: Dp = 24.dp,
-    val dp36: Dp = 36.dp,
-    val dp40: Dp = 48.dp,
-    val dp48: Dp = 48.dp,
-    val dp64: Dp = 64.dp,
-)
-
-internal val LocalDimension = staticCompositionLocalOf(::MindplexDimension)
+data object MindplexDimension {
+    val dp0: MindplexDsToken<Dp> = MindplexDsToken(0.dp)
+    val dp1: MindplexDsToken<Dp> = MindplexDsToken(1.dp)
+    val dp2: MindplexDsToken<Dp> = MindplexDsToken(2.dp)
+    val dp4: MindplexDsToken<Dp> = MindplexDsToken(4.dp)
+    val dp8: MindplexDsToken<Dp> = MindplexDsToken(8.dp)
+    val dp12: MindplexDsToken<Dp> = MindplexDsToken(12.dp)
+    val dp16: MindplexDsToken<Dp> = MindplexDsToken(16.dp)
+    val dp24: MindplexDsToken<Dp> = MindplexDsToken(24.dp)
+    val dp36: MindplexDsToken<Dp> = MindplexDsToken(36.dp)
+    val dp48: MindplexDsToken<Dp> = MindplexDsToken(48.dp)
+    val dp64: MindplexDsToken<Dp> = MindplexDsToken(64.dp)
+}

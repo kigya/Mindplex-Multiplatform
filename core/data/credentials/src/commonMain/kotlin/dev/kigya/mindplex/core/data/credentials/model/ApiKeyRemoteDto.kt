@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ApiKeyRemoteDto(
-    @SerialName(FirestoreConfig.Collection.Secrets.Document.FactsAPI.API_KEY) val apiKey: String,
+    @SerialName(FirestoreConfig.Collection.Secrets.Document.FactsAPI.API_KEY)
+    val apiKey: String,
 )

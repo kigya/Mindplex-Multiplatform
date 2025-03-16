@@ -9,11 +9,11 @@ import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingCon
 import dev.kigya.mindplex.feature.onboarding.presentation.contract.OnboardingContract.State.OnboardingScreenData.Companion.LAST_PAGE_INDEX
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
 interface OnboardingContract :
     UnidirectionalViewModelContract<OnboardingContract.State, OnboardingContract.Event, OnboardingContract.Effect> {
+    @ConsistentCopyVisibility
     @Immutable
     data class State internal constructor(
         @Size(
@@ -25,10 +25,10 @@ interface OnboardingContract :
         val shouldDisplayDescription: Boolean = false,
         val shouldDisplayDotsIndicator: Boolean = false,
     ) : CopyableComponentState {
+        @ConsistentCopyVisibility
         @Immutable
         data class OnboardingScreenData internal constructor(
             val lottiePath: String? = null,
-            val lottieDrawableResource: DrawableResource? = null,
             val titleTextResource: StringResource? = null,
             val descriptionTextResource: StringResource? = null,
             @OnboardingIndexRange val page: Int = FIRST_PAGE_INDEX,
@@ -49,7 +49,6 @@ interface OnboardingContract :
 
     @Immutable
     sealed class Event {
-        internal data object OnFirstLaunch : Event()
 
         internal data object OnSkipClicked : Event()
 
@@ -61,7 +60,11 @@ interface OnboardingContract :
 
     @Immutable
     sealed class Effect {
-        data class ScrollToPage internal constructor(@OnboardingIndexRange val pageTo: Int) : Effect()
+        @ConsistentCopyVisibility
+        data class ScrollToPage internal constructor(
+            @OnboardingIndexRange
+            val pageTo: Int,
+        ) : Effect()
     }
 }
 

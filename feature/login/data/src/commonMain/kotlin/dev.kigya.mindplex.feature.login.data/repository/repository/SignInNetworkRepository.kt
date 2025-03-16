@@ -1,6 +1,7 @@
 package dev.kigya.mindplex.feature.login.data.repository.repository
 
 import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.firestore.Source
 import dev.gitlive.firebase.firestore.firestore
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.model.GoogleUserSignInDomainModel
@@ -14,15 +15,20 @@ class SignInNetworkRepository(
     override suspend fun signIn(googleUser: GoogleUserSignInDomainModel) =
         requireNotNull(googleUser.tokenId).let { tokenId ->
             withContext(dispatcher) {
-                Firebase.firestore
+                val documentRef = Firebase.firestore
                     .collection(UsersCollection.NAME)
                     .document(tokenId)
-                    .set(
+
+                val isExist = documentRef.get(Source.SERVER).exists
+                if (!isExist) {
+                    documentRef.set(
                         hashMapOf(
                             UsersCollection.Document.NAME to googleUser.displayName,
                             UsersCollection.Document.AVATAR_URL to googleUser.profilePictureUrl.orEmpty(),
+                            UsersCollection.Document.SCORE to 0,
                         ),
                     )
+                }
             }
         }
 
