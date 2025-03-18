@@ -33,7 +33,7 @@ compottie = { require = "2.0.0-rc02" }
 koin = { strictly = "4.0.2" }
 
 # Network
-ktor = { require = "3.0.2" }
+ktor = { require = "3.0.3" }
 napier = { prefer = "2.7.1" }
 
 # Local Storage
@@ -74,7 +74,7 @@ gitlive = { require = "2.1.0" }
 jwtParser = { require = "1.0.0" }
 
 # Image
-coil = { prefer = "3.0.4" }
+coil = { prefer = "3.1.0" }
 
 # Arrow
 arrow = { require = "2.0.0" }

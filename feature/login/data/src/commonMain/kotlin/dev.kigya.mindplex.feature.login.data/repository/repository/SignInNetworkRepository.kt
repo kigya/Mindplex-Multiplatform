@@ -20,7 +20,15 @@ class SignInNetworkRepository(
                     .document(tokenId)
 
                 val isExist = documentRef.get(Source.SERVER).exists
-                if (!isExist) {
+
+                if (isExist) {
+                    documentRef.update(
+                        hashMapOf(
+                            UsersCollection.Document.NAME to googleUser.displayName,
+                            UsersCollection.Document.AVATAR_URL to googleUser.profilePictureUrl.orEmpty(),
+                        ),
+                    )
+                } else {
                     documentRef.set(
                         hashMapOf(
                             UsersCollection.Document.NAME to googleUser.displayName,
