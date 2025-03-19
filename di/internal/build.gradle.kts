@@ -18,7 +18,6 @@ kotlin {
                 implementation(bundles.dataStore)
                 implementation(connectivity.core)
                 implementation(connectivity.device)
-                implementation(jwt.parser)
             }
             with(projects) {
                 with(feature) {
@@ -49,6 +48,8 @@ kotlin {
                     implementation(domain.connectivity)
                     implementation(domain.profile)
                     implementation(presentation.feature)
+                    implementation(data.jwtParser)
+                    implementation(domain.jwtParser)
                 }
                 with(navigation) {
                     implementation(internal)

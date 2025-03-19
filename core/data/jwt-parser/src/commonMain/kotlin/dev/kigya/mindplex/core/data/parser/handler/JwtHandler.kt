@@ -1,8 +1,8 @@
-package dev.kigya.mindplex.feature.login.data.repository.handler
+package dev.kigya.mindplex.core.data.parser.handler
 
-import com.wonddak.jwt.JwtParser
+import dev.kigya.mindplex.core.data.parser.JwtParser
+import parser.contract.JwtHandlerContract
 import dev.kigya.mindplex.core.util.dsl.runSuspendCatching
-import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.jsonPrimitive
