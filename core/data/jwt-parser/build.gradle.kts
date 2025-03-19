@@ -3,7 +3,6 @@ plugins {
         alias(config.shared.library)
         with(component) {
             alias(serialization)
-            alias(room)
         }
     }
 }
@@ -13,7 +12,6 @@ kotlin {
         commonMain.dependencies {
             with(projects) {
                 implementation(core.domain.jwtParser)
-                implementation(core.data.firebase)
                 implementation(core.util)
             }
         }
