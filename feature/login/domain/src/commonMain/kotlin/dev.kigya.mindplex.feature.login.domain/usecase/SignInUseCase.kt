@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.login.domain.usecase
 
+import parser.contract.JwtHandlerContract
 import androidx.annotation.CheckResult
 import arrow.core.Either
 import arrow.core.raise.either
@@ -9,7 +10,6 @@ import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityReposito
 import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
 import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
 import dev.kigya.mindplex.core.util.dsl.requireNotNullOrRaise
-import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
 import dev.kigya.mindplex.feature.login.domain.contract.ProfileImageInterceptorContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
