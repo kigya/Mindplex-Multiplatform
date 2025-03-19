@@ -38,8 +38,8 @@ class SignInUseCase(
                         tokenId = userId,
                         profilePictureUrl = profileImageInterceptor.intercept(profilePictureUrl),
                     )
-                    signInPreferencesRepositoryContract.signIn(user.tokenId)
                     signInNetworkRepositoryContract.signIn(user)
+                    signInPreferencesRepositoryContract.signIn(user.tokenId)
                     Unit.right()
                 },
                 onFailure = { raise(MindplexDomainError.OTHER) },
