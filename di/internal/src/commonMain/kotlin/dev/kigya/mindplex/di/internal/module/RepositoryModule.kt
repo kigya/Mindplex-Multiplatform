@@ -64,7 +64,7 @@ val repositoryModule = module {
     single {
         UserProfileDatabaseRepository(
             userProfileDao = get(),
-            dispatcher = get(qualifier = named(Dispatchers.Default::class.simpleName.orEmpty())),
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind UserProfileDatabaseRepositoryContract::class
 
