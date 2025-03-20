@@ -169,9 +169,6 @@ firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx", vers
 firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = "gitlive" }
 firebase-common = { module = "dev.gitlive:firebase-common", version.ref = "gitlive" }
 
-# Encoding
-jwt-parser = { module = "io.github.jmseb3:simpleJwtParser", version.ref = "jwtParser" }
-
 # Image
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }

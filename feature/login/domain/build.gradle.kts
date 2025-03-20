@@ -15,7 +15,6 @@ kotlin {
             with(projects) {
                 api(core.domain.interactor)
                 api(core.domain.connectivity)
-                api(core.domain.jwtParser)
                 implementation(core.util)
             }
         }

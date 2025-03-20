@@ -3,6 +3,7 @@ package dev.kigya.mindplex.feature.login.domain
 import arrow.core.raise.either
 import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityRepositoryContract
 import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
+import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
 import dev.kigya.mindplex.feature.login.domain.contract.ProfileImageInterceptorContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
@@ -15,7 +16,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import parser.contract.JwtHandlerContract
 import kotlin.properties.Delegates
 import kotlin.test.assertEquals
 

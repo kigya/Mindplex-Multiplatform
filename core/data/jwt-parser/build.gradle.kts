@@ -11,7 +11,6 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             with(projects) {
-                implementation(core.domain.jwtParser)
                 implementation(core.util)
             }
         }

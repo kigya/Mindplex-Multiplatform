@@ -33,7 +33,6 @@ include(
     ":core:domain:connectivity",
     ":core:domain:interactor",
     ":core:domain:profile",
-    ":core:domain:jwt-parser",
     ":core:presentation:feature",
     ":core:presentation:uikit",
     ":core:presentation:theme",

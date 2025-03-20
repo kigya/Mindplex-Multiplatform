@@ -49,7 +49,6 @@ kotlin {
                     implementation(domain.profile)
                     implementation(presentation.feature)
                     implementation(data.jwtParser)
-                    implementation(domain.jwtParser)
                 }
                 with(navigation) {
                     implementation(internal)
