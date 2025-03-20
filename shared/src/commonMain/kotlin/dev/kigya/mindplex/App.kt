@@ -4,8 +4,13 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -18,8 +23,8 @@ import coil3.compose.LocalPlatformContext
 import coil3.compose.setSingletonImageLoaderFactory
 import dev.kigya.mindplex.core.presentation.common.util.SystemBarsColor
 import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
-import dev.kigya.mindplex.core.presentation.feature.host.ScreenHost
-import dev.kigya.mindplex.core.presentation.feature.host.ScreenHostViewModel
+import dev.kigya.mindplex.core.presentation.feature.host.AppActionsHost
+import dev.kigya.mindplex.core.presentation.feature.host.AppActionsHostViewModel
 import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.game.presentation.ui.GameScreen
 import dev.kigya.mindplex.feature.game.presentation.ui.GameScreenViewModel
@@ -53,7 +58,12 @@ fun App() {
             val imageLoader = rememberCoilImageLoader()
             setSingletonImageLoaderFactory { imageLoader }
 
-            Box(contentAlignment = Alignment.BottomCenter) {
+            var predictiveBackAlpha by remember { mutableFloatStateOf(1f) }
+
+            Box(
+                modifier = Modifier.alpha(predictiveBackAlpha),
+                contentAlignment = Alignment.BottomCenter,
+            ) {
                 NavHost(
                     navController = navigationController,
                     startDestination = ScreenRoute.Splash,
@@ -111,10 +121,10 @@ fun App() {
                     }
                 }
 
-                ScreenHost(
+                AppActionsHost(
                     navigationController = navigationController,
-                    contract = koinViewModel<ScreenHostViewModel>(),
-                )
+                    contract = koinViewModel<AppActionsHostViewModel>(),
+                ) { predictiveBackAlpha = it }
             }
         }
     }

@@ -1,6 +1,6 @@
 package dev.kigya.mindplex.di.internal.module
 
-import dev.kigya.mindplex.core.presentation.feature.host.ScreenHostViewModel
+import dev.kigya.mindplex.core.presentation.feature.host.AppActionsHostViewModel
 import dev.kigya.mindplex.feature.game.presentation.ui.GameScreenViewModel
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreenViewModel
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.LeaderboardScreenViewModel
@@ -12,7 +12,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 actual val viewModelModule = module {
-    viewModelOf(::ScreenHostViewModel)
+    viewModelOf(::AppActionsHostViewModel)
     viewModelOf(::SplashScreenViewModel)
     viewModelOf(::OnboardingScreenViewModel)
     viewModelOf(::HomeScreenViewModel)

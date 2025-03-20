@@ -16,7 +16,7 @@ ksp = { strictly = "2.1.0-1.0.29" }
 kotlinxSerialization = { require = "1.7.3" }
 
 # Compose
-composeActivity = { require = "1.9.3" }
+composeActivity = { require = "1.10.1" }
 composeMultiplatform = { require = "1.8.0-alpha03" }
 composeTest = { strictly = "1.8.0-beta02" }
 composeNavigation = { require = "2.8.0-alpha13" }
@@ -90,9 +90,6 @@ kotlinPoet = { prefer = "2.0.0" }
 
 # Json Parsing
 ksoup = { require = "0.5.0" }
-
-# Uri
-uriKmp = { require = "0.0.19" }
 
 [libraries]
 # Serialization
@@ -194,9 +191,6 @@ kotlin-poet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinPoet" }
 
 # Ksoup
 ksoup = { module = "com.mohamedrejeb.ksoup:ksoup-entities", version.ref = "ksoup" }
-
-# Uri
-uriKmp = { module = "com.eygraber:uri-kmp", version.ref = "uriKmp" }
 
 # Gradle Plugins
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
