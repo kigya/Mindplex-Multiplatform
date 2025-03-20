@@ -1,15 +1,20 @@
 package dev.kigya.mindplex.core.presentation.feature.host
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.backhandler.BackHandler
+import androidx.compose.ui.backhandler.PredictiveBackHandler
 import androidx.navigation.NavHostController
 import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
 import dev.kigya.mindplex.core.presentation.feature.contract.ScreenHostContract
@@ -19,6 +24,7 @@ import dev.kigya.mindplex.core.presentation.uikit.AnimatedNavigationBar
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIconButton
 import dev.kigya.mindplex.core.util.contract.enforceNonNullSmartCast
 import dev.kigya.mindplex.navigation.navigator.intent.NavigationIntent
+import dev.kigya.mindplex.navigation.navigator.navigator.NavigationExitHandler
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import mindplex_multiplatform.core.presentation.feature.generated.resources.Res
@@ -31,15 +37,31 @@ import mindplex_multiplatform.core.presentation.feature.generated.resources.ic_p
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ScreenHost(
+fun AppActionsHost(
     navigationController: NavHostController,
     contract: ScreenHostContract,
+    onBackPressAlphaChange: (Float) -> Unit,
 ) {
-    val hostViewModel = koinViewModel<ScreenHostViewModel>()
+    val hostViewModel = koinViewModel<AppActionsHostViewModel>()
 
     val (state, event, _) = use(contract)
 
-    BackHandler(onBack = hostViewModel::onBackPressed)
+    var backGestureProgress by remember { mutableStateOf(0f) }
+    val animatedAlpha by animateFloatAsState(targetValue = 1f - backGestureProgress)
+
+    LaunchedEffect(animatedAlpha) {
+        onBackPressAlphaChange(animatedAlpha)
+    }
+
+    PredictiveBackHandler(
+        enabled = true,
+    ) { progressFlow ->
+        progressFlow.collect { backEvent ->
+            backGestureProgress = backEvent.progress
+        }
+        backGestureProgress = 0f
+        hostViewModel.onBackPressed()
+    }
 
     NavigationEffects(
         navigationChannel = hostViewModel.navigationChannel,
@@ -95,17 +117,25 @@ private fun NavigationEffects(
     navHostController: NavHostController,
     event: (ScreenHostContract.Event) -> Unit,
 ) {
+    var shouldExit by remember { mutableStateOf(false) }
+
+    NavigationExitHandler(shouldExit)
+
     LaunchedEffect(navHostController, navigationChannel) {
         navigationChannel.receiveAsFlow().collect { intent ->
             event(ScreenHostContract.Event.OnNewRouteReceived(intent.route))
             when (intent) {
-                is NavigationIntent.NavigateBack -> if (intent.route != null) {
-                    val safeRoute = enforceNonNullSmartCast(intent.route) ?: return@collect
-                    navHostController.popBackStack(safeRoute, intent.inclusive)
-                } else {
-                    navHostController.popBackStack()
+                is NavigationIntent.NavigateBack -> {
+                    val popped = if (intent.route != null) {
+                        val safeRoute = enforceNonNullSmartCast(intent.route) ?: return@collect
+                        navHostController.popBackStack(safeRoute, intent.inclusive)
+                    } else {
+                        navHostController.popBackStack()
+                    }
+                    if (!popped) {
+                        shouldExit = true
+                    }
                 }
-
                 is NavigationIntent.NavigateTo -> navHostController.navigate(intent.route) {
                     launchSingleTop = intent.isSingleTop
                     intent.popUpToRoute?.let { popUpToRoute ->

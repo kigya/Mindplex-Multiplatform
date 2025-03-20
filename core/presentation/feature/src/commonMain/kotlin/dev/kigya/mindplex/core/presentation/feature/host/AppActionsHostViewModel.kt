@@ -7,7 +7,7 @@ import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ScreenHostViewModel(
+class AppActionsHostViewModel(
     navigatorContract: MindplexNavigatorContract,
 ) : BaseViewModel<ScreenHostContract.State, ScreenHostContract.Effect>(
     navigatorContract = navigatorContract,
