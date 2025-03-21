@@ -30,7 +30,7 @@ actual class JwtParser : JwtParserContract {
         return null
     }
 
-    companion object {
+    private companion object {
         private const val JWT_DELIMITER = "\\."
     }
 }

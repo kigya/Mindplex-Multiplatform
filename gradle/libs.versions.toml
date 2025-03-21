@@ -70,9 +70,6 @@ googleServices = { require = "4.4.2" }
 firebaseExtension = { require = "21.0.0" }
 gitlive = { require = "2.1.0" }
 
-# Encoding
-jwtParser = { require = "1.0.0" }
-
 # Image
 coil = { prefer = "3.1.0" }
 

@@ -17,6 +17,7 @@ import org.koin.dsl.onClose
 
 val dataSourceModule = module {
     single { Connectivity() } bind Connectivity::class
+    single { JwtParser() } bind JwtParserContract::class
 
     factory {
         ConnectivityManager(
@@ -30,8 +31,6 @@ val dataSourceModule = module {
     } onClose { connectivityManager ->
         connectivityManager?.close()
     }
-
-    single<JwtParserContract> { JwtParser() }
 
     single {
         JwtHandler(
