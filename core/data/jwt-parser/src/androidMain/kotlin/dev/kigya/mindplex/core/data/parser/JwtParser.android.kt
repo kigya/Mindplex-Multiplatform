@@ -31,6 +31,6 @@ actual class JwtParser : JwtParserContract {
     }
 
     private companion object {
-        private const val JWT_DELIMITER = "\\."
+        const val JWT_DELIMITER = "\\."
     }
 }
