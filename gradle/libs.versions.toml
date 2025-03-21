@@ -33,7 +33,7 @@ compottie = { require = "2.0.0-rc02" }
 koin = { strictly = "4.0.2" }
 
 # Network
-ktor = { require = "3.0.2" }
+ktor = { require = "3.0.3" }
 napier = { prefer = "2.7.1" }
 
 # Local Storage
@@ -70,11 +70,8 @@ googleServices = { require = "4.4.2" }
 firebaseExtension = { require = "21.0.0" }
 gitlive = { require = "2.1.0" }
 
-# Encoding
-jwtParser = { require = "1.0.0" }
-
 # Image
-coil = { prefer = "3.0.4" }
+coil = { prefer = "3.1.0" }
 
 # Arrow
 arrow = { require = "2.0.0" }
@@ -165,9 +162,6 @@ annotation = { module = "androidx.annotation:annotation", version.ref = "annotat
 firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx", version.ref = "firebaseExtension" }
 firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = "gitlive" }
 firebase-common = { module = "dev.gitlive:firebase-common", version.ref = "gitlive" }
-
-# Encoding
-jwt-parser = { module = "io.github.jmseb3:simpleJwtParser", version.ref = "jwtParser" }
 
 # Image
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }

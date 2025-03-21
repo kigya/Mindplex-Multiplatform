@@ -2,7 +2,9 @@ package dev.kigya.mindplex.di.internal.module
 
 import dev.jordond.connectivity.Connectivity
 import dev.kigya.mindplex.core.data.connectivity.ConnectivityManager
-import dev.kigya.mindplex.feature.login.data.repository.handler.JwtHandler
+import dev.kigya.mindplex.core.data.parser.JwtParser
+import dev.kigya.mindplex.core.data.parser.JwtParserContract
+import dev.kigya.mindplex.feature.login.data.JwtHandler
 import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -15,6 +17,7 @@ import org.koin.dsl.onClose
 
 val dataSourceModule = module {
     single { Connectivity() } bind Connectivity::class
+    single { JwtParser() } bind JwtParserContract::class
 
     factory {
         ConnectivityManager(
@@ -32,6 +35,7 @@ val dataSourceModule = module {
     single {
         JwtHandler(
             dispatcher = get(named(Dispatchers.Default::class.simpleName.orEmpty())),
+            jwtParserContract = get(),
         )
     } bind JwtHandlerContract::class
 }

@@ -14,12 +14,12 @@ kotlin {
                 implementation(bundles.dataStore)
                 implementation(firebase.firestore)
                 implementation(firebase.common)
-                implementation(jwt.parser)
             }
             with(projects) {
                 implementation(feature.login.domain)
                 implementation(core.util)
                 implementation(core.data.firebase)
+                implementation(core.data.jwtParser)
             }
         }
     }

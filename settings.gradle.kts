@@ -29,6 +29,7 @@ include(
     ":core:data:firebase",
     ":core:data:profile",
     ":core:data:credentials",
+    ":core:data:jwt-parser",
     ":core:domain:connectivity",
     ":core:domain:interactor",
     ":core:domain:profile",
