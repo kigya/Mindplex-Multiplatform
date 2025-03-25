@@ -26,4 +26,7 @@ data class MindplexColor internal constructor(
     val mandy: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFEB5D60)),
     val crayola: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFFF4B4F)),
     val transparent: MindplexDsToken<Color> = MindplexDsToken(Color(0x00000000)),
+    val yellow100: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFFEE39D)),
+    val yellow50: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFFFBF1B)),
+    val red100: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFFFA46D)),
 )

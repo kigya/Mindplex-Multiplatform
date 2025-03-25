@@ -11,6 +11,36 @@ class LeaderboardScreenViewModel(
     initialState = LeaderboardContract.State(),
 ),
     LeaderboardContract {
-    @Suppress("NotImplementedDeclaration")
-    override fun handleEvent(event: LeaderboardContract.Event) = TODO()
+
+    override fun executeStartAction() {
+        withUseCaseScope {
+            fetchScreenData()
+        }
+    }
+
+    override fun handleEvent(event: LeaderboardContract.Event) {
+        withUseCaseScope {
+            event.run {
+                when (this) {
+                    LeaderboardContract.Event.OnErrorStubClicked -> handleErrorStubClick()
+                    LeaderboardContract.Event.OnProfilePictureErrorReceived -> handleProfilePictureError()
+                    LeaderboardContract.Event.OnProfilePictureLoaded -> handleProfilePictureLoading()
+                }
+            }
+        }
+    }
+
+    private fun handleProfilePictureLoading() = updateState {
+        copy(podiumData = podiumData.copy(arePodiumLoading = false))
+    }
+
+    private fun handleProfilePictureError() = updateState {
+        copy(podiumData = podiumData.copy(arePodiumLoading = false))
+    }
+
+    private suspend fun handleErrorStubClick() = fetchScreenData()
+
+    private suspend fun fetchScreenData() {
+        updateState { LeaderboardContract.State() }
+    }
 }
