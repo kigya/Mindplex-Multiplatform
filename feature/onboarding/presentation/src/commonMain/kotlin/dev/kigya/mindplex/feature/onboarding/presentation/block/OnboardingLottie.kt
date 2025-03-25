@@ -81,7 +81,7 @@ private fun drawOnboardingLottieContent(
                 .aspectRatio(1f / ONBOARDING_LOTTIE_ASPECT_RATIO),
         )
     } else {
-        lottiePath?.let {
+        lottiePath?.let { path ->
             MindplexLottie(
                 reader = { Res.readBytes(lottiePath) },
                 modifier = Modifier
