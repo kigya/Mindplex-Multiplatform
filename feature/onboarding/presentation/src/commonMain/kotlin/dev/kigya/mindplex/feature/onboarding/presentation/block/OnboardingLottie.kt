@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.util.lerp
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
 import dev.kigya.mindplex.core.presentation.uikit.MindplexLottie
+import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindplexUiKitApi
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.provider.OnboardingAdaptiveMetrics.LocalOnboardingLottieWidthRatio
 import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.onboarding.presentation.generated.resources.im_onboarding_first
@@ -66,7 +67,7 @@ internal fun OnboardingLottie(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalMindplexUiKitApi::class)
 @Composable
 private fun drawOnboardingLottieContent(
     lottiePath: String?,
@@ -81,7 +82,7 @@ private fun drawOnboardingLottieContent(
                 .aspectRatio(1f / ONBOARDING_LOTTIE_ASPECT_RATIO),
         )
     } else {
-        lottiePath?.let {
+        lottiePath?.let { path ->
             MindplexLottie(
                 reader = { Res.readBytes(lottiePath) },
                 modifier = Modifier
