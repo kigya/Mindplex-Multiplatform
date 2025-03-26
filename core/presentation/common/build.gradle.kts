@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.dependencies
-
 plugins {
     with(libs.plugins.convention) {
         alias(config.shared.library)
