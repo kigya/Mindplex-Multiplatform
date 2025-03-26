@@ -83,6 +83,14 @@ internal object LeaderboardTheme : MindplexTheme() {
                 dark = super.color.red100,
             )
 
+    val MindplexColorScheme.dividerLineUserPlaceColor
+        @Composable
+        get() =
+            this provides MindplexDynamicColor(
+                light = super.color.iris20,
+                dark = super.color.gunmetal60,
+            )
+
     // typography
     val MindplexTypography.leaderboardNameText
         @Composable

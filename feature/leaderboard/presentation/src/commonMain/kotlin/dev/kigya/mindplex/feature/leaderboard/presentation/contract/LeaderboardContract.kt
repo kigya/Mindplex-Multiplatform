@@ -16,7 +16,7 @@ interface LeaderboardContract :
         val mock: Int = 0,
         val stubErrorType: StubErrorType? = null,
         val podiumData: PodiumData = PodiumData(),
-        val userCardData: UserCardData = UserCardData(),
+        val userCardData: List<UserCardData> = emptyList(),
     ) : CopyableComponentState {
 
         @ConsistentCopyVisibility

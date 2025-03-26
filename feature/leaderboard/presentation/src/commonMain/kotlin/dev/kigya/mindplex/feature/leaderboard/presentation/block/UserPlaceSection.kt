@@ -1,10 +1,10 @@
 package dev.kigya.mindplex.feature.leaderboard.presentation.block
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
@@ -19,26 +19,38 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.dividerLineUserPlaceColor
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumPlaceText
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumScoreText
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_profile_fallback
+import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.leaderboard_points
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+
+private const val SKIP_PODIUM_USERS = 3
+private const val MAX_USERS_PLACE = 7
 
 @Composable
 internal fun UserPlaceSection(
     modifier: Modifier = Modifier,
-    state: LeaderboardContract.State.UserCardData,
+    userPlaces: List<LeaderboardContract.State.UserCardData>,
     event: (LeaderboardContract.Event) -> Unit,
 ) {
-    LazyColumn(
-        modifier = modifier,
-    ) {
-        items(state.place.size) {
-            UserPlaceCard(
-                state = state,
-                event = event,
-            )
+    val filteredUsers = userPlaces
+        .drop(SKIP_PODIUM_USERS)
+        .take(MAX_USERS_PLACE)
+
+    if (filteredUsers.isNotEmpty()) {
+        LazyColumn(
+            modifier = modifier,
+        ) {
+            items(filteredUsers.size) { index ->
+                UserPlaceCard(
+                    state = filteredUsers[index],
+                    event = event,
+                )
+            }
         }
     }
 }
@@ -57,6 +69,7 @@ private fun UserPlaceCard(
                 horizontal = LeaderboardTheme.dimension.dp8.value,
             ),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(LeaderboardTheme.dimension.dp8.value),
     ) {
         MindplexText(
             value = state.userPlace,
@@ -67,15 +80,13 @@ private fun UserPlaceCard(
         MindplexMeasurablePlaceholder(isLoading = state.isProfilePictureLoading && state.isProfileNameLoading) {
             AsyncImage(
                 modifier = Modifier
-                    .padding(horizontal = LeaderboardTheme.dimension.dp4.value)
                     .size(LeaderboardTheme.dimension.dp48.value)
                     .clip(CircleShape),
                 model = state.avatarUrl,
                 contentDescription = String.empty,
                 error = painterResource(Res.drawable.ic_profile_fallback),
-                fallback = painterResource(
-                    resource = Res.drawable.ic_profile_fallback,
-                ).takeIf { state.isProfileNameLoading.not() },
+                fallback = painterResource(Res.drawable.ic_profile_fallback)
+                    .takeIf { !state.isProfileNameLoading },
                 onError = { event(LeaderboardContract.Event.OnProfilePictureErrorReceived) },
                 onSuccess = { event(LeaderboardContract.Event.OnProfilePictureLoaded) },
             )
@@ -90,14 +101,13 @@ private fun UserPlaceCard(
         MindplexSpacer(modifier = modifier.weight(1f))
 
         MindplexText(
-            value = state.userScore,
+            value = stringResource(Res.string.leaderboard_points, state.userScore),
             color = LeaderboardTheme.colorScheme.userPodiumScoreText,
             typography = LeaderboardTheme.typography.userPodiumScoreText,
         )
     }
 
     HorizontalDivider(
-        modifier = modifier.width(LeaderboardTheme.dimension.dp1.value),
-        color = LeaderboardTheme.colorScheme.userPodiumPlaceText.value,
+        color = LeaderboardTheme.colorScheme.dividerLineUserPlaceColor.value,
     )
 }

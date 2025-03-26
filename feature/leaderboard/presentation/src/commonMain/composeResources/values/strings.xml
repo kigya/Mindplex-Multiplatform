@@ -1,3 +1,4 @@
 <resources>
     <string name="leaderboard">Leaderboard</string>
+    <string name="leaderboard_points">%1$s points</string>
 </resources>

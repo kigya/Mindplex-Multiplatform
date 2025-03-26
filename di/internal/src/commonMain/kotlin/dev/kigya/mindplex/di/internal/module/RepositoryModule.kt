@@ -16,6 +16,10 @@ import dev.kigya.mindplex.feature.home.data.repository.FactsDatabaseRepository
 import dev.kigya.mindplex.feature.home.data.repository.FactsNetworkRepository
 import dev.kigya.mindplex.feature.home.domain.contract.FactsDatabaseRepositoryContract
 import dev.kigya.mindplex.feature.home.domain.contract.FactsNetworkRepositoryContract
+import dev.kigya.mindplex.feature.leaderboard.data.repository.UserPlaceDatabaseRepository
+import dev.kigya.mindplex.feature.leaderboard.data.repository.UserPlaceNetworkRepository
+import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserPlaceDatabaseRepositoryContract
+import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserPlaceNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.data.repository.interceptor.ProfileImageInterceptor
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInNetworkRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInPreferencesRepository
@@ -100,4 +104,17 @@ val repositoryModule = module {
     single {
         ProfileImageInterceptor()
     } bind ProfileImageInterceptorContract::class
+
+    single {
+        UserPlaceDatabaseRepository(
+            userPlaceDao = get(),
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
+        )
+    } bind UserPlaceDatabaseRepositoryContract::class
+
+    single {
+        UserPlaceNetworkRepository(
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
+        )
+    } bind UserPlaceNetworkRepositoryContract::class
 }

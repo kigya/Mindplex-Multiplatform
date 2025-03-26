@@ -69,14 +69,14 @@ private fun ColumnScope.LeaderboardPortraitSection(
     MindplexSpacer(size = LeaderboardTheme.dimension.dp36)
 
     PodiumSection(
-        state = state.userCardData,
+        podiumUsers = state.userCardData,
         event = event,
     )
 
     MindplexSpacer(size = LeaderboardTheme.dimension.dp36)
 
     UserPlaceSection(
-        state = state.userCardData,
+        userPlaces = state.userCardData,
         event = event,
     )
 }

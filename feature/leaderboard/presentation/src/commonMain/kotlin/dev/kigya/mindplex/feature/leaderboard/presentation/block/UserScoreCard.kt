@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import coil3.compose.AsyncImage
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
 import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
+import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
@@ -28,7 +30,9 @@ import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardT
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_crown
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_profile_fallback
+import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.leaderboard_points
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 private const val MAX_LINER_USER_NAME = 2
 private const val CARD_WIDTH = 0.43f
@@ -56,8 +60,10 @@ internal fun UserScoreCard(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(LeaderboardTheme.dimension.dp8.value),
     ) {
+        MindplexSpacer(modifier = modifier.height(LeaderboardTheme.dimension.dp8.value))
+
         if (isFirstPlace) {
-            Box(contentAlignment = Alignment.TopCenter) {
+            Box(contentAlignment = Alignment.Center) {
                 MindplexIcon(
                     resource = Res.drawable.ic_crown,
                     color = LeaderboardTheme.colorScheme.crown,
@@ -101,7 +107,7 @@ internal fun UserScoreCard(
         )
 
         MindplexText(
-            value = state.userScore,
+            value = stringResource(Res.string.leaderboard_points, state.userScore),
             color = LeaderboardTheme.colorScheme.userPodiumScoreText,
             typography = LeaderboardTheme.typography.userPodiumScoreText,
         )

@@ -21,11 +21,12 @@ private const val PODIUM_HEIGHT = 0.5f
 private const val FIRST_PLACE_CARD_HEIGHT = 0.7f
 private const val SECOND_PLACE_CARD_HEIGHT = 0.5f
 private const val THIRD_PLACE_CARD_HEIGHT = 0.4f
+private const val THIRD_CARD = 3
 
 @Composable
 internal fun PodiumSection(
     modifier: Modifier = Modifier,
-    state: LeaderboardContract.State.UserCardData,
+    podiumUsers: List<LeaderboardContract.State.UserCardData>,
     event: (LeaderboardContract.Event) -> Unit,
 ) {
     Box(
@@ -39,35 +40,41 @@ internal fun PodiumSection(
             color = LeaderboardTheme.colorScheme.branchesTint,
         )
 
-        UserScoreCard(
-            modifier = modifier
-                .fillMaxHeight(FIRST_PLACE_CARD_HEIGHT)
-                .align(Alignment.TopCenter),
-            state = state,
-            event = event,
-            isFirstPlace = true,
-            topColumnGradientColor = LeaderboardTheme.colorScheme.firstPlaceCardColor.value,
-        )
+        if (podiumUsers.isNotEmpty()) {
+            UserScoreCard(
+                modifier = modifier
+                    .fillMaxHeight(FIRST_PLACE_CARD_HEIGHT)
+                    .align(Alignment.TopCenter),
+                state = podiumUsers[0],
+                event = event,
+                isFirstPlace = true,
+                topColumnGradientColor = LeaderboardTheme.colorScheme.firstPlaceCardColor.value,
+            )
 
-        UserScoreCard(
-            modifier = modifier
-                .fillMaxHeight(SECOND_PLACE_CARD_HEIGHT)
-                .align(Alignment.BottomStart)
-                .padding(bottom = LeaderboardTheme.dimension.dp36.value),
-            state = state,
-            event = event,
-            isFirstPlace = false,
-            topColumnGradientColor = LeaderboardTheme.colorScheme.secondPlaceCardColor.value,
-        )
+            if (podiumUsers.size >= 2) {
+                UserScoreCard(
+                    modifier = modifier
+                        .fillMaxHeight(SECOND_PLACE_CARD_HEIGHT)
+                        .align(Alignment.BottomStart)
+                        .padding(bottom = LeaderboardTheme.dimension.dp36.value),
+                    state = podiumUsers[1],
+                    event = event,
+                    isFirstPlace = false,
+                    topColumnGradientColor = LeaderboardTheme.colorScheme.secondPlaceCardColor.value,
+                )
+            }
 
-        UserScoreCard(
-            modifier = modifier
-                .fillMaxHeight(THIRD_PLACE_CARD_HEIGHT)
-                .align(Alignment.BottomEnd),
-            state = state,
-            event = event,
-            isFirstPlace = false,
-            topColumnGradientColor = LeaderboardTheme.colorScheme.thirdPlaceCardColor.value,
-        )
+            if (podiumUsers.size >= THIRD_CARD) {
+                UserScoreCard(
+                    modifier = modifier
+                        .fillMaxHeight(THIRD_PLACE_CARD_HEIGHT)
+                        .align(Alignment.BottomEnd),
+                    state = podiumUsers[2],
+                    event = event,
+                    isFirstPlace = false,
+                    topColumnGradientColor = LeaderboardTheme.colorScheme.thirdPlaceCardColor.value,
+                )
+            }
+        }
     }
 }
