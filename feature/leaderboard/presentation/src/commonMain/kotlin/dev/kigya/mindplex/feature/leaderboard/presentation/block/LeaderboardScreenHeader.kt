@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
+import dev.kigya.mindplex.core.presentation.uikit.MindplexTextAnimation
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.leaderboardNameText
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
@@ -18,6 +19,7 @@ internal fun LeaderBoardScreenHeader(modifier: Modifier = Modifier) {
             value = stringResource(Res.string.leaderboard),
             color = LeaderboardTheme.colorScheme.leaderboardNameText,
             typography = LeaderboardTheme.typography.leaderboardNameText,
+            animation = MindplexTextAnimation.Typewriter,
         )
     }
 }

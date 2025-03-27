@@ -11,6 +11,8 @@ import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserPlaceDatabaseR
 import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserPlaceNetworkRepositoryContract
 import dev.kigya.mindplex.feature.leaderboard.domain.model.UserPlaceDomainModel
 
+private const val GET_USERS_LIMIT = 10
+
 class GetUserPlaceUseCase(
     private val userPlaceNetworkRepositoryContract: UserPlaceNetworkRepositoryContract,
     private val userPlaceDatabaseRepositoryContract: UserPlaceDatabaseRepositoryContract,
@@ -20,23 +22,23 @@ class GetUserPlaceUseCase(
     override suspend operator fun invoke(
         params: None,
     ): Either<MindplexDomainError, List<UserPlaceDomainModel>> = either {
-        userPlaceNetworkRepositoryContract.getTopUsersByScore().fold(
-            onSuccess = { networkUsers ->
-                networkUsers
-            },
-            onFailure = {
-                userPlaceDatabaseRepositoryContract.getTopUsersByScore().fold(
-                    onSuccess = { databaseUsers ->
-                        databaseUsers
-                    },
-                    onFailure = {
-                        ensure(
-                            connectivityRepositoryContract.isConnected().not(),
-                        ) { MindplexDomainError.OTHER }
-                        raise(MindplexDomainError.NETWORK)
-                    },
-                )
-            },
-        )
+        userPlaceNetworkRepositoryContract.getTopUsersByScore(GET_USERS_LIMIT)
+            .fold(
+                onSuccess = { networkUsers ->
+                    userPlaceDatabaseRepositoryContract.saveUsers(networkUsers)
+                    networkUsers
+                },
+                onFailure = {
+                    userPlaceDatabaseRepositoryContract.getTopUsersByScore().fold(
+                        onSuccess = { databaseUsers ->
+                            databaseUsers
+                        },
+                        onFailure = {
+                            ensure(connectivityRepositoryContract.isConnected().not()) { MindplexDomainError.OTHER }
+                            raise(MindplexDomainError.NETWORK)
+                        },
+                    )
+                },
+            )
     }
 }

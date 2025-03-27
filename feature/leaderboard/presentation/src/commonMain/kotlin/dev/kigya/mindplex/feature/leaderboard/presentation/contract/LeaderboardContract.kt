@@ -8,21 +8,23 @@ import dev.kigya.mindplex.core.presentation.uikit.StubErrorType
 import dev.kigya.mindplex.core.util.extension.empty
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 interface LeaderboardContract :
     UnidirectionalViewModelContract<LeaderboardContract.State, LeaderboardContract.Event, LeaderboardContract.Effect> {
     @Immutable
     data class State internal constructor(
-        val mock: Int = 0,
         val stubErrorType: StubErrorType? = null,
         val podiumData: PodiumData = PodiumData(),
-        val userCardData: List<UserCardData> = emptyList(),
+        val leaderboardLoading: LeaderboardScreenLoadingData = LeaderboardScreenLoadingData(),
+        val userCardData: ImmutableList<UserCardData> = RANGE_SHIMMER_CARDS
+            .map { UserCardData() }
+            .toPersistentList(),
     ) : CopyableComponentState {
 
         @ConsistentCopyVisibility
         @Immutable
         data class PodiumData internal constructor(
-            val arePodiumLoading: Boolean = true,
             @Size(value = PLACE_AMOUNT.toLong())
             val place: ImmutableList<String> = persistentListOf(),
             val currentIndex: Int = 0,
@@ -36,8 +38,12 @@ interface LeaderboardContract :
             val userScore: String = String.empty,
             val userPlace: String = String.empty,
             val place: ImmutableList<String> = persistentListOf(),
-            val isProfileNameLoading: Boolean = true,
-            val isProfilePictureLoading: Boolean = true,
+        )
+
+        @ConsistentCopyVisibility
+        @Immutable
+        data class LeaderboardScreenLoadingData internal constructor(
+            val isLeaderboardLoading: Boolean = true,
         )
     }
 
@@ -46,9 +52,7 @@ interface LeaderboardContract :
 
         internal data object OnErrorStubClicked : Event()
 
-        internal data object OnProfilePictureLoaded : Event()
-
-        internal data object OnProfilePictureErrorReceived : Event()
+        internal data object OnLeaderboardLoaded : Event()
     }
 
     @Immutable
@@ -56,5 +60,8 @@ interface LeaderboardContract :
 
     companion object {
         internal const val PLACE_AMOUNT = 3
+        private const val SHIMMER_START = 0
+        private const val SHIMMER_END = 9
+        internal val RANGE_SHIMMER_CARDS = SHIMMER_START..SHIMMER_END
     }
 }

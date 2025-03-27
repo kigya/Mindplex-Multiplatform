@@ -3,6 +3,7 @@ package dev.kigya.mindplex.feature.leaderboard.presentation.ui
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
+import dev.kigya.mindplex.core.presentation.uikit.StubErrorType
 import dev.kigya.mindplex.feature.leaderboard.domain.usecase.GetUserPlaceUseCase
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
@@ -28,20 +29,15 @@ class LeaderboardScreenViewModel(
         withUseCaseScope {
             event.run {
                 when (this) {
+                    LeaderboardContract.Event.OnLeaderboardLoaded -> handleLeaderboardLoading()
                     LeaderboardContract.Event.OnErrorStubClicked -> handleErrorStubClick()
-                    LeaderboardContract.Event.OnProfilePictureErrorReceived -> handleProfilePictureError()
-                    LeaderboardContract.Event.OnProfilePictureLoaded -> handleProfilePictureLoading()
                 }
             }
         }
     }
 
-    private fun handleProfilePictureLoading() = updateState {
-        copy(podiumData = podiumData.copy(arePodiumLoading = false))
-    }
-
-    private fun handleProfilePictureError() = updateState {
-        copy(podiumData = podiumData.copy(arePodiumLoading = false))
+    private fun handleLeaderboardLoading() = updateState {
+        copy(leaderboardLoading = leaderboardLoading.copy(isLeaderboardLoading = false))
     }
 
     private suspend fun handleErrorStubClick() = fetchScreenData()
@@ -49,13 +45,17 @@ class LeaderboardScreenViewModel(
     private suspend fun fetchScreenData() = supervisorScope {
         updateState { LeaderboardContract.State() }
 
-        getUserPlaceUseCase.invoke(None).fold(
+        getUserPlaceUseCase(None).fold(
             ifRight = { userPlaces ->
+                if (userPlaces.isEmpty()) {
+                    updateState { copy(stubErrorType = StubErrorType.NETWORK) }
+                    return@fold
+                }
+
                 updateState {
                     copy(
                         stubErrorType = null,
                         podiumData = podiumData.copy(
-                            arePodiumLoading = false,
                             place = userPlaces.take(LeaderboardContract.PLACE_AMOUNT)
                                 .map { it.displayName }
                                 .toImmutableList(),
@@ -66,18 +66,15 @@ class LeaderboardScreenViewModel(
                                 userScore = user.score.toString(),
                                 avatarUrl = user.profilePictureUrl,
                                 userPlace = (index + 1).toString(),
-                                isProfileNameLoading = false,
-                                isProfilePictureLoading = false,
                             )
-                        },
+                        }.toImmutableList(),
                     )
                 }
+                handleLeaderboardLoading()
             },
             ifLeft = { error ->
                 updateState {
-                    copy(
-                        stubErrorType = error.toStubErrorType(),
-                    )
+                    copy(stubErrorType = error.toStubErrorType())
                 }
             },
         )

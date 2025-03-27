@@ -14,25 +14,26 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Users as UsersCollection
 
-private const val TAKE_TEN_USERS = 10
+private const val FIELD_SCORE = "score"
 
 class UserPlaceNetworkRepository(
     private val dispatcher: CoroutineDispatcher,
 ) : UserPlaceNetworkRepositoryContract {
 
-    override suspend fun getTopUsersByScore(): Result<List<UserPlaceDomainModel>> =
+    override suspend fun getTopUsersByScore(userLimit: Int): Result<List<UserPlaceDomainModel>> =
         withContext(dispatcher) {
             runSuspendCatching {
                 val documentSnapshot = Firebase.firestore
                     .collection(UsersCollection.NAME)
-                    .orderBy("score", Direction.DESCENDING)
+                    .orderBy(FIELD_SCORE, Direction.DESCENDING)
+                    .limit(userLimit)
                     .get(Source.SERVER)
 
                 val userList = documentSnapshot.documents.map { document ->
                     document.data<UserRemotePlaceDto>().toDomain()
                 }
 
-                userList.take(TAKE_TEN_USERS)
+                userList
             }.onFailure { e ->
                 e.message?.let { UserPlaceNotFoundException(it) }
                 e.printStackTrace()

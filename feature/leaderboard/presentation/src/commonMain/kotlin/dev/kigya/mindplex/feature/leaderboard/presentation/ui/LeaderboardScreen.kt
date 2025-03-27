@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.kigya.mindplex.core.presentation.common.util.MindplexAdaptiveContainer
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStubContainer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
@@ -40,28 +39,14 @@ internal fun LeaderboardScreenContent(
         verticalArrangement = Arrangement.Top,
         onRetryButtonClicked = { event(LeaderboardContract.Event.OnErrorStubClicked) },
     ) {
-        MindplexAdaptiveContainer(
-            portrait = {
-                LeaderboardPortraitSection(
-                    state = state,
-                    event = event,
-                )
-            },
-            landscape = {
-//            HomeLandscapeSection(
-//                state = state,
-//                event = event,
-//            )
-            },
+        LeaderboardPortraitSection(
+            state = state,
         )
     }
 }
 
 @Composable
-private fun ColumnScope.LeaderboardPortraitSection(
-    state: LeaderboardContract.State,
-    event: (LeaderboardContract.Event) -> Unit,
-) {
+private fun ColumnScope.LeaderboardPortraitSection(state: LeaderboardContract.State) {
     LeaderBoardScreenHeader(
         modifier = Modifier.fillMaxWidth(),
     )
@@ -70,13 +55,13 @@ private fun ColumnScope.LeaderboardPortraitSection(
 
     PodiumSection(
         podiumUsers = state.userCardData,
-        event = event,
+        leaderboardLoading = state.leaderboardLoading,
     )
 
     MindplexSpacer(size = LeaderboardTheme.dimension.dp36)
 
     UserPlaceSection(
         userPlaces = state.userCardData,
-        event = event,
+        leaderboardLoading = state.leaderboardLoading,
     )
 }

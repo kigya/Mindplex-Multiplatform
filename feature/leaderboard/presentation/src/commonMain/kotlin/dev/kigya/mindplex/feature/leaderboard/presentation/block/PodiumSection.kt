@@ -14,6 +14,7 @@ import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardT
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.firstPlaceCardColor
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.secondPlaceCardColor
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.thirdPlaceCardColor
+import kotlinx.collections.immutable.ImmutableList
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_branches
 
@@ -26,8 +27,8 @@ private const val THIRD_CARD = 3
 @Composable
 internal fun PodiumSection(
     modifier: Modifier = Modifier,
-    podiumUsers: List<LeaderboardContract.State.UserCardData>,
-    event: (LeaderboardContract.Event) -> Unit,
+    podiumUsers: ImmutableList<LeaderboardContract.State.UserCardData>,
+    leaderboardLoading: LeaderboardContract.State.LeaderboardScreenLoadingData,
 ) {
     Box(
         modifier = modifier
@@ -46,9 +47,9 @@ internal fun PodiumSection(
                     .fillMaxHeight(FIRST_PLACE_CARD_HEIGHT)
                     .align(Alignment.TopCenter),
                 state = podiumUsers[0],
-                event = event,
                 isFirstPlace = true,
                 topColumnGradientColor = LeaderboardTheme.colorScheme.firstPlaceCardColor.value,
+                leaderboardLoading = leaderboardLoading,
             )
 
             if (podiumUsers.size >= 2) {
@@ -58,9 +59,9 @@ internal fun PodiumSection(
                         .align(Alignment.BottomStart)
                         .padding(bottom = LeaderboardTheme.dimension.dp36.value),
                     state = podiumUsers[1],
-                    event = event,
                     isFirstPlace = false,
                     topColumnGradientColor = LeaderboardTheme.colorScheme.secondPlaceCardColor.value,
+                    leaderboardLoading = leaderboardLoading,
                 )
             }
 
@@ -70,9 +71,9 @@ internal fun PodiumSection(
                         .fillMaxHeight(THIRD_PLACE_CARD_HEIGHT)
                         .align(Alignment.BottomEnd),
                     state = podiumUsers[2],
-                    event = event,
                     isFirstPlace = false,
                     topColumnGradientColor = LeaderboardTheme.colorScheme.thirdPlaceCardColor.value,
+                    leaderboardLoading = leaderboardLoading,
                 )
             }
         }

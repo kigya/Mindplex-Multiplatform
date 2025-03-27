@@ -20,6 +20,7 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
 import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
+import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindplexUiKitApi
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
@@ -37,13 +38,14 @@ import org.jetbrains.compose.resources.stringResource
 private const val MAX_LINER_USER_NAME = 2
 private const val CARD_WIDTH = 0.43f
 
+@OptIn(ExperimentalMindplexUiKitApi::class)
 @Composable
 internal fun UserScoreCard(
     modifier: Modifier = Modifier,
     state: LeaderboardContract.State.UserCardData,
-    event: (LeaderboardContract.Event) -> Unit,
     topColumnGradientColor: Color,
     isFirstPlace: Boolean,
+    leaderboardLoading: LeaderboardContract.State.LeaderboardScreenLoadingData,
 ) {
     Column(
         modifier = modifier
@@ -61,7 +63,6 @@ internal fun UserScoreCard(
         verticalArrangement = Arrangement.spacedBy(LeaderboardTheme.dimension.dp8.value),
     ) {
         MindplexSpacer(modifier = modifier.height(LeaderboardTheme.dimension.dp8.value))
-
         if (isFirstPlace) {
             Box(contentAlignment = Alignment.Center) {
                 MindplexIcon(
@@ -83,7 +84,7 @@ internal fun UserScoreCard(
             )
         }
 
-        MindplexMeasurablePlaceholder(isLoading = state.isProfilePictureLoading && state.isProfileNameLoading) {
+        MindplexMeasurablePlaceholder(isLoading = leaderboardLoading.isLeaderboardLoading) {
             AsyncImage(
                 modifier = Modifier
                     .size(LeaderboardTheme.dimension.dp48.value)
@@ -93,9 +94,7 @@ internal fun UserScoreCard(
                 error = painterResource(Res.drawable.ic_profile_fallback),
                 fallback = painterResource(
                     resource = Res.drawable.ic_profile_fallback,
-                ).takeIf { state.isProfileNameLoading.not() },
-                onError = { event(LeaderboardContract.Event.OnProfilePictureErrorReceived) },
-                onSuccess = { event(LeaderboardContract.Event.OnProfilePictureLoaded) },
+                ),
             )
         }
 
@@ -106,10 +105,16 @@ internal fun UserScoreCard(
             maxLines = MAX_LINER_USER_NAME,
         )
 
-        MindplexText(
-            value = stringResource(Res.string.leaderboard_points, state.userScore),
-            color = LeaderboardTheme.colorScheme.userPodiumScoreText,
-            typography = LeaderboardTheme.typography.userPodiumScoreText,
-        )
+        MindplexMeasurablePlaceholder(
+            isLoading = leaderboardLoading.isLeaderboardLoading,
+            textToMeasure = stringResource(Res.string.leaderboard_points),
+            textStyle = LeaderboardTheme.typography.userPodiumScoreText,
+        ) {
+            MindplexText(
+                value = stringResource(Res.string.leaderboard_points, state.userScore),
+                color = LeaderboardTheme.colorScheme.userPodiumScoreText,
+                typography = LeaderboardTheme.typography.userPodiumScoreText,
+            )
+        }
     }
 }
