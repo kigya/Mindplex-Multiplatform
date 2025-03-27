@@ -44,6 +44,7 @@ interface LeaderboardContract :
         @Immutable
         data class LeaderboardScreenLoadingData internal constructor(
             val isLeaderboardLoading: Boolean = true,
+            val isBranchesVisible: Boolean = false,
         )
     }
 

@@ -37,7 +37,12 @@ class LeaderboardScreenViewModel(
     }
 
     private fun handleLeaderboardLoading() = updateState {
-        copy(leaderboardLoading = leaderboardLoading.copy(isLeaderboardLoading = false))
+        copy(
+            leaderboardLoading = leaderboardLoading.copy(
+                isLeaderboardLoading = false,
+                isBranchesVisible = true,
+            ),
+        )
     }
 
     private suspend fun handleErrorStubClick() = fetchScreenData()

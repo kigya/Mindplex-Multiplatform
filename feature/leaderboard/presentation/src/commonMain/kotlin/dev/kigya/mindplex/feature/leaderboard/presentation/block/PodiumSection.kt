@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import dev.kigya.mindplex.core.presentation.common.extension.fadeInEffect
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
@@ -35,17 +36,22 @@ internal fun PodiumSection(
             .fillMaxWidth()
             .fillMaxHeight(PODIUM_HEIGHT),
     ) {
-        MindplexIcon(
-            modifier = modifier.align(alignment = Alignment.Center),
-            resource = Res.drawable.ic_branches,
-            color = LeaderboardTheme.colorScheme.branchesTint,
-        )
+        if (leaderboardLoading.isBranchesVisible) {
+            MindplexIcon(
+                modifier = modifier
+                    .align(alignment = Alignment.Center)
+                    .fadeInEffect(),
+                resource = Res.drawable.ic_branches,
+                color = LeaderboardTheme.colorScheme.branchesTint,
+            )
+        }
 
         if (podiumUsers.isNotEmpty()) {
             UserScoreCard(
                 modifier = modifier
                     .fillMaxHeight(FIRST_PLACE_CARD_HEIGHT)
-                    .align(Alignment.TopCenter),
+                    .align(Alignment.TopCenter)
+                    .fadeInEffect(delayMillis = 900),
                 state = podiumUsers[0],
                 isFirstPlace = true,
                 topColumnGradientColor = LeaderboardTheme.colorScheme.firstPlaceCardColor.value,
@@ -57,7 +63,8 @@ internal fun PodiumSection(
                     modifier = modifier
                         .fillMaxHeight(SECOND_PLACE_CARD_HEIGHT)
                         .align(Alignment.BottomStart)
-                        .padding(bottom = LeaderboardTheme.dimension.dp36.value),
+                        .padding(bottom = LeaderboardTheme.dimension.dp36.value)
+                        .fadeInEffect(delayMillis = 600),
                     state = podiumUsers[1],
                     isFirstPlace = false,
                     topColumnGradientColor = LeaderboardTheme.colorScheme.secondPlaceCardColor.value,
@@ -69,7 +76,8 @@ internal fun PodiumSection(
                 UserScoreCard(
                     modifier = modifier
                         .fillMaxHeight(THIRD_PLACE_CARD_HEIGHT)
-                        .align(Alignment.BottomEnd),
+                        .align(Alignment.BottomEnd)
+                        .fadeInEffect(delayMillis = 300),
                     state = podiumUsers[2],
                     isFirstPlace = false,
                     topColumnGradientColor = LeaderboardTheme.colorScheme.thirdPlaceCardColor.value,
