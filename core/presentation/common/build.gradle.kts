@@ -8,6 +8,11 @@ plugins {
 
 kotlin {
     sourceSets {
+        androidMain.dependencies {
+            with(libs) {
+                implementation(compose.android.activity)
+            }
+        }
         commonMain.dependencies {
             with(libs) {
                 implementation(compose.navigation)
