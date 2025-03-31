@@ -88,7 +88,13 @@ kotlinPoet = { prefer = "2.0.0" }
 # Json Parsing
 ksoup = { require = "0.5.0" }
 
+# Flagkit
+flagKit = { require = "1.1.0" }
+
 [libraries]
+# Flagkit
+compose-flag-kit = { module = "dev.carlsen.flagkit:flagkit", version.ref = "flagKit"}
+
 # Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 

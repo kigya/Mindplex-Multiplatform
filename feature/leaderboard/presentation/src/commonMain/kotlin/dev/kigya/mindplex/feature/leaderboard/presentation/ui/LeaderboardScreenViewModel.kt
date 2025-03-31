@@ -4,7 +4,7 @@ import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
 import dev.kigya.mindplex.core.presentation.uikit.StubErrorType
-import dev.kigya.mindplex.feature.leaderboard.domain.usecase.GetUserPlaceUseCase
+import dev.kigya.mindplex.feature.leaderboard.domain.usecase.GetUserRankUseCase
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import kotlinx.collections.immutable.toImmutableList
@@ -12,7 +12,7 @@ import kotlinx.coroutines.supervisorScope
 
 class LeaderboardScreenViewModel(
     navigatorContract: MindplexNavigatorContract,
-    private val getUserPlaceUseCase: GetUserPlaceUseCase,
+    private val getUserPlaceUseCase: GetUserRankUseCase,
 ) : BaseViewModel<LeaderboardContract.State, LeaderboardContract.Effect>(
     navigatorContract = navigatorContract,
     initialState = LeaderboardContract.State(),
@@ -40,7 +40,6 @@ class LeaderboardScreenViewModel(
         copy(
             leaderboardLoading = leaderboardLoading.copy(
                 isLeaderboardLoading = false,
-                isBranchesVisible = true,
             ),
         )
     }
@@ -61,7 +60,7 @@ class LeaderboardScreenViewModel(
                     copy(
                         stubErrorType = null,
                         podiumData = podiumData.copy(
-                            place = userPlaces.take(LeaderboardContract.PLACE_AMOUNT)
+                            place = userPlaces.take(LeaderboardContract.PODIUM_SIZE)
                                 .map { it.displayName }
                                 .toImmutableList(),
                         ),
@@ -71,6 +70,7 @@ class LeaderboardScreenViewModel(
                                 userScore = user.score.toString(),
                                 avatarUrl = user.profilePictureUrl,
                                 userPlace = (index + 1).toString(),
+                                userCountry = user.userCountry,
                             )
                         }.toImmutableList(),
                     )

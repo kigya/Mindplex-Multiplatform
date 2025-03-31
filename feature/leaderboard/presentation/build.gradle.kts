@@ -24,6 +24,9 @@ kotlin {
                 implementation(feature.leaderboard.domain)
                 implementation(navigation.api)
             }
+            with(libs) {
+                implementation(compose.flag.kit)
+            }
         }
     }
 }

@@ -6,4 +6,5 @@ data class GoogleUserSignInDomainModel(
     val tokenId: String,
     val displayName: String = String.empty,
     val profilePictureUrl: String? = null,
+    val countryCode: String? = null,
 )

@@ -9,6 +9,7 @@ data object FirestoreConfig {
                 const val AVATAR_URL = "avatarUrl"
                 const val NAME = "name"
                 const val SCORE = "score"
+                const val COUNTRY_CODE = "countyCode"
             }
         }
 

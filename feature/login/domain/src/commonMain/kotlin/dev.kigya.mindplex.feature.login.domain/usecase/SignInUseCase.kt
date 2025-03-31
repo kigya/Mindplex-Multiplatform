@@ -21,6 +21,7 @@ class SignInUseCase(
     private val profileImageInterceptor: ProfileImageInterceptorContract,
     private val jwtHandlerContract: JwtHandlerContract,
     private val connectivityRepositoryContract: ConnectivityRepositoryContract,
+    private val getUserCountryCodeUseCase: GetUserCountryCodeUseCase,
 ) : BaseSuspendUseCase<Either<MindplexDomainError, Unit>, GoogleUserSignInDomainModel?>() {
 
     @CheckResult
@@ -34,9 +35,12 @@ class SignInUseCase(
             val userIdResult = jwtHandlerContract.decodeSubject(tokenId)
             userIdResult.fold(
                 onSuccess = { userId ->
+                    val countryCode = getUserCountryCodeUseCase()
+
                     val user = copy(
                         tokenId = userId,
                         profilePictureUrl = profileImageInterceptor.intercept(profilePictureUrl),
+                        countryCode = countryCode,
                     )
                     signInNetworkRepositoryContract.signIn(user)
                     signInPreferencesRepositoryContract.signIn(user.tokenId)

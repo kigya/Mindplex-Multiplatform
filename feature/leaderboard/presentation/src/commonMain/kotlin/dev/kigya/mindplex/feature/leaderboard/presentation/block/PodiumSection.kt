@@ -36,7 +36,7 @@ internal fun PodiumSection(
             .fillMaxWidth()
             .fillMaxHeight(PODIUM_HEIGHT),
     ) {
-        if (leaderboardLoading.isBranchesVisible) {
+        if (leaderboardLoading.isLeaderboardLoading.not()) {
             MindplexIcon(
                 modifier = modifier
                     .align(alignment = Alignment.Center)

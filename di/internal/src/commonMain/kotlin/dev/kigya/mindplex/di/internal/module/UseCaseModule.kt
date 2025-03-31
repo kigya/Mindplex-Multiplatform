@@ -6,8 +6,9 @@ import dev.kigya.mindplex.feature.game.domain.usecase.GetScoreUseCase
 import dev.kigya.mindplex.feature.game.domain.usecase.UpdateScoreUseCase
 import dev.kigya.mindplex.feature.game.domain.usecase.ValidateQuestionUseCase
 import dev.kigya.mindplex.feature.home.domain.usecase.GetFactsUseCase
-import dev.kigya.mindplex.feature.leaderboard.domain.usecase.GetUserPlaceUseCase
+import dev.kigya.mindplex.feature.leaderboard.domain.usecase.GetUserRankUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
+import dev.kigya.mindplex.feature.login.domain.usecase.GetUserCountryCodeUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
@@ -25,5 +26,6 @@ val useCaseModule = module {
     factoryOf(::ValidateQuestionUseCase)
     factoryOf(::GetScoreUseCase)
     factoryOf(::UpdateScoreUseCase)
-    factoryOf(::GetUserPlaceUseCase)
+    factoryOf(::GetUserRankUseCase)
+    factoryOf(::GetUserCountryCodeUseCase)
 }

@@ -7,21 +7,21 @@ import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityReposito
 import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
-import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserPlaceDatabaseRepositoryContract
-import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserPlaceNetworkRepositoryContract
-import dev.kigya.mindplex.feature.leaderboard.domain.model.UserPlaceDomainModel
+import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankDatabaseRepositoryContract
+import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankNetworkRepositoryContract
+import dev.kigya.mindplex.feature.leaderboard.domain.model.UserRankDomainModel
 
 private const val GET_USERS_LIMIT = 10
 
-class GetUserPlaceUseCase(
-    private val userPlaceNetworkRepositoryContract: UserPlaceNetworkRepositoryContract,
-    private val userPlaceDatabaseRepositoryContract: UserPlaceDatabaseRepositoryContract,
+class GetUserRankUseCase(
+    private val userPlaceNetworkRepositoryContract: UserRankNetworkRepositoryContract,
+    private val userPlaceDatabaseRepositoryContract: UserRankDatabaseRepositoryContract,
     private val connectivityRepositoryContract: ConnectivityRepositoryContract,
-) : BaseSuspendUseCase<Either<MindplexDomainError, List<UserPlaceDomainModel>>, None>() {
+) : BaseSuspendUseCase<Either<MindplexDomainError, List<UserRankDomainModel>>, None>() {
 
     override suspend operator fun invoke(
         params: None,
-    ): Either<MindplexDomainError, List<UserPlaceDomainModel>> = either {
+    ): Either<MindplexDomainError, List<UserRankDomainModel>> = either {
         userPlaceNetworkRepositoryContract.getTopUsersByScore(GET_USERS_LIMIT)
             .fold(
                 onSuccess = { networkUsers ->

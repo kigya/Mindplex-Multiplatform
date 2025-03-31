@@ -25,7 +25,7 @@ interface LeaderboardContract :
         @ConsistentCopyVisibility
         @Immutable
         data class PodiumData internal constructor(
-            @Size(value = PLACE_AMOUNT.toLong())
+            @Size(value = PODIUM_SIZE.toLong())
             val place: ImmutableList<String> = persistentListOf(),
             val currentIndex: Int = 0,
         )
@@ -35,6 +35,7 @@ interface LeaderboardContract :
         data class UserCardData internal constructor(
             val userName: String = String.empty,
             val avatarUrl: String? = null,
+            val userCountry: String? = null,
             val userScore: String = String.empty,
             val userPlace: String = String.empty,
             val place: ImmutableList<String> = persistentListOf(),
@@ -44,7 +45,6 @@ interface LeaderboardContract :
         @Immutable
         data class LeaderboardScreenLoadingData internal constructor(
             val isLeaderboardLoading: Boolean = true,
-            val isBranchesVisible: Boolean = false,
         )
     }
 
@@ -60,7 +60,7 @@ interface LeaderboardContract :
     sealed class Effect
 
     companion object {
-        internal const val PLACE_AMOUNT = 3
+        internal const val PODIUM_SIZE = 3
         private const val SHIMMER_START = 0
         private const val SHIMMER_END = 9
         internal val RANGE_SHIMMER_CARDS = SHIMMER_START..SHIMMER_END
