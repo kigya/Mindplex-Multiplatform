@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import dev.kigya.mindplex.core.presentation.common.extension.fadeInEffect
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.provider.LeaderboardAdaptiveMetrics.LocalLeaderboardWidthRatio
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.branchesTint
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.firstPlaceCardColor
@@ -31,6 +33,8 @@ internal fun PodiumSection(
     podiumUsers: ImmutableList<LeaderboardContract.State.UserCardData>,
     leaderboardLoading: LeaderboardContract.State.LeaderboardScreenLoadingData,
 ) {
+    val leaderboardWidthRatio = LocalLeaderboardWidthRatio.current
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -39,8 +43,13 @@ internal fun PodiumSection(
         if (leaderboardLoading.isLeaderboardLoading.not()) {
             MindplexIcon(
                 modifier = modifier
+                    .fillMaxWidth(leaderboardWidthRatio)
                     .align(alignment = Alignment.Center)
-                    .fadeInEffect(),
+                    .fadeInEffect()
+                    .graphicsLayer {
+                        scaleX = leaderboardWidthRatio
+                        scaleY = leaderboardWidthRatio
+                    },
                 resource = Res.drawable.ic_branches,
                 color = LeaderboardTheme.colorScheme.branchesTint,
             )
