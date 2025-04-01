@@ -3,6 +3,8 @@ package dev.kigya.mindplex.feature.home.presentation.block
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -34,13 +36,16 @@ internal fun HomeScreenHeader(
     event: (HomeContract.Event) -> Unit,
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start,
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = HomeTheme.dimension.dp16.value),
         ) {
             MindplexMeasurablePlaceholder(isLoading = state.isProfileNameLoading) {
                 MindplexText(
@@ -62,6 +67,7 @@ internal fun HomeScreenHeader(
                     color = HomeTheme.colorScheme.homeProfileNameText,
                     typography = HomeTheme.typography.homeProfileNameText,
                     animation = MindplexTextAnimation.Typewriter,
+                    maxLines = 1,
                 )
             }
         }
