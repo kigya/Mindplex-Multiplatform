@@ -76,13 +76,14 @@ private fun UserPlaceCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                vertical = LeaderboardTheme.dimension.dp4.value,
-                horizontal = LeaderboardTheme.dimension.dp8.value,
+                vertical = LeaderboardTheme.dimension.dp8.value,
+                horizontal = LeaderboardTheme.dimension.dp16.value,
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(LeaderboardTheme.dimension.dp8.value),
     ) {
         MindplexText(
+            modifier = modifier.width(LeaderboardTheme.dimension.dp16.value),
             value = state.userPlace,
             color = LeaderboardTheme.colorScheme.userPodiumPlaceText,
             typography = LeaderboardTheme.typography.userPodiumPlaceText,

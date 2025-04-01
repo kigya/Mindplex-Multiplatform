@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -21,7 +22,6 @@ import coil3.compose.AsyncImage
 import dev.carlsen.flagkit.FlagKit
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
 import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
-import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindplexUiKitApi
 import dev.kigya.mindplex.core.util.extension.empty
@@ -65,7 +65,7 @@ internal fun UserScoreCard(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(LeaderboardTheme.dimension.dp8.value),
     ) {
-        MindplexSpacer(modifier = modifier.height(LeaderboardTheme.dimension.dp8.value))
+        Spacer(modifier = Modifier.height(LeaderboardTheme.dimension.dp16.value))
         if (isFirstPlace) {
             Box(contentAlignment = Alignment.Center) {
                 MindplexIcon(
