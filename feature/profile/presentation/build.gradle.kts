@@ -25,6 +25,7 @@ kotlin {
                 implementation(feature.profile.domain)
                 implementation(navigation.api)
             }
+            implementation(libs.compose.flag.kit)
         }
     }
 }
