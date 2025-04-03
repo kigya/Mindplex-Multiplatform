@@ -11,79 +11,93 @@ import dev.kigya.mindplex.core.presentation.theme.text.provides
 
 internal object ProfileTheme : MindplexTheme() {
 
+    // region ColorScheme
     val MindplexColorScheme.profileBackground
         @Composable
-        get() =
-            this provides MindplexDynamicColor(
-                light = super.color.iris10,
-                dark = super.color.iris80,
-            )
+        get() = this provides MindplexDynamicColor(
+            light = super.color.iris10,
+            dark = super.color.iris80,
+        )
 
     val MindplexColorScheme.profileNameText
         @Composable
-        get() =
-            this provides MindplexDynamicColor(
-                light = super.color.gunmetal100,
-                dark = super.color.white,
-            )
+        get() = this provides MindplexDynamicColor(
+            light = super.color.gunmetal100,
+            dark = super.color.white,
+        )
 
     val MindplexColorScheme.profileIcons
         @Composable
-        get() =
-            this provides MindplexDynamicColor(
-                light = super.color.iris80,
-                dark = super.color.gunmetal60,
-            )
+        get() = this provides MindplexDynamicColor(
+            light = super.color.iris80,
+            dark = super.color.gunmetal60,
+        )
 
     val MindplexColorScheme.userNameText
         @Composable
-        get() =
-            this provides MindplexDynamicColor(
-                light = super.color.gunmetal100,
-                dark = super.color.white,
-            )
+        get() = this provides MindplexDynamicColor(
+            light = super.color.gunmetal100,
+            dark = super.color.white,
+        )
 
     val MindplexColorScheme.userStatisticsCardBackground
         @Composable
-        get() =
-            this provides MindplexDynamicColor(
-                light = super.color.white,
-                dark = super.color.iris100,
-            )
+        get() = this provides MindplexDynamicColor(
+            light = super.color.white,
+            dark = super.color.iris100,
+        )
 
     val MindplexColorScheme.userStatisticCategoryNameText
         @Composable
-        get() =
-            this provides MindplexDynamicColor(
-                light = super.color.gunmetal60,
-                dark = super.color.gunmetal60,
-            )
+        get() = this provides MindplexDynamicColor(
+            light = super.color.gunmetal60,
+            dark = super.color.gunmetal60,
+        )
 
     val MindplexColorScheme.userStatisticScoreText
         @Composable
-        get() =
-            this provides MindplexDynamicColor(
-                light = super.color.gunmetal100,
-                dark = super.color.white,
-            )
+        get() = this provides MindplexDynamicColor(
+            light = super.color.gunmetal100,
+            dark = super.color.white,
+        )
 
     val MindplexColorScheme.verticalDivider
         @Composable
-        get() =
-            this provides MindplexDynamicColor(
-                light = super.color.iris10,
-                dark = super.color.iris10,
-            )
+        get() = this provides MindplexDynamicColor(
+            light = super.color.iris10,
+            dark = super.color.iris10,
+        )
 
-    val MindplexColorScheme.shadowColor
+    val MindplexColorScheme.themeNameText
         @Composable
-        get() =
-            this provides MindplexDynamicColor(
-                light = super.color.gunmetal80,
-                dark = super.color.gunmetal60,
-            )
+        get() = this provides MindplexDynamicColor(
+            light = super.color.iris80,
+            dark = super.color.white,
+        )
 
-    // typography
+    val MindplexColorScheme.switchBorder
+        @Composable
+        get() = this provides MindplexDynamicColor(
+            light = super.color.iris80,
+            dark = super.color.white,
+        )
+
+    val MindplexColorScheme.switchTrack
+        @Composable
+        get() = this provides MindplexDynamicColor(
+            light = super.color.transparent,
+            dark = super.color.white,
+        )
+
+    val MindplexColorScheme.switchThumb
+        @Composable
+        get() = this provides MindplexDynamicColor(
+            light = super.color.iris80,
+            dark = super.color.iris80,
+        )
+    // endregion
+
+    // region Typography
     val MindplexTypography.profileNameText
         @Composable
         get() = this provides MindplexTextStyle(
@@ -115,4 +129,13 @@ internal object ProfileTheme : MindplexTheme() {
             fontWeight = super.fontWeight.medium,
             fontFamily = super.font.rubik,
         )
+
+    val MindplexTypography.themeNameText
+        @Composable
+        get() = this provides MindplexTextStyle(
+            fontSize = super.textSize.sp16,
+            fontWeight = super.fontWeight.medium,
+            fontFamily = super.font.rubik,
+        )
+    // endregion
 }

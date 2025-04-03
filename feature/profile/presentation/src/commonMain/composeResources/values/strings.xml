@@ -4,4 +4,6 @@
     <string name="points">Points</string>
     <string name="world_rank">World rank</string>
     <string name="local_rank">Local rank</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="light_theme">Light theme</string>
 </resources>

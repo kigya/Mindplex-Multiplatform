@@ -33,7 +33,7 @@ import mindplex_multiplatform.feature.profile.presentation.generated.resources.w
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
 
-private const val USER_CARD_STATISTIC_HEIGHT = 0.3f
+private const val USER_CARD_STATISTIC_FRACTION = 0.3f
 
 @Composable
 internal fun UserStatisticsCard(
@@ -43,7 +43,7 @@ internal fun UserStatisticsCard(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight(USER_CARD_STATISTIC_HEIGHT)
+            .fillMaxHeight(USER_CARD_STATISTIC_FRACTION)
             .shadow(
                 ProfileTheme.dimension.dp16.value,
                 RoundedCornerShape(ProfileTheme.dimension.dp24.value),
@@ -84,7 +84,7 @@ private fun UserStatistic(
     score: String,
 ) {
     Column(
-        modifier = Modifier.width(ProfileTheme.dimension.dp76.value),
+        modifier = Modifier.width(ProfileTheme.dimension.dp80.value),
         verticalArrangement = Arrangement.spacedBy(ProfileTheme.dimension.dp12.value),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
