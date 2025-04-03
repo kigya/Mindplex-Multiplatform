@@ -27,7 +27,7 @@ import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardC
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.crown
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.leaderboardBackground
-import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumPlaceText
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumRankText
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumScoreText
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_crown
@@ -36,18 +36,20 @@ import mindplex_multiplatform.feature.leaderboard.presentation.generated.resourc
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-private const val CARD_FRACTION = 0.43f
+internal object UserScoreCardConstants {
+    const val CARD_FRACTION = 0.43f
+}
 
 @Composable
 internal fun UserScoreCard(
     state: LeaderboardContract.State.UserCardData,
     topColumnGradientColor: Color,
-    isFirstPlace: Boolean,
+    isFirstRank: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth(CARD_FRACTION)
+            .fillMaxWidth(UserScoreCardConstants.CARD_FRACTION)
             .clip(shape = RoundedCornerShape(LeaderboardTheme.dimension.dp16.value))
             .background(
                 Brush.verticalGradient(
@@ -61,7 +63,7 @@ internal fun UserScoreCard(
         verticalArrangement = Arrangement.spacedBy(LeaderboardTheme.dimension.dp8.value),
     ) {
         Spacer(modifier = Modifier.height(LeaderboardTheme.dimension.dp16.value))
-        if (isFirstPlace) {
+        if (isFirstRank) {
             Box(contentAlignment = Alignment.Center) {
                 MindplexIcon(
                     resource = Res.drawable.ic_crown,
@@ -69,16 +71,16 @@ internal fun UserScoreCard(
                 )
 
                 MindplexText(
-                    value = state.userPlace,
-                    color = LeaderboardTheme.colorScheme.userPodiumPlaceText,
-                    typography = LeaderboardTheme.typography.userPodiumPlaceText,
+                    value = state.userRank,
+                    color = LeaderboardTheme.colorScheme.userPodiumRankText,
+                    typography = LeaderboardTheme.typography.userPodiumRankText,
                 )
             }
         } else {
             MindplexText(
-                value = state.userPlace,
-                color = LeaderboardTheme.colorScheme.userPodiumPlaceText,
-                typography = LeaderboardTheme.typography.userPodiumPlaceText,
+                value = state.userRank,
+                color = LeaderboardTheme.colorScheme.userPodiumRankText,
+                typography = LeaderboardTheme.typography.userPodiumRankText,
             )
         }
 
@@ -111,8 +113,8 @@ internal fun UserScoreCard(
 
         MindplexText(
             value = state.userName,
-            color = LeaderboardTheme.colorScheme.userPodiumPlaceText,
-            typography = LeaderboardTheme.typography.userPodiumPlaceText,
+            color = LeaderboardTheme.colorScheme.userPodiumRankText,
+            typography = LeaderboardTheme.typography.userPodiumRankText,
             maxLines = 2,
         )
 

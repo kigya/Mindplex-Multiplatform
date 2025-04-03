@@ -5,7 +5,6 @@ import dev.gitlive.firebase.firestore.Source
 import dev.gitlive.firebase.firestore.firestore
 import dev.kigya.mindplex.core.data.credentials.api.SecretsProviderContract
 import dev.kigya.mindplex.core.data.credentials.model.ApiKeyRemoteDto
-import dev.kigya.mindplex.core.data.credentials.model.UserTokenRemoteDto
 import dev.kigya.mindplex.core.util.dsl.runSuspendCatching
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -30,7 +29,7 @@ class SecretsProvider(private val dispatcher: CoroutineDispatcher) : SecretsProv
                 .document(name)
                 .get(Source.SERVER)
 
-            documentSnapshot.data<UserTokenRemoteDto>().token
+            documentSnapshot.data<ApiKeyRemoteDto>().flagsKey
         }
     }
 }

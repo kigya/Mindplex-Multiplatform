@@ -18,13 +18,13 @@ data object FirestoreConfig {
 
             object Document {
                 const val FACTS_API = "facts_api"
-                const val USER_TOKEN = "user_token"
+                const val FLAGS_API = "flags_api"
 
                 object FactsAPI {
                     const val API_KEY = "api_key"
                 }
-                object UserToken {
-                    const val TOKEN = "token"
+                object FlagsAPI {
+                    const val FLAGS_KEY = "flags_key"
                 }
             }
         }

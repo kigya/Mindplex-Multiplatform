@@ -23,8 +23,8 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
-import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.dividerLineUserPlaceColor
-import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumPlaceText
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.dividerLineUserRankColor
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumRankText
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumScoreText
 import kotlinx.collections.immutable.ImmutableList
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
@@ -69,9 +69,9 @@ private fun UserRankCard(
     ) {
         MindplexText(
             modifier = modifier.width(LeaderboardTheme.dimension.dp16.value),
-            value = state.userPlace,
-            color = LeaderboardTheme.colorScheme.userPodiumPlaceText,
-            typography = LeaderboardTheme.typography.userPodiumPlaceText,
+            value = state.userRank,
+            color = LeaderboardTheme.colorScheme.userPodiumRankText,
+            typography = LeaderboardTheme.typography.userPodiumRankText,
         )
 
         Box(modifier = Modifier.width(LeaderboardTheme.dimension.dp48.value)) {
@@ -100,8 +100,8 @@ private fun UserRankCard(
 
         MindplexText(
             value = state.userName,
-            color = LeaderboardTheme.colorScheme.userPodiumPlaceText,
-            typography = LeaderboardTheme.typography.userPodiumPlaceText,
+            color = LeaderboardTheme.colorScheme.userPodiumRankText,
+            typography = LeaderboardTheme.typography.userPodiumRankText,
         )
 
         MindplexSpacer(modifier = modifier.weight(1f))
@@ -114,6 +114,6 @@ private fun UserRankCard(
     }
 
     HorizontalDivider(
-        color = LeaderboardTheme.colorScheme.dividerLineUserPlaceColor.value,
+        color = LeaderboardTheme.colorScheme.dividerLineUserRankColor.value,
     )
 }

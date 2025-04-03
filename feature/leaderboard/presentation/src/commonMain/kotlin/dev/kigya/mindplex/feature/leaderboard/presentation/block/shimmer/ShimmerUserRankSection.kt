@@ -18,7 +18,7 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindplexUiKitApi
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
-import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.dividerLineUserPlaceColor
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.dividerLineUserRankColor
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumScoreText
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.leaderboard_points
@@ -94,6 +94,6 @@ private fun ShimmerUserRankCard(modifier: Modifier = Modifier) {
     }
 
     HorizontalDivider(
-        color = LeaderboardTheme.colorScheme.dividerLineUserPlaceColor.value,
+        color = LeaderboardTheme.colorScheme.dividerLineUserRankColor.value,
     )
 }

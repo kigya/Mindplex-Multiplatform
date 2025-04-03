@@ -109,7 +109,7 @@ val repositoryModule = module {
 
     single {
         UserRankDatabaseRepository(
-            userPlaceDao = get(),
+            userRankDao = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind UserRankDatabaseRepositoryContract::class

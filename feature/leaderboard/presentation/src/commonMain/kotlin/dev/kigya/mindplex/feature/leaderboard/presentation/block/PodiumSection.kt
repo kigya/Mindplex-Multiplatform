@@ -14,17 +14,19 @@ import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardC
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.provider.LeaderboardAdaptiveMetrics.LocalLeaderboardWidthRatio
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.branchesTint
-import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.firstPlaceCardColor
-import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.secondPlaceCardColor
-import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.thirdPlaceCardColor
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.firstRankCardColor
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.secondRankCardColor
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.thirdRankCardColor
 import kotlinx.collections.immutable.ImmutableList
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_branches
 
-private const val PODIUM_FRACTION = 0.5f
-private const val FIRST_PLACE_CARD_FRACTION = 0.7f
-private const val SECOND_PLACE_CARD_FRACTION = 0.5f
-private const val THIRD_PLACE_CARD_FRACTION = 0.4f
+internal object PodiumConstants {
+    const val PODIUM_FRACTION = 0.5f
+    const val FIRST_RANK_CARD_FRACTION = 0.7f
+    const val SECOND_RANK_CARD_FRACTION = 0.55f
+    const val THIRD_RANK_CARD_FRACTION = 0.45f
+}
 
 @Composable
 @Suppress("MagicNumber")
@@ -37,7 +39,7 @@ internal fun PodiumSection(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight(PODIUM_FRACTION),
+            .fillMaxHeight(PodiumConstants.PODIUM_FRACTION),
     ) {
         MindplexIcon(
             modifier = modifier
@@ -55,36 +57,36 @@ internal fun PodiumSection(
         if (podiumUsers.isNotEmpty()) {
             UserScoreCard(
                 modifier = modifier
-                    .fillMaxHeight(FIRST_PLACE_CARD_FRACTION)
+                    .fillMaxHeight(PodiumConstants.FIRST_RANK_CARD_FRACTION)
                     .align(Alignment.TopCenter)
                     .fadeInEffect(delayMillis = 900),
                 state = podiumUsers[0],
-                isFirstPlace = true,
-                topColumnGradientColor = LeaderboardTheme.colorScheme.firstPlaceCardColor.value,
+                isFirstRank = true,
+                topColumnGradientColor = LeaderboardTheme.colorScheme.firstRankCardColor.value,
             )
 
             if (podiumUsers.size >= 2) {
                 UserScoreCard(
                     modifier = modifier
-                        .fillMaxHeight(SECOND_PLACE_CARD_FRACTION)
+                        .fillMaxHeight(PodiumConstants.SECOND_RANK_CARD_FRACTION)
                         .align(Alignment.BottomStart)
                         .padding(bottom = LeaderboardTheme.dimension.dp36.value)
                         .fadeInEffect(delayMillis = 600),
                     state = podiumUsers[1],
-                    isFirstPlace = false,
-                    topColumnGradientColor = LeaderboardTheme.colorScheme.secondPlaceCardColor.value,
+                    isFirstRank = false,
+                    topColumnGradientColor = LeaderboardTheme.colorScheme.secondRankCardColor.value,
                 )
             }
 
             if (podiumUsers.size >= 3) {
                 UserScoreCard(
                     modifier = modifier
-                        .fillMaxHeight(THIRD_PLACE_CARD_FRACTION)
+                        .fillMaxHeight(PodiumConstants.THIRD_RANK_CARD_FRACTION)
                         .align(Alignment.BottomEnd)
                         .fadeInEffect(delayMillis = 300),
                     state = podiumUsers[2],
-                    isFirstPlace = false,
-                    topColumnGradientColor = LeaderboardTheme.colorScheme.thirdPlaceCardColor.value,
+                    isFirstRank = false,
+                    topColumnGradientColor = LeaderboardTheme.colorScheme.thirdRankCardColor.value,
                 )
             }
         }

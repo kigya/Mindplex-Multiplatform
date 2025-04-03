@@ -14,7 +14,7 @@ private const val NON_PODIUM_USER_LIMIT = 7
 
 class LeaderboardScreenViewModel(
     navigatorContract: MindplexNavigatorContract,
-    private val getUserPlaceUseCase: GetUsersByRankUseCase,
+    private val getUserRankUseCase: GetUsersByRankUseCase,
 ) : BaseViewModel<LeaderboardContract.State, LeaderboardContract.Effect>(
     navigatorContract = navigatorContract,
     initialState = LeaderboardContract.State(),
@@ -42,26 +42,26 @@ class LeaderboardScreenViewModel(
     private fun fetchScreenData() = withUseCaseScope {
         updateState { LeaderboardContract.State() }
 
-        getUserPlaceUseCase(None).fold(
-            ifRight = { userPlaces ->
-                if (userPlaces.isEmpty()) {
+        getUserRankUseCase(None).fold(
+            ifRight = { userRanks ->
+                if (userRanks.isEmpty()) {
                     updateState { copy(stubErrorType = StubErrorType.NETWORK) }
                     return@fold
                 }
 
                 val userCardMapper = UserCardMapper
 
-                val podiumUsers = userPlaces.take(LeaderboardContract.PODIUM_SIZE)
+                val podiumUsers = userRanks.take(LeaderboardContract.PODIUM_SIZE)
                     .mapIndexed { index, user ->
-                        userCardMapper.mapToDomainModel(user).copy(userPlace = (index + 1).toString())
+                        userCardMapper.mapToDomainModel(user).copy(userRank = (index + 1).toString())
                     }
                     .toImmutableList()
 
-                val nonPodiumUsers = userPlaces
+                val nonPodiumUsers = userRanks
                     .drop(LeaderboardContract.PODIUM_SIZE)
                     .take(NON_PODIUM_USER_LIMIT)
                     .mapIndexed { index, user ->
-                        userCardMapper.mapToDomainModel(user).copy(userPlace = (index + 4).toString())
+                        userCardMapper.mapToDomainModel(user).copy(userRank = (index + 4).toString())
                     }
                     .toImmutableList()
 

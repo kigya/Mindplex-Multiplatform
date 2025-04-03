@@ -1,3 +1,3 @@
 package dev.kigya.mindplex.feature.leaderboard.data.exception
 
-class UserRankNotFoundException(message: String?) : Exception(message)
+internal class UserRankNotFoundException(message: String?) : Exception(message)

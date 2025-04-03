@@ -9,14 +9,14 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 class UserRankDatabaseRepository(
-    private val userPlaceDao: UserRankDao,
+    private val userRankDao: UserRankDao,
     private val dispatcher: CoroutineDispatcher,
 ) : UserRankDatabaseRepositoryContract {
 
     override suspend fun getTopUsersByScore(limit: Int): Result<List<UserRankDomainModel>> =
         runSuspendCatching {
             withContext(dispatcher) {
-                userPlaceDao.getTopUsersByScore(limit).map(UserLocalRankMapper::mapToDomainModel)
+                userRankDao.getTopUsersByScore(limit).map(UserLocalRankMapper::mapToDomainModel)
             }
         }
 
@@ -25,7 +25,7 @@ class UserRankDatabaseRepository(
     ): Result<List<UserRankDomainModel>> = runSuspendCatching {
         withContext(dispatcher) {
             val userEntities = users.map(UserLocalRankMapper::mapFromDomainModel)
-            userPlaceDao.upsertUsers(userEntities)
+            userRankDao.upsertUsers(userEntities)
             users
         }
     }

@@ -16,7 +16,7 @@ class GeoLocationRepository(
 
     override suspend fun getUserCountryCode(): Result<String?> {
         val ipAddress = getPublicIP()
-        val tokenResult = secretsProviderContract.provideToken(Document.USER_TOKEN)
+        val tokenResult = secretsProviderContract.provideToken(Document.FLAGS_API)
 
         return tokenResult.fold(
             onSuccess = { token ->

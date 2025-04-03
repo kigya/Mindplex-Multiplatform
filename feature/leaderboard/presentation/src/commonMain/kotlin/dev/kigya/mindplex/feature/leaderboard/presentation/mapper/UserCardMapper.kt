@@ -13,7 +13,7 @@ internal object UserCardMapper : DomainMapper<UserRankDomainModel, LeaderboardCo
         userName = entity.displayName,
         userScore = entity.score.toString(),
         avatarUrl = entity.profilePictureUrl,
-        userPlace = String.empty,
+        userRank = String.empty,
         countryCode = entity.userCountry,
     )
 

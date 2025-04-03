@@ -26,7 +26,7 @@ interface LeaderboardContract :
             val avatarUrl: String? = null,
             val countryCode: String? = null,
             val userScore: String = String.empty,
-            val userPlace: String = String.empty,
+            val userRank: String = String.empty,
         )
     }
 

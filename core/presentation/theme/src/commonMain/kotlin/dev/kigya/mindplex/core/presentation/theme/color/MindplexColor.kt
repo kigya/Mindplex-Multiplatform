@@ -19,6 +19,8 @@ data class MindplexColor internal constructor(
     val iris20: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFE3E1FA)),
     val iris10: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFEFEEFC)),
     val white: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFFFFFFF)),
+    val white50: MindplexDsToken<Color> = MindplexDsToken(Color(0x80FFFFFF)),
+    val white20: MindplexDsToken<Color> = MindplexDsToken(Color(0x33FFFFFF)),
     val gunmetal100: MindplexDsToken<Color> = MindplexDsToken(Color(0xFF263238)),
     val gunmetal80: MindplexDsToken<Color> = MindplexDsToken(Color(0xFF707070)),
     val gunmetal60: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFC1BFD3)),
@@ -28,5 +30,7 @@ data class MindplexColor internal constructor(
     val crayola: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFFF4B4F)),
     val creamBrulee: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFFEE39D)),
     val lightningYellow: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFFFBF1B)),
+    val lightningYellow50: MindplexDsToken<Color> = MindplexDsToken(Color(0x80FFBF1B)),
     val atomicTangerine: MindplexDsToken<Color> = MindplexDsToken(Color(0xFFFFA46D)),
+    val atomicTangerine50: MindplexDsToken<Color> = MindplexDsToken(Color(0x80FFA46D)),
 )

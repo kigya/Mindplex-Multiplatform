@@ -21,28 +21,27 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindplexUiKitApi
 import dev.kigya.mindplex.core.util.extension.empty
+import dev.kigya.mindplex.feature.leaderboard.presentation.block.UserScoreCardConstants
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.crown
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.leaderboardBackground
-import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumPlaceText
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumRankText
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.userPodiumScoreText
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_crown
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.leaderboard_points
 import org.jetbrains.compose.resources.stringResource
 
-private const val CARD_FRACTION = 0.43f
-
 @OptIn(ExperimentalMindplexUiKitApi::class)
 @Composable
 internal fun ShimmerUserScoreCard(
     topColumnGradientColor: Color,
-    isFirstPlace: Boolean,
+    isFirstRank: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth(CARD_FRACTION)
+            .fillMaxWidth(UserScoreCardConstants.CARD_FRACTION)
             .clip(shape = RoundedCornerShape(LeaderboardTheme.dimension.dp16.value))
             .background(
                 Brush.verticalGradient(
@@ -56,7 +55,7 @@ internal fun ShimmerUserScoreCard(
         verticalArrangement = Arrangement.spacedBy(LeaderboardTheme.dimension.dp8.value),
     ) {
         Spacer(modifier = Modifier.height(LeaderboardTheme.dimension.dp16.value))
-        if (isFirstPlace) {
+        if (isFirstRank) {
             Box(contentAlignment = Alignment.Center) {
                 MindplexIcon(
                     resource = Res.drawable.ic_crown,
@@ -65,15 +64,15 @@ internal fun ShimmerUserScoreCard(
 
                 MindplexText(
                     value = String.empty,
-                    color = LeaderboardTheme.colorScheme.userPodiumPlaceText,
-                    typography = LeaderboardTheme.typography.userPodiumPlaceText,
+                    color = LeaderboardTheme.colorScheme.userPodiumRankText,
+                    typography = LeaderboardTheme.typography.userPodiumRankText,
                 )
             }
         } else {
             MindplexText(
                 value = String.empty,
-                color = LeaderboardTheme.colorScheme.userPodiumPlaceText,
-                typography = LeaderboardTheme.typography.userPodiumPlaceText,
+                color = LeaderboardTheme.colorScheme.userPodiumRankText,
+                typography = LeaderboardTheme.typography.userPodiumRankText,
             )
         }
 

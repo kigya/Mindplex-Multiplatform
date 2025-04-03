@@ -33,7 +33,7 @@ internal object LeaderboardTheme : MindplexTheme() {
             dark = super.color.iris100,
         )
 
-    val MindplexColorScheme.userPodiumPlaceText
+    val MindplexColorScheme.userPodiumRankText
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.gunmetal100,
@@ -54,32 +54,32 @@ internal object LeaderboardTheme : MindplexTheme() {
             dark = super.color.iris80,
         )
 
-    val MindplexColorScheme.firstPlaceCardColor
+    val MindplexColorScheme.firstRankCardColor
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.lightningYellow,
-            dark = super.color.lightningYellow,
+            dark = super.color.lightningYellow50,
         )
 
-    val MindplexColorScheme.secondPlaceCardColor
+    val MindplexColorScheme.secondRankCardColor
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.white,
-            dark = super.color.white,
+            dark = super.color.white50,
         )
 
-    val MindplexColorScheme.thirdPlaceCardColor
+    val MindplexColorScheme.thirdRankCardColor
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.atomicTangerine,
-            dark = super.color.atomicTangerine,
+            dark = super.color.atomicTangerine50,
         )
 
-    val MindplexColorScheme.dividerLineUserPlaceColor
+    val MindplexColorScheme.dividerLineUserRankColor
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.iris20,
-            dark = super.color.gunmetal60,
+            dark = super.color.white20,
         )
     // endregion
 
@@ -92,7 +92,7 @@ internal object LeaderboardTheme : MindplexTheme() {
             fontFamily = super.font.rubik,
         )
 
-    val MindplexTypography.userPodiumPlaceText
+    val MindplexTypography.userPodiumRankText
         @Composable
         get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp14,
