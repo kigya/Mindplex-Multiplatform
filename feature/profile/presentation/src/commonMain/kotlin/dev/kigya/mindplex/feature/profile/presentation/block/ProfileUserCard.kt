@@ -32,9 +32,9 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalMindplexUiKitApi::class)
 @Composable
 internal fun ProfileUserCard(
-    modifier: Modifier = Modifier,
     state: ProfileContract.State.UserProfile,
     profileLoading: ProfileContract.State.ProfileScreenLoadingData,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -53,9 +53,7 @@ internal fun ProfileUserCard(
                     model = state.avatarUrl,
                     contentDescription = String.empty,
                     error = painterResource(Res.drawable.ic_profile_fallback),
-                    fallback = painterResource(
-                        resource = Res.drawable.ic_profile_fallback,
-                    ),
+                    fallback = painterResource(resource = Res.drawable.ic_profile_fallback),
                 )
 
                 state.userCountry?.let { countryCode ->
