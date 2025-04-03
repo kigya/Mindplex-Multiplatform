@@ -25,7 +25,7 @@ kotlin {
                 implementation(navigation.api)
             }
             with(libs) {
-                implementation(compose.flag.kit)
+                implementation(flagKit)
             }
         }
     }

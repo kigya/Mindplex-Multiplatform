@@ -9,6 +9,7 @@ import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityReposito
 import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
 import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
 import dev.kigya.mindplex.core.util.dsl.requireNotNullOrRaise
+import dev.kigya.mindplex.feature.login.domain.contract.GeoLocationContract
 import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
 import dev.kigya.mindplex.feature.login.domain.contract.ProfileImageInterceptorContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
@@ -21,7 +22,7 @@ class SignInUseCase(
     private val profileImageInterceptor: ProfileImageInterceptorContract,
     private val jwtHandlerContract: JwtHandlerContract,
     private val connectivityRepositoryContract: ConnectivityRepositoryContract,
-    private val getUserCountryCodeUseCase: GetUserCountryCodeUseCase,
+    private val geoLocationContract: GeoLocationContract,
 ) : BaseSuspendUseCase<Either<MindplexDomainError, Unit>, GoogleUserSignInDomainModel?>() {
 
     @CheckResult
@@ -35,7 +36,7 @@ class SignInUseCase(
             val userIdResult = jwtHandlerContract.decodeSubject(tokenId)
             userIdResult.fold(
                 onSuccess = { userId ->
-                    val countryCode = getUserCountryCodeUseCase()
+                    val countryCode = geoLocationContract.getUserCountryCode().getOrNull()
 
                     val user = copy(
                         tokenId = userId,

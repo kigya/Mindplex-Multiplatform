@@ -11,28 +11,26 @@ import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankDatabaseRe
 import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankNetworkRepositoryContract
 import dev.kigya.mindplex.feature.leaderboard.domain.model.UserRankDomainModel
 
-private const val GET_USERS_LIMIT = 10
+private const val USERS_LIMIT = 10
 
-class GetUserRankUseCase(
-    private val userPlaceNetworkRepositoryContract: UserRankNetworkRepositoryContract,
-    private val userPlaceDatabaseRepositoryContract: UserRankDatabaseRepositoryContract,
+class GetUsersByRankUseCase(
+    private val userRankNetworkRepositoryContract: UserRankNetworkRepositoryContract,
+    private val userRankDatabaseRepositoryContract: UserRankDatabaseRepositoryContract,
     private val connectivityRepositoryContract: ConnectivityRepositoryContract,
 ) : BaseSuspendUseCase<Either<MindplexDomainError, List<UserRankDomainModel>>, None>() {
 
     override suspend operator fun invoke(
         params: None,
     ): Either<MindplexDomainError, List<UserRankDomainModel>> = either {
-        userPlaceNetworkRepositoryContract.getTopUsersByScore(GET_USERS_LIMIT)
+        userRankNetworkRepositoryContract.getTopUsersByScore(USERS_LIMIT)
             .fold(
                 onSuccess = { networkUsers ->
-                    userPlaceDatabaseRepositoryContract.saveUsers(networkUsers)
+                    userRankDatabaseRepositoryContract.saveUsers(networkUsers)
                     networkUsers
                 },
                 onFailure = {
-                    userPlaceDatabaseRepositoryContract.getTopUsersByScore().fold(
-                        onSuccess = { databaseUsers ->
-                            databaseUsers
-                        },
+                    userRankDatabaseRepositoryContract.getTopUsersByScore(USERS_LIMIT).fold(
+                        onSuccess = { it },
                         onFailure = {
                             ensure(connectivityRepositoryContract.isConnected().not()) { MindplexDomainError.OTHER }
                             raise(MindplexDomainError.NETWORK)

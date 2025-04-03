@@ -20,7 +20,6 @@ import dev.kigya.mindplex.feature.leaderboard.data.repository.UserRankDatabaseRe
 import dev.kigya.mindplex.feature.leaderboard.data.repository.UserRankNetworkRepository
 import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankDatabaseRepositoryContract
 import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankNetworkRepositoryContract
-import dev.kigya.mindplex.feature.login.data.HttpClientProvider
 import dev.kigya.mindplex.feature.login.data.repository.interceptor.ProfileImageInterceptor
 import dev.kigya.mindplex.feature.login.data.repository.repository.GeoLocationRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInNetworkRepository
@@ -123,9 +122,8 @@ val repositoryModule = module {
 
     single {
         GeoLocationRepository(
-            httpClientProvider = get(),
+            httpClient = get(),
+            secretsProviderContract = get(),
         )
     } bind GeoLocationContract::class
-
-    single { HttpClientProvider() }
 }

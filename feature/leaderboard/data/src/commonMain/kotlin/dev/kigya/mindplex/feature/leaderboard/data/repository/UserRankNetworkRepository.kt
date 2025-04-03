@@ -6,7 +6,7 @@ import dev.gitlive.firebase.firestore.Source
 import dev.gitlive.firebase.firestore.firestore
 import dev.kigya.mindplex.core.util.dsl.runSuspendCatching
 import dev.kigya.mindplex.feature.leaderboard.data.exception.UserRankNotFoundException
-import dev.kigya.mindplex.feature.leaderboard.data.mapper.toDomain
+import dev.kigya.mindplex.feature.leaderboard.data.mapper.UserRemoteRankMapper
 import dev.kigya.mindplex.feature.leaderboard.data.model.UserRemoteRankDto
 import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankNetworkRepositoryContract
 import dev.kigya.mindplex.feature.leaderboard.domain.model.UserRankDomainModel
@@ -23,19 +23,21 @@ class UserRankNetworkRepository(
     override suspend fun getTopUsersByScore(userLimit: Int): Result<List<UserRankDomainModel>> =
         withContext(dispatcher) {
             runSuspendCatching {
-                val documentSnapshot = Firebase.firestore
-                    .collection(UsersCollection.NAME)
-                    .orderBy(FIELD_SCORE, Direction.DESCENDING)
-                    .limit(userLimit)
-                    .get(Source.DEFAULT)
+                try {
+                    val documentSnapshot = Firebase.firestore
+                        .collection(UsersCollection.NAME)
+                        .orderBy(FIELD_SCORE, Direction.DESCENDING)
+                        .limit(userLimit)
+                        .get(Source.DEFAULT)
 
-                val userList = documentSnapshot.documents.map { document ->
-                    document.data<UserRemoteRankDto>().toDomain()
+                    documentSnapshot.documents.map { document ->
+                        val userDto = document.data<UserRemoteRankDto>()
+                        UserRemoteRankMapper.mapToDomainModel(userDto)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    throw UserRankNotFoundException("Failed to fetch top users by score: ${e.message}")
                 }
-
-                userList
-            }.onFailure { e ->
-                throw UserRankNotFoundException(e.message)
             }
         }
 }

@@ -21,76 +21,70 @@ import kotlinx.collections.immutable.ImmutableList
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_branches
 
-private const val PODIUM_HEIGHT = 0.5f
-private const val FIRST_PLACE_CARD_HEIGHT = 0.7f
-private const val SECOND_PLACE_CARD_HEIGHT = 0.5f
-private const val THIRD_PLACE_CARD_HEIGHT = 0.4f
-private const val THIRD_CARD = 3
+private const val PODIUM_FRACTION = 0.5f
+private const val FIRST_PLACE_CARD_FRACTION = 0.7f
+private const val SECOND_PLACE_CARD_FRACTION = 0.5f
+private const val THIRD_PLACE_CARD_FRACTION = 0.4f
 
 @Composable
+@Suppress("MagicNumber")
 internal fun PodiumSection(
-    modifier: Modifier = Modifier,
     podiumUsers: ImmutableList<LeaderboardContract.State.UserCardData>,
-    leaderboardLoading: LeaderboardContract.State.LeaderboardScreenLoadingData,
+    modifier: Modifier = Modifier,
 ) {
     val leaderboardWidthRatio = LocalLeaderboardWidthRatio.current
 
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight(PODIUM_HEIGHT),
+            .fillMaxHeight(PODIUM_FRACTION),
     ) {
-        if (leaderboardLoading.isLeaderboardLoading.not()) {
-            MindplexIcon(
-                modifier = modifier
-                    .fillMaxWidth(leaderboardWidthRatio)
-                    .align(alignment = Alignment.Center)
-                    .fadeInEffect()
-                    .graphicsLayer {
-                        scaleX = leaderboardWidthRatio
-                        scaleY = leaderboardWidthRatio
-                    },
-                resource = Res.drawable.ic_branches,
-                color = LeaderboardTheme.colorScheme.branchesTint,
-            )
-        }
+        MindplexIcon(
+            modifier = modifier
+                .fillMaxWidth(leaderboardWidthRatio)
+                .align(alignment = Alignment.Center)
+                .fadeInEffect()
+                .graphicsLayer {
+                    scaleX = leaderboardWidthRatio
+                    scaleY = leaderboardWidthRatio
+                },
+            resource = Res.drawable.ic_branches,
+            color = LeaderboardTheme.colorScheme.branchesTint,
+        )
 
         if (podiumUsers.isNotEmpty()) {
             UserScoreCard(
                 modifier = modifier
-                    .fillMaxHeight(FIRST_PLACE_CARD_HEIGHT)
+                    .fillMaxHeight(FIRST_PLACE_CARD_FRACTION)
                     .align(Alignment.TopCenter)
                     .fadeInEffect(delayMillis = 900),
                 state = podiumUsers[0],
                 isFirstPlace = true,
                 topColumnGradientColor = LeaderboardTheme.colorScheme.firstPlaceCardColor.value,
-                leaderboardLoading = leaderboardLoading,
             )
 
             if (podiumUsers.size >= 2) {
                 UserScoreCard(
                     modifier = modifier
-                        .fillMaxHeight(SECOND_PLACE_CARD_HEIGHT)
+                        .fillMaxHeight(SECOND_PLACE_CARD_FRACTION)
                         .align(Alignment.BottomStart)
                         .padding(bottom = LeaderboardTheme.dimension.dp36.value)
                         .fadeInEffect(delayMillis = 600),
                     state = podiumUsers[1],
                     isFirstPlace = false,
                     topColumnGradientColor = LeaderboardTheme.colorScheme.secondPlaceCardColor.value,
-                    leaderboardLoading = leaderboardLoading,
                 )
             }
 
-            if (podiumUsers.size >= THIRD_CARD) {
+            if (podiumUsers.size >= 3) {
                 UserScoreCard(
                     modifier = modifier
-                        .fillMaxHeight(THIRD_PLACE_CARD_HEIGHT)
+                        .fillMaxHeight(THIRD_PLACE_CARD_FRACTION)
                         .align(Alignment.BottomEnd)
                         .fadeInEffect(delayMillis = 300),
                     state = podiumUsers[2],
                     isFirstPlace = false,
                     topColumnGradientColor = LeaderboardTheme.colorScheme.thirdPlaceCardColor.value,
-                    leaderboardLoading = leaderboardLoading,
                 )
             }
         }

@@ -4,15 +4,17 @@ import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
 import dev.kigya.mindplex.core.presentation.uikit.StubErrorType
-import dev.kigya.mindplex.feature.leaderboard.domain.usecase.GetUserRankUseCase
+import dev.kigya.mindplex.feature.leaderboard.domain.usecase.GetUsersByRankUseCase
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
+import dev.kigya.mindplex.feature.leaderboard.presentation.mapper.UserCardMapper
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.supervisorScope
+
+private const val NON_PODIUM_USER_LIMIT = 7
 
 class LeaderboardScreenViewModel(
     navigatorContract: MindplexNavigatorContract,
-    private val getUserPlaceUseCase: GetUserRankUseCase,
+    private val getUserPlaceUseCase: GetUsersByRankUseCase,
 ) : BaseViewModel<LeaderboardContract.State, LeaderboardContract.Effect>(
     navigatorContract = navigatorContract,
     initialState = LeaderboardContract.State(),
@@ -29,24 +31,15 @@ class LeaderboardScreenViewModel(
         withUseCaseScope {
             event.run {
                 when (this) {
-                    LeaderboardContract.Event.OnLeaderboardLoaded -> handleLeaderboardLoading()
                     LeaderboardContract.Event.OnErrorStubClicked -> handleErrorStubClick()
                 }
             }
         }
     }
 
-    private fun handleLeaderboardLoading() = updateState {
-        copy(
-            leaderboardLoading = leaderboardLoading.copy(
-                isLeaderboardLoading = false,
-            ),
-        )
-    }
+    private fun handleErrorStubClick() = fetchScreenData()
 
-    private suspend fun handleErrorStubClick() = fetchScreenData()
-
-    private suspend fun fetchScreenData() = supervisorScope {
+    private fun fetchScreenData() = withUseCaseScope {
         updateState { LeaderboardContract.State() }
 
         getUserPlaceUseCase(None).fold(
@@ -56,26 +49,30 @@ class LeaderboardScreenViewModel(
                     return@fold
                 }
 
+                val userCardMapper = UserCardMapper
+
+                val podiumUsers = userPlaces.take(LeaderboardContract.PODIUM_SIZE)
+                    .mapIndexed { index, user ->
+                        userCardMapper.mapToDomainModel(user).copy(userPlace = (index + 1).toString())
+                    }
+                    .toImmutableList()
+
+                val nonPodiumUsers = userPlaces
+                    .drop(LeaderboardContract.PODIUM_SIZE)
+                    .take(NON_PODIUM_USER_LIMIT)
+                    .mapIndexed { index, user ->
+                        userCardMapper.mapToDomainModel(user).copy(userPlace = (index + 4).toString())
+                    }
+                    .toImmutableList()
+
                 updateState {
                     copy(
                         stubErrorType = null,
-                        podiumData = podiumData.copy(
-                            place = userPlaces.take(LeaderboardContract.PODIUM_SIZE)
-                                .map { it.displayName }
-                                .toImmutableList(),
-                        ),
-                        userCardData = userPlaces.mapIndexed { index, user ->
-                            LeaderboardContract.State.UserCardData(
-                                userName = user.displayName,
-                                userScore = user.score.toString(),
-                                avatarUrl = user.profilePictureUrl,
-                                userPlace = (index + 1).toString(),
-                                userCountry = user.userCountry,
-                            )
-                        }.toImmutableList(),
+                        podiumUsers = podiumUsers,
+                        nonPodiumUsers = nonPodiumUsers,
+                        isLoading = false,
                     )
                 }
-                handleLeaderboardLoading()
             },
             ifLeft = { error ->
                 updateState {

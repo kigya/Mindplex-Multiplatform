@@ -13,15 +13,17 @@ import dev.kigya.mindplex.core.presentation.common.util.MindplexAdaptiveContaine
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStubContainer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
-import dev.kigya.mindplex.feature.leaderboard.presentation.block.LeaderBoardScreenHeader
+import dev.kigya.mindplex.feature.leaderboard.presentation.block.LeaderboardScreenHeader
 import dev.kigya.mindplex.feature.leaderboard.presentation.block.PodiumSection
-import dev.kigya.mindplex.feature.leaderboard.presentation.block.UserPlaceSection
+import dev.kigya.mindplex.feature.leaderboard.presentation.block.UserRankSection
+import dev.kigya.mindplex.feature.leaderboard.presentation.block.shimmer.ShimmerPodiumSection
+import dev.kigya.mindplex.feature.leaderboard.presentation.block.shimmer.ShimmerUserRankSection
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.provider.LeaderboardCompositionLocalProvider
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.leaderboardBackground
 
-private const val LANDSCAPE_PODIUM_WIDTH = 0.43f
+private const val LANDSCAPE_PODIUM_FRACTION = 0.43f
 
 @Composable
 fun LeaderboardScreen(contract: LeaderboardContract) {
@@ -58,26 +60,28 @@ internal fun LeaderboardScreenContent(
 
 @Composable
 private fun ColumnScope.LeaderboardPortraitSection(state: LeaderboardContract.State) {
-    LeaderBoardScreenHeader(modifier = Modifier.fillMaxWidth())
+    LeaderboardScreenHeader(modifier = Modifier.fillMaxWidth())
 
     MindplexSpacer(size = LeaderboardTheme.dimension.dp36)
 
-    PodiumSection(
-        podiumUsers = state.userCardData,
-        leaderboardLoading = state.leaderboardLoading,
-    )
+    if (state.isLoading) {
+        ShimmerPodiumSection()
+    } else {
+        PodiumSection(podiumUsers = state.podiumUsers)
+    }
 
     MindplexSpacer(size = LeaderboardTheme.dimension.dp36)
 
-    UserPlaceSection(
-        userPlaces = state.userCardData,
-        leaderboardLoading = state.leaderboardLoading,
-    )
+    if (state.isLoading) {
+        ShimmerUserRankSection()
+    } else {
+        UserRankSection(nonPodiumUsers = state.nonPodiumUsers)
+    }
 }
 
 @Composable
 private fun ColumnScope.LeaderboardLandscapeSection(state: LeaderboardContract.State) {
-    LeaderBoardScreenHeader(modifier = Modifier.fillMaxWidth())
+    LeaderboardScreenHeader(modifier = Modifier.fillMaxWidth())
 
     MindplexSpacer(size = LeaderboardTheme.dimension.dp36)
 
@@ -86,16 +90,22 @@ private fun ColumnScope.LeaderboardLandscapeSection(state: LeaderboardContract.S
         horizontalArrangement = Arrangement.spacedBy(LeaderboardTheme.dimension.dp36.value),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        PodiumSection(
-            modifier = Modifier.fillMaxWidth(LANDSCAPE_PODIUM_WIDTH),
-            podiumUsers = state.userCardData,
-            leaderboardLoading = state.leaderboardLoading,
-        )
+        if (state.isLoading) {
+            ShimmerPodiumSection(modifier = Modifier.fillMaxWidth(LANDSCAPE_PODIUM_FRACTION))
+        } else {
+            PodiumSection(
+                modifier = Modifier.fillMaxWidth(LANDSCAPE_PODIUM_FRACTION),
+                podiumUsers = state.podiumUsers,
+            )
+        }
 
-        UserPlaceSection(
-            modifier = Modifier.weight(1f),
-            userPlaces = state.userCardData,
-            leaderboardLoading = state.leaderboardLoading,
-        )
+        if (state.isLoading) {
+            ShimmerUserRankSection(modifier = Modifier.weight(1f))
+        } else {
+            UserRankSection(
+                modifier = Modifier.weight(1f),
+                nonPodiumUsers = state.nonPodiumUsers,
+            )
+        }
     }
 }

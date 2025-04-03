@@ -18,10 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import coil3.compose.AsyncImage
 import dev.carlsen.flagkit.FlagKit
-import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
-import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindplexUiKitApi
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
@@ -32,45 +30,32 @@ import kotlinx.collections.immutable.ImmutableList
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_profile_fallback
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.leaderboard_points
-import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.user_name_preview
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-private const val SKIP_PODIUM_USERS = 3
-private const val MAX_USERS_PLACE = 7
-
 @Composable
-internal fun UserPlaceSection(
+internal fun UserRankSection(
+    nonPodiumUsers: ImmutableList<LeaderboardContract.State.UserCardData>,
     modifier: Modifier = Modifier,
-    userPlaces: ImmutableList<LeaderboardContract.State.UserCardData>,
-    leaderboardLoading: LeaderboardContract.State.LeaderboardScreenLoadingData,
 ) {
-    val filteredUsers = userPlaces
-        .drop(SKIP_PODIUM_USERS)
-        .take(MAX_USERS_PLACE)
-
-    if (filteredUsers.isNotEmpty()) {
+    if (nonPodiumUsers.isNotEmpty()) {
         LazyColumn(
-            modifier = modifier
-                .padding(bottom = LeaderboardTheme.dimension.dp76.value),
+            modifier = modifier.padding(bottom = LeaderboardTheme.dimension.dp80.value),
             overscrollEffect = null,
         ) {
-            items(filteredUsers.size) { index ->
-                UserPlaceCard(
-                    state = filteredUsers[index],
-                    leaderboardLoading = leaderboardLoading,
+            items(nonPodiumUsers.size) { index ->
+                UserRankCard(
+                    state = nonPodiumUsers[index],
                 )
             }
         }
     }
 }
 
-@OptIn(ExperimentalMindplexUiKitApi::class)
 @Composable
-private fun UserPlaceCard(
-    modifier: Modifier = Modifier,
+private fun UserRankCard(
     state: LeaderboardContract.State.UserCardData,
-    leaderboardLoading: LeaderboardContract.State.LeaderboardScreenLoadingData,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -89,58 +74,43 @@ private fun UserPlaceCard(
             typography = LeaderboardTheme.typography.userPodiumPlaceText,
         )
 
-        MindplexMeasurablePlaceholder(isLoading = leaderboardLoading.isLeaderboardLoading) {
-            Box(modifier = Modifier.width(LeaderboardTheme.dimension.dp48.value)) {
-                AsyncImage(
-                    modifier = Modifier
-                        .size(LeaderboardTheme.dimension.dp48.value)
-                        .clip(CircleShape),
-                    model = state.avatarUrl,
-                    contentDescription = String.empty,
-                    error = painterResource(Res.drawable.ic_profile_fallback),
-                    fallback = painterResource(Res.drawable.ic_profile_fallback)
-                        .takeIf { leaderboardLoading.isLeaderboardLoading.not() },
-                )
+        Box(modifier = Modifier.width(LeaderboardTheme.dimension.dp48.value)) {
+            AsyncImage(
+                modifier = Modifier
+                    .size(LeaderboardTheme.dimension.dp48.value)
+                    .clip(CircleShape),
+                model = state.avatarUrl,
+                contentDescription = String.empty,
+                error = painterResource(Res.drawable.ic_profile_fallback),
+                fallback = painterResource(Res.drawable.ic_profile_fallback),
+            )
 
-                state.userCountry?.let { countryCode ->
-                    FlagKit.getFlag(countryCode)?.let { flagImageVector ->
-                        Image(
-                            imageVector = flagImageVector,
-                            contentDescription = String.empty,
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(LeaderboardTheme.dimension.dp4.value))
-                                .align(Alignment.BottomEnd),
-                        )
-                    }
+            state.countryCode?.let { countryCode ->
+                FlagKit.getFlag(countryCode)?.let { flagImageVector ->
+                    Image(
+                        imageVector = flagImageVector,
+                        contentDescription = String.empty,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(LeaderboardTheme.dimension.dp4.value))
+                            .align(Alignment.BottomEnd),
+                    )
                 }
             }
         }
 
-        MindplexMeasurablePlaceholder(
-            isLoading = leaderboardLoading.isLeaderboardLoading,
-            textToMeasure = stringResource(Res.string.user_name_preview),
-            textStyle = LeaderboardTheme.typography.userPodiumScoreText,
-        ) {
-            MindplexText(
-                value = state.userName,
-                color = LeaderboardTheme.colorScheme.userPodiumPlaceText,
-                typography = LeaderboardTheme.typography.userPodiumPlaceText,
-            )
-        }
+        MindplexText(
+            value = state.userName,
+            color = LeaderboardTheme.colorScheme.userPodiumPlaceText,
+            typography = LeaderboardTheme.typography.userPodiumPlaceText,
+        )
 
         MindplexSpacer(modifier = modifier.weight(1f))
 
-        MindplexMeasurablePlaceholder(
-            isLoading = leaderboardLoading.isLeaderboardLoading,
-            textToMeasure = stringResource(Res.string.leaderboard_points),
-            textStyle = LeaderboardTheme.typography.userPodiumScoreText,
-        ) {
-            MindplexText(
-                value = stringResource(Res.string.leaderboard_points, state.userScore),
-                color = LeaderboardTheme.colorScheme.userPodiumScoreText,
-                typography = LeaderboardTheme.typography.userPodiumScoreText,
-            )
-        }
+        MindplexText(
+            value = stringResource(Res.string.leaderboard_points, state.userScore),
+            color = LeaderboardTheme.colorScheme.userPodiumScoreText,
+            typography = LeaderboardTheme.typography.userPodiumScoreText,
+        )
     }
 
     HorizontalDivider(

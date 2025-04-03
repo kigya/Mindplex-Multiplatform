@@ -5,6 +5,7 @@ import dev.gitlive.firebase.firestore.Source
 import dev.gitlive.firebase.firestore.firestore
 import dev.kigya.mindplex.core.data.credentials.api.SecretsProviderContract
 import dev.kigya.mindplex.core.data.credentials.model.ApiKeyRemoteDto
+import dev.kigya.mindplex.core.data.credentials.model.UserTokenRemoteDto
 import dev.kigya.mindplex.core.util.dsl.runSuspendCatching
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -19,6 +20,17 @@ class SecretsProvider(private val dispatcher: CoroutineDispatcher) : SecretsProv
                 .get(Source.SERVER)
 
             documentSnapshot.data<ApiKeyRemoteDto>().apiKey
+        }
+    }
+
+    override suspend fun provideToken(name: String): Result<String> = withContext(dispatcher) {
+        runSuspendCatching {
+            val documentSnapshot = Firebase.firestore
+                .collection(SecretsCollection.NAME)
+                .document(name)
+                .get(Source.SERVER)
+
+            documentSnapshot.data<UserTokenRemoteDto>().token
         }
     }
 }

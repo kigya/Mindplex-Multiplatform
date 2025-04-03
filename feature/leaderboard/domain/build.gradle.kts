@@ -11,9 +11,11 @@ kotlin {
                 implementation(coroutines.core)
             }
             with(projects) {
-                api(core.domain.interactor)
-                implementation(core.util)
-                implementation(core.domain.connectivity)
+                with(core) {
+                    api(domain.interactor)
+                    implementation(util)
+                    implementation(domain.connectivity)
+                }
             }
         }
     }

@@ -18,10 +18,12 @@ kotlin {
                 implementation(firebase.firestore)
             }
             with(projects) {
-                implementation(core.data.profile)
                 implementation(feature.leaderboard.domain)
-                implementation(core.util)
-                implementation(core.data.firebase)
+                with(core) {
+                    implementation(data.profile)
+                    implementation(util)
+                    implementation(data.firebase)
+                }
             }
         }
     }
