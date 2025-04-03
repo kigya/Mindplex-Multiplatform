@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import dev.kigya.mindplex.core.presentation.common.util.MindplexAdaptiveContainer
 import dev.kigya.mindplex.core.presentation.feature.effect.use
@@ -13,6 +17,7 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStubContainer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.feature.profile.presentation.block.ProfileScreenHeader
 import dev.kigya.mindplex.feature.profile.presentation.block.ProfileUserCard
+import dev.kigya.mindplex.feature.profile.presentation.block.ToggleChangeTheme
 import dev.kigya.mindplex.feature.profile.presentation.contract.ProfileContract
 import dev.kigya.mindplex.feature.profile.presentation.ui.provider.ProfileCompositionLocalProvider
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme
@@ -58,6 +63,8 @@ private fun ColumnScope.ProfilePortraitSection(
     state: ProfileContract.State,
     event: (ProfileContract.Event) -> Unit,
 ) {
+    var isDarkTheme by remember { mutableStateOf(false) }
+
     ProfileScreenHeader(
         modifier = Modifier.fillMaxWidth(),
         event = event,
@@ -68,5 +75,10 @@ private fun ColumnScope.ProfilePortraitSection(
     ProfileUserCard(
         state = state.userProfile,
         profileLoading = state.profileLoading,
+    )
+
+    ToggleChangeTheme(
+        isDarkTheme = isDarkTheme,
+        onThemeChange = { newValue -> isDarkTheme = newValue },
     )
 }
