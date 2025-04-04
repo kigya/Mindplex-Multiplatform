@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.kigya.mindplex.core.presentation.common.extension.fadeInEffect
 import dev.kigya.mindplex.feature.leaderboard.presentation.block.PodiumConstants
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.provider.LeaderboardAdaptiveMetrics.LocalPodiumFraction
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.firstRankCardColor
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.secondRankCardColor
@@ -17,10 +18,12 @@ import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardT
 @Composable
 @Suppress("MagicNumber")
 internal fun ShimmerPodiumSection(modifier: Modifier = Modifier) {
+    val podiumFraction = LocalPodiumFraction.current
+
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight(PodiumConstants.PODIUM_FRACTION),
+            .fillMaxHeight(podiumFraction),
     ) {
         ShimmerUserScoreCard(
             modifier = modifier

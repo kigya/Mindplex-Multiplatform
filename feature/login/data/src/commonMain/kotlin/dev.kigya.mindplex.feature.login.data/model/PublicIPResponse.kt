@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class PublicIPResponse(
-    @SerialName("public_ip")
+    @SerialName("ip")
     val ip: String,
 )

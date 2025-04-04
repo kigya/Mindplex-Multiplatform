@@ -12,6 +12,7 @@ import dev.kigya.mindplex.core.presentation.common.extension.fadeInEffect
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.provider.LeaderboardAdaptiveMetrics.LocalLeaderboardWidthRatio
+import dev.kigya.mindplex.feature.leaderboard.presentation.ui.provider.LeaderboardAdaptiveMetrics.LocalPodiumFraction
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.branchesTint
 import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardTheme.firstRankCardColor
@@ -22,7 +23,6 @@ import mindplex_multiplatform.feature.leaderboard.presentation.generated.resourc
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_branches
 
 internal object PodiumConstants {
-    const val PODIUM_FRACTION = 0.5f
     const val FIRST_RANK_CARD_FRACTION = 0.7f
     const val SECOND_RANK_CARD_FRACTION = 0.55f
     const val THIRD_RANK_CARD_FRACTION = 0.45f
@@ -35,21 +35,22 @@ internal fun PodiumSection(
     modifier: Modifier = Modifier,
 ) {
     val leaderboardWidthRatio = LocalLeaderboardWidthRatio.current
+    val podiumFraction = LocalPodiumFraction.current
 
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight(PodiumConstants.PODIUM_FRACTION),
+            .fillMaxHeight(podiumFraction),
     ) {
         MindplexIcon(
             modifier = modifier
-                .fillMaxWidth(leaderboardWidthRatio)
-                .align(alignment = Alignment.Center)
-                .fadeInEffect()
                 .graphicsLayer {
                     scaleX = leaderboardWidthRatio
                     scaleY = leaderboardWidthRatio
-                },
+                }
+                .fillMaxWidth(leaderboardWidthRatio)
+                .align(alignment = Alignment.Center)
+                .fadeInEffect(),
             resource = Res.drawable.ic_branches,
             color = LeaderboardTheme.colorScheme.branchesTint,
         )

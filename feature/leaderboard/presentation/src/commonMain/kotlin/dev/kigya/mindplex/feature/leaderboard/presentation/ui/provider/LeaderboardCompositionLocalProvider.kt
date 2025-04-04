@@ -19,9 +19,19 @@ internal object LeaderboardAdaptiveMetrics : AdaptiveMetrics() {
         )
     val LocalLeaderboardWidthRatio = requiredCompositionLocalOf<Float>()
 
+    private val PodiumFraction
+        @Composable
+        get() = windowSizeClassWhen(
+            compact = 0.5f,
+            medium = 0.6f,
+            expanded = 0.6f,
+        )
+    val LocalPodiumFraction = requiredCompositionLocalOf<Float>()
+
     @Composable
     override fun provideValues(): Array<ProvidedValue<*>> = arrayOf(
         LocalLeaderboardWidthRatio provides LeaderboardBranchesWidthRatio,
+        LocalPodiumFraction provides PodiumFraction,
     )
 }
 

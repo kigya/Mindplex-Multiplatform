@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import coil3.compose.AsyncImage
 import dev.carlsen.flagkit.FlagKit
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
@@ -99,9 +100,12 @@ private fun UserRankCard(
         }
 
         MindplexText(
+            modifier = modifier.weight(1f),
             value = state.userName,
             color = LeaderboardTheme.colorScheme.userPodiumRankText,
             typography = LeaderboardTheme.typography.userPodiumRankText,
+            maxLines = 1,
+            align = TextAlign.Start,
         )
 
         MindplexSpacer(modifier = modifier.weight(1f))
