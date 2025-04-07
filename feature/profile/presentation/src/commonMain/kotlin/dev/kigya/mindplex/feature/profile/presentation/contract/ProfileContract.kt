@@ -11,7 +11,7 @@ interface ProfileContract :
     @Immutable
     data class State internal constructor(
         val stubErrorType: StubErrorType? = null,
-        val profileLoading: ProfileScreenLoadingData = ProfileScreenLoadingData(),
+        val profileLoading: Boolean = true,
         val userProfile: UserProfile = UserProfile(),
     ) : CopyableComponentState {
 
@@ -25,20 +25,12 @@ interface ProfileContract :
             val userLocalRank: String = String.empty,
             val userGlobalRank: String = String.empty,
         )
-
-        @ConsistentCopyVisibility
-        @Immutable
-        data class ProfileScreenLoadingData internal constructor(
-            val isProfileLoading: Boolean = true,
-        )
     }
 
     @Immutable
     sealed class Event {
 
         internal data object OnErrorStubClicked : Event()
-
-        internal data object OnProfileLoaded : Event()
     }
 
     @Immutable

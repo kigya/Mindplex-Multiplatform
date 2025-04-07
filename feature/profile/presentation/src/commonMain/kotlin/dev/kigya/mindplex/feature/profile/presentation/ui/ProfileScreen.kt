@@ -74,7 +74,7 @@ private fun ColumnScope.ProfilePortraitSection(
 
     ProfileUserCard(
         state = state.userProfile,
-        profileLoading = state.profileLoading,
+        isLoading = state.profileLoading,
     )
 
     ToggleChangeTheme(
