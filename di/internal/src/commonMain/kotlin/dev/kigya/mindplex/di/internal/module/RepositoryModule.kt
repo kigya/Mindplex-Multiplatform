@@ -76,8 +76,7 @@ val repositoryModule = module {
 
     single {
         FactsNetworkRepository(
-            httpClient = get(),
-            secretsProviderContract = get(),
+            scoutNetworkClientContract = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind FactsNetworkRepositoryContract::class

@@ -21,7 +21,7 @@ fun LaunchedEffectSaveable(
     key: Any?,
     block: suspend CoroutineScope.() -> Unit,
 ) {
-    var hasAlreadyExecuted by rememberSaveable { mutableStateOf(false) }
+    var hasAlreadyExecuted by rememberSaveable(key) { mutableStateOf(false) }
 
     if (!hasAlreadyExecuted) {
         LaunchedEffect(

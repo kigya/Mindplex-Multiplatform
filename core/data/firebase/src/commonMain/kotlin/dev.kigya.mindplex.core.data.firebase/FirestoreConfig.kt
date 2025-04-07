@@ -17,7 +17,6 @@ data object FirestoreConfig {
             const val NAME = "secrets"
 
             object Document {
-                const val FACTS_API = "facts_api"
                 const val FLAGS_API = "flags_api"
 
                 object FactsAPI {
