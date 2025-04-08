@@ -1,7 +1,6 @@
 plugins {
     with(libs.plugins.convention) {
         alias(config.shared.library)
-        alias(component.unit.test)
     }
 }
 
@@ -12,7 +11,11 @@ kotlin {
                 implementation(coroutines.core)
             }
             with(projects) {
-                api(core.domain.interactor)
+                with(core) {
+                    api(domain.interactor)
+                    implementation(util)
+                    implementation(domain.connectivity)
+                }
             }
         }
     }

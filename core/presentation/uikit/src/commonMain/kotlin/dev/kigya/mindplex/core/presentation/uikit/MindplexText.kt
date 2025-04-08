@@ -74,10 +74,15 @@ fun MindplexText(
 
             var displayedText by remember { mutableStateOf(String.empty) }
 
-            MindplexText(
-                value = displayedText,
-                color = color,
-                typography = typography,
+            Text(
+                text = displayedText,
+                modifier = modifier,
+                color = color.value,
+                style = typography.value,
+                maxLines = maxLines,
+                minLines = minLines,
+                textAlign = align,
+                overflow = TextOverflow.Ellipsis,
             )
 
             LaunchedEffect(value) {

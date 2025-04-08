@@ -3,6 +3,7 @@ package dev.kigya.mindplex.core.presentation.common.extension
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -21,6 +22,9 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 private const val SHIFT_CLICK_TARGET_TRANSLATION = 20f
@@ -125,4 +129,29 @@ fun Modifier.shake(shakeController: ShakeController) = composed {
                 )
             }
     } ?: this
+}
+
+fun Modifier.fadeInEffect(
+    duration: Int = 500,
+    delayMillis: Int = 0,
+    startOffsetY: Float = 50f,
+    onAnimationEnd: (() -> Unit)? = null,
+) = composed {
+    val alpha = remember { Animatable(0f) }
+    val offsetY = remember { Animatable(startOffsetY) }
+
+    LaunchedEffect(Unit) {
+        delay(delayMillis.toLong())
+        listOf(
+            launch { alpha.animateTo(1f, animationSpec = tween(durationMillis = duration)) },
+            launch { offsetY.animateTo(0f, animationSpec = tween(durationMillis = duration)) },
+        ).joinAll()
+
+        onAnimationEnd?.invoke()
+    }
+
+    this.graphicsLayer {
+        this.alpha = alpha.value
+        translationY = offsetY.value
+    }
 }

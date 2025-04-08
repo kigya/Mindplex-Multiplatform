@@ -21,4 +21,15 @@ class SecretsProvider(private val dispatcher: CoroutineDispatcher) : SecretsProv
             documentSnapshot.data<ApiKeyRemoteDto>().apiKey
         }
     }
+
+    override suspend fun provideToken(name: String): Result<String> = withContext(dispatcher) {
+        runSuspendCatching {
+            val documentSnapshot = Firebase.firestore
+                .collection(SecretsCollection.NAME)
+                .document(name)
+                .get(Source.SERVER)
+
+            documentSnapshot.data<ApiKeyRemoteDto>().flagsKey
+        }
+    }
 }

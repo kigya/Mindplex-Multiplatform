@@ -16,9 +16,15 @@ import dev.kigya.mindplex.feature.home.data.repository.FactsDatabaseRepository
 import dev.kigya.mindplex.feature.home.data.repository.FactsNetworkRepository
 import dev.kigya.mindplex.feature.home.domain.contract.FactsDatabaseRepositoryContract
 import dev.kigya.mindplex.feature.home.domain.contract.FactsNetworkRepositoryContract
+import dev.kigya.mindplex.feature.leaderboard.data.repository.UserRankDatabaseRepository
+import dev.kigya.mindplex.feature.leaderboard.data.repository.UserRankNetworkRepository
+import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankDatabaseRepositoryContract
+import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.data.repository.interceptor.ProfileImageInterceptor
+import dev.kigya.mindplex.feature.login.data.repository.repository.GeoLocationRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInNetworkRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInPreferencesRepository
+import dev.kigya.mindplex.feature.login.domain.contract.GeoLocationContract
 import dev.kigya.mindplex.feature.login.domain.contract.ProfileImageInterceptorContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
@@ -100,4 +106,24 @@ val repositoryModule = module {
     single {
         ProfileImageInterceptor()
     } bind ProfileImageInterceptorContract::class
+
+    single {
+        UserRankDatabaseRepository(
+            userRankDao = get(),
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
+        )
+    } bind UserRankDatabaseRepositoryContract::class
+
+    single {
+        UserRankNetworkRepository(
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
+        )
+    } bind UserRankNetworkRepositoryContract::class
+
+    single {
+        GeoLocationRepository(
+            httpClient = get(),
+            secretsProviderContract = get(),
+        )
+    } bind GeoLocationContract::class
 }

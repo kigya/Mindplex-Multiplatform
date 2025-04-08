@@ -182,7 +182,7 @@ class HomeScreenViewModel(
                     name = getState()
                         .categorySelectionData
                         .difficulties
-                        .find { it.isSelected == true }
+                        .find { it.isSelected }
                         ?.type
                         ?.name
                         .toString(),

@@ -26,4 +26,10 @@ abstract class AdaptiveMetrics {
 fun MindplexAdaptiveContainer(
     portrait: @Composable () -> Unit,
     landscape: @Composable () -> Unit,
-) = if (LocalWindowWidth.current == WindowWidthSizeClass.COMPACT) portrait() else landscape()
+) = if (LocalWindowWidth.current == WindowWidthSizeClass.COMPACT ||
+    LocalWindowWidth.current == WindowWidthSizeClass.MEDIUM
+) {
+    portrait()
+} else {
+    landscape()
+}

@@ -6,6 +6,7 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import dev.kigya.mindplex.core.data.profile.database.UserProfileDatabase
 import dev.kigya.mindplex.feature.game.data.database.QuestionsDatabase
 import dev.kigya.mindplex.feature.home.data.database.FactsDatabase
+import dev.kigya.mindplex.feature.leaderboard.data.database.UserRankDatabase
 import org.koin.dsl.module
 
 actual val databaseModule = module {
@@ -41,4 +42,15 @@ actual val databaseModule = module {
     }
 
     single { get<QuestionsDatabase>().dao }
+
+    single {
+        with(get<Context>()) {
+            Room.databaseBuilder<UserRankDatabase>(
+                context = applicationContext,
+                name = getDatabasePath(UserRankDatabase.DATABASE_NAME).absolutePath,
+            ).setDriver(BundledSQLiteDriver()).build()
+        }
+    }
+
+    single { get<UserRankDatabase>().dao }
 }

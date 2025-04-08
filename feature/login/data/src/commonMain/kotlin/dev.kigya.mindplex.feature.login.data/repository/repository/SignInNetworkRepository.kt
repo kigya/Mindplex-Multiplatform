@@ -26,6 +26,7 @@ class SignInNetworkRepository(
                         hashMapOf(
                             UsersCollection.Document.NAME to googleUser.displayName,
                             UsersCollection.Document.AVATAR_URL to googleUser.profilePictureUrl.orEmpty(),
+                            UsersCollection.Document.COUNTRY_CODE to googleUser.countryCode,
                         ),
                     )
                 } else {
@@ -33,6 +34,7 @@ class SignInNetworkRepository(
                         hashMapOf(
                             UsersCollection.Document.NAME to googleUser.displayName,
                             UsersCollection.Document.AVATAR_URL to googleUser.profilePictureUrl.orEmpty(),
+                            UsersCollection.Document.COUNTRY_CODE to googleUser.countryCode,
                             UsersCollection.Document.SCORE to 0,
                         ),
                     )

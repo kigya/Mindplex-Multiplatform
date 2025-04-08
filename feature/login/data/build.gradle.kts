@@ -1,8 +1,11 @@
 plugins {
     with(libs.plugins.convention) {
         alias(config.shared.library)
-        alias(component.serialization)
-        alias(component.unit.test)
+        with(component) {
+            alias(serialization)
+            alias(ktor)
+            alias(unit.test)
+        }
     }
 }
 
@@ -17,9 +20,12 @@ kotlin {
             }
             with(projects) {
                 implementation(feature.login.domain)
-                implementation(core.util)
-                implementation(core.data.firebase)
-                implementation(core.data.jwtParser)
+                with(core) {
+                    implementation(util)
+                    implementation(data.firebase)
+                    implementation(data.jwtParser)
+                    implementation(data.credentials)
+                }
             }
         }
     }
