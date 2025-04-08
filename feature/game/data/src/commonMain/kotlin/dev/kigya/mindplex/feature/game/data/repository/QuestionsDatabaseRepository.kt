@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.game.data.repository
 
+import dev.kigya.mindplex.core.util.dsl.runSuspendCatching
 import dev.kigya.mindplex.feature.game.data.dao.QuestionDao
 import dev.kigya.mindplex.feature.game.data.mapper.CategoryLocalMapper
 import dev.kigya.mindplex.feature.game.data.mapper.DifficultyLocalMapper
@@ -18,8 +19,8 @@ class QuestionsDatabaseRepository(
 ) : QuestionsDatabaseRepositoryContract {
 
     override suspend fun getQuestion(config: GameDomainConfig): Result<QuestionDomainModel?> =
-        withContext(dispatcher) {
-            runCatching {
+        runSuspendCatching {
+            withContext(dispatcher) {
                 val type = config.type mappedBy TypeLocalMapper
                 val difficulty = config.difficulty mappedBy DifficultyLocalMapper
                 val category = config.category mappedBy CategoryLocalMapper
@@ -29,15 +30,15 @@ class QuestionsDatabaseRepository(
             }
         }
 
-    override suspend fun getCount(): Result<Int> = withContext(dispatcher) {
-        runCatching {
+    override suspend fun getCount(): Result<Int> = runSuspendCatching {
+        withContext(dispatcher) {
             questionDao.getCount()
         }
     }
 
     override suspend fun saveQuestions(questions: List<QuestionDomainModel>): Result<Unit> =
-        withContext(dispatcher) {
-            runCatching {
+        runSuspendCatching {
+            withContext(dispatcher) {
                 val localQuestions = questions.map { question ->
                     question mappedBy QuestionLocalDomainMapper
                 }
@@ -46,15 +47,15 @@ class QuestionsDatabaseRepository(
         }
 
     override suspend fun getQuestionByText(questionText: String): Result<QuestionDomainModel?> =
-        withContext(dispatcher) {
-            runCatching {
+        runSuspendCatching {
+            withContext(dispatcher) {
                 val local = questionDao.getQuestionByText(questionText)
                 local?.let { it mappedBy QuestionLocalDomainMapper }
             }
         }
 
-    override suspend fun clearAll(): Result<Unit> = withContext(dispatcher) {
-        runCatching {
+    override suspend fun clearAll(): Result<Unit> = runSuspendCatching {
+        withContext(dispatcher) {
             questionDao.clearAll()
         }
     }

@@ -1,7 +1,6 @@
 package dev.kigya.mindplex.feature.login.data.repository.repository
 
 import dev.kigya.mindplex.core.data.credentials.api.SecretsProviderContract
-import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Secrets.Document
 import dev.kigya.mindplex.feature.login.data.model.GeoLocationResponse
 import dev.kigya.mindplex.feature.login.data.model.PublicIPResponse
 import dev.kigya.mindplex.feature.login.domain.contract.GeoLocationContract
@@ -16,7 +15,7 @@ class GeoLocationRepository(
 
     override suspend fun getUserCountryCode(): Result<String?> {
         val ipAddress = getPublicIP()
-        val tokenResult = secretsProviderContract.provideToken(Document.FLAGS_API)
+        val tokenResult = secretsProviderContract.provideFlagsKey()
 
         return tokenResult.fold(
             onSuccess = { token ->

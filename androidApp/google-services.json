@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "415983434678-4kpgblfojee1v0gmman6c1rkrgubsiap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.kigya.mindplex",
+            "certificate_hash": "f12fffb17daa30a3b9ed20de105975cefc18a40c"
+          }
+        },
+        {
+          "client_id": "415983434678-52c2vhrjp2li7tc7r2rdj6prve1alfs4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.kigya.mindplex",
+            "certificate_hash": "b80529dd1256a4d65c6ef7569648934914c69c1c"
+          }
+        },
+        {
           "client_id": "415983434678-q9cmlv7j2gn76ccpjcnqhs33kqsmgd59.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
