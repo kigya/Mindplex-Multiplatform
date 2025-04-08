@@ -97,7 +97,7 @@ val repositoryModule = module {
 
     single {
         QuestionsNetworkRepository(
-            httpClient = get(),
+            scoutNetworkClientContract = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind QuestionsNetworkRepositoryContract::class

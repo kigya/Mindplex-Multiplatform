@@ -5,7 +5,6 @@ plugins {
         with(component) {
             alias(koin)
             alias(serialization)
-            alias(ktor)
             alias(room)
         }
     }
@@ -19,8 +18,11 @@ kotlin {
             }
             with(projects) {
                 implementation(feature.game.domain)
-                implementation(core.util)
-                implementation(core.data.firebase)
+                with(core) {
+                    implementation(util)
+                    implementation(data.firebase)
+                    implementation(data.scout)
+                }
             }
         }
     }

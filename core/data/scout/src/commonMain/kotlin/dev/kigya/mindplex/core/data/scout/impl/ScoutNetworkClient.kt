@@ -14,6 +14,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import kotlin.reflect.KType
+import kotlin.reflect.typeOf
 
 class ScoutNetworkClient(
     private val httpClient: HttpClient,
@@ -39,10 +40,14 @@ class ScoutNetworkClient(
         if (response.status.isSuccess()) {
             val bytes = response.readRawBytes()
             val text = bytes.decodeToString()
-            Json.decodeFromString(
-                deserializer = serializer(type),
-                string = text,
-            ) as ResponseType
+            if (type == typeOf<String>()) {
+                text as ResponseType
+            } else {
+                Json.decodeFromString(
+                    deserializer = serializer(type),
+                    string = text,
+                ) as ResponseType
+            }
         } else {
             throw ScoutException.FailedToFetchData(response.status.description)
         }

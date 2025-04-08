@@ -19,9 +19,6 @@ data object FirestoreConfig {
             object Document {
                 const val FLAGS_API = "flags_api"
 
-                object FactsAPI {
-                    const val API_KEY = "api_key"
-                }
                 object FlagsAPI {
                     const val FLAGS_KEY = "flags_key"
                 }

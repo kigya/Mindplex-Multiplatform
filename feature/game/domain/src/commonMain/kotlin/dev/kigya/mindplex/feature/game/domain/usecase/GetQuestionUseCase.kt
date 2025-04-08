@@ -13,15 +13,15 @@ import dev.kigya.mindplex.feature.game.domain.model.GameDomainConfig
 import dev.kigya.mindplex.feature.game.domain.model.QuestionDomainModel
 
 class GetQuestionUseCase(
-    private val remoteRepo: QuestionsNetworkRepositoryContract,
-    private val localRepo: QuestionsDatabaseRepositoryContract,
-    private val connectivityRepo: ConnectivityRepositoryContract,
+    private val questionsNetworkRepositoryContract: QuestionsNetworkRepositoryContract,
+    private val questionsDatabaseRepositoryContract: QuestionsDatabaseRepositoryContract,
+    private val connectivityRepositoryContract: ConnectivityRepositoryContract,
 ) : BaseSuspendUseCase<Either<MindplexDomainError, QuestionDomainModel>, GameDomainConfig>() {
 
     override suspend operator fun invoke(
         params: GameDomainConfig,
     ): Either<MindplexDomainError, QuestionDomainModel> = either {
-        val localCount = localRepo.getCount().getOrElse {
+        val localCount = questionsDatabaseRepositoryContract.getCount().getOrElse {
             raise(MindplexDomainError.OTHER)
         }
 
@@ -29,7 +29,7 @@ class GetQuestionUseCase(
             fetchRemoteQuestions()
         }
 
-        localRepo.getQuestion(params).fold(
+        questionsDatabaseRepositoryContract.getQuestion(params).fold(
             onSuccess = { question ->
                 question ?: raise(MindplexDomainError.OTHER)
             },
@@ -40,14 +40,14 @@ class GetQuestionUseCase(
     }
 
     private suspend fun Raise<MindplexDomainError>.fetchRemoteQuestions() {
-        remoteRepo.getQuestions().fold(
+        questionsNetworkRepositoryContract.getQuestions().fold(
             onSuccess = { questions ->
-                localRepo
+                questionsDatabaseRepositoryContract
                     .saveQuestions(questions)
                     .getOrElse { raise(MindplexDomainError.OTHER) }
             },
             onFailure = {
-                ensure(connectivityRepo.isConnected().not()) { MindplexDomainError.OTHER }
+                ensure(connectivityRepositoryContract.isConnected().not()) { MindplexDomainError.OTHER }
                 raise(MindplexDomainError.NETWORK)
             },
         )
