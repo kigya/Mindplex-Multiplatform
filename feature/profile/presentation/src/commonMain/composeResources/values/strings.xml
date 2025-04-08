@@ -6,4 +6,6 @@
     <string name="local_rank">Local rank</string>
     <string name="dark_theme">Dark theme</string>
     <string name="light_theme">Light theme</string>
+    <string name="profile_category_preview">World rank</string>
+    <string name="profile_score_preview">score</string>
 </resources>

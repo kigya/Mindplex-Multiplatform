@@ -33,7 +33,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun ProfileUserCard(
     state: ProfileContract.State.UserProfile,
-    profileLoading: ProfileContract.State.ProfileScreenLoadingData,
+    isLoading: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -43,7 +43,7 @@ internal fun ProfileUserCard(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(ProfileTheme.dimension.dp24.value),
     ) {
-        MindplexMeasurablePlaceholder(isLoading = profileLoading.isProfileLoading) {
+        MindplexMeasurablePlaceholder(isLoading = isLoading) {
             Box(modifier = Modifier.width(ProfileTheme.dimension.dp132.value)) {
                 AsyncImage(
                     modifier = Modifier
@@ -71,7 +71,7 @@ internal fun ProfileUserCard(
         }
 
         MindplexMeasurablePlaceholder(
-            isLoading = profileLoading.isProfileLoading,
+            isLoading = isLoading,
             textToMeasure = stringResource(Res.string.user_name),
             textStyle = ProfileTheme.typography.userNameText,
         ) {
@@ -82,6 +82,9 @@ internal fun ProfileUserCard(
             )
         }
 
-        UserStatisticsCard(state = state)
+        UserStatisticsCard(
+            state = state,
+            isLoading = isLoading,
+        )
     }
 }

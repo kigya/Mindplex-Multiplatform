@@ -7,4 +7,6 @@ data class GoogleUserSignInDomainModel(
     val displayName: String = String.empty,
     val profilePictureUrl: String? = null,
     val countryCode: String? = null,
+    val globalRank: Int? = null,
+    val localRank: Int? = null,
 )

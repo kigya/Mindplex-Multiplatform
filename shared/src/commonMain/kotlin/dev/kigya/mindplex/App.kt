@@ -30,12 +30,12 @@ import dev.kigya.mindplex.feature.game.presentation.ui.GameScreen
 import dev.kigya.mindplex.feature.game.presentation.ui.GameScreenViewModel
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreen
 import dev.kigya.mindplex.feature.home.presentation.ui.HomeScreenViewModel
-import dev.kigya.mindplex.feature.leaderboard.presentation.ui.LeaderboardScreen
-import dev.kigya.mindplex.feature.leaderboard.presentation.ui.LeaderboardScreenViewModel
 import dev.kigya.mindplex.feature.login.presentation.ui.LoginScreen
 import dev.kigya.mindplex.feature.login.presentation.ui.LoginScreenViewModel
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreen
 import dev.kigya.mindplex.feature.onboarding.presentation.ui.OnboardingScreenViewModel
+import dev.kigya.mindplex.feature.profile.presentation.ui.LeaderboardScreen
+import dev.kigya.mindplex.feature.profile.presentation.ui.LeaderboardScreenViewModel
 import dev.kigya.mindplex.feature.profile.presentation.ui.ProfileScreen
 import dev.kigya.mindplex.feature.profile.presentation.ui.ProfileScreenViewModel
 import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreen
