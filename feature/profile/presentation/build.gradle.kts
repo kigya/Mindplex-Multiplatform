@@ -28,6 +28,7 @@ kotlin {
                 implementation(navigation.api)
             }
             implementation(libs.flagKit)
+            implementation(libs.bundles.dataStore)
         }
     }
 }

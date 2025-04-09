@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "profile_screen")
-data class UserLocalProfile(
+data class LocalProfile(
     @PrimaryKey @ColumnInfo("id") val id: String,
     @Embedded val profileLocalData: ProfileLocalData? = null,
 )

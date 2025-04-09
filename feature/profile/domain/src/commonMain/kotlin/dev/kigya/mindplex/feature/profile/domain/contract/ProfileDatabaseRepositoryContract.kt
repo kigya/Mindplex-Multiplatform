@@ -1,11 +1,11 @@
 package dev.kigya.mindplex.feature.profile.domain.contract
 
-import dev.kigya.mindplex.feature.profile.domain.model.UserProfileDomainModel
+import dev.kigya.mindplex.feature.profile.domain.model.ProfileDomainModel
 
 interface ProfileDatabaseRepositoryContract {
-    suspend fun getTopUsersByToken(token: String): Result<UserProfileDomainModel>
+    suspend fun getTopUsersByToken(token: String): Result<ProfileDomainModel>
     suspend fun saveUser(
-        user: UserProfileDomainModel,
+        user: ProfileDomainModel,
         token: String,
-    ): Result<UserProfileDomainModel>
+    ): Result<ProfileDomainModel>
 }

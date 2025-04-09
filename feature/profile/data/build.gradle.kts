@@ -16,6 +16,7 @@ kotlin {
                 implementation(coroutines.core)
                 implementation(kotlinx.datetime)
                 implementation(firebase.firestore)
+                implementation(bundles.dataStore)
             }
             with(projects) {
                 implementation(feature.profile.domain)
