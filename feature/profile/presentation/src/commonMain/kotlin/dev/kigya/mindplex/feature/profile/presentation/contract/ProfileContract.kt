@@ -13,6 +13,7 @@ interface ProfileContract :
         val stubErrorType: StubErrorType? = null,
         val profileLoading: Boolean = true,
         val userProfile: UserProfile = UserProfile(),
+        val isDarkTheme: Boolean? = null,
     ) : CopyableComponentState {
 
         @ConsistentCopyVisibility
@@ -31,6 +32,7 @@ interface ProfileContract :
     sealed class Event {
 
         internal data object OnErrorStubClicked : Event()
+        internal data class OnThemeChanged(val isDarkTheme: Boolean) : Event()
     }
 
     @Immutable

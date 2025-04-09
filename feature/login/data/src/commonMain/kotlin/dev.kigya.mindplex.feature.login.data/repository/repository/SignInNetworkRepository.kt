@@ -27,8 +27,6 @@ class SignInNetworkRepository(
                             UsersCollection.Document.NAME to googleUser.displayName,
                             UsersCollection.Document.AVATAR_URL to googleUser.profilePictureUrl.orEmpty(),
                             UsersCollection.Document.COUNTRY_CODE to googleUser.countryCode,
-                            UsersCollection.Document.GLOBAL_RANK to googleUser.globalRank,
-                            UsersCollection.Document.LOCAL_RANK to googleUser.localRank,
                         ),
                     )
                 } else {

@@ -22,6 +22,7 @@ kotlin {
                     implementation(presentation.theme)
                 }
                 with(feature) {
+                    implementation(profile.domain)
                     implementation(onboarding.domain)
                     implementation(login.domain)
                 }

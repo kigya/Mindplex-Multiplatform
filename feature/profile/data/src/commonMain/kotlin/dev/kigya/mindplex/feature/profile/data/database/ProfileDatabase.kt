@@ -5,12 +5,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import dev.kigya.mindplex.feature.profile.data.dao.ProfileDao
-import dev.kigya.mindplex.feature.profile.data.model.UserLocalProfile
+import dev.kigya.mindplex.feature.profile.data.model.LocalProfile
 
 expect object LocalProfileConstructor : RoomDatabaseConstructor<ProfileDatabase>
 
 @Database(
-    entities = [UserLocalProfile::class],
+    entities = [LocalProfile::class],
     version = 1,
 )
 @ConstructedBy(LocalProfileConstructor::class)

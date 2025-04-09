@@ -2,8 +2,10 @@ package dev.kigya.mindplex.feature.splash.presentation.ui
 
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
+import dev.kigya.mindplex.core.presentation.theme.ThemeManager
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
+import dev.kigya.mindplex.feature.profile.domain.usecase.GetThemeUseCase
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
@@ -17,6 +19,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class SplashScreenViewModel(
     private val getIsOnboardingCompletedUseCase: GetIsOnboardingCompletedUseCase,
     private val getIsUserSignedInUseCase: GetIsUserSignedInUseCase,
+    private val getThemeUseCase: GetThemeUseCase,
     navigatorContract: MindplexNavigatorContract,
 ) : BaseViewModel<SplashContract.State, SplashContract.Effect>(
     navigatorContract = navigatorContract,
@@ -28,13 +31,18 @@ class SplashScreenViewModel(
     private val _isUserSignedIn = MutableStateFlow<Boolean?>(null)
 
     override fun executeStartAction() {
-        combine(
-            getIsOnboardingCompletedUseCase(None),
-            getIsUserSignedInUseCase(None),
-        ) { isOnboardingCompleted, isUserSignedIn ->
-            _isOnboardingCompleted.update { isOnboardingCompleted }
-            _isUserSignedIn.update { isUserSignedIn }
-        }.launchIn(useCaseCoroutineScope)
+        withUseCaseScope {
+            val isDark = getThemeUseCase(None).getOrNull()
+            isDark?.let { ThemeManager.setTheme(it) }
+
+            combine(
+                getIsOnboardingCompletedUseCase(None),
+                getIsUserSignedInUseCase(None),
+            ) { isOnboardingCompleted, isUserSignedIn ->
+                _isOnboardingCompleted.update { isOnboardingCompleted }
+                _isUserSignedIn.update { isUserSignedIn }
+            }.launchIn(this)
+        }
     }
 
     override fun handleEvent(event: SplashContract.Event) {

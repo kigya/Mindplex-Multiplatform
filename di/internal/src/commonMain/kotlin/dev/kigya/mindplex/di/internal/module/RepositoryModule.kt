@@ -26,10 +26,12 @@ import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryC
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
 import dev.kigya.mindplex.feature.onboarding.data.OnboardingRepository
 import dev.kigya.mindplex.feature.onboarding.domain.contract.OnboardingRepositoryContract
+import dev.kigya.mindplex.feature.profile.data.repository.PreferencesRepository
 import dev.kigya.mindplex.feature.profile.data.repository.ProfileDatabaseRepository
 import dev.kigya.mindplex.feature.profile.data.repository.ProfileNetworkRepository
 import dev.kigya.mindplex.feature.profile.data.repository.UserRankDatabaseRepository
 import dev.kigya.mindplex.feature.profile.data.repository.UserRankNetworkRepository
+import dev.kigya.mindplex.feature.profile.domain.contract.PreferencesRepositoryContract
 import dev.kigya.mindplex.feature.profile.domain.contract.ProfileDatabaseRepositoryContract
 import dev.kigya.mindplex.feature.profile.domain.contract.ProfileNetworkRepositoryContract
 import dev.kigya.mindplex.feature.profile.domain.contract.UserRankDatabaseRepositoryContract
@@ -142,4 +144,10 @@ val repositoryModule = module {
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind ProfileNetworkRepositoryContract::class
+
+    single {
+        PreferencesRepository(
+            dataStore = get<DataStore<Preferences>>(),
+        )
+    } bind PreferencesRepositoryContract::class
 }
