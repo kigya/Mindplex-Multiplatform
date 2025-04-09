@@ -4,6 +4,8 @@ import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
 import dev.kigya.mindplex.feature.profile.domain.usecase.GetProfileUseCase
+import dev.kigya.mindplex.feature.profile.domain.usecase.GetThemeUseCase
+import dev.kigya.mindplex.feature.profile.domain.usecase.SaveThemeUseCase
 import dev.kigya.mindplex.feature.profile.presentation.contract.ProfileContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import kotlinx.coroutines.supervisorScope
@@ -11,6 +13,8 @@ import kotlinx.coroutines.supervisorScope
 class ProfileScreenViewModel(
     navigatorContract: MindplexNavigatorContract,
     private val getUserProfileUseCase: GetProfileUseCase,
+    private val getThemeUseCase: GetThemeUseCase,
+    private val saveThemeUseCase: SaveThemeUseCase,
 ) : BaseViewModel<ProfileContract.State, ProfileContract.Effect>(
     navigatorContract = navigatorContract,
     initialState = ProfileContract.State(),
@@ -20,6 +24,7 @@ class ProfileScreenViewModel(
     override fun executeStartAction() {
         withUseCaseScope {
             fetchScreenData()
+            fetchTheme()
         }
     }
 
@@ -27,7 +32,8 @@ class ProfileScreenViewModel(
         withUseCaseScope {
             event.run {
                 when (this) {
-                    ProfileContract.Event.OnErrorStubClicked -> handleErrorStubClick()
+                    is ProfileContract.Event.OnErrorStubClicked -> handleErrorStubClick()
+                    is ProfileContract.Event.OnThemeChanged -> handleThemeChange(isDarkTheme)
                 }
             }
         }
@@ -63,5 +69,25 @@ class ProfileScreenViewModel(
                 }
             },
         )
+    }
+
+    private suspend fun fetchTheme() {
+        getThemeUseCase(None).fold(
+            ifRight = { theme ->
+                updateState { copy(isDarkTheme = theme) }
+            },
+            ifLeft = { error ->
+                updateState {
+                    copy(
+                        stubErrorType = error.toStubErrorType(),
+                    )
+                }
+            },
+        )
+    }
+
+    private suspend fun handleThemeChange(isDarkTheme: Boolean) {
+        saveThemeUseCase.invoke(isDarkTheme)
+        updateState { copy(isDarkTheme = isDarkTheme) }
     }
 }
