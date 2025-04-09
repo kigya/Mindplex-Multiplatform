@@ -38,7 +38,7 @@ internal fun ProfileScreenHeader(
         MindplexIconButton(
             resource = Res.drawable.ic_log_out,
             color = ProfileTheme.colorScheme.profileIcons,
-            onClick = { event },
+            onClick = { event(ProfileContract.Event.GoToRegistration) },
         )
     }
 }

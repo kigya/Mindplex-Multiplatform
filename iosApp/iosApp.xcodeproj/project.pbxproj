@@ -15,7 +15,6 @@
 		F357CA4C2C27023A000FCE10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F357CA4B2C27023A000FCE10 /* AppDelegate.swift */; };
 		F357CA4F2C270948000FCE10 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = F357CA4E2C270948000FCE10 /* GoogleSignIn */; };
 		F357CA512C270948000FCE10 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F357CA502C270948000FCE10 /* GoogleSignInSwift */; };
-		F3FCCFE72C2EB822004DA755 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F3FCCFE62C2EB822004DA755 /* Config.xcconfig */; };
 		F3FCCFE92C384893004DA755 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F3FCCFE82C384893004DA755 /* GoogleService-Info.plist */; };
 		F3FCCFEC2C3849D5004DA755 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F3FCCFEB2C3849D5004DA755 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
@@ -141,8 +140,9 @@
 		7555FF73242A565900829871 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = orgName;
 				TargetAttributes = {
 					7555FF7A242A565900829871 = {
@@ -180,7 +180,6 @@
 			files = (
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
 				F3FCCFE92C384893004DA755 /* GoogleService-Info.plist in Resources */,
-				F3FCCFE72C2EB822004DA755 /* Config.xcconfig in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,6 +259,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -322,6 +322,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -349,6 +350,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = KR26V7338X;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)",
@@ -387,6 +389,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = KR26V7338X;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)",

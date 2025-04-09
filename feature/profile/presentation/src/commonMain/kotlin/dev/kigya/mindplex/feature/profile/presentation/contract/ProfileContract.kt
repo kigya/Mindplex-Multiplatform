@@ -33,6 +33,7 @@ interface ProfileContract :
 
         internal data object OnErrorStubClicked : Event()
         internal data class OnThemeChanged(val isDarkTheme: Boolean) : Event()
+        internal data object GoToRegistration : Event()
     }
 
     @Immutable

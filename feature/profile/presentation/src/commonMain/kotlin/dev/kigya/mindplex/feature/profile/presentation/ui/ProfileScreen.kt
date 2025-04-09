@@ -51,6 +51,10 @@ internal fun ProfileScreenContent(
                 )
             },
             landscape = {
+                ProfileLandscapeSection(
+                    state = state,
+                    event = event,
+                )
             },
         )
     }
@@ -58,6 +62,32 @@ internal fun ProfileScreenContent(
 
 @Composable
 private fun ColumnScope.ProfilePortraitSection(
+    state: ProfileContract.State,
+    event: (ProfileContract.Event) -> Unit,
+) {
+    val isDarkTheme = state.isDarkTheme ?: ThemeManager.getTheme(isSystemInDarkTheme())
+    ThemeManager.setTheme(isDarkTheme)
+
+    ProfileScreenHeader(
+        modifier = Modifier.fillMaxWidth(),
+        event = event,
+    )
+
+    MindplexSpacer(modifier = Modifier.width(ProfileTheme.dimension.dp64.value))
+
+    ProfileUserCard(
+        state = state.userProfile,
+        isLoading = state.profileLoading,
+    )
+
+    ToggleChangeTheme(
+        isDarkTheme = isDarkTheme,
+        onThemeChange = { newValue -> event(ProfileContract.Event.OnThemeChanged(newValue)) },
+    )
+}
+
+@Composable
+private fun ColumnScope.ProfileLandscapeSection(
     state: ProfileContract.State,
     event: (ProfileContract.Event) -> Unit,
 ) {
