@@ -3,7 +3,6 @@ package dev.kigya.mindplex.feature.login.presentation.ui
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
-import dev.kigya.mindplex.core.util.extension.Lambda
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
@@ -26,11 +25,9 @@ class LoginScreenViewModel(
         withUseCaseScope {
             getIsUserSignedInUseCase(None).collect { isSignedIn ->
                 if (isSignedIn) {
-                    navigatorContract.navigateTo(
-                        route = ScreenRoute.Home,
-                        popUpToRoute = ScreenRoute.Login,
-                        inclusive = true,
-                    )
+                    updateState {
+                        copy(isSignedIn = true)
+                    }
                 }
             }
         }
@@ -54,7 +51,14 @@ class LoginScreenViewModel(
                     copy(stubErrorType = error.toStubErrorType())
                 }
             },
-            ifRight = Lambda.noOpConsumer(),
+            ifRight = {
+                navigatorContract.navigateTo(
+                    route = ScreenRoute.Home,
+                    popUpToRoute = ScreenRoute.Login,
+                    inclusive = true,
+                    isSingleTop = true,
+                )
+            },
         )
 
     private fun handleErrorStubClick() = updateState { copy(stubErrorType = null) }

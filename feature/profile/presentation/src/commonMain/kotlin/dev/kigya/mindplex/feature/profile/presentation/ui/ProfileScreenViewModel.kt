@@ -8,6 +8,7 @@ import dev.kigya.mindplex.feature.profile.domain.usecase.GetThemeUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.SaveThemeUseCase
 import dev.kigya.mindplex.feature.profile.presentation.contract.ProfileContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
+import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import kotlinx.coroutines.supervisorScope
 
 class ProfileScreenViewModel(
@@ -34,9 +35,18 @@ class ProfileScreenViewModel(
                 when (this) {
                     is ProfileContract.Event.OnErrorStubClicked -> handleErrorStubClick()
                     is ProfileContract.Event.OnThemeChanged -> handleThemeChange(isDarkTheme)
+                    is ProfileContract.Event.GoToRegistration -> handleGoToRegistration()
                 }
             }
         }
+    }
+
+    private suspend fun handleGoToRegistration() {
+        navigatorContract.navigateTo(
+            route = ScreenRoute.Login,
+            popUpToRoute = ScreenRoute.Home,
+            inclusive = true,
+        )
     }
 
     private suspend fun handleErrorStubClick() = fetchScreenData()
