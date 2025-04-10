@@ -9,6 +9,6 @@ class GetIsOnboardingCompletedUseCase(
     private val onboardingRepositoryContract: OnboardingRepositoryContract,
 ) : BaseUseCase<Flow<Boolean>, None>() {
 
-    override operator fun invoke(params: None): Flow<Boolean> =
+    override suspend operator fun invoke(params: None): Flow<Boolean> =
         onboardingRepositoryContract.isOnboardingCompleted
 }

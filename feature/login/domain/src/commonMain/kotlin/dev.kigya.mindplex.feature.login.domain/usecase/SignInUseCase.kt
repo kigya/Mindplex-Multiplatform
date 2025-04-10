@@ -8,7 +8,6 @@ import arrow.core.right
 import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityRepositoryContract
 import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
 import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
-import dev.kigya.mindplex.core.util.dsl.requireNotNullOrRaise
 import dev.kigya.mindplex.feature.login.domain.contract.GeoLocationContract
 import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
 import dev.kigya.mindplex.feature.login.domain.contract.ProfileImageInterceptorContract
@@ -26,29 +25,27 @@ class SignInUseCase(
 ) : BaseSuspendUseCase<Either<MindplexDomainError, Unit>, GoogleUserSignInDomainModel?>() {
 
     @CheckResult
-    override suspend operator fun invoke(
+    override suspend fun invoke(
         params: GoogleUserSignInDomainModel?,
     ): Either<MindplexDomainError, Unit> = either {
-        requireNotNullOrRaise(params) {
-            ensure(connectivityRepositoryContract.isConnected().not()) { MindplexDomainError.OTHER }
-            raise(MindplexDomainError.NETWORK)
-        }.run {
-            val userIdResult = jwtHandlerContract.decodeSubject(tokenId)
-            userIdResult.fold(
-                onSuccess = { userId ->
-                    val countryCode = geoLocationContract.getUserCountryCode().getOrNull()
+        ensure(connectivityRepositoryContract.isConnected()) { MindplexDomainError.NETWORK }
+        val notNullParams = requireNotNull(params) { raise(MindplexDomainError.OTHER) }
 
-                    val user = copy(
-                        tokenId = userId,
-                        profilePictureUrl = profileImageInterceptor.intercept(profilePictureUrl),
-                        countryCode = countryCode,
-                    )
-                    signInNetworkRepositoryContract.signIn(user)
-                    signInPreferencesRepositoryContract.signIn(user.tokenId)
-                    Unit.right()
-                },
-                onFailure = { raise(MindplexDomainError.OTHER) },
-            )
-        }
+        val userIdResult = jwtHandlerContract.decodeSubject(notNullParams.tokenId)
+        userIdResult.fold(
+            onSuccess = { userId ->
+                val countryCode = geoLocationContract.getUserCountryCode().getOrNull()
+
+                val user = notNullParams.copy(
+                    tokenId = userId,
+                    profilePictureUrl = profileImageInterceptor.intercept(notNullParams.profilePictureUrl),
+                    countryCode = countryCode,
+                )
+                signInNetworkRepositoryContract.signIn(user)
+                signInPreferencesRepositoryContract.signIn(user.tokenId)
+                Unit.right()
+            },
+            onFailure = { raise(MindplexDomainError.OTHER) },
+        )
     }
 }

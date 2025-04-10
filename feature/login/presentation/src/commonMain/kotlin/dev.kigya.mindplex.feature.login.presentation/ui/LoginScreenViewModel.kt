@@ -3,8 +3,8 @@ package dev.kigya.mindplex.feature.login.presentation.ui
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
-import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
+import dev.kigya.mindplex.feature.login.domain.usecase.SignOutUseCase
 import dev.kigya.mindplex.feature.login.presentation.contract.LoginContract
 import dev.kigya.mindplex.feature.login.presentation.mapper.GoogleUserPresentationMapper
 import dev.kigya.mindplex.feature.login.presentation.mapper.GoogleUserPresentationMapper.mappedBy
@@ -13,7 +13,7 @@ import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 
 class LoginScreenViewModel(
     private val signInUseCase: SignInUseCase,
-    private val getIsUserSignedInUseCase: GetIsUserSignedInUseCase,
+    private val signOutUseCase: SignOutUseCase,
     navigatorContract: MindplexNavigatorContract,
 ) : BaseViewModel<LoginContract.State, LoginContract.Effect>(
     navigatorContract = navigatorContract,
@@ -23,13 +23,7 @@ class LoginScreenViewModel(
 
     override fun executeStartAction() {
         withUseCaseScope {
-            getIsUserSignedInUseCase(None).collect { isSignedIn ->
-                if (isSignedIn) {
-                    updateState {
-                        copy(isSignedIn = true)
-                    }
-                }
-            }
+            signOutUseCase.invoke(None)
         }
     }
 

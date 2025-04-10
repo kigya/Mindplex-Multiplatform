@@ -9,6 +9,7 @@ import dev.kigya.mindplex.feature.home.domain.usecase.GetFactsUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.GetUserCountryCodeUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
+import dev.kigya.mindplex.feature.login.domain.usecase.SignOutUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.GetProfileUseCase
@@ -22,6 +23,7 @@ val useCaseModule = module {
     factoryOf(::GetIsOnboardingCompletedUseCase)
     factoryOf(::SetOnboardingCompletedUseCase)
     factoryOf(::SignInUseCase)
+    factoryOf(::SignOutUseCase)
     factoryOf(::GetIsUserSignedInUseCase)
     factoryOf(::GetUserProfileUseCase)
     factoryOf(::GetFactsUseCase)
