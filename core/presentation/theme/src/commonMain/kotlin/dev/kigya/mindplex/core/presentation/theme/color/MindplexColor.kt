@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import dev.kigya.mindplex.core.presentation.theme.MindplexDsToken
 
 @Immutable
+@ConsistentCopyVisibility
 data class MindplexColor internal constructor(
     val iris100: MindplexDsToken<Color> = MindplexDsToken(Color(0xFF4C4580)),
     val iris90: MindplexDsToken<Color> = MindplexDsToken(Color(0xFF49408E)),

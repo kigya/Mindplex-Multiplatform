@@ -17,18 +17,18 @@ class UserProfileNetworkRepository(
 ) : UserProfileNetworkRepositoryContract {
 
     override suspend fun getUserProfile(token: String): Result<UserProfileDomainModel> =
-        withContext(dispatcher) {
-            runSuspendCatching {
+        runSuspendCatching {
+            withContext(dispatcher) {
                 val documentSnapshot = Firebase.firestore
                     .collection(UsersCollection.NAME)
                     .document(token)
                     .get(Source.SERVER)
 
                 documentSnapshot.data<UserRemoteProfileDto>().toDomain()
-            }.onFailure { e ->
-                println("Exception occurred: ${e.message}")
-                e.printStackTrace()
             }
+        }.onFailure { e ->
+            println("Exception occurred: ${e.message}")
+            e.printStackTrace()
         }
 
     override suspend fun updateUserScore(

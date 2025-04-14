@@ -30,6 +30,7 @@ include(
     ":core:data:profile",
     ":core:data:credentials",
     ":core:data:jwt-parser",
+    ":core:data:scout",
     ":core:domain:connectivity",
     ":core:domain:interactor",
     ":core:domain:profile",

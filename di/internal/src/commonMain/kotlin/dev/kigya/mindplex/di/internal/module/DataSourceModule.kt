@@ -4,6 +4,8 @@ import dev.jordond.connectivity.Connectivity
 import dev.kigya.mindplex.core.data.connectivity.ConnectivityManager
 import dev.kigya.mindplex.core.data.parser.JwtParser
 import dev.kigya.mindplex.core.data.parser.JwtParserContract
+import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
+import dev.kigya.mindplex.core.data.scout.impl.ScoutNetworkClient
 import dev.kigya.mindplex.feature.login.data.JwtHandler
 import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
 import kotlinx.coroutines.CoroutineDispatcher
@@ -38,4 +40,11 @@ val dataSourceModule = module {
             jwtParserContract = get(),
         )
     } bind JwtHandlerContract::class
+
+    factory {
+        ScoutNetworkClient(
+            httpClient = get(),
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
+        )
+    } bind ScoutNetworkClientContract::class
 }

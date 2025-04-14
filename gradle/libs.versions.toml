@@ -9,40 +9,40 @@ targetSdk = { strictly = "35" }
 agp = { require = "8.7.2" }
 
 # Kotlin
-kotlin = { strictly = "2.1.0" }
-ksp = { strictly = "2.1.0-1.0.29" }
+kotlin = { strictly = "2.1.20" }
+ksp = { strictly = "2.1.20-1.0.31" }
 
 # Serialization
 kotlinxSerialization = { require = "1.7.3" }
 
 # Compose
 composeActivity = { require = "1.10.1" }
-composeMultiplatform = { require = "1.8.0-alpha03" }
+composeMultiplatform = { require = "1.8.0-beta01" }
 composeTest = { strictly = "1.8.0-beta02" }
-composeNavigation = { require = "2.8.0-alpha13" }
-composeShimmer = { require = "1.3.1" }
-composeAdaptive = { require = "1.0.1" }
+composeNavigation = { require = "2.9.0-alpha15" }
+composeShimmer = { require = "1.3.2" }
+composeAdaptive = { require = "1.1.0-beta01" }
 
 # Lifecycle
 lifecycle = { require = "2.9.0-alpha07" }
 
 # Compottie
-compottie = { require = "2.0.0-rc02" }
+compottie = { require = "2.0.0-rc04" }
 
 # DI
 koin = { strictly = "4.0.2" }
 
 # Network
-ktor = { require = "3.0.3" }
+ktor = { require = "3.1.1" }
 napier = { prefer = "2.7.1" }
 
 # Local Storage
-dataStore = { require = "1.1.1" }
+dataStore = { require = "1.1.3" }
 room = { strictly = "2.7.0-alpha11" }
 sqlite = { strictly = "2.5.0-alpha11" }
 
 # Coroutines
-coroutines = { require = "1.9.0" }
+coroutines = { require = "1.10.1" }
 
 # Tests
 konsist = { prefer = "0.17.3" }
@@ -55,9 +55,10 @@ robolectric = { prefer = "4.12" }
 
 # Detekt
 detekt = { require = "1.23.7" }
+detektPlugin = { require = "0.3.13" }
 
 # Auth
-kmpAuth = { require = "2.3.0-beta01" }
+kmpAuth = { require = "2.3.1" }
 
 # Connectivity
 connectivity = { require = "1.2.0" }
@@ -77,7 +78,7 @@ coil = { prefer = "3.1.0" }
 arrow = { require = "2.0.0" }
 
 # Time
-kotlinxDatetime = { prefer = "0.6.1" }
+kotlinxDatetime = { prefer = "0.6.2" }
 
 # Immutable Collections
 kotlinxCollectionsImmutable = { require = "0.3.8" }
@@ -152,7 +153,7 @@ robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectr
 
 # Detekt Libraries
 detekt-plugins-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-detekt-plugins-compose = { module = "io.nlopez.compose.rules:detekt", version = "0.3.13" }
+detekt-plugins-compose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektPlugin" }
 
 # Auth
 kmpAuth-google = { module = "io.github.mirzemehdi:kmpauth-google", version.ref = "kmpAuth" }
