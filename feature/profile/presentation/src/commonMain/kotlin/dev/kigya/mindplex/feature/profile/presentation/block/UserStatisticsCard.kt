@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -22,19 +23,20 @@ import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindple
 import dev.kigya.mindplex.feature.profile.presentation.contract.ProfileContract
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileIcons
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.userStatisticCategoryNameText
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.userStatisticScoreText
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.userStatisticsCardBackground
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.verticalDivider
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileUserStatisticCategoryNameText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileUserStatisticScoreText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileUserStatisticsCardBackground
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileVerticalDivider
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.ic_flag
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.ic_star
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.ic_world
-import mindplex_multiplatform.feature.profile.presentation.generated.resources.local_rank
-import mindplex_multiplatform.feature.profile.presentation.generated.resources.points
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile_category_preview
+import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile_hash
+import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile_local_rank
+import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile_points
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile_score_preview
-import mindplex_multiplatform.feature.profile.presentation.generated.resources.world_rank
+import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile_world_rank
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -55,36 +57,36 @@ internal fun UserStatisticsCard(
                 RoundedCornerShape(ProfileTheme.dimension.dp24.value),
             )
             .clip(RoundedCornerShape(ProfileTheme.dimension.dp24.value))
-            .background(ProfileTheme.colorScheme.userStatisticsCardBackground.value),
+            .background(ProfileTheme.colorScheme.profileUserStatisticsCardBackground.value),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         UserStatistic(
             image = Res.drawable.ic_star,
-            name = stringResource(Res.string.points),
+            name = stringResource(Res.string.profile_points),
             score = state.userScore,
             isLoading = isLoading,
-            showHash = false,
+            isHash = false,
         )
 
-        VerticalDivider(color = ProfileTheme.colorScheme.verticalDivider.value)
+        VerticalDivider(color = ProfileTheme.colorScheme.profileVerticalDivider.value)
 
         UserStatistic(
             image = Res.drawable.ic_world,
-            name = stringResource(Res.string.world_rank),
+            name = stringResource(Res.string.profile_world_rank),
             score = state.userGlobalRank,
             isLoading = isLoading,
-            showHash = true,
+            isHash = true,
         )
 
-        VerticalDivider(color = ProfileTheme.colorScheme.verticalDivider.value)
+        VerticalDivider(color = ProfileTheme.colorScheme.profileVerticalDivider.value)
 
         UserStatistic(
             image = Res.drawable.ic_flag,
-            name = stringResource(Res.string.local_rank),
+            name = stringResource(Res.string.profile_local_rank),
             score = state.userLocalRank,
             isLoading = isLoading,
-            showHash = true,
+            isHash = true,
         )
     }
 }
@@ -96,7 +98,7 @@ private fun UserStatistic(
     name: String,
     score: String,
     isLoading: Boolean,
-    showHash: Boolean,
+    isHash: Boolean,
 ) {
     Column(
         modifier = Modifier.width(ProfileTheme.dimension.dp80.value),
@@ -112,28 +114,45 @@ private fun UserStatistic(
 
         MindplexMeasurablePlaceholder(
             textToMeasure = stringResource(Res.string.profile_category_preview),
-            textStyle = ProfileTheme.typography.userStatisticCategoryNameText,
+            textStyle = ProfileTheme.typography.profileUserStatisticCategoryNameText,
             isLoading = isLoading,
         ) {
             MindplexText(
                 value = name,
-                color = ProfileTheme.colorScheme.userStatisticCategoryNameText,
-                typography = ProfileTheme.typography.userStatisticCategoryNameText,
+                color = ProfileTheme.colorScheme.profileUserStatisticCategoryNameText,
+                typography = ProfileTheme.typography.profileUserStatisticCategoryNameText,
             )
         }
 
         MindplexMeasurablePlaceholder(
             textToMeasure = stringResource(Res.string.profile_score_preview),
-            textStyle = ProfileTheme.typography.userStatisticScoreText,
+            textStyle = ProfileTheme.typography.profileUserStatisticScoreText,
             isLoading = isLoading,
         ) {
-            MindplexText(
-                value = score,
-                color = ProfileTheme.colorScheme.userStatisticScoreText,
-                typography = ProfileTheme.typography.userStatisticScoreText,
-                animation = MindplexTextAnimation.MovingText,
-                prefix = showHash,
-            )
+            if (isHash) {
+                Row {
+                    MindplexText(
+                        value = stringResource(Res.string.profile_hash),
+                        color = ProfileTheme.colorScheme.profileUserStatisticScoreText,
+                        typography = ProfileTheme.typography.profileUserStatisticScoreText,
+                    )
+                    MindplexText(
+                        modifier = Modifier.wrapContentWidth(),
+                        value = score,
+                        color = ProfileTheme.colorScheme.profileUserStatisticScoreText,
+                        typography = ProfileTheme.typography.profileUserStatisticScoreText,
+                        animation = MindplexTextAnimation.MovingText,
+                    )
+                }
+            } else {
+                MindplexText(
+                    modifier = Modifier.wrapContentWidth(),
+                    value = score,
+                    color = ProfileTheme.colorScheme.profileUserStatisticScoreText,
+                    typography = ProfileTheme.typography.profileUserStatisticScoreText,
+                    animation = MindplexTextAnimation.MovingText,
+                )
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.pro
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileNameText
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.ic_log_out
-import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile
+import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile_name
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -29,7 +29,7 @@ internal fun ProfileScreenHeader(
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         MindplexText(
-            value = stringResource(Res.string.profile),
+            value = stringResource(Res.string.profile_name),
             color = ProfileTheme.colorScheme.profileNameText,
             typography = ProfileTheme.typography.profileNameText,
             animation = MindplexTextAnimation.Typewriter,

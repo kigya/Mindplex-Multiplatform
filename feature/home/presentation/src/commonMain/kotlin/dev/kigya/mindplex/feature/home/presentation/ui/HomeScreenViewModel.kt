@@ -40,7 +40,11 @@ class HomeScreenViewModel(
 
     override fun executeStartAction() {
         withUseCaseScope {
-            fetchScreenData()
+            val result = getUserProfileUseCase.invoke(None)
+            result.fold(
+                ifLeft = { navigatorContract.navigateTo(ScreenRoute.Login) },
+                ifRight = { fetchScreenData() },
+            )
         }
     }
 

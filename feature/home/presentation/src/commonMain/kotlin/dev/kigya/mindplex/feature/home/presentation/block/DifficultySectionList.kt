@@ -12,9 +12,9 @@ import dev.kigya.mindplex.core.presentation.common.util.performClickHapticFeedba
 import dev.kigya.mindplex.core.presentation.uikit.MindplexChip
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
 import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionButton
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionDifficultyBackground
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionDifficultyText
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeCategorySelectionButton
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeCategorySelectionDifficultyBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeCategorySelectionDifficultyText
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -35,10 +35,10 @@ internal fun DifficultySectionList(
             difficulty.textResource?.let { textResource ->
                 MindplexChip(
                     text = stringResource(textResource),
-                    textStyle = HomeTheme.typography.categorySelectionButton,
+                    textStyle = HomeTheme.typography.homeCategorySelectionButton,
                     isSelected = difficulty.isSelected,
-                    textColor = HomeTheme.colorScheme.categorySelectionDifficultyText,
-                    backgroundColor = HomeTheme.colorScheme.categorySelectionDifficultyBackground,
+                    textColor = HomeTheme.colorScheme.homeCategorySelectionDifficultyText,
+                    backgroundColor = HomeTheme.colorScheme.homeCategorySelectionDifficultyBackground,
                 ) {
                     performClickHapticFeedback(haptic)
                     event(HomeContract.Event.OnDifficultyClicked(difficulty))

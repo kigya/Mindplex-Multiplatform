@@ -12,7 +12,6 @@ import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignOutUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
-import dev.kigya.mindplex.feature.profile.domain.usecase.GetProfileUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.GetThemeUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.GetUsersByRankUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.SaveThemeUseCase
@@ -33,7 +32,6 @@ val useCaseModule = module {
     factoryOf(::UpdateScoreUseCase)
     factoryOf(::GetUsersByRankUseCase)
     factoryOf(::GetUserCountryCodeUseCase)
-    factoryOf(::GetProfileUseCase)
     factoryOf(::GetThemeUseCase)
     factoryOf(::SaveThemeUseCase)
 }

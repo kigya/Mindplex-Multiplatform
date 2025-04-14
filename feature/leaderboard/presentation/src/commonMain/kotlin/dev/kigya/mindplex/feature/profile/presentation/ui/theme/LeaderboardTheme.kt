@@ -26,56 +26,56 @@ internal object LeaderboardTheme : MindplexTheme() {
             dark = super.color.white,
         )
 
-    val MindplexColorScheme.branchesTint
+    val MindplexColorScheme.leaderboardBranchesTint
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.iris80,
             dark = super.color.iris100,
         )
 
-    val MindplexColorScheme.userPodiumRankText
+    val MindplexColorScheme.leaderboardUserPodiumRankText
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.gunmetal100,
             dark = super.color.white,
         )
 
-    val MindplexColorScheme.userPodiumScoreText
+    val MindplexColorScheme.leaderboardUserPodiumScoreText
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.gunmetal80,
             dark = super.color.gunmetal60,
         )
 
-    val MindplexColorScheme.crown
+    val MindplexColorScheme.leaderboardCrown
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.creamBrulee,
             dark = super.color.iris80,
         )
 
-    val MindplexColorScheme.firstRankCardColor
+    val MindplexColorScheme.leaderboardFirstRankCardColor
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.lightningYellow,
             dark = super.color.lightningYellow50,
         )
 
-    val MindplexColorScheme.secondRankCardColor
+    val MindplexColorScheme.leaderboardSecondRankCardColor
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.white,
             dark = super.color.white50,
         )
 
-    val MindplexColorScheme.thirdRankCardColor
+    val MindplexColorScheme.leaderboardThirdRankCardColor
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.atomicTangerine,
             dark = super.color.atomicTangerine50,
         )
 
-    val MindplexColorScheme.dividerLineUserRankColor
+    val MindplexColorScheme.leaderboardDividerLineUserRankColor
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.iris20,
@@ -92,7 +92,7 @@ internal object LeaderboardTheme : MindplexTheme() {
             fontFamily = super.font.rubik,
         )
 
-    val MindplexTypography.userPodiumRankText
+    val MindplexTypography.leaderboardUserPodiumRankText
         @Composable
         get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp14,
@@ -100,7 +100,7 @@ internal object LeaderboardTheme : MindplexTheme() {
             fontFamily = super.font.rubik,
         )
 
-    val MindplexTypography.userPodiumScoreText
+    val MindplexTypography.leaderboardUserPodiumScoreText
         @Composable
         get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp12,

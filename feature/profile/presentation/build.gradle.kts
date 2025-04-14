@@ -24,6 +24,7 @@ kotlin {
                         implementation(common)
                     }
                 }
+                implementation(feature.login.domain)
                 implementation(feature.profile.domain)
                 implementation(navigation.api)
             }

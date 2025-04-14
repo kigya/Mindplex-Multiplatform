@@ -6,6 +6,7 @@ import dev.kigya.mindplex.core.presentation.theme.ThemeManager
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.GetThemeUseCase
+import dev.kigya.mindplex.feature.profile.domain.usecase.SaveThemeUseCase
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
@@ -20,6 +21,7 @@ class SplashScreenViewModel(
     private val getIsOnboardingCompletedUseCase: GetIsOnboardingCompletedUseCase,
     private val getIsUserSignedInUseCase: GetIsUserSignedInUseCase,
     private val getThemeUseCase: GetThemeUseCase,
+    private val setThemeUseCase: SaveThemeUseCase,
     navigatorContract: MindplexNavigatorContract,
 ) : BaseViewModel<SplashContract.State, SplashContract.Effect>(
     navigatorContract = navigatorContract,
@@ -32,8 +34,12 @@ class SplashScreenViewModel(
 
     override fun executeStartAction() {
         withUseCaseScope {
-            val isDark = getThemeUseCase(None).getOrNull()
-            isDark?.let { ThemeManager.setTheme(it) }
+            val theme = getThemeUseCase(None).getOrNull()
+            if (theme == null) {
+                sendEffect(SplashContract.Effect.RequestSystemTheme)
+            } else {
+                ThemeManager.setTheme(theme)
+            }
 
             combine(
                 getIsOnboardingCompletedUseCase(None),
@@ -61,6 +67,11 @@ class SplashScreenViewModel(
                         popUpToRoute = ScreenRoute.Splash,
                         inclusive = true,
                     )
+                }
+
+                is SplashContract.Event.OnSystemThemeReceived -> {
+                    setThemeUseCase(event.isDark)
+                    ThemeManager.setTheme(event.isDark)
                 }
             }
         }

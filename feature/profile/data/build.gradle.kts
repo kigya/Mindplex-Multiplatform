@@ -22,6 +22,7 @@ kotlin {
                 implementation(feature.profile.domain)
                 with(core) {
                     implementation(data.profile)
+                    implementation(domain.profile)
                     implementation(util)
                     implementation(data.firebase)
                 }

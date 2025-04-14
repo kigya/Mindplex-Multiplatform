@@ -18,8 +18,8 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindplexUiKitApi
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.dividerLineUserRankColor
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.userPodiumScoreText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardDividerLineUserRankColor
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardUserPodiumScoreText
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.leaderboard_points
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.leaderboard_user_name_preview
@@ -69,7 +69,7 @@ private fun ShimmerUserRankCard(modifier: Modifier = Modifier) {
         MindplexMeasurablePlaceholder(
             isLoading = true,
             textToMeasure = stringResource(Res.string.leaderboard_user_name_preview),
-            textStyle = LeaderboardTheme.typography.userPodiumScoreText,
+            textStyle = LeaderboardTheme.typography.leaderboardUserPodiumScoreText,
         ) {
             Box(
                 modifier = modifier
@@ -83,7 +83,7 @@ private fun ShimmerUserRankCard(modifier: Modifier = Modifier) {
         MindplexMeasurablePlaceholder(
             isLoading = true,
             textToMeasure = stringResource(Res.string.leaderboard_points),
-            textStyle = LeaderboardTheme.typography.userPodiumScoreText,
+            textStyle = LeaderboardTheme.typography.leaderboardUserPodiumScoreText,
         ) {
             Box(
                 modifier = modifier
@@ -94,6 +94,6 @@ private fun ShimmerUserRankCard(modifier: Modifier = Modifier) {
     }
 
     HorizontalDivider(
-        color = LeaderboardTheme.colorScheme.dividerLineUserRankColor.value,
+        color = LeaderboardTheme.colorScheme.leaderboardDividerLineUserRankColor.value,
     )
 }

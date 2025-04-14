@@ -11,9 +11,9 @@ import dev.kigya.mindplex.core.presentation.common.extension.fadeInEffect
 import dev.kigya.mindplex.feature.profile.presentation.block.PodiumConstants
 import dev.kigya.mindplex.feature.profile.presentation.ui.provider.LeaderboardAdaptiveMetrics.LocalPodiumFraction
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.firstRankCardColor
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.secondRankCardColor
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.thirdRankCardColor
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardFirstRankCardColor
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardSecondRankCardColor
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardThirdRankCardColor
 
 @Composable
 @Suppress("MagicNumber")
@@ -31,7 +31,7 @@ internal fun ShimmerPodiumSection(modifier: Modifier = Modifier) {
                 .align(Alignment.TopCenter)
                 .fadeInEffect(delayMillis = 900),
             isFirstRank = true,
-            topColumnGradientColor = LeaderboardTheme.colorScheme.firstRankCardColor.value,
+            topColumnGradientColor = LeaderboardTheme.colorScheme.leaderboardFirstRankCardColor.value,
         )
 
         ShimmerUserScoreCard(
@@ -41,7 +41,7 @@ internal fun ShimmerPodiumSection(modifier: Modifier = Modifier) {
                 .padding(bottom = LeaderboardTheme.dimension.dp36.value)
                 .fadeInEffect(delayMillis = 600),
             isFirstRank = false,
-            topColumnGradientColor = LeaderboardTheme.colorScheme.secondRankCardColor.value,
+            topColumnGradientColor = LeaderboardTheme.colorScheme.leaderboardSecondRankCardColor.value,
         )
 
         ShimmerUserScoreCard(
@@ -50,7 +50,7 @@ internal fun ShimmerPodiumSection(modifier: Modifier = Modifier) {
                 .align(Alignment.BottomEnd)
                 .fadeInEffect(delayMillis = 300),
             isFirstRank = false,
-            topColumnGradientColor = LeaderboardTheme.colorScheme.thirdRankCardColor.value,
+            topColumnGradientColor = LeaderboardTheme.colorScheme.leaderboardThirdRankCardColor.value,
         )
     }
 }

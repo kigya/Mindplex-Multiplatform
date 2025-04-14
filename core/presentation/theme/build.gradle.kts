@@ -11,7 +11,6 @@ kotlin {
             with(libs) {
                 implementation(bundles.dataStore)
             }
-            implementation(projects.feature.profile.domain)
         }
     }
 }

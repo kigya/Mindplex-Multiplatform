@@ -1,6 +1,7 @@
 package dev.kigya.mindplex.core.data.profile.repository
 
 import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.firestore.Direction
 import dev.gitlive.firebase.firestore.Source
 import dev.gitlive.firebase.firestore.firestore
 import dev.kigya.mindplex.core.data.profile.mapper.toDomain
@@ -17,19 +18,55 @@ class UserProfileNetworkRepository(
 ) : UserProfileNetworkRepositoryContract {
 
     override suspend fun getUserProfile(token: String): Result<UserProfileDomainModel> =
-        runSuspendCatching {
-            withContext(dispatcher) {
+        withContext(dispatcher) {
+            runSuspendCatching {
                 val documentSnapshot = Firebase.firestore
                     .collection(UsersCollection.NAME)
                     .document(token)
                     .get(Source.SERVER)
 
-                documentSnapshot.data<UserRemoteProfileDto>().toDomain()
+                val userDto = documentSnapshot.data<UserRemoteProfileDto>()
+                val domainProfile = userDto.toDomain()
+
+                val globalRank = getGlobalRank(userDto.score)
+                val localRank = getLocalRank(userDto.score, userDto.countryCode)
+
+                val finalProfile = domainProfile.copy(
+                    globalRank = globalRank,
+                    localRank = localRank,
+                )
+                return@runSuspendCatching finalProfile
             }
-        }.onFailure { e ->
-            println("Exception occurred: ${e.message}")
-            e.printStackTrace()
         }
+
+    private suspend fun getGlobalRank(userScore: Int): Int {
+        val allUsersSnapshot = Firebase.firestore
+            .collection(UsersCollection.NAME)
+            .orderBy(UsersCollection.Document.SCORE, Direction.DESCENDING)
+            .get()
+
+        return allUsersSnapshot.documents.indexOfFirst {
+            (it.get(UsersCollection.Document.SCORE) ?: 0L) <= userScore.toLong()
+        } + 1
+    }
+
+    private suspend fun getLocalRank(
+        userScore: Int,
+        countryCode: String,
+    ): Int {
+        val localUsersSnapshot = Firebase.firestore
+            .collection(UsersCollection.NAME)
+            .orderBy(UsersCollection.Document.SCORE, Direction.DESCENDING)
+            .get()
+
+        val filteredUsersSnapshot = localUsersSnapshot.documents.filter {
+            it.get<String>(UsersCollection.Document.COUNTRY_CODE) == countryCode
+        }
+
+        return filteredUsersSnapshot.indexOfFirst {
+            (it.get(UsersCollection.Document.SCORE) ?: 0L) <= userScore.toLong()
+        } + 1
+    }
 
     override suspend fun updateUserScore(
         token: String,

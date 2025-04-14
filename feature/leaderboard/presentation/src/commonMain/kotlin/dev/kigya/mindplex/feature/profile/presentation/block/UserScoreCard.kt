@@ -26,10 +26,10 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.profile.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.crown
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardBackground
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.userPodiumRankText
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.userPodiumScoreText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardCrown
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardUserPodiumRankText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardUserPodiumScoreText
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_crown
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_profile_fallback
@@ -68,20 +68,20 @@ internal fun UserScoreCard(
             Box(contentAlignment = Alignment.Center) {
                 MindplexIcon(
                     resource = Res.drawable.ic_crown,
-                    color = LeaderboardTheme.colorScheme.crown,
+                    color = LeaderboardTheme.colorScheme.leaderboardCrown,
                 )
 
                 MindplexText(
                     value = state.userRank,
-                    color = LeaderboardTheme.colorScheme.userPodiumRankText,
-                    typography = LeaderboardTheme.typography.userPodiumRankText,
+                    color = LeaderboardTheme.colorScheme.leaderboardUserPodiumRankText,
+                    typography = LeaderboardTheme.typography.leaderboardUserPodiumRankText,
                 )
             }
         } else {
             MindplexText(
                 value = state.userRank,
-                color = LeaderboardTheme.colorScheme.userPodiumRankText,
-                typography = LeaderboardTheme.typography.userPodiumRankText,
+                color = LeaderboardTheme.colorScheme.leaderboardUserPodiumRankText,
+                typography = LeaderboardTheme.typography.leaderboardUserPodiumRankText,
             )
         }
 
@@ -115,15 +115,15 @@ internal fun UserScoreCard(
         MindplexText(
             modifier = Modifier.padding(horizontal = LeaderboardTheme.dimension.dp8.value),
             value = state.userName,
-            color = LeaderboardTheme.colorScheme.userPodiumRankText,
-            typography = LeaderboardTheme.typography.userPodiumRankText,
+            color = LeaderboardTheme.colorScheme.leaderboardUserPodiumRankText,
+            typography = LeaderboardTheme.typography.leaderboardUserPodiumRankText,
             maxLines = 2,
         )
 
         MindplexText(
             value = stringResource(Res.string.leaderboard_points, state.userScore),
-            color = LeaderboardTheme.colorScheme.userPodiumScoreText,
-            typography = LeaderboardTheme.typography.userPodiumScoreText,
+            color = LeaderboardTheme.colorScheme.leaderboardUserPodiumScoreText,
+            typography = LeaderboardTheme.typography.leaderboardUserPodiumScoreText,
         )
     }
 }

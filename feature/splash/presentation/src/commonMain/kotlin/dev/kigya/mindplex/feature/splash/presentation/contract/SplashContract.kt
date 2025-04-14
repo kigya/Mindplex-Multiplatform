@@ -17,8 +17,11 @@ interface SplashContract :
     sealed class Event {
 
         internal data object OnAnimationFinished : Event()
+        internal data class OnSystemThemeReceived(val isDark: Boolean) : Event()
     }
 
     @Immutable
-    sealed class Effect
+    sealed class Effect {
+        internal data object RequestSystemTheme : Effect()
+    }
 }

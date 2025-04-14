@@ -24,9 +24,9 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.profile.presentation.contract.LeaderboardContract
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.dividerLineUserRankColor
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.userPodiumRankText
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.userPodiumScoreText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardDividerLineUserRankColor
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardUserPodiumRankText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardUserPodiumScoreText
 import kotlinx.collections.immutable.ImmutableList
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_profile_fallback
@@ -71,8 +71,8 @@ private fun UserRankCard(
         MindplexText(
             modifier = modifier.width(LeaderboardTheme.dimension.dp16.value),
             value = state.userRank,
-            color = LeaderboardTheme.colorScheme.userPodiumRankText,
-            typography = LeaderboardTheme.typography.userPodiumRankText,
+            color = LeaderboardTheme.colorScheme.leaderboardUserPodiumRankText,
+            typography = LeaderboardTheme.typography.leaderboardUserPodiumRankText,
         )
 
         Box(modifier = Modifier.width(LeaderboardTheme.dimension.dp48.value)) {
@@ -102,8 +102,8 @@ private fun UserRankCard(
         MindplexText(
             modifier = modifier.weight(1f),
             value = state.userName,
-            color = LeaderboardTheme.colorScheme.userPodiumRankText,
-            typography = LeaderboardTheme.typography.userPodiumRankText,
+            color = LeaderboardTheme.colorScheme.leaderboardUserPodiumRankText,
+            typography = LeaderboardTheme.typography.leaderboardUserPodiumRankText,
             maxLines = 1,
             align = TextAlign.Start,
         )
@@ -112,12 +112,12 @@ private fun UserRankCard(
 
         MindplexText(
             value = stringResource(Res.string.leaderboard_points, state.userScore),
-            color = LeaderboardTheme.colorScheme.userPodiumScoreText,
-            typography = LeaderboardTheme.typography.userPodiumScoreText,
+            color = LeaderboardTheme.colorScheme.leaderboardUserPodiumScoreText,
+            typography = LeaderboardTheme.typography.leaderboardUserPodiumScoreText,
         )
     }
 
     HorizontalDivider(
-        color = LeaderboardTheme.colorScheme.dividerLineUserRankColor.value,
+        color = LeaderboardTheme.colorScheme.leaderboardDividerLineUserRankColor.value,
     )
 }

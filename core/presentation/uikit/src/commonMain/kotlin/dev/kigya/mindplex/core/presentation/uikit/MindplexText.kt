@@ -7,7 +7,6 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -63,7 +62,6 @@ fun MindplexText(
     maxLines: Int = Int.MAX_VALUE,
     minLines: Int = 1,
     animation: MindplexTextAnimation = MindplexTextAnimation.None,
-    prefix: Boolean? = false,
 ) {
     when (animation) {
         MindplexTextAnimation.None ->
@@ -129,14 +127,9 @@ fun MindplexText(
                 }
             }
 
-            Box(
-                modifier = modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center,
-            ) {
-                val text = if (prefix == true) "#$animatedValue" else "$animatedValue"
-
+            Box(contentAlignment = Alignment.Center) {
                 Text(
-                    text = text,
+                    text = "$animatedValue",
                     color = color.value,
                     style = typography.value,
                     maxLines = maxLines,

@@ -1,9 +1,10 @@
 package dev.kigya.mindplex.feature.profile.presentation.ui
 
 import dev.kigya.mindplex.core.domain.interactor.base.None
+import dev.kigya.mindplex.core.domain.profile.usecase.GetUserProfileUseCase
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
-import dev.kigya.mindplex.feature.profile.domain.usecase.GetProfileUseCase
+import dev.kigya.mindplex.feature.login.domain.usecase.SignOutUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.GetThemeUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.SaveThemeUseCase
 import dev.kigya.mindplex.feature.profile.presentation.contract.ProfileContract
@@ -13,9 +14,10 @@ import kotlinx.coroutines.supervisorScope
 
 class ProfileScreenViewModel(
     navigatorContract: MindplexNavigatorContract,
-    private val getUserProfileUseCase: GetProfileUseCase,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
     private val getThemeUseCase: GetThemeUseCase,
     private val saveThemeUseCase: SaveThemeUseCase,
+    private val singOutUseCase: SignOutUseCase,
 ) : BaseViewModel<ProfileContract.State, ProfileContract.Effect>(
     navigatorContract = navigatorContract,
     initialState = ProfileContract.State(),
@@ -42,6 +44,7 @@ class ProfileScreenViewModel(
     }
 
     private suspend fun handleGoToRegistration() {
+        singOutUseCase.invoke(None)
         navigatorContract.navigateTo(
             route = ScreenRoute.Login,
             popUpToRoute = ScreenRoute.Home,

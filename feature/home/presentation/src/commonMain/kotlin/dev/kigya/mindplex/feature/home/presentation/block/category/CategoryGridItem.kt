@@ -18,8 +18,8 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionItem
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionRipple
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeCategorySelectionItem
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeCategorySelectionRipple
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -38,7 +38,7 @@ internal fun CategoryGridItem(
             .clickable(
                 onClick = onClick,
                 interactionSource = remember(::MutableInteractionSource),
-                indication = ripple(color = HomeTheme.colorScheme.categorySelectionRipple.value),
+                indication = ripple(color = HomeTheme.colorScheme.homeCategorySelectionRipple.value),
             )
             .padding(vertical = HomeTheme.dimension.dp8.value)
             .width(intrinsicSize = IntrinsicSize.Min),
@@ -54,8 +54,8 @@ internal fun CategoryGridItem(
 
         MindplexText(
             value = stringResource(name),
-            typography = HomeTheme.typography.categorySelectionItem,
-            color = HomeTheme.colorScheme.categorySelectionItem,
+            typography = HomeTheme.typography.homeCategorySelectionItem,
+            color = HomeTheme.colorScheme.homeCategorySelectionItem,
             modifier = Modifier.width(IntrinsicSize.Min),
         )
     }

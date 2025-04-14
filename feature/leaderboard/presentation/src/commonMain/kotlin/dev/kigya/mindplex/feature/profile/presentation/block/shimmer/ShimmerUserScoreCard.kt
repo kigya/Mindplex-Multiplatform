@@ -23,10 +23,10 @@ import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindple
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.profile.presentation.block.UserScoreCardConstants
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.crown
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardBackground
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.userPodiumRankText
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.userPodiumScoreText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardCrown
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardUserPodiumRankText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardUserPodiumScoreText
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_crown
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.leaderboard_points
@@ -59,20 +59,20 @@ internal fun ShimmerUserScoreCard(
             Box(contentAlignment = Alignment.Center) {
                 MindplexIcon(
                     resource = Res.drawable.ic_crown,
-                    color = LeaderboardTheme.colorScheme.crown,
+                    color = LeaderboardTheme.colorScheme.leaderboardCrown,
                 )
 
                 MindplexText(
                     value = String.empty,
-                    color = LeaderboardTheme.colorScheme.userPodiumRankText,
-                    typography = LeaderboardTheme.typography.userPodiumRankText,
+                    color = LeaderboardTheme.colorScheme.leaderboardUserPodiumRankText,
+                    typography = LeaderboardTheme.typography.leaderboardUserPodiumRankText,
                 )
             }
         } else {
             MindplexText(
                 value = String.empty,
-                color = LeaderboardTheme.colorScheme.userPodiumRankText,
-                typography = LeaderboardTheme.typography.userPodiumRankText,
+                color = LeaderboardTheme.colorScheme.leaderboardUserPodiumRankText,
+                typography = LeaderboardTheme.typography.leaderboardUserPodiumRankText,
             )
         }
 
@@ -83,7 +83,7 @@ internal fun ShimmerUserScoreCard(
         MindplexMeasurablePlaceholder(
             isLoading = true,
             textToMeasure = stringResource(Res.string.leaderboard_points),
-            textStyle = LeaderboardTheme.typography.userPodiumScoreText,
+            textStyle = LeaderboardTheme.typography.leaderboardUserPodiumScoreText,
         ) {
             Box(modifier = Modifier.width(LeaderboardTheme.dimension.dp24.value))
         }

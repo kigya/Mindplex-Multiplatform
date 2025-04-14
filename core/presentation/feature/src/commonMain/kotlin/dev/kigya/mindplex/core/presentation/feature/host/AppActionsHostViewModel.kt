@@ -64,18 +64,15 @@ class AppActionsHostViewModel(
                 if (getState().shouldDisplayNavigationBar.not()) delay(NAVIGATION_BAR_DELAY)
                 val targetRoute = this@handleNewRouteReceive.route
 
-                val newVertical = when (targetRoute) {
-                    ScreenRoute.Home -> ScreenHostContract.State.Vertical.Home
-                    ScreenRoute.Leaderboard -> ScreenHostContract.State.Vertical.Leaderboard
-                    ScreenRoute.Profile -> ScreenHostContract.State.Vertical.Profile
-                    else -> null
-                }
-
                 updateState {
                     copy(
                         shouldDisplayNavigationBar = targetRoute != null &&
                             targetRoute in ALLOWED_NAVIGATION_BAR_ROUTES,
-                        activeVertical = newVertical ?: getState().activeVertical,
+                        activeVertical = if (targetRoute == ScreenRoute.Login) {
+                            ScreenHostContract.State.Vertical.Home
+                        } else {
+                            getState().activeVertical
+                        },
                     )
                 }
             }

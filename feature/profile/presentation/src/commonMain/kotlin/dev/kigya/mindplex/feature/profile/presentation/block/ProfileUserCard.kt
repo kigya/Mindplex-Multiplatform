@@ -22,10 +22,10 @@ import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindple
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.profile.presentation.contract.ProfileContract
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.userNameText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileUserNameText
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.ic_profile_fallback
-import mindplex_multiplatform.feature.profile.presentation.generated.resources.user_name
+import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile_user_name
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -44,7 +44,11 @@ internal fun ProfileUserCard(
         verticalArrangement = Arrangement.spacedBy(ProfileTheme.dimension.dp24.value),
     ) {
         MindplexMeasurablePlaceholder(isLoading = isLoading) {
-            Box(modifier = Modifier.width(ProfileTheme.dimension.dp132.value)) {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = ProfileTheme.dimension.dp4.value)
+                    .width(ProfileTheme.dimension.dp128.value),
+            ) {
                 AsyncImage(
                     modifier = Modifier
                         .size(ProfileTheme.dimension.dp128.value)
@@ -72,13 +76,13 @@ internal fun ProfileUserCard(
 
         MindplexMeasurablePlaceholder(
             isLoading = isLoading,
-            textToMeasure = stringResource(Res.string.user_name),
-            textStyle = ProfileTheme.typography.userNameText,
+            textToMeasure = stringResource(Res.string.profile_user_name),
+            textStyle = ProfileTheme.typography.profileUserNameText,
         ) {
             MindplexText(
                 value = state.userName,
-                color = ProfileTheme.colorScheme.userNameText,
-                typography = ProfileTheme.typography.userNameText,
+                color = ProfileTheme.colorScheme.profileUserNameText,
+                typography = ProfileTheme.typography.profileUserNameText,
             )
         }
 

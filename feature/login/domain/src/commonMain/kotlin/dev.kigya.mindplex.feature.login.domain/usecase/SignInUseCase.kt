@@ -29,16 +29,16 @@ class SignInUseCase(
         params: GoogleUserSignInDomainModel?,
     ): Either<MindplexDomainError, Unit> = either {
         ensure(connectivityRepositoryContract.isConnected()) { MindplexDomainError.NETWORK }
-        val notNullParams = requireNotNull(params) { raise(MindplexDomainError.OTHER) }
+        requireNotNull(params) { raise(MindplexDomainError.OTHER) }
 
-        val userIdResult = jwtHandlerContract.decodeSubject(notNullParams.tokenId)
+        val userIdResult = jwtHandlerContract.decodeSubject(params.tokenId)
         userIdResult.fold(
             onSuccess = { userId ->
                 val countryCode = geoLocationContract.getUserCountryCode().getOrNull()
 
-                val user = notNullParams.copy(
+                val user = params.copy(
                     tokenId = userId,
-                    profilePictureUrl = profileImageInterceptor.intercept(notNullParams.profilePictureUrl),
+                    profilePictureUrl = profileImageInterceptor.intercept(params.profilePictureUrl),
                     countryCode = countryCode,
                 )
                 signInNetworkRepositoryContract.signIn(user)

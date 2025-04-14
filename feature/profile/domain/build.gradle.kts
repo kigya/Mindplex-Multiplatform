@@ -17,6 +17,7 @@ kotlin {
                     implementation(util)
                     implementation(domain.connectivity)
                     implementation(feature.login.domain)
+                    implementation(domain.profile)
                 }
             }
         }

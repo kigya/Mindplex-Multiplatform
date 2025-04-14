@@ -10,20 +10,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.switchBorder
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.switchThumb
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.switchTrack
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.themeNameText
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileSwitchBorder
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileSwitchThumb
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileSwitchTrack
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.ProfileTheme.profileThemeNameText
 import mindplex_multiplatform.feature.profile.presentation.generated.resources.Res
-import mindplex_multiplatform.feature.profile.presentation.generated.resources.dark_theme
-import mindplex_multiplatform.feature.profile.presentation.generated.resources.light_theme
+import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile_dark_theme
+import mindplex_multiplatform.feature.profile.presentation.generated.resources.profile_light_theme
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ToggleChangeTheme(
     isDarkTheme: Boolean,
-    onThemeChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    onThemeChange: (Boolean) -> Unit,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -38,23 +38,21 @@ internal fun ToggleChangeTheme(
             checked = isDarkTheme,
             onCheckedChange = onThemeChange,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = ProfileTheme.colorScheme.switchThumb.value,
-                uncheckedThumbColor = ProfileTheme.colorScheme.switchThumb.value,
-                checkedTrackColor = ProfileTheme.colorScheme.switchTrack.value,
-                uncheckedTrackColor = ProfileTheme.colorScheme.switchTrack.value,
-                checkedBorderColor = ProfileTheme.colorScheme.switchBorder.value,
-                uncheckedBorderColor = ProfileTheme.colorScheme.switchBorder.value,
+                checkedThumbColor = ProfileTheme.colorScheme.profileSwitchThumb.value,
+                uncheckedThumbColor = ProfileTheme.colorScheme.profileSwitchThumb.value,
+                checkedTrackColor = ProfileTheme.colorScheme.profileSwitchTrack.value,
+                uncheckedTrackColor = ProfileTheme.colorScheme.profileSwitchTrack.value,
+                checkedBorderColor = ProfileTheme.colorScheme.profileSwitchBorder.value,
+                uncheckedBorderColor = ProfileTheme.colorScheme.profileSwitchBorder.value,
             ),
         )
 
         MindplexText(
-            value = if (isDarkTheme) {
-                stringResource(Res.string.dark_theme)
-            } else {
-                stringResource(Res.string.light_theme)
-            },
-            color = ProfileTheme.colorScheme.themeNameText,
-            typography = ProfileTheme.typography.themeNameText,
+            value = stringResource(
+                if (isDarkTheme) Res.string.profile_dark_theme else Res.string.profile_light_theme,
+            ),
+            color = ProfileTheme.colorScheme.profileThemeNameText,
+            typography = ProfileTheme.typography.profileThemeNameText,
         )
     }
 }

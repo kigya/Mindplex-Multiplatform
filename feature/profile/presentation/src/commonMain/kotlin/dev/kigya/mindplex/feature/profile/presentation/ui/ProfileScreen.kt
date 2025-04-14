@@ -1,7 +1,6 @@
 package dev.kigya.mindplex.feature.profile.presentation.ui
 
 import androidx.annotation.VisibleForTesting
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -65,8 +64,10 @@ private fun ColumnScope.ProfilePortraitSection(
     state: ProfileContract.State,
     event: (ProfileContract.Event) -> Unit,
 ) {
-    val isDarkTheme = state.isDarkTheme ?: ThemeManager.getTheme(isSystemInDarkTheme())
-    ThemeManager.setTheme(isDarkTheme)
+    val isDarkTheme = state.isDarkTheme
+    if (isDarkTheme != null) {
+        ThemeManager.setTheme(isDarkTheme)
+    }
 
     ProfileScreenHeader(
         modifier = Modifier.fillMaxWidth(),
@@ -80,10 +81,12 @@ private fun ColumnScope.ProfilePortraitSection(
         isLoading = state.profileLoading,
     )
 
-    ToggleChangeTheme(
-        isDarkTheme = isDarkTheme,
-        onThemeChange = { newValue -> event(ProfileContract.Event.OnThemeChanged(newValue)) },
-    )
+    if (isDarkTheme != null) {
+        ToggleChangeTheme(
+            isDarkTheme = isDarkTheme,
+            onThemeChange = { newValue -> event(ProfileContract.Event.OnThemeChanged(newValue)) },
+        )
+    }
 }
 
 @Composable
@@ -91,8 +94,10 @@ private fun ColumnScope.ProfileLandscapeSection(
     state: ProfileContract.State,
     event: (ProfileContract.Event) -> Unit,
 ) {
-    val isDarkTheme = state.isDarkTheme ?: ThemeManager.getTheme(isSystemInDarkTheme())
-    ThemeManager.setTheme(isDarkTheme)
+    val isDarkTheme = state.isDarkTheme
+    if (isDarkTheme != null) {
+        ThemeManager.setTheme(isDarkTheme)
+    }
 
     ProfileScreenHeader(
         modifier = Modifier.fillMaxWidth(),
@@ -106,8 +111,10 @@ private fun ColumnScope.ProfileLandscapeSection(
         isLoading = state.profileLoading,
     )
 
-    ToggleChangeTheme(
-        isDarkTheme = isDarkTheme,
-        onThemeChange = { newValue -> event(ProfileContract.Event.OnThemeChanged(newValue)) },
-    )
+    if (isDarkTheme != null) {
+        ToggleChangeTheme(
+            isDarkTheme = isDarkTheme,
+            onThemeChange = { newValue -> event(ProfileContract.Event.OnThemeChanged(newValue)) },
+        )
+    }
 }

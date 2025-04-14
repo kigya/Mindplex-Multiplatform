@@ -12,8 +12,8 @@ import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.feature.home.presentation.block.DifficultySectionList
 import dev.kigya.mindplex.feature.home.presentation.contract.HomeContract
 import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionPopupBackground
-import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.categorySelectionTitle
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeCategorySelectionPopupBackground
+import dev.kigya.mindplex.feature.home.presentation.ui.theme.HomeTheme.homeCategorySelectionTitle
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -27,7 +27,7 @@ internal fun CategorySelectionPopup(
             .fillMaxWidth()
             .padding(horizontal = HomeTheme.dimension.dp16.value),
         shouldShowDialog = state.shouldDisplayPopup,
-        backgroundColor = HomeTheme.colorScheme.categorySelectionPopupBackground,
+        backgroundColor = HomeTheme.colorScheme.homeCategorySelectionPopupBackground,
         onDismissRequest = { event(HomeContract.Event.OnPopupDismissed) },
     ) {
         Column(
@@ -39,8 +39,8 @@ internal fun CategorySelectionPopup(
             state.typeTitle?.let { mode ->
                 MindplexText(
                     value = stringResource(mode),
-                    typography = HomeTheme.typography.categorySelectionTitle,
-                    color = HomeTheme.colorScheme.categorySelectionTitle,
+                    typography = HomeTheme.typography.homeCategorySelectionTitle,
+                    color = HomeTheme.colorScheme.homeCategorySelectionTitle,
                 )
             }
 

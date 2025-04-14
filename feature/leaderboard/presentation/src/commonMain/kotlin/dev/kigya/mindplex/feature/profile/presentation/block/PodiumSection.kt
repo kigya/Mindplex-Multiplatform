@@ -14,10 +14,10 @@ import dev.kigya.mindplex.feature.profile.presentation.contract.LeaderboardContr
 import dev.kigya.mindplex.feature.profile.presentation.ui.provider.LeaderboardAdaptiveMetrics.LocalLeaderboardWidthRatio
 import dev.kigya.mindplex.feature.profile.presentation.ui.provider.LeaderboardAdaptiveMetrics.LocalPodiumFraction
 import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.branchesTint
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.firstRankCardColor
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.secondRankCardColor
-import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.thirdRankCardColor
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardBranchesTint
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardFirstRankCardColor
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardSecondRankCardColor
+import dev.kigya.mindplex.feature.profile.presentation.ui.theme.LeaderboardTheme.leaderboardThirdRankCardColor
 import kotlinx.collections.immutable.ImmutableList
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.Res
 import mindplex_multiplatform.feature.leaderboard.presentation.generated.resources.ic_branches
@@ -52,7 +52,7 @@ internal fun PodiumSection(
                 .align(alignment = Alignment.Center)
                 .fadeInEffect(),
             resource = Res.drawable.ic_branches,
-            color = LeaderboardTheme.colorScheme.branchesTint,
+            color = LeaderboardTheme.colorScheme.leaderboardBranchesTint,
         )
 
         if (podiumUsers.isNotEmpty()) {
@@ -63,7 +63,7 @@ internal fun PodiumSection(
                     .fadeInEffect(delayMillis = 900),
                 state = podiumUsers[0],
                 isFirstRank = true,
-                topColumnGradientColor = LeaderboardTheme.colorScheme.firstRankCardColor.value,
+                topColumnGradientColor = LeaderboardTheme.colorScheme.leaderboardFirstRankCardColor.value,
             )
 
             if (podiumUsers.size >= 2) {
@@ -75,7 +75,7 @@ internal fun PodiumSection(
                         .fadeInEffect(delayMillis = 600),
                     state = podiumUsers[1],
                     isFirstRank = false,
-                    topColumnGradientColor = LeaderboardTheme.colorScheme.secondRankCardColor.value,
+                    topColumnGradientColor = LeaderboardTheme.colorScheme.leaderboardSecondRankCardColor.value,
                 )
             }
 
@@ -87,7 +87,7 @@ internal fun PodiumSection(
                         .fadeInEffect(delayMillis = 300),
                     state = podiumUsers[2],
                     isFirstRank = false,
-                    topColumnGradientColor = LeaderboardTheme.colorScheme.thirdRankCardColor.value,
+                    topColumnGradientColor = LeaderboardTheme.colorScheme.leaderboardThirdRankCardColor.value,
                 )
             }
         }

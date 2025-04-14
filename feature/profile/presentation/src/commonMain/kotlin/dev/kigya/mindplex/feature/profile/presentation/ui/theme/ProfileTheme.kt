@@ -33,63 +33,63 @@ internal object ProfileTheme : MindplexTheme() {
             dark = super.color.gunmetal60,
         )
 
-    val MindplexColorScheme.userNameText
+    val MindplexColorScheme.profileUserNameText
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.gunmetal100,
             dark = super.color.white,
         )
 
-    val MindplexColorScheme.userStatisticsCardBackground
+    val MindplexColorScheme.profileUserStatisticsCardBackground
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.white,
             dark = super.color.iris100,
         )
 
-    val MindplexColorScheme.userStatisticCategoryNameText
+    val MindplexColorScheme.profileUserStatisticCategoryNameText
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.gunmetal60,
             dark = super.color.gunmetal60,
         )
 
-    val MindplexColorScheme.userStatisticScoreText
+    val MindplexColorScheme.profileUserStatisticScoreText
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.gunmetal100,
             dark = super.color.white,
         )
 
-    val MindplexColorScheme.verticalDivider
+    val MindplexColorScheme.profileVerticalDivider
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.iris10,
             dark = super.color.iris10,
         )
 
-    val MindplexColorScheme.themeNameText
+    val MindplexColorScheme.profileThemeNameText
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.iris80,
             dark = super.color.white,
         )
 
-    val MindplexColorScheme.switchBorder
+    val MindplexColorScheme.profileSwitchBorder
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.iris80,
             dark = super.color.white,
         )
 
-    val MindplexColorScheme.switchTrack
+    val MindplexColorScheme.profileSwitchTrack
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.transparent,
             dark = super.color.white,
         )
 
-    val MindplexColorScheme.switchThumb
+    val MindplexColorScheme.profileSwitchThumb
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.iris80,
@@ -106,7 +106,7 @@ internal object ProfileTheme : MindplexTheme() {
             fontFamily = super.font.rubik,
         )
 
-    val MindplexTypography.userNameText
+    val MindplexTypography.profileUserNameText
         @Composable
         get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp24,
@@ -114,7 +114,7 @@ internal object ProfileTheme : MindplexTheme() {
             fontFamily = super.font.rubik,
         )
 
-    val MindplexTypography.userStatisticCategoryNameText
+    val MindplexTypography.profileUserStatisticCategoryNameText
         @Composable
         get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp12,
@@ -122,7 +122,7 @@ internal object ProfileTheme : MindplexTheme() {
             fontFamily = super.font.rubik,
         )
 
-    val MindplexTypography.userStatisticScoreText
+    val MindplexTypography.profileUserStatisticScoreText
         @Composable
         get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp16,
@@ -130,7 +130,7 @@ internal object ProfileTheme : MindplexTheme() {
             fontFamily = super.font.rubik,
         )
 
-    val MindplexTypography.themeNameText
+    val MindplexTypography.profileThemeNameText
         @Composable
         get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp16,

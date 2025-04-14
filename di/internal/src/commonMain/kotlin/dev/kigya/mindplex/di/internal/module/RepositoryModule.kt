@@ -26,14 +26,10 @@ import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryC
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
 import dev.kigya.mindplex.feature.onboarding.data.OnboardingRepository
 import dev.kigya.mindplex.feature.onboarding.domain.contract.OnboardingRepositoryContract
-import dev.kigya.mindplex.feature.profile.data.repository.PreferencesRepository
-import dev.kigya.mindplex.feature.profile.data.repository.ProfileDatabaseRepository
-import dev.kigya.mindplex.feature.profile.data.repository.ProfileNetworkRepository
+import dev.kigya.mindplex.feature.profile.data.repository.ThemePreferencesRepository
 import dev.kigya.mindplex.feature.profile.data.repository.UserRankDatabaseRepository
 import dev.kigya.mindplex.feature.profile.data.repository.UserRankNetworkRepository
 import dev.kigya.mindplex.feature.profile.domain.contract.PreferencesRepositoryContract
-import dev.kigya.mindplex.feature.profile.domain.contract.ProfileDatabaseRepositoryContract
-import dev.kigya.mindplex.feature.profile.domain.contract.ProfileNetworkRepositoryContract
 import dev.kigya.mindplex.feature.profile.domain.contract.UserRankDatabaseRepositoryContract
 import dev.kigya.mindplex.feature.profile.domain.contract.UserRankNetworkRepositoryContract
 import kotlinx.coroutines.Dispatchers
@@ -133,21 +129,9 @@ val repositoryModule = module {
     } bind GeoLocationContract::class
 
     single {
-        ProfileDatabaseRepository(
-            profileDao = get(),
-            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
-        )
-    } bind ProfileDatabaseRepositoryContract::class
-
-    single {
-        ProfileNetworkRepository(
-            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
-        )
-    } bind ProfileNetworkRepositoryContract::class
-
-    single {
-        PreferencesRepository(
+        ThemePreferencesRepository(
             dataStore = get<DataStore<Preferences>>(),
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind PreferencesRepositoryContract::class
 }

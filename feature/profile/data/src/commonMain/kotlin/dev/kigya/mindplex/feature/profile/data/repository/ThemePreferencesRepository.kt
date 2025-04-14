@@ -5,22 +5,27 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import dev.kigya.mindplex.feature.profile.domain.contract.PreferencesRepositoryContract
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 
-class PreferencesRepository(
+class ThemePreferencesRepository(
     private val dataStore: DataStore<Preferences>,
+    private val dispatcher: CoroutineDispatcher,
 ) : PreferencesRepositoryContract {
 
     private val themeKey = booleanPreferencesKey("theme_key")
 
-    override suspend fun getTheme(): Boolean? {
+    override suspend fun getTheme(): Boolean? = withContext(dispatcher) {
         val preferences = dataStore.data.first()
-        return preferences[themeKey]
+        preferences[themeKey]
     }
 
     override suspend fun saveTheme(isDark: Boolean) {
-        dataStore.edit { preferences ->
-            preferences[themeKey] = isDark
+        withContext(dispatcher) {
+            dataStore.edit { preferences ->
+                preferences[themeKey] = isDark
+            }
         }
     }
 }

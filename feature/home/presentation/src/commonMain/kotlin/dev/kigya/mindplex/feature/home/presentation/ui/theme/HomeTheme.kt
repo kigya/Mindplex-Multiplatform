@@ -110,42 +110,42 @@ internal object HomeTheme : MindplexTheme() {
             dark = super.color.iris80,
         )
 
-    val MindplexColorScheme.categorySelectionPopupBackground
+    val MindplexColorScheme.homeCategorySelectionPopupBackground
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.white,
             dark = super.color.iris60,
         )
 
-    val MindplexColorScheme.categorySelectionTitle
+    val MindplexColorScheme.homeCategorySelectionTitle
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.gunmetal80,
             dark = super.color.iris30,
         )
 
-    val MindplexColorScheme.categorySelectionItem
+    val MindplexColorScheme.homeCategorySelectionItem
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.gunmetal100,
             dark = super.color.white,
         )
 
-    val MindplexColorScheme.categorySelectionDifficultyBackground
+    val MindplexColorScheme.homeCategorySelectionDifficultyBackground
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.iris60,
             dark = super.color.white,
         )
 
-    val MindplexColorScheme.categorySelectionDifficultyText
+    val MindplexColorScheme.homeCategorySelectionDifficultyText
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.white,
             dark = super.color.iris60,
         )
 
-    val MindplexColorScheme.categorySelectionRipple
+    val MindplexColorScheme.homeCategorySelectionRipple
         @Composable
         get() = this provides MindplexDynamicColor(
             light = super.color.iris70,
@@ -202,7 +202,7 @@ internal object HomeTheme : MindplexTheme() {
             fontFamily = super.font.rubik,
         )
 
-    val MindplexTypography.categorySelectionTitle
+    val MindplexTypography.homeCategorySelectionTitle
         @Composable
         get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp12,
@@ -210,7 +210,7 @@ internal object HomeTheme : MindplexTheme() {
             fontFamily = super.font.rubik,
         )
 
-    val MindplexTypography.categorySelectionItem
+    val MindplexTypography.homeCategorySelectionItem
         @Composable
         get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp14,
@@ -218,7 +218,7 @@ internal object HomeTheme : MindplexTheme() {
             fontFamily = super.font.rubik,
         )
 
-    val MindplexTypography.categorySelectionButton
+    val MindplexTypography.homeCategorySelectionButton
         @Composable
         get() = this provides MindplexTextStyle(
             fontSize = super.textSize.sp16,
