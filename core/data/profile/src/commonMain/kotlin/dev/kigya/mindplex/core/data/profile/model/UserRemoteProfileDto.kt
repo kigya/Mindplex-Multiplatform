@@ -7,7 +7,7 @@ import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Users.Do
 @Serializable
 data class UserRemoteProfileDto(
     @SerialName(UsersDocument.AVATAR_URL) val avatarUrl: String,
-    @SerialName(UsersDocument.COUNTRY_CODE) val countryCode: String,
+    @SerialName(UsersDocument.COUNTRY_CODE) val countryCode: String?,
     @SerialName(UsersDocument.NAME) val name: String,
     @SerialName(UsersDocument.SCORE) val score: Int,
     @SerialName(UsersDocument.GLOBAL_RANK) val globalRank: Int,

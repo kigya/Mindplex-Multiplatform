@@ -29,7 +29,9 @@ class UserProfileNetworkRepository(
                 val domainProfile = userDto.toDomain()
 
                 val globalRank = getGlobalRank(userDto.score)
-                val localRank = getLocalRank(userDto.score, userDto.countryCode)
+                val localRank = userDto.countryCode?.let {
+                    getLocalRank(userDto.score, it)
+                }
 
                 val finalProfile = domainProfile.copy(
                     globalRank = globalRank,

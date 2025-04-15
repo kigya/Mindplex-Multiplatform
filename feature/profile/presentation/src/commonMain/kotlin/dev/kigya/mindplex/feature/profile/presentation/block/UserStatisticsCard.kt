@@ -79,15 +79,17 @@ internal fun UserStatisticsCard(
             isHash = true,
         )
 
-        VerticalDivider(color = ProfileTheme.colorScheme.profileVerticalDivider.value)
+        if (state.userCountry != null) {
+            VerticalDivider(color = ProfileTheme.colorScheme.profileVerticalDivider.value)
 
-        UserStatistic(
-            image = Res.drawable.ic_flag,
-            name = stringResource(Res.string.profile_local_rank),
-            score = state.userLocalRank,
-            isLoading = isLoading,
-            isHash = true,
-        )
+            UserStatistic(
+                image = Res.drawable.ic_flag,
+                name = stringResource(Res.string.profile_local_rank),
+                score = state.userLocalRank,
+                isLoading = isLoading,
+                isHash = true,
+            )
+        }
     }
 }
 

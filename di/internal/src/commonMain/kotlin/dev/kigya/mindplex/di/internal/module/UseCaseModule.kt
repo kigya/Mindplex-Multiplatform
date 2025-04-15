@@ -15,6 +15,7 @@ import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingComplet
 import dev.kigya.mindplex.feature.profile.domain.usecase.GetThemeUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.GetUsersByRankUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.SaveThemeUseCase
+import dev.kigya.mindplex.feature.profile.domain.usecase.UpdateCountryCodeUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -34,4 +35,5 @@ val useCaseModule = module {
     factoryOf(::GetUserCountryCodeUseCase)
     factoryOf(::GetThemeUseCase)
     factoryOf(::SaveThemeUseCase)
+    factoryOf(::UpdateCountryCodeUseCase)
 }
