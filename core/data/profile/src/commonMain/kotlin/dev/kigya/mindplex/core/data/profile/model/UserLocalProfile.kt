@@ -5,7 +5,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "user_profile")
+@Entity(tableName = "userProfile")
 data class UserLocalProfile(
     @PrimaryKey @ColumnInfo("id") val id: String,
     @Embedded val userLocalData: UserLocalData? = null,
@@ -13,9 +13,9 @@ data class UserLocalProfile(
 
 data class UserLocalData(
     @ColumnInfo("name") val name: String,
-    @ColumnInfo("avatar_url") val avatar: String,
-    @ColumnInfo("country_code") val countryCode: String,
+    @ColumnInfo("avatarUrl") val avatar: String,
+    @ColumnInfo("countryCode") val countryCode: String,
     @ColumnInfo("score") val score: Int,
-    @ColumnInfo("global_rank") val globalRank: Int,
-    @ColumnInfo("local_rank") val localRank: Int,
+    @ColumnInfo("globalRank") val globalRank: Int,
+    @ColumnInfo("localRank") val localRank: Int,
 )

@@ -7,7 +7,7 @@ import dev.kigya.mindplex.feature.profile.data.model.UserLocalRank
 
 @Dao
 interface UserRankDao {
-    @Query("SELECT * FROM user_rank ORDER BY score DESC LIMIT :limit")
+    @Query("SELECT * FROM userRank ORDER BY score DESC LIMIT :limit")
     suspend fun getTopUsersByScore(limit: Int): List<UserLocalRank>
 
     @Upsert

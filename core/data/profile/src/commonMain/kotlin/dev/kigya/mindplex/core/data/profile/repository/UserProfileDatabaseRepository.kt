@@ -3,8 +3,7 @@ package dev.kigya.mindplex.core.data.profile.repository
 import dev.kigya.mindplex.core.data.profile.dao.UserProfileDao
 import dev.kigya.mindplex.core.data.profile.exception.ScoreRetrievalException
 import dev.kigya.mindplex.core.data.profile.exception.UserProfileNotFoundException
-import dev.kigya.mindplex.core.data.profile.mapper.toDatabaseEntry
-import dev.kigya.mindplex.core.data.profile.mapper.toDomain
+import dev.kigya.mindplex.core.data.profile.mapper.UserLocalProfileMapper
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileDatabaseRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.model.UserProfileDomainModel
 import dev.kigya.mindplex.core.util.dsl.runSuspendCatching
@@ -19,8 +18,10 @@ class UserProfileDatabaseRepository(
     override suspend fun getUserProfile(token: String): Result<UserProfileDomainModel> =
         runSuspendCatching {
             withContext(dispatcher) {
-                userProfileDao.getProfile(token)?.toDomain()
-            } ?: throw UserProfileNotFoundException("User not found")
+                val localProfile = userProfileDao.getProfile(token)
+                    ?: throw UserProfileNotFoundException("User not found")
+                UserLocalProfileMapper.mapToDomainModel(localProfile)
+            }
         }
 
     override suspend fun getUserScore(token: String): Result<Int> = runSuspendCatching {
@@ -46,7 +47,8 @@ class UserProfileDatabaseRepository(
     ) {
         runSuspendCatching {
             withContext(dispatcher) {
-                userProfileDao.upsertProfile(profile.toDatabaseEntry(token))
+                val localProfile = UserLocalProfileMapper.mapFromDomainModel(profile).copy(id = token)
+                userProfileDao.upsertProfile(localProfile)
             }
         }
     }

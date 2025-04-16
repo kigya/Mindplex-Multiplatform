@@ -8,5 +8,5 @@
     <string name="profile_light_theme">Light theme</string>
     <string name="profile_category_preview">World rank</string>
     <string name="profile_score_preview">score</string>
-    <string name="profile_hash">#</string>
+    <string name="profile_hash" translatable="false">#</string>
 </resources>

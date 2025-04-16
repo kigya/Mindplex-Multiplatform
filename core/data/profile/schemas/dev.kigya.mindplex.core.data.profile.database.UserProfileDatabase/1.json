@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ed2e01981d5a1ba6577ea041a3ec01be",
+    "identityHash": "180f9cfb6976ea457a4eb1742793af81",
     "entities": [
       {
-        "tableName": "user_profile",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `avatar_url` TEXT, `country_code` TEXT, `score` INTEGER, `global_rank` INTEGER, `local_rank` INTEGER, PRIMARY KEY(`id`))",
+        "tableName": "userProfile",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `avatarUrl` TEXT, `countryCode` TEXT, `score` INTEGER, `globalRank` INTEGER, `localRank` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -21,12 +21,12 @@
           },
           {
             "fieldPath": "userLocalData.avatar",
-            "columnName": "avatar_url",
+            "columnName": "avatarUrl",
             "affinity": "TEXT"
           },
           {
             "fieldPath": "userLocalData.countryCode",
-            "columnName": "country_code",
+            "columnName": "countryCode",
             "affinity": "TEXT"
           },
           {
@@ -36,12 +36,12 @@
           },
           {
             "fieldPath": "userLocalData.globalRank",
-            "columnName": "global_rank",
+            "columnName": "globalRank",
             "affinity": "INTEGER"
           },
           {
             "fieldPath": "userLocalData.localRank",
-            "columnName": "local_rank",
+            "columnName": "localRank",
             "affinity": "INTEGER"
           }
         ],
@@ -55,7 +55,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ed2e01981d5a1ba6577ea041a3ec01be')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '180f9cfb6976ea457a4eb1742793af81')"
     ]
   }
 }

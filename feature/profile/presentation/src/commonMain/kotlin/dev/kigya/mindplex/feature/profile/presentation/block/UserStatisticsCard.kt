@@ -61,33 +61,33 @@ internal fun UserStatisticsCard(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        UserStatistic(
+        UserStatistics(
             image = Res.drawable.ic_star,
             name = stringResource(Res.string.profile_points),
             score = state.userScore,
             isLoading = isLoading,
-            isHash = false,
+            shouldShowHash = false,
         )
 
         VerticalDivider(color = ProfileTheme.colorScheme.profileVerticalDivider.value)
 
-        UserStatistic(
+        UserStatistics(
             image = Res.drawable.ic_world,
             name = stringResource(Res.string.profile_world_rank),
             score = state.userGlobalRank,
             isLoading = isLoading,
-            isHash = true,
+            shouldShowHash = true,
         )
 
         if (state.userCountry != null) {
             VerticalDivider(color = ProfileTheme.colorScheme.profileVerticalDivider.value)
 
-            UserStatistic(
+            UserStatistics(
                 image = Res.drawable.ic_flag,
                 name = stringResource(Res.string.profile_local_rank),
                 score = state.userLocalRank,
                 isLoading = isLoading,
-                isHash = true,
+                shouldShowHash = true,
             )
         }
     }
@@ -95,12 +95,12 @@ internal fun UserStatisticsCard(
 
 @OptIn(ExperimentalMindplexUiKitApi::class)
 @Composable
-private fun UserStatistic(
+private fun UserStatistics(
     image: DrawableResource,
     name: String,
     score: String,
     isLoading: Boolean,
-    isHash: Boolean,
+    shouldShowHash: Boolean,
 ) {
     Column(
         modifier = Modifier.width(ProfileTheme.dimension.dp80.value),
@@ -131,7 +131,7 @@ private fun UserStatistic(
             textStyle = ProfileTheme.typography.profileUserStatisticScoreText,
             isLoading = isLoading,
         ) {
-            if (isHash) {
+            if (shouldShowHash) {
                 Row {
                     MindplexText(
                         value = stringResource(Res.string.profile_hash),

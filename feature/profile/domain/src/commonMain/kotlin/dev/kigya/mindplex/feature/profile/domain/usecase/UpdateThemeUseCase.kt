@@ -3,17 +3,15 @@ package dev.kigya.mindplex.feature.profile.domain.usecase
 import arrow.core.Either
 import arrow.core.raise.either
 import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
-import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
 import dev.kigya.mindplex.feature.profile.domain.contract.PreferencesRepositoryContract
 
-class GetThemeUseCase(
+class UpdateThemeUseCase(
     private val preferencesContract: PreferencesRepositoryContract,
-) : BaseSuspendUseCase<Either<MindplexDomainError, Boolean>, None>() {
+) : BaseSuspendUseCase<Either<MindplexDomainError, Boolean>, Boolean>() {
 
-    override suspend fun invoke(params: None): Either<MindplexDomainError, Boolean> = either {
-        val savedTheme = preferencesContract.getTheme()
-        val theme = savedTheme ?: false
-        theme
+    override suspend fun invoke(params: Boolean): Either<MindplexDomainError, Boolean> = either {
+        preferencesContract.saveTheme(params)
+        params
     }
 }

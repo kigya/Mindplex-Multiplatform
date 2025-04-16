@@ -8,6 +8,7 @@ import dev.kigya.mindplex.core.util.extension.empty
 
 interface ProfileContract :
     UnidirectionalViewModelContract<ProfileContract.State, ProfileContract.Event, ProfileContract.Effect> {
+    @ConsistentCopyVisibility
     @Immutable
     data class State internal constructor(
         val stubErrorType: StubErrorType? = null,

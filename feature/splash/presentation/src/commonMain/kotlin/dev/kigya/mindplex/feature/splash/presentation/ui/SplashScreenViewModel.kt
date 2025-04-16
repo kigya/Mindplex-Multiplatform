@@ -5,8 +5,8 @@ import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.theme.ThemeManager
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
-import dev.kigya.mindplex.feature.profile.domain.usecase.GetThemeUseCase
-import dev.kigya.mindplex.feature.profile.domain.usecase.SaveThemeUseCase
+import dev.kigya.mindplex.feature.profile.domain.usecase.FetchThemeUseCase
+import dev.kigya.mindplex.feature.profile.domain.usecase.UpdateThemeUseCase
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
@@ -20,8 +20,8 @@ import kotlin.time.Duration.Companion.milliseconds
 class SplashScreenViewModel(
     private val getIsOnboardingCompletedUseCase: GetIsOnboardingCompletedUseCase,
     private val getIsUserSignedInUseCase: GetIsUserSignedInUseCase,
-    private val getThemeUseCase: GetThemeUseCase,
-    private val setThemeUseCase: SaveThemeUseCase,
+    private val getThemeUseCase: FetchThemeUseCase,
+    private val setThemeUseCase: UpdateThemeUseCase,
     navigatorContract: MindplexNavigatorContract,
 ) : BaseViewModel<SplashContract.State, SplashContract.Effect>(
     navigatorContract = navigatorContract,

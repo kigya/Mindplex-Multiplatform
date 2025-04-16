@@ -4,7 +4,7 @@ import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.firestore.Direction
 import dev.gitlive.firebase.firestore.Source
 import dev.gitlive.firebase.firestore.firestore
-import dev.kigya.mindplex.core.data.profile.mapper.toDomain
+import dev.kigya.mindplex.core.data.profile.mapper.UserRemoteProfileMapper
 import dev.kigya.mindplex.core.data.profile.model.UserRemoteProfileDto
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileNetworkRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.model.UserProfileDomainModel
@@ -18,15 +18,15 @@ class UserProfileNetworkRepository(
 ) : UserProfileNetworkRepositoryContract {
 
     override suspend fun getUserProfile(token: String): Result<UserProfileDomainModel> =
-        withContext(dispatcher) {
-            runSuspendCatching {
+        runSuspendCatching {
+            withContext(dispatcher) {
                 val documentSnapshot = Firebase.firestore
                     .collection(UsersCollection.NAME)
                     .document(token)
                     .get(Source.SERVER)
 
                 val userDto = documentSnapshot.data<UserRemoteProfileDto>()
-                val domainProfile = userDto.toDomain()
+                val domainProfile = UserRemoteProfileMapper.mapToDomainModel(userDto)
 
                 val globalRank = getGlobalRank(userDto.score)
                 val localRank = userDto.countryCode?.let {
@@ -37,7 +37,7 @@ class UserProfileNetworkRepository(
                     globalRank = globalRank,
                     localRank = localRank,
                 )
-                return@runSuspendCatching finalProfile
+                return@withContext finalProfile
             }
         }
 

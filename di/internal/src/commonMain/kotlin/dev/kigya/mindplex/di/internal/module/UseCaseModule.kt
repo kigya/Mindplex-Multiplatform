@@ -12,10 +12,10 @@ import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignOutUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
-import dev.kigya.mindplex.feature.profile.domain.usecase.GetThemeUseCase
+import dev.kigya.mindplex.feature.profile.domain.usecase.FetchThemeUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.GetUsersByRankUseCase
-import dev.kigya.mindplex.feature.profile.domain.usecase.SaveThemeUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.UpdateCountryCodeUseCase
+import dev.kigya.mindplex.feature.profile.domain.usecase.UpdateThemeUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -33,7 +33,7 @@ val useCaseModule = module {
     factoryOf(::UpdateScoreUseCase)
     factoryOf(::GetUsersByRankUseCase)
     factoryOf(::GetUserCountryCodeUseCase)
-    factoryOf(::GetThemeUseCase)
-    factoryOf(::SaveThemeUseCase)
+    factoryOf(::FetchThemeUseCase)
+    factoryOf(::UpdateThemeUseCase)
     factoryOf(::UpdateCountryCodeUseCase)
 }

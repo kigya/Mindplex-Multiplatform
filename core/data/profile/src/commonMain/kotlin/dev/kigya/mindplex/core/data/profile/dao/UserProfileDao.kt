@@ -8,7 +8,7 @@ import dev.kigya.mindplex.core.data.profile.model.UserLocalProfile
 
 @Dao
 interface UserProfileDao {
-    @Query("SELECT * FROM user_profile WHERE id = :token LIMIT 1")
+    @Query("SELECT * FROM userProfile WHERE id = :token LIMIT 1")
     suspend fun getProfile(token: String): UserLocalProfile?
 
     @Upsert
@@ -17,10 +17,10 @@ interface UserProfileDao {
     @Delete
     suspend fun deleteProfile(profile: UserLocalProfile)
 
-    @Query("SELECT score FROM user_profile WHERE id = :token LIMIT 1")
+    @Query("SELECT score FROM userProfile WHERE id = :token LIMIT 1")
     suspend fun getScore(token: String): Int?
 
-    @Query("UPDATE user_profile SET score = :newScore WHERE id = :token")
+    @Query("UPDATE userProfile SET score = :newScore WHERE id = :token")
     suspend fun updateScore(
         token: String,
         newScore: Int,

@@ -12,7 +12,6 @@ interface LoginContract :
     @Immutable
     data class State internal constructor(
         val stubErrorType: StubErrorType? = null,
-        val isSignedIn: Boolean = false,
     ) : CopyableComponentState
 
     @Immutable

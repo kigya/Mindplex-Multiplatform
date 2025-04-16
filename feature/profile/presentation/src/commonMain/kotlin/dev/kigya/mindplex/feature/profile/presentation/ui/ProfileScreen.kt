@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.kigya.mindplex.core.presentation.common.util.MindplexAdaptiveContainer
 import dev.kigya.mindplex.core.presentation.feature.effect.use
-import dev.kigya.mindplex.core.presentation.theme.ThemeManager
 import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStubContainer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.feature.profile.presentation.block.ProfileScreenHeader
@@ -64,11 +63,6 @@ private fun ColumnScope.ProfilePortraitSection(
     state: ProfileContract.State,
     event: (ProfileContract.Event) -> Unit,
 ) {
-    val isDarkTheme = state.isDarkTheme
-    if (isDarkTheme != null) {
-        ThemeManager.setTheme(isDarkTheme)
-    }
-
     ProfileScreenHeader(
         modifier = Modifier.fillMaxWidth(),
         event = event,
@@ -81,7 +75,7 @@ private fun ColumnScope.ProfilePortraitSection(
         isLoading = state.profileLoading,
     )
 
-    if (isDarkTheme != null) {
+    state.isDarkTheme?.let { isDarkTheme ->
         ToggleChangeTheme(
             isDarkTheme = isDarkTheme,
             onThemeChange = { newValue -> event(ProfileContract.Event.OnThemeChanged(newValue)) },
@@ -94,11 +88,6 @@ private fun ColumnScope.ProfileLandscapeSection(
     state: ProfileContract.State,
     event: (ProfileContract.Event) -> Unit,
 ) {
-    val isDarkTheme = state.isDarkTheme
-    if (isDarkTheme != null) {
-        ThemeManager.setTheme(isDarkTheme)
-    }
-
     ProfileScreenHeader(
         modifier = Modifier.fillMaxWidth(),
         event = event,
@@ -111,7 +100,7 @@ private fun ColumnScope.ProfileLandscapeSection(
         isLoading = state.profileLoading,
     )
 
-    if (isDarkTheme != null) {
+    state.isDarkTheme?.let { isDarkTheme ->
         ToggleChangeTheme(
             isDarkTheme = isDarkTheme,
             onThemeChange = { newValue -> event(ProfileContract.Event.OnThemeChanged(newValue)) },

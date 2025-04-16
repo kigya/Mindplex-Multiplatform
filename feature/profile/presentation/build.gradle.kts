@@ -17,19 +17,23 @@ kotlin {
                     api(domain.interactor)
                     implementation(util)
                     implementation(domain.profile)
-                    with(presentation){
+                    with(presentation) {
                         implementation(feature)
                         implementation(theme)
                         implementation(uikit)
                         implementation(common)
                     }
                 }
-                implementation(feature.login.domain)
-                implementation(feature.profile.domain)
+                with(feature) {
+                    implementation(login.domain)
+                    implementation(profile.domain)
+                }
                 implementation(navigation.api)
             }
-            implementation(libs.flagKit)
-            implementation(libs.bundles.dataStore)
+            with(libs) {
+                implementation(flagKit)
+                implementation(bundles.dataStore)
+            }
         }
     }
 }
