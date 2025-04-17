@@ -14,10 +14,7 @@ kotlin {
             with(projects) {
                 with(core) {
                     api(domain.interactor)
-                    implementation(util)
-                    implementation(domain.connectivity)
                     implementation(feature.login.domain)
-                    implementation(domain.profile)
                 }
             }
         }

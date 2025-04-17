@@ -10,8 +10,6 @@ data object FirestoreConfig {
                 const val NAME = "name"
                 const val SCORE = "score"
                 const val COUNTRY_CODE = "countryCode"
-                const val GLOBAL_RANK = "globalRank"
-                const val LOCAL_RANK = "localRank"
             }
         }
 

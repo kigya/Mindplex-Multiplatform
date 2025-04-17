@@ -31,7 +31,6 @@ kotlin {
                     implementation(home.data)
                     implementation(home.domain)
                     implementation(home.presentation)
-                    implementation(profile.data)
                     implementation(profile.domain)
                     implementation(profile.presentation)
                     implementation(leaderboard.data)

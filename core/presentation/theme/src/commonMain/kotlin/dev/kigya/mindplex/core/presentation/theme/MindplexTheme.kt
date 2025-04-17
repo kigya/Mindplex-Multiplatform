@@ -2,6 +2,7 @@
 
 package dev.kigya.mindplex.core.presentation.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -20,12 +21,16 @@ import dev.kigya.mindplex.core.presentation.theme.window.Window
 import kotlin.jvm.JvmInline
 
 @Composable
-fun MindplexTheme(content: @Composable () -> Unit) {
+fun MindplexTheme(
+    isDark: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
     CompositionLocalProvider(
         values = arrayOf(
             LocalWindow provides Window,
             LocalWindowWidth provides currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass,
             LocalWindowHeight provides currentWindowAdaptiveInfo().windowSizeClass.windowHeightSizeClass,
+            LocalTheme provides Theme.create(isDark = isDark),
         ),
         content = content,
     )

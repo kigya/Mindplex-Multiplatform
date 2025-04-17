@@ -36,8 +36,6 @@ class SignInNetworkRepository(
                             UsersCollection.Document.AVATAR_URL to googleUser.profilePictureUrl.orEmpty(),
                             UsersCollection.Document.COUNTRY_CODE to googleUser.countryCode,
                             UsersCollection.Document.SCORE to 0,
-                            UsersCollection.Document.GLOBAL_RANK to 0,
-                            UsersCollection.Document.LOCAL_RANK to 0,
                         ),
                     )
                 }

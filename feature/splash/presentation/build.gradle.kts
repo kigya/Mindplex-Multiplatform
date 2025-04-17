@@ -15,8 +15,9 @@ kotlin {
             with(projects) {
                 with(core) {
                     api(domain.interactor)
-                    implementation(core.util)
-                    implementation(core.presentation.common)
+                    implementation(util)
+                    implementation(domain.profile)
+                    implementation(presentation.common)
                     implementation(presentation.feature)
                     implementation(presentation.uikit)
                     implementation(presentation.theme)

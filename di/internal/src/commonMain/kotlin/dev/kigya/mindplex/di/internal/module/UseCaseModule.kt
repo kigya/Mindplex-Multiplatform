@@ -1,6 +1,8 @@
 package dev.kigya.mindplex.di.internal.module
 
 import dev.kigya.mindplex.core.domain.profile.usecase.GetUserProfileUseCase
+import dev.kigya.mindplex.core.domain.profile.usecase.IsSystemDarkThemeUseCase
+import dev.kigya.mindplex.core.domain.profile.usecase.UpdateThemeUseCase
 import dev.kigya.mindplex.feature.game.domain.usecase.GetQuestionUseCase
 import dev.kigya.mindplex.feature.game.domain.usecase.GetScoreUseCase
 import dev.kigya.mindplex.feature.game.domain.usecase.UpdateScoreUseCase
@@ -12,10 +14,8 @@ import dev.kigya.mindplex.feature.login.domain.usecase.SignInUseCase
 import dev.kigya.mindplex.feature.login.domain.usecase.SignOutUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
-import dev.kigya.mindplex.feature.profile.domain.usecase.FetchThemeUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.GetUsersByRankUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.UpdateCountryCodeUseCase
-import dev.kigya.mindplex.feature.profile.domain.usecase.UpdateThemeUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -33,7 +33,7 @@ val useCaseModule = module {
     factoryOf(::UpdateScoreUseCase)
     factoryOf(::GetUsersByRankUseCase)
     factoryOf(::GetUserCountryCodeUseCase)
-    factoryOf(::FetchThemeUseCase)
+    factoryOf(::IsSystemDarkThemeUseCase)
     factoryOf(::UpdateThemeUseCase)
     factoryOf(::UpdateCountryCodeUseCase)
 }

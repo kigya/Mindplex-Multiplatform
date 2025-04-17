@@ -2,13 +2,12 @@ package dev.kigya.mindplex.feature.profile.presentation.ui
 
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.domain.profile.usecase.GetUserProfileUseCase
+import dev.kigya.mindplex.core.domain.profile.usecase.IsSystemDarkThemeUseCase
+import dev.kigya.mindplex.core.domain.profile.usecase.UpdateThemeUseCase
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
-import dev.kigya.mindplex.core.presentation.theme.ThemeManager
 import dev.kigya.mindplex.feature.login.domain.usecase.SignOutUseCase
-import dev.kigya.mindplex.feature.profile.domain.usecase.FetchThemeUseCase
 import dev.kigya.mindplex.feature.profile.domain.usecase.UpdateCountryCodeUseCase
-import dev.kigya.mindplex.feature.profile.domain.usecase.UpdateThemeUseCase
 import dev.kigya.mindplex.feature.profile.presentation.contract.ProfileContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
@@ -17,7 +16,7 @@ import kotlinx.coroutines.supervisorScope
 class ProfileScreenViewModel(
     navigatorContract: MindplexNavigatorContract,
     private val getUserProfileUseCase: GetUserProfileUseCase,
-    private val getThemeUseCase: FetchThemeUseCase,
+    private val getThemeUseCase: IsSystemDarkThemeUseCase,
     private val saveThemeUseCase: UpdateThemeUseCase,
     private val singOutUseCase: SignOutUseCase,
     private val updateCountryCodeUseCase: UpdateCountryCodeUseCase,
@@ -90,14 +89,12 @@ class ProfileScreenViewModel(
 
     private suspend fun handleThemeChange(isDarkTheme: Boolean) {
         saveThemeUseCase.invoke(isDarkTheme)
-        ThemeManager.setTheme(isDarkTheme)
         updateState { copy(isDarkTheme = isDarkTheme) }
     }
 
     private suspend fun fetchTheme() {
         getThemeUseCase(None).fold(
             ifRight = { theme ->
-                ThemeManager.setTheme(theme)
                 updateState { copy(isDarkTheme = theme) }
             },
             ifLeft = { error ->

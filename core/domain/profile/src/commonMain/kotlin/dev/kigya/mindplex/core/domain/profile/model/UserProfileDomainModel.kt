@@ -5,6 +5,6 @@ data class UserProfileDomainModel(
     val profilePictureUrl: String?,
     val userCountry: String?,
     val score: Int,
-    val globalRank: Int?,
-    val localRank: Int?,
+    val globalRank: Int? = null,
+    val localRank: Int? = null,
 )

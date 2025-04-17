@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -21,6 +22,7 @@ import androidx.navigation.toRoute
 import coil3.ImageLoader
 import coil3.compose.LocalPlatformContext
 import coil3.compose.setSingletonImageLoaderFactory
+import dev.kigya.mindplex.core.domain.profile.contract.ThemePreferencesRepositoryContract
 import dev.kigya.mindplex.core.presentation.common.util.SystemBarsColor
 import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
 import dev.kigya.mindplex.core.presentation.feature.host.AppActionsHost
@@ -43,6 +45,7 @@ import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreenViewModel
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import dev.kigya.mindplex.navigation.navigator.type.enumNavTypeEntry
 import dev.kigya.mindplex.navigation.navigator.type.nullableEnumNavType
+import kotlinx.coroutines.flow.distinctUntilChanged
 import org.koin.compose.KoinContext
 import org.koin.compose.currentKoinScope
 import org.koin.core.parameter.parametersOf
@@ -51,7 +54,7 @@ import kotlin.reflect.typeOf
 
 @Composable
 fun App() {
-    MindplexTheme {
+    MindplexTheme(isDark = rememberIsDarkTheme()) {
         KoinContext {
             val navigationController = rememberNavController()
 
@@ -144,4 +147,16 @@ private fun rememberCoilImageLoader(): ImageLoader {
     val koinScope = currentKoinScope()
     val context = LocalPlatformContext.current
     return remember { koinScope.getKoin().get<ImageLoader> { parametersOf(context) } }
+}
+
+@Composable
+private fun rememberIsDarkTheme(): Boolean {
+    val koinScope = currentKoinScope()
+    val isDarkTheme by koinScope
+        .getKoin()
+        .get<ThemePreferencesRepositoryContract>()
+        .isInDarkTheme
+        .distinctUntilChanged()
+        .collectAsStateWithLifecycle(false)
+    return remember(isDarkTheme) { isDarkTheme }
 }
