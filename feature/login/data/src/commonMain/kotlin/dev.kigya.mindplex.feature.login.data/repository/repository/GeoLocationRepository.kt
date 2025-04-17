@@ -1,43 +1,25 @@
 package dev.kigya.mindplex.feature.login.data.repository.repository
 
-import dev.kigya.mindplex.core.data.credentials.api.SecretsProviderContract
-import dev.kigya.mindplex.feature.login.data.model.GeoLocationResponse
-import dev.kigya.mindplex.feature.login.data.model.PublicIPResponse
+import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
+import dev.kigya.mindplex.core.data.scout.api.fetchReified
+import dev.kigya.mindplex.core.util.dsl.runSuspendCatching
+import dev.kigya.mindplex.feature.login.data.mapper.CountryCodeRemoteMapper
+import dev.kigya.mindplex.feature.login.data.mapper.CountryCodeRemoteMapper.mappedBy
+import dev.kigya.mindplex.feature.login.data.model.CountryCodeResponse
 import dev.kigya.mindplex.feature.login.domain.contract.GeoLocationContract
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.request.get
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 class GeoLocationRepository(
-    private val httpClient: HttpClient,
-    private val secretsProviderContract: SecretsProviderContract,
+    private val scoutNetworkClientContract: ScoutNetworkClientContract,
+    private val dispatcher: CoroutineDispatcher,
 ) : GeoLocationContract {
 
-    override suspend fun getUserCountryCode(): Result<String?> {
-        val ipAddress = getPublicIP()
-        val tokenResult = secretsProviderContract.provideFlagsKey()
-
-        return tokenResult.fold(
-            onSuccess = { token ->
-                val response: GeoLocationResponse = httpClient
-                    .get(USER_COUNTRY_CODE.replace("%s", ipAddress).replace("{token}", token))
-                    .body()
-
-                Result.success(response.country)
-            },
-            onFailure = {
-                Result.failure(it)
-            },
-        )
-    }
-
-    private suspend fun getPublicIP(): String {
-        val response = httpClient.get(USER_IP).body<PublicIPResponse>()
-        return response.ip
-    }
-
-    private companion object GeoLocationConstants {
-        const val USER_IP = "https://api.ipify.org?format=json"
-        const val USER_COUNTRY_CODE = "https://ipinfo.io/%s?token={token}"
+    override suspend fun getUserCountryCode(): Result<String?> = runSuspendCatching {
+        withContext(dispatcher) {
+            scoutNetworkClientContract.fetchReified<CountryCodeResponse>(
+                path = arrayOf("country"),
+            ) mappedBy CountryCodeRemoteMapper
+        }
     }
 }

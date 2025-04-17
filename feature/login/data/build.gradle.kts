@@ -16,7 +16,6 @@ kotlin {
                 implementation(coroutines.core)
                 implementation(bundles.dataStore)
                 implementation(firebase.firestore)
-                implementation(firebase.common)
             }
             with(projects) {
                 implementation(feature.login.domain)
@@ -24,7 +23,7 @@ kotlin {
                     implementation(util)
                     implementation(data.firebase)
                     implementation(data.jwtParser)
-                    implementation(data.credentials)
+                    implementation(data.scout)
                 }
             }
         }
