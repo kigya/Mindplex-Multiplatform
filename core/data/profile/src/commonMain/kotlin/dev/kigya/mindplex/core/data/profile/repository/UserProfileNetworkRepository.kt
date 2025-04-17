@@ -62,7 +62,7 @@ class UserProfileNetworkRepository(
             .get()
 
         val filteredUsersSnapshot = localUsersSnapshot.documents.filter {
-            it.get<String>(UsersCollection.Document.COUNTRY_CODE) == countryCode
+            it.get<String?>(UsersCollection.Document.COUNTRY_CODE) == countryCode
         }
 
         return filteredUsersSnapshot.indexOfFirst {
