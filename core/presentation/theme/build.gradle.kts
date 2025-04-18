@@ -4,3 +4,13 @@ plugins {
         alias(bundle.shared.ui.screen.compose)
     }
 }
+
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            with(libs) {
+                implementation(bundles.dataStore)
+            }
+        }
+    }
+}

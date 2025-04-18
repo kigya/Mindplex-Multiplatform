@@ -1,0 +1,12 @@
+<resources>
+    <string name="profile_name">Profile</string>
+    <string name="profile_user_name">User Name</string>
+    <string name="profile_points">Points</string>
+    <string name="profile_world_rank">World rank</string>
+    <string name="profile_local_rank">Local rank</string>
+    <string name="profile_dark_theme">Dark theme</string>
+    <string name="profile_light_theme">Light theme</string>
+    <string name="profile_category_preview">World rank</string>
+    <string name="profile_score_preview">score</string>
+    <string name="profile_hash" translatable="false">#</string>
+</resources>

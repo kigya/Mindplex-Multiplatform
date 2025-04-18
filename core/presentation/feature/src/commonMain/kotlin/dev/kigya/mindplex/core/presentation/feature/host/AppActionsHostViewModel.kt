@@ -68,6 +68,11 @@ class AppActionsHostViewModel(
                     copy(
                         shouldDisplayNavigationBar = targetRoute != null &&
                             targetRoute in ALLOWED_NAVIGATION_BAR_ROUTES,
+                        activeVertical = if (targetRoute == ScreenRoute.Login) {
+                            ScreenHostContract.State.Vertical.Home
+                        } else {
+                            getState().activeVertical
+                        },
                     )
                 }
             }

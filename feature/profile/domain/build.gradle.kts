@@ -12,7 +12,10 @@ kotlin {
                 implementation(coroutines.core)
             }
             with(projects) {
-                api(core.domain.interactor)
+                with(core) {
+                    api(domain.interactor)
+                    implementation(feature.login.domain)
+                }
             }
         }
     }

@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "415983434678-5ugpij654afgh9kcb0ch5o3f3j8ml2hm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.kigya.mindplex",
+            "certificate_hash": "3cef51d9161cc95073f95491df784e836eed1903"
+          }
+        },
+        {
           "client_id": "415983434678-q9cmlv7j2gn76ccpjcnqhs33kqsmgd59.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

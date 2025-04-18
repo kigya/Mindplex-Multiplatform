@@ -48,4 +48,21 @@ class SignInNetworkRepository(
             .document(googleIdToken)
             .delete()
     }
+
+    override suspend fun sendUserCountryCode(
+        userId: String,
+        countryCode: String,
+    ) {
+        withContext(dispatcher) {
+            val documentRef = Firebase.firestore
+                .collection(UsersCollection.NAME)
+                .document(userId)
+
+            documentRef.update(
+                hashMapOf(
+                    UsersCollection.Document.COUNTRY_CODE to countryCode,
+                ),
+            )
+        }
+    }
 }

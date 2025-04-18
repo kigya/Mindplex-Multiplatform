@@ -2,9 +2,23 @@ package dev.kigya.mindplex.core.data.profile.mapper
 
 import dev.kigya.mindplex.core.data.profile.model.UserRemoteProfileDto
 import dev.kigya.mindplex.core.domain.profile.model.UserProfileDomainModel
+import dev.kigya.mindplex.core.util.mapper.DomainMapper
 
-internal fun UserRemoteProfileDto.toDomain(): UserProfileDomainModel = UserProfileDomainModel(
-    displayName = name,
-    profilePictureUrl = avatarUrl,
-    score = score,
-)
+internal object UserRemoteProfileMapper : DomainMapper<UserRemoteProfileDto, UserProfileDomainModel>() {
+
+    override fun mapToDomainModel(entity: UserRemoteProfileDto): UserProfileDomainModel =
+        UserProfileDomainModel(
+            displayName = entity.name,
+            profilePictureUrl = entity.avatarUrl,
+            score = entity.score,
+            userCountry = entity.countryCode,
+        )
+
+    override fun mapFromDomainModel(domainModel: UserProfileDomainModel): UserRemoteProfileDto =
+        UserRemoteProfileDto(
+            name = domainModel.displayName,
+            avatarUrl = domainModel.profilePictureUrl.orEmpty(),
+            score = domainModel.score,
+            countryCode = domainModel.userCountry.orEmpty(),
+        )
+}

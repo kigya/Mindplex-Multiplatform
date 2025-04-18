@@ -15,6 +15,7 @@ kotlin {
                 implementation(coroutines.core)
                 implementation(firebase.firestore)
                 implementation(firebase.common)
+                implementation(bundles.dataStore)
             }
             with(projects) {
                 implementation(core.domain.profile)

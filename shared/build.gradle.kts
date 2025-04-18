@@ -30,6 +30,7 @@ kotlin {
                     implementation(presentation.theme)
                     implementation(presentation.feature)
                     implementation(presentation.common)
+                    implementation(domain.profile)
                 }
                 implementation(navigation.api)
                 implementation(di.api)
