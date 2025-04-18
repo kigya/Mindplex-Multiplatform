@@ -15,18 +15,22 @@ class SignInPreferencesRepository(
     private val dataStore: DataStore<Preferences>,
     private val dispatcher: CoroutineDispatcher,
 ) : SignInPreferencesRepositoryContract {
+
     override val userToken: Flow<String?>
         get() = dataStore.data.map { preferences ->
             preferences[stringPreferencesKey(GOOGLE_ID_TOKEN)]
         }
 
     override val isSignedIn: Flow<Boolean>
-        get() = userToken.map { it != null }
+        get() = dataStore.data.map { preferences ->
+            preferences[stringPreferencesKey(IS_SIGNED_IN)]?.toBoolean() ?: false
+        }
 
     override suspend fun signIn(googleIdToken: String) {
         withContext(dispatcher) {
             dataStore.edit { preferences ->
                 preferences[stringPreferencesKey(GOOGLE_ID_TOKEN)] = googleIdToken
+                preferences[stringPreferencesKey(IS_SIGNED_IN)] = "true"
             }
         }
     }
@@ -35,11 +39,13 @@ class SignInPreferencesRepository(
         withContext(dispatcher) {
             dataStore.edit { preferences ->
                 preferences[stringPreferencesKey(GOOGLE_ID_TOKEN)] = String.empty
+                preferences[stringPreferencesKey(IS_SIGNED_IN)] = "false"
             }
         }
     }
 
     private companion object {
         const val GOOGLE_ID_TOKEN = "google_id_token"
+        const val IS_SIGNED_IN = "is_signed_in"
     }
 }
