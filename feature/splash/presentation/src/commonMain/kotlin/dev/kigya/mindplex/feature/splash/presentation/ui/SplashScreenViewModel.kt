@@ -1,8 +1,8 @@
 package dev.kigya.mindplex.feature.splash.presentation.ui
 
 import dev.kigya.mindplex.core.domain.interactor.base.None
-import dev.kigya.mindplex.core.domain.profile.usecase.IsSystemDarkThemeUseCase
-import dev.kigya.mindplex.core.domain.profile.usecase.UpdateThemeUseCase
+import dev.kigya.mindplex.core.domain.profile.usecase.CheckAppInDarkThemeUseCase
+import dev.kigya.mindplex.core.domain.profile.usecase.UpdateAppInDarkThemeUsrCase
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
@@ -19,8 +19,8 @@ import kotlin.time.Duration.Companion.milliseconds
 class SplashScreenViewModel(
     private val getIsOnboardingCompletedUseCase: GetIsOnboardingCompletedUseCase,
     private val getIsUserSignedInUseCase: GetIsUserSignedInUseCase,
-    private val getThemeUseCase: IsSystemDarkThemeUseCase,
-    private val setThemeUseCase: UpdateThemeUseCase,
+    private val getThemeUseCase: CheckAppInDarkThemeUseCase,
+    private val setThemeUseCase: UpdateAppInDarkThemeUsrCase,
     navigatorContract: MindplexNavigatorContract,
 ) : BaseViewModel<SplashContract.State, SplashContract.Effect>(
     navigatorContract = navigatorContract,

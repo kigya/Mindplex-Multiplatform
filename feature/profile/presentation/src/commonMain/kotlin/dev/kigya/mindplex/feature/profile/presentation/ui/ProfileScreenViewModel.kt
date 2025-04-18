@@ -1,9 +1,9 @@
 package dev.kigya.mindplex.feature.profile.presentation.ui
 
 import dev.kigya.mindplex.core.domain.interactor.base.None
+import dev.kigya.mindplex.core.domain.profile.usecase.CheckAppInDarkThemeUseCase
 import dev.kigya.mindplex.core.domain.profile.usecase.GetUserProfileUseCase
-import dev.kigya.mindplex.core.domain.profile.usecase.IsSystemDarkThemeUseCase
-import dev.kigya.mindplex.core.domain.profile.usecase.UpdateThemeUseCase
+import dev.kigya.mindplex.core.domain.profile.usecase.UpdateAppInDarkThemeUsrCase
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
 import dev.kigya.mindplex.feature.login.domain.usecase.SignOutUseCase
@@ -16,8 +16,8 @@ import kotlinx.coroutines.supervisorScope
 class ProfileScreenViewModel(
     navigatorContract: MindplexNavigatorContract,
     private val getUserProfileUseCase: GetUserProfileUseCase,
-    private val getThemeUseCase: IsSystemDarkThemeUseCase,
-    private val saveThemeUseCase: UpdateThemeUseCase,
+    private val getThemeUseCase: CheckAppInDarkThemeUseCase,
+    private val saveThemeUseCase: UpdateAppInDarkThemeUsrCase,
     private val singOutUseCase: SignOutUseCase,
     private val updateCountryCodeUseCase: UpdateCountryCodeUseCase,
 ) : BaseViewModel<ProfileContract.State, ProfileContract.Effect>(

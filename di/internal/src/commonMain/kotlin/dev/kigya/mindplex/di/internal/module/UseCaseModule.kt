@@ -1,8 +1,8 @@
 package dev.kigya.mindplex.di.internal.module
 
+import dev.kigya.mindplex.core.domain.profile.usecase.CheckAppInDarkThemeUseCase
 import dev.kigya.mindplex.core.domain.profile.usecase.GetUserProfileUseCase
-import dev.kigya.mindplex.core.domain.profile.usecase.IsSystemDarkThemeUseCase
-import dev.kigya.mindplex.core.domain.profile.usecase.UpdateThemeUseCase
+import dev.kigya.mindplex.core.domain.profile.usecase.UpdateAppInDarkThemeUsrCase
 import dev.kigya.mindplex.feature.game.domain.usecase.GetQuestionUseCase
 import dev.kigya.mindplex.feature.game.domain.usecase.GetScoreUseCase
 import dev.kigya.mindplex.feature.game.domain.usecase.UpdateScoreUseCase
@@ -33,7 +33,7 @@ val useCaseModule = module {
     factoryOf(::UpdateScoreUseCase)
     factoryOf(::GetUsersByRankUseCase)
     factoryOf(::GetUserCountryCodeUseCase)
-    factoryOf(::IsSystemDarkThemeUseCase)
-    factoryOf(::UpdateThemeUseCase)
+    factoryOf(::CheckAppInDarkThemeUseCase)
+    factoryOf(::UpdateAppInDarkThemeUsrCase)
     factoryOf(::UpdateCountryCodeUseCase)
 }
