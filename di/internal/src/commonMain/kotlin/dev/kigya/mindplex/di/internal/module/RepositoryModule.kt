@@ -123,8 +123,8 @@ val repositoryModule = module {
 
     single {
         GeoLocationRepository(
-            httpClient = get(),
-            secretsProviderContract = get(),
+            scoutNetworkClientContract = get(),
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind GeoLocationContract::class
 

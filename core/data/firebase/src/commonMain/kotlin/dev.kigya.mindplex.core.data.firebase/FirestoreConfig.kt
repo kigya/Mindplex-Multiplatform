@@ -12,17 +12,5 @@ data object FirestoreConfig {
                 const val COUNTRY_CODE = "countryCode"
             }
         }
-
-        object Secrets {
-            const val NAME = "secrets"
-
-            object Document {
-                const val FLAGS_API = "flags_api"
-
-                object FlagsAPI {
-                    const val FLAGS_KEY = "flags_key"
-                }
-            }
-        }
     }
 }

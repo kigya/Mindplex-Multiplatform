@@ -43,7 +43,6 @@ kotlin {
                 with(core) {
                     implementation(data.connectivity)
                     implementation(data.profile)
-                    implementation(data.credentials)
                     implementation(domain.connectivity)
                     implementation(domain.profile)
                     implementation(presentation.feature)
