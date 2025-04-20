@@ -8,6 +8,7 @@ import dev.kigya.mindplex.feature.login.presentation.mapper.GoogleUserPresentati
 import dev.kigya.mindplex.feature.login.presentation.mapper.GoogleUserPresentationMapper.mappedBy
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
+import dev.kigya.outcome.unwrap
 
 class LoginScreenViewModel(
     private val signInUseCase: SignInUseCase,
@@ -30,13 +31,13 @@ class LoginScreenViewModel(
     }
 
     private suspend fun LoginContract.Event.OnGoogleSignInResultReceived.handleGoogleSignInResult() =
-        signInUseCase(googleUser mappedBy GoogleUserPresentationMapper).fold(
-            ifLeft = { error ->
+        signInUseCase(googleUser mappedBy GoogleUserPresentationMapper).unwrap(
+            onFailure = { error ->
                 updateState {
                     copy(stubErrorType = error.toStubErrorType())
                 }
             },
-            ifRight = {
+            onSuccess = {
                 navigatorContract.navigateTo(
                     route = ScreenRoute.Home,
                     popUpToRoute = ScreenRoute.Login,

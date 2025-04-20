@@ -14,7 +14,7 @@ class GetScoreUseCase(
 ) : BaseSuspendUseCase<Either<None, Int>, None>() {
 
     override suspend operator fun invoke(params: None): Either<None, Int> = either {
-        val token = signInPreferencesRepositoryContract.userToken.first()
+        val token = signInPreferencesRepositoryContract.userId.first()
         profileDatabaseRepositoryContract.getUserScore(token.orEmpty()).fold(
             onSuccess = { it },
             onFailure = { raise(None) },

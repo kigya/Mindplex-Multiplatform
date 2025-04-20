@@ -7,7 +7,6 @@ import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesReposit
 class SignOutUseCase(
     private val signInPreferencesRepositoryContract: SignInPreferencesRepositoryContract,
 ) : BaseSuspendUseCase<Unit, None>() {
-    override suspend fun invoke(params: None) {
-        signInPreferencesRepositoryContract.signOut()
-    }
+
+    override suspend fun invoke(params: None) = signInPreferencesRepositoryContract.signOut()
 }

@@ -41,6 +41,7 @@ class GameScreenViewModel(
     initialState = GameContract.State(),
 ),
     GameContract {
+
     private val _gameType = MutableStateFlow(TypePresentationModel.MULTIPLE)
     private var _timerJob: Job? = null
 
@@ -75,7 +76,7 @@ class GameScreenViewModel(
     }
 
     private suspend fun getQuestion() {
-        getQuestionUseCase.invoke(
+        getQuestionUseCase(
             GameDomainConfig(
                 category = getState().category mappedBy GameCategoryMapper,
                 difficulty = getState().difficulty mappedBy GameDifficultyMapper,
@@ -86,7 +87,7 @@ class GameScreenViewModel(
                 updateState { copy(stubErrorType = error.toStubErrorType()) }
             },
             ifRight = { questionData: QuestionDomainModel ->
-                getScoreUseCase.invoke(None).onRight { score ->
+                getScoreUseCase(None).onRight { score ->
                     updateState { copy(score = score) }
                 }
                 val type = questionData.config.type mappedBy GameTypeMapper
@@ -120,7 +121,7 @@ class GameScreenViewModel(
                 updateState { copy(stubErrorType = error.toStubErrorType()) }
             },
             ifRight = { questionValidation: QuestionValidationDomainModel ->
-                updateScoreUseCase.invoke(questionValidation.isAnswerCorrect)
+                updateScoreUseCase(questionValidation.isAnswerCorrect)
                 val updatedAnswers = getState().answers.mapIndexed { i, answer ->
                     val domainResult = questionValidation.results.find { it.index == i }
 

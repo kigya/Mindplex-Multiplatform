@@ -19,10 +19,10 @@ import dev.kigya.mindplex.feature.home.data.repository.FactsNetworkRepository
 import dev.kigya.mindplex.feature.home.domain.contract.FactsDatabaseRepositoryContract
 import dev.kigya.mindplex.feature.home.domain.contract.FactsNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.data.repository.interceptor.ProfileImageInterceptor
-import dev.kigya.mindplex.feature.login.data.repository.repository.GeoLocationRepository
+import dev.kigya.mindplex.feature.login.data.repository.repository.CountryCodeNetworkRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInNetworkRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInPreferencesRepository
-import dev.kigya.mindplex.feature.login.domain.contract.GeoLocationContract
+import dev.kigya.mindplex.feature.login.domain.contract.CountryCodeNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.ProfileImageInterceptorContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
@@ -122,11 +122,11 @@ val repositoryModule = module {
     } bind UserRankNetworkRepositoryContract::class
 
     single {
-        GeoLocationRepository(
+        CountryCodeNetworkRepository(
             scoutNetworkClientContract = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
-    } bind GeoLocationContract::class
+    } bind CountryCodeNetworkRepositoryContract::class
 
     single {
         ThemePreferencesRepository(

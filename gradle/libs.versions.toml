@@ -3,6 +3,7 @@
 java = { strictly = "17" }
 minSdk = { strictly = "28" }
 compileSdk = { strictly = "35" }
+outcome = "0.1.2-SNAPSHOT"
 targetSdk = { strictly = "35" }
 
 # Gradle
@@ -192,6 +193,9 @@ kotlin-poet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinPoet" }
 
 # Ksoup
 ksoup = { module = "com.mohamedrejeb.ksoup:ksoup-entities", version.ref = "ksoup" }
+
+# Outcome
+outcome = { module = "dev.kigya:outcome", version.ref = "outcome" }
 
 # Gradle Plugins
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }

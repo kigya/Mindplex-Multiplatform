@@ -30,7 +30,7 @@ class ProfileScreenViewModel(
         withUseCaseScope {
             fetchScreenData()
             fetchTheme()
-            updateCountryCodeUseCase.invoke(None)
+            updateCountryCodeUseCase(None)
         }
     }
 
@@ -47,7 +47,7 @@ class ProfileScreenViewModel(
     }
 
     private suspend fun handleGoToRegistration() {
-        singOutUseCase.invoke(None)
+        singOutUseCase(None)
         navigatorContract.navigateTo(
             route = ScreenRoute.Login,
             popUpToRoute = ScreenRoute.Home,
@@ -88,7 +88,7 @@ class ProfileScreenViewModel(
     }
 
     private suspend fun handleThemeChange(isDarkTheme: Boolean) {
-        saveThemeUseCase.invoke(isDarkTheme)
+        saveThemeUseCase(isDarkTheme)
         updateState { copy(isDarkTheme = isDarkTheme) }
     }
 

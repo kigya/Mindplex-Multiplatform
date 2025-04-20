@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class CountryCodeResponse(
-    val countryCode: String? = null,
+    val countryCode: String,
 )

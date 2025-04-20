@@ -24,7 +24,7 @@ class GetUserProfileUseCase(
     override suspend operator fun invoke(
         params: None,
     ): Either<MindplexDomainError, UserProfileDomainModel> = either {
-        signInPreferencesRepositoryContract.userToken.map { token ->
+        signInPreferencesRepositoryContract.userId.map { token ->
             requireNotNullOrRaise(token) { raise(MindplexDomainError.OTHER) }
 
             userProfileNetworkRepositoryContract.getUserProfile(token).fold(

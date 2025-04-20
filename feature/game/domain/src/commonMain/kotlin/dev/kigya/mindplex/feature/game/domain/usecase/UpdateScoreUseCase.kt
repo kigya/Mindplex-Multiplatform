@@ -13,7 +13,7 @@ class UpdateScoreUseCase(
 ) : BaseSuspendUseCase<Unit, Boolean>() {
 
     override suspend operator fun invoke(params: Boolean) {
-        val token = signInPreferencesRepositoryContract.userToken.first().orEmpty()
+        val token = signInPreferencesRepositoryContract.userId.first().orEmpty()
         val currentScore =
             profileDatabaseRepositoryContract.getUserScore(token).getOrNull() ?: return
 
