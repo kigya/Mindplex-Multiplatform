@@ -9,6 +9,7 @@ import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompl
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
+import dev.kigya.outcome.getOrNull
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine

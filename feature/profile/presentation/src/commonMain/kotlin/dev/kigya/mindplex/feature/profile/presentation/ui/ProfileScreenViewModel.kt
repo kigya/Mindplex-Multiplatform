@@ -11,6 +11,7 @@ import dev.kigya.mindplex.feature.profile.domain.usecase.UpdateCountryCodeUseCas
 import dev.kigya.mindplex.feature.profile.presentation.contract.ProfileContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
+import dev.kigya.outcome.unwrap
 import kotlinx.coroutines.supervisorScope
 
 class ProfileScreenViewModel(
@@ -60,8 +61,8 @@ class ProfileScreenViewModel(
     private suspend fun fetchScreenData() = supervisorScope {
         updateState { ProfileContract.State() }
 
-        getUserProfileUseCase(None).fold(
-            ifRight = { userProfile ->
+        getUserProfileUseCase(None).unwrap(
+            onSuccess = { userProfile ->
                 updateState {
                     copy(
                         stubErrorType = null,
@@ -77,7 +78,7 @@ class ProfileScreenViewModel(
                     )
                 }
             },
-            ifLeft = { error ->
+            onFailure = { error ->
                 updateState {
                     copy(
                         stubErrorType = error.toStubErrorType(),
@@ -93,11 +94,11 @@ class ProfileScreenViewModel(
     }
 
     private suspend fun fetchTheme() {
-        getThemeUseCase(None).fold(
-            ifRight = { theme ->
+        getThemeUseCase(None).unwrap(
+            onSuccess = { theme ->
                 updateState { copy(isDarkTheme = theme) }
             },
-            ifLeft = { error ->
+            onFailure = { error ->
                 updateState {
                     copy(stubErrorType = error.toStubErrorType())
                 }

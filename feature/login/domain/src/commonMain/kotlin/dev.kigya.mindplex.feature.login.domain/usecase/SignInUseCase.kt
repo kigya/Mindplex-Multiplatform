@@ -15,33 +15,41 @@ import dev.kigya.outcome.getOrNull
 import dev.kigya.outcome.unwrap
 
 class SignInUseCase(
-    private val signInPreferencesRepository: SignInPreferencesRepositoryContract,
-    private val signInNetworkRepository: SignInNetworkRepositoryContract,
-    private val countryCodeRepository: CountryCodeNetworkRepositoryContract,
-    private val profileImageInterceptor: ProfileImageInterceptorContract,
-    private val jwtHandler: JwtHandlerContract,
-    private val connectivity: ConnectivityRepositoryContract,
+    private val signInPreferencesRepositoryContract: SignInPreferencesRepositoryContract,
+    private val signInNetworkRepositoryContract: SignInNetworkRepositoryContract,
+    private val countryCodeRepositoryContract: CountryCodeNetworkRepositoryContract,
+    private val connectivityRepositoryContract: ConnectivityRepositoryContract,
+    private val profileImageInterceptorContract: ProfileImageInterceptorContract,
+    private val jwtHandlerContract: JwtHandlerContract,
 ) : BaseSuspendUseCase<Outcome<MindplexDomainError, Unit>, GoogleUserSignInDomainModel?>() {
 
     @CheckResult
     override suspend fun invoke(
         params: GoogleUserSignInDomainModel?,
     ): Outcome<MindplexDomainError, Unit> {
-        if (!connectivity.isConnected()) return Outcome.failure(MindplexDomainError.NETWORK)
-        val googleUserDomainModel = params ?: return Outcome.failure(MindplexDomainError.OTHER)
+        if (!connectivityRepositoryContract.isConnected()) {
+            return Outcome.failure(
+                error = MindplexDomainError.NETWORK,
+            )
+        }
+        val googleUserDomainModel = params ?: return Outcome.failure(
+            error = MindplexDomainError.OTHER,
+        )
 
-        return jwtHandler
-            .decodeSubject(googleUserDomainModel.tokenId)
+        return jwtHandlerContract
+            .decodeSubject(googleUserDomainModel.userId)
             .unwrap(
                 onFailure = { Outcome.failure(MindplexDomainError.OTHER) },
-                onSuccess = { tokenId ->
+                onSuccess = { userId ->
                     val googleUser = googleUserDomainModel.copy(
-                        tokenId = tokenId,
-                        profilePictureUrl = profileImageInterceptor.intercept(googleUserDomainModel.profilePictureUrl),
-                        countryCode = countryCodeRepository.fetchCountryCode().getOrNull(),
+                        userId = userId,
+                        profilePictureUrl = profileImageInterceptorContract.intercept(
+                            googleUserDomainModel.profilePictureUrl,
+                        ),
+                        countryCode = countryCodeRepositoryContract.fetchCountryCode().getOrNull(),
                     )
-                    signInNetworkRepository.signIn(googleUser)
-                    signInPreferencesRepository.signIn(googleUser.tokenId)
+                    signInNetworkRepositoryContract.signIn(googleUser)
+                    signInPreferencesRepositoryContract.signIn(googleUser.userId)
 
                     Outcome.success(Unit)
                 },

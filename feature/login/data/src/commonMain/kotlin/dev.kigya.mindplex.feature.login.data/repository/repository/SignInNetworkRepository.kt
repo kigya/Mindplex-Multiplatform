@@ -13,11 +13,11 @@ class SignInNetworkRepository(
     private val dispatcher: CoroutineDispatcher,
 ) : SignInNetworkRepositoryContract {
     override suspend fun signIn(googleUser: GoogleUserSignInDomainModel) =
-        requireNotNull(googleUser.tokenId).let { tokenId ->
+        requireNotNull(googleUser.userId).let { userId ->
             withContext(dispatcher) {
                 val documentRef = Firebase.firestore
                     .collection(UsersCollection.NAME)
-                    .document(tokenId)
+                    .document(userId)
 
                 val isExist = documentRef.get(Source.SERVER).exists
 

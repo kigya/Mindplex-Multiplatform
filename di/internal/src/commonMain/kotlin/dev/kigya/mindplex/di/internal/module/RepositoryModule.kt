@@ -18,6 +18,10 @@ import dev.kigya.mindplex.feature.home.data.repository.FactsDatabaseRepository
 import dev.kigya.mindplex.feature.home.data.repository.FactsNetworkRepository
 import dev.kigya.mindplex.feature.home.domain.contract.FactsDatabaseRepositoryContract
 import dev.kigya.mindplex.feature.home.domain.contract.FactsNetworkRepositoryContract
+import dev.kigya.mindplex.feature.leaderboard.data.repository.UserRankDatabaseRepository
+import dev.kigya.mindplex.feature.leaderboard.data.repository.UserRankNetworkRepository
+import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankDatabaseRepositoryContract
+import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.data.repository.interceptor.ProfileImageInterceptor
 import dev.kigya.mindplex.feature.login.data.repository.repository.CountryCodeNetworkRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInNetworkRepository
@@ -28,10 +32,6 @@ import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryC
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
 import dev.kigya.mindplex.feature.onboarding.data.OnboardingRepository
 import dev.kigya.mindplex.feature.onboarding.domain.contract.OnboardingRepositoryContract
-import dev.kigya.mindplex.feature.profile.data.repository.UserRankDatabaseRepository
-import dev.kigya.mindplex.feature.profile.data.repository.UserRankNetworkRepository
-import dev.kigya.mindplex.feature.profile.domain.contract.UserRankDatabaseRepositoryContract
-import dev.kigya.mindplex.feature.profile.domain.contract.UserRankNetworkRepositoryContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import org.koin.core.qualifier.named

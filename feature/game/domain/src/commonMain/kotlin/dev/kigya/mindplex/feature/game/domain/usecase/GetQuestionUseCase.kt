@@ -1,9 +1,5 @@
 package dev.kigya.mindplex.feature.game.domain.usecase
 
-import arrow.core.Either
-import arrow.core.raise.Raise
-import arrow.core.raise.either
-import arrow.core.raise.ensure
 import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityRepositoryContract
 import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
 import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
@@ -11,45 +7,52 @@ import dev.kigya.mindplex.feature.game.domain.contract.QuestionsDatabaseReposito
 import dev.kigya.mindplex.feature.game.domain.contract.QuestionsNetworkRepositoryContract
 import dev.kigya.mindplex.feature.game.domain.model.GameDomainConfig
 import dev.kigya.mindplex.feature.game.domain.model.QuestionDomainModel
+import dev.kigya.outcome.Outcome
+import dev.kigya.outcome.getOrElse
+import dev.kigya.outcome.unwrap
 
 class GetQuestionUseCase(
     private val questionsNetworkRepositoryContract: QuestionsNetworkRepositoryContract,
     private val questionsDatabaseRepositoryContract: QuestionsDatabaseRepositoryContract,
     private val connectivityRepositoryContract: ConnectivityRepositoryContract,
-) : BaseSuspendUseCase<Either<MindplexDomainError, QuestionDomainModel>, GameDomainConfig>() {
+) : BaseSuspendUseCase<Outcome<MindplexDomainError, QuestionDomainModel>, GameDomainConfig>() {
 
     override suspend operator fun invoke(
         params: GameDomainConfig,
-    ): Either<MindplexDomainError, QuestionDomainModel> = either {
+    ): Outcome<MindplexDomainError, QuestionDomainModel> {
         val localCount = questionsDatabaseRepositoryContract.getCount().getOrElse {
-            raise(MindplexDomainError.OTHER)
+            return Outcome.failure(MindplexDomainError.OTHER)
         }
 
         if (localCount == 0) {
             fetchRemoteQuestions()
         }
 
-        questionsDatabaseRepositoryContract.getQuestion(params).fold(
+        return questionsDatabaseRepositoryContract.getQuestion(params).unwrap(
             onSuccess = { question ->
-                question ?: raise(MindplexDomainError.OTHER)
+                question?.let {
+                    Outcome.success(question)
+                } ?: Outcome.failure(MindplexDomainError.OTHER)
             },
             onFailure = {
-                raise(MindplexDomainError.OTHER)
+                Outcome.failure(MindplexDomainError.OTHER)
             },
         )
     }
 
-    private suspend fun Raise<MindplexDomainError>.fetchRemoteQuestions() {
-        questionsNetworkRepositoryContract.getQuestions().fold(
+    private suspend fun fetchRemoteQuestions() = questionsNetworkRepositoryContract
+        .getQuestions()
+        .unwrap(
             onSuccess = { questions ->
                 questionsDatabaseRepositoryContract
                     .saveQuestions(questions)
-                    .getOrElse { raise(MindplexDomainError.OTHER) }
+                    .getOrElse { return@unwrap Outcome.failure(MindplexDomainError.OTHER) }
             },
             onFailure = {
-                ensure(connectivityRepositoryContract.isConnected().not()) { MindplexDomainError.OTHER }
-                raise(MindplexDomainError.NETWORK)
+                if (!connectivityRepositoryContract.isConnected()) {
+                    return@unwrap Outcome.failure(MindplexDomainError.NETWORK)
+                }
+                return@unwrap Outcome.failure(MindplexDomainError.OTHER)
             },
         )
-    }
 }

@@ -3,6 +3,7 @@ package dev.kigya.mindplex.feature.onboarding.domain
 import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.feature.onboarding.domain.contract.OnboardingRepositoryContract
 import dev.kigya.mindplex.feature.onboarding.domain.usecase.SetOnboardingCompletedUseCase
+import dev.kigya.outcome.outcomeCatching
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -46,7 +47,7 @@ class SetOnboardingCompletedUseCaseTest {
         coEvery { onboardingRepositoryContract.setOnboardingCompleted() } throws RuntimeException("Test exception")
 
         // When
-        runCatching { setOnboardingCompletedUseCase(None) }
+        outcomeCatching { setOnboardingCompletedUseCase(None) }
 
         // Then
         coVerify { onboardingRepositoryContract.setOnboardingCompleted() }

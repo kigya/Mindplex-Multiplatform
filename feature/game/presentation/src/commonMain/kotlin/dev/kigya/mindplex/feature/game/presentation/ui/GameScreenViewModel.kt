@@ -23,6 +23,8 @@ import dev.kigya.mindplex.feature.game.presentation.mapper.GameDifficultyMapper.
 import dev.kigya.mindplex.feature.game.presentation.mapper.GameTypeMapper
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute.Game.TypePresentationModel
+import dev.kigya.outcome.onSuccess
+import dev.kigya.outcome.unwrap
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -82,12 +84,12 @@ class GameScreenViewModel(
                 difficulty = getState().difficulty mappedBy GameDifficultyMapper,
                 type = _gameType.value mappedBy GameTypeMapper,
             ),
-        ).fold(
-            ifLeft = { error: MindplexDomainError ->
+        ).unwrap(
+            onFailure = { error: MindplexDomainError ->
                 updateState { copy(stubErrorType = error.toStubErrorType()) }
             },
-            ifRight = { questionData: QuestionDomainModel ->
-                getScoreUseCase(None).onRight { score ->
+            onSuccess = { questionData: QuestionDomainModel ->
+                getScoreUseCase(None).onSuccess { score ->
                     updateState { copy(score = score) }
                 }
                 val type = questionData.config.type mappedBy GameTypeMapper
@@ -116,11 +118,11 @@ class GameScreenViewModel(
                 question = question,
                 answerIndex = answerIndex,
             ),
-        ).fold(
-            ifLeft = { error: MindplexDomainError ->
+        ).unwrap(
+            onFailure = { error: MindplexDomainError ->
                 updateState { copy(stubErrorType = error.toStubErrorType()) }
             },
-            ifRight = { questionValidation: QuestionValidationDomainModel ->
+            onSuccess = { questionValidation: QuestionValidationDomainModel ->
                 updateScoreUseCase(questionValidation.isAnswerCorrect)
                 val updatedAnswers = getState().answers.mapIndexed { i, answer ->
                     val domainResult = questionValidation.results.find { it.index == i }

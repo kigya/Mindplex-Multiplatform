@@ -4,6 +4,7 @@ import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileDatabaseRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
+import dev.kigya.outcome.getOrNull
 import kotlinx.coroutines.flow.first
 
 class UpdateScoreUseCase(

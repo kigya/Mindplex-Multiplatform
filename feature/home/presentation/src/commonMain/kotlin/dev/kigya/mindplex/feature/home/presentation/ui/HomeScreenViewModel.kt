@@ -1,10 +1,10 @@
 package dev.kigya.mindplex.feature.home.presentation.ui
 
 import dev.kigya.mindplex.core.domain.interactor.base.None
+import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
 import dev.kigya.mindplex.core.domain.profile.usecase.GetUserProfileUseCase
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
-import dev.kigya.mindplex.core.util.dsl.parZipOrAccumulate
 import dev.kigya.mindplex.core.util.dsl.safeValueOf
 import dev.kigya.mindplex.core.util.extension.mapPersistent
 import dev.kigya.mindplex.core.util.extension.update
@@ -18,6 +18,9 @@ import dev.kigya.mindplex.feature.home.presentation.mapper.FactsPresentationMapp
 import dev.kigya.mindplex.feature.home.presentation.mapper.FactsPresentationMapper.mappedBy
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
+import dev.kigya.outcome.onFailure
+import dev.kigya.outcome.unwrap
+import dev.kigya.outcome.zipParallelAccumulate
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
@@ -41,9 +44,9 @@ class HomeScreenViewModel(
     override fun executeStartAction() {
         withUseCaseScope {
             val result = getUserProfileUseCase.invoke(None)
-            result.fold(
-                ifLeft = { navigatorContract.navigateTo(ScreenRoute.Login) },
-                ifRight = { fetchScreenData() },
+            result.unwrap(
+                onFailure = { navigatorContract.navigateTo(ScreenRoute.Login) },
+                onSuccess = { fetchScreenData() },
             )
         }
     }
@@ -79,10 +82,16 @@ class HomeScreenViewModel(
     private suspend fun fetchScreenData() = supervisorScope {
         updateState { HomeContract.State() }
 
-        parZipOrAccumulate(
+        zipParallelAccumulate(
             fa = { getUserProfileUseCase(None) },
             fb = { getFactsUseCase(GetFactsUseCase.Params(FACTS_AMOUNT)) },
-            onSuccess = { profile, facts ->
+            combineError = { e1, e2 ->
+                listOf(e1, e2)
+                    .takeIf { MindplexDomainError.NETWORK in it }
+                    ?.let { MindplexDomainError.NETWORK }
+                    ?: MindplexDomainError.OTHER
+            },
+            transform = { profile, facts ->
                 updateState {
                     copy(
                         stubErrorType = null,
@@ -107,14 +116,11 @@ class HomeScreenViewModel(
                 }
                 launch { enableFactsAutoChangeEffect() }
             },
-            onError = { errorList ->
-                updateState {
-                    copy(
-                        stubErrorType = errorList.toStubErrorType(),
-                    )
-                }
-            },
-        )
+        ).onFailure { error ->
+            updateState {
+                copy(stubErrorType = error.toStubErrorType())
+            }
+        }
     }
 
     private suspend fun enableFactsAutoChangeEffect() {

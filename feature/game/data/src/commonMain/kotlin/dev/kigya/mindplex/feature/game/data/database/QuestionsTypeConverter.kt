@@ -4,6 +4,8 @@ import androidx.room.TypeConverter
 import dev.kigya.mindplex.feature.game.data.model.local.CategoryLocal
 import dev.kigya.mindplex.feature.game.data.model.local.DifficultyLocal
 import dev.kigya.mindplex.feature.game.data.model.local.TypeLocal
+import dev.kigya.outcome.getOrDefault
+import dev.kigya.outcome.outcomeCatching
 
 private const val CONVERTER_SEPARATOR = "||"
 
@@ -24,20 +26,21 @@ internal class QuestionsTypeConverter {
 
     @TypeConverter
     fun toDifficultyLocal(value: String): DifficultyLocal =
-        runCatching { DifficultyLocal.valueOf(value) }
+        outcomeCatching { DifficultyLocal.valueOf(value) }
             .getOrDefault(DifficultyLocal.EASY)
 
     @TypeConverter
     fun fromTypeLocal(type: TypeLocal): String = type.name
 
     @TypeConverter
-    fun toTypeLocal(value: String): TypeLocal = runCatching { TypeLocal.valueOf(value) }
+    fun toTypeLocal(value: String): TypeLocal = outcomeCatching { TypeLocal.valueOf(value) }
         .getOrDefault(TypeLocal.MULTIPLE)
 
     @TypeConverter
     fun fromCategoryLocal(category: CategoryLocal): String = category.name
 
     @TypeConverter
-    fun toCategoryLocal(value: String): CategoryLocal = runCatching { CategoryLocal.valueOf(value) }
-        .getOrDefault(CategoryLocal.ENTERTAINMENT_MUSICALS_THEATRES)
+    fun toCategoryLocal(value: String): CategoryLocal =
+        outcomeCatching { CategoryLocal.valueOf(value) }
+            .getOrDefault(CategoryLocal.ENTERTAINMENT_MUSICALS_THEATRES)
 }

@@ -1,34 +1,10 @@
 package dev.kigya.mindplex.core.util.dsl
 
-import arrow.core.Either
-import arrow.core.Either.Companion.zipOrAccumulate
-import arrow.core.NonEmptyList
-import arrow.fx.coroutines.parZip
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.coroutineScope
+import dev.kigya.outcome.getOrDefault
+import dev.kigya.outcome.outcomeCatching
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.coroutines.cancellation.CancellationException
-
-@OptIn(ExperimentalContracts::class)
-inline fun <T : Any> requireNotNullOrRaise(
-    value: T?,
-    lazyExecute: () -> Nothing,
-): T {
-    contract {
-        returns() implies (value != null)
-    }
-
-    if (value == null) {
-        lazyExecute()
-    } else {
-        return value
-    }
-}
 
 @OptIn(ExperimentalContracts::class)
 inline fun <T> T?.ifPresentOrElse(
@@ -64,52 +40,6 @@ inline fun <T, R> T?.ifPresentOrElseReturn(
     }
 }
 
-inline fun <R> runSuspendCatching(block: () -> R): Result<R> = try {
-    Result.success(block())
-} catch (t: TimeoutCancellationException) {
-    Result.failure(t)
-} catch (c: CancellationException) {
-    throw c
-} catch (ignore: Throwable) {
-    Result.failure(ignore)
-}
-
-@OptIn(ExperimentalContracts::class)
-inline fun <T> T.takeOrExecute(
-    predicate: (T) -> Boolean,
-    action: () -> T,
-): T {
-    contract {
-        callsInPlace(predicate, InvocationKind.EXACTLY_ONCE)
-        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
-    }
-
-    return if (predicate(this)) {
-        this
-    } else {
-        action()
-    }
-}
-
-suspend fun <E, A, B, Z> parZipOrAccumulate(
-    ctx: CoroutineContext = EmptyCoroutineContext,
-    fa: suspend CoroutineScope.() -> Either<E, A>,
-    fb: suspend CoroutineScope.() -> Either<E, B>,
-    onSuccess: (A, B) -> Z,
-    onError: (NonEmptyList<E>) -> Unit,
-) = coroutineScope {
-    parZip(
-        ctx = ctx,
-        fa = { fa() },
-        fb = { fb().mapLeft { it } },
-    ) { eitherA, eitherB ->
-        zipOrAccumulate(eitherA, eitherB, onSuccess)
-    }.fold(
-        ifLeft = { errorList -> onError(errorList) },
-        ifRight = { },
-    )
-}
-
 @OptIn(ExperimentalContracts::class)
 inline fun <T1, T2, R> invokeIfPresent(
     p1: T1?,
@@ -117,7 +47,7 @@ inline fun <T1, T2, R> invokeIfPresent(
     block: (T1, T2) -> R,
 ): R? {
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
         returnsNotNull() implies (p1 != null && p2 != null)
     }
     return if (p1 != null && p2 != null) {
@@ -130,4 +60,4 @@ inline fun <T1, T2, R> invokeIfPresent(
 inline fun <reified T : Enum<T>> safeValueOf(
     name: String,
     default: T,
-): T = runCatching { enumValueOf<T>(name) }.getOrDefault(default)
+): T = outcomeCatching { enumValueOf<T>(name) }.getOrDefault(default)
