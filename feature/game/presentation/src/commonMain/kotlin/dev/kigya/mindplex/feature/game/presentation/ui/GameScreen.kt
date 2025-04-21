@@ -11,7 +11,7 @@ import dev.kigya.mindplex.feature.game.presentation.block.GameAnswers
 import dev.kigya.mindplex.feature.game.presentation.block.GameContainer
 import dev.kigya.mindplex.feature.game.presentation.block.GameQuestion
 import dev.kigya.mindplex.feature.game.presentation.block.GameTimer
-import dev.kigya.mindplex.feature.game.presentation.block.GameTopBar
+import dev.kigya.mindplex.feature.game.presentation.block.topbar.GameTopBar
 import dev.kigya.mindplex.feature.game.presentation.contract.GameContract
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameBackground

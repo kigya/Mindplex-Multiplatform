@@ -1,10 +1,5 @@
-package dev.kigya.mindplex.feature.game.presentation.block
+package dev.kigya.mindplex.feature.game.presentation.block.topbar
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -15,10 +10,8 @@ import androidx.compose.ui.Modifier
 import dev.kigya.mindplex.core.presentation.uikit.MindplexChip
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIcon
 import dev.kigya.mindplex.core.presentation.uikit.MindplexIconButton
-import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
 import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
-import dev.kigya.mindplex.core.presentation.uikit.annotation.ExperimentalMindplexUiKitApi
 import dev.kigya.mindplex.feature.game.presentation.contract.GameContract
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameBackground
@@ -29,62 +22,46 @@ import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameScore
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameScoreLabelText
 import dev.kigya.mindplex.feature.game.presentation.ui.theme.GameTheme.gameTitle
 import mindplex_multiplatform.feature.game.presentation.generated.resources.Res
-import mindplex_multiplatform.feature.game.presentation.generated.resources.game_modes_pick_answer_title
 import mindplex_multiplatform.feature.game.presentation.generated.resources.ic_game_arrow_back
 import mindplex_multiplatform.feature.game.presentation.generated.resources.ic_game_score_label
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(ExperimentalMindplexUiKitApi::class)
 @Composable
-internal fun GameTopBar(
+internal fun GameTopBarContent(
     state: GameContract.State,
     event: (GameContract.Event) -> Unit,
 ) {
-    AnimatedVisibility(
-        visible = !state.isLoading,
-        enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
-        exit = slideOutVertically(targetOffsetY = { -it }) + fadeOut(),
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(GameTheme.colorScheme.gameBackground.value),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(GameTheme.colorScheme.gameBackground.value),
-            verticalAlignment = Alignment.CenterVertically,
+        MindplexIconButton(
+            resource = Res.drawable.ic_game_arrow_back,
+            color = GameTheme.colorScheme.gameIconBack,
+            onClick = { event(GameContract.Event.OnBackPressed) },
+        )
+
+        MindplexSpacer(size = GameTheme.dimension.dp8)
+
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterStart,
         ) {
-            MindplexIconButton(
-                resource = Res.drawable.ic_game_arrow_back,
-                color = GameTheme.colorScheme.gameIconBack,
-                onClick = { event(GameContract.Event.OnBackPressed) },
-            )
-
-            MindplexSpacer(size = GameTheme.dimension.dp8)
-
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.CenterStart,
-            ) {
-                MindplexMeasurablePlaceholder(
-                    isLoading = state.isLoading,
-                    textToMeasure = stringResource(Res.string.game_modes_pick_answer_title),
-                    textStyle = GameTheme.typography.gameTitle,
-                ) {
-                    state.typeTitle?.let { textResource ->
-                        MindplexText(
-                            value = stringResource(textResource),
-                            color = GameTheme.colorScheme.gameTitle,
-                            typography = GameTheme.typography.gameTitle,
-                            maxLines = 1,
-                        )
-                    }
-                }
-            }
-
-            MindplexSpacer(size = GameTheme.dimension.dp8)
-
-            MindplexMeasurablePlaceholder(isLoading = state.isLoading) {
-                GameScoreLabel(scoreText = state.score.toString())
+            state.typeTitle?.let { textResource ->
+                MindplexText(
+                    value = stringResource(textResource),
+                    color = GameTheme.colorScheme.gameTitle,
+                    typography = GameTheme.typography.gameTitle,
+                    maxLines = 1,
+                )
             }
         }
+
+        MindplexSpacer(size = GameTheme.dimension.dp8)
+
+        GameScoreLabel(scoreText = state.score.toString())
     }
 }
 
