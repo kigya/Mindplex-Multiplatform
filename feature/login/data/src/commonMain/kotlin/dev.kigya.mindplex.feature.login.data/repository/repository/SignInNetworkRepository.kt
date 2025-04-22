@@ -13,11 +13,11 @@ class SignInNetworkRepository(
     private val dispatcher: CoroutineDispatcher,
 ) : SignInNetworkRepositoryContract {
     override suspend fun signIn(googleUser: GoogleUserSignInDomainModel) =
-        requireNotNull(googleUser.tokenId).let { tokenId ->
+        requireNotNull(googleUser.userId).let { userId ->
             withContext(dispatcher) {
                 val documentRef = Firebase.firestore
                     .collection(UsersCollection.NAME)
-                    .document(tokenId)
+                    .document(userId)
 
                 val isExist = documentRef.get(Source.SERVER).exists
 
@@ -47,22 +47,5 @@ class SignInNetworkRepository(
             .collection(UsersCollection.NAME)
             .document(googleIdToken)
             .delete()
-    }
-
-    override suspend fun sendUserCountryCode(
-        userId: String,
-        countryCode: String,
-    ) {
-        withContext(dispatcher) {
-            val documentRef = Firebase.firestore
-                .collection(UsersCollection.NAME)
-                .document(userId)
-
-            documentRef.update(
-                hashMapOf(
-                    UsersCollection.Document.COUNTRY_CODE to countryCode,
-                ),
-            )
-        }
     }
 }

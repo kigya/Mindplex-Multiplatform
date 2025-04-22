@@ -38,7 +38,7 @@ class SignInUseCaseTest {
         signInUseCase = SignInUseCase(
             signInPreferencesRepositoryContract = signInPreferencesRepositoryContract,
             signInNetworkRepositoryContract = signInNetworkRepositoryContract,
-            profileImageInterceptor = profileImageInterceptorContract,
+            profileImageInterceptorContract = profileImageInterceptorContract,
             jwtHandlerContract = jwtHandlerContract,
             connectivityRepositoryContract = connectivityRepositoryContract,
         )
@@ -47,7 +47,7 @@ class SignInUseCaseTest {
     @Test
     fun `invoke returns Success when user is signed in successfully`() = runTest {
         // Given
-        val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
+        val googleUser = GoogleUserSignInDomainModel(userId = "tokenId")
         val decodedUserId = "userId"
         val interceptedProfilePictureUrl = "intercepted"
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
@@ -60,12 +60,12 @@ class SignInUseCaseTest {
 
         // Then
         assertEquals(either { }, result)
-        coVerify { jwtHandlerContract.decodeSubject(googleUser.tokenId) }
+        coVerify { jwtHandlerContract.decodeSubject(googleUser.userId) }
         coVerify { signInPreferencesRepositoryContract.signIn(decodedUserId) }
         coVerify {
             signInNetworkRepositoryContract.signIn(
                 googleUser.copy(
-                    tokenId = decodedUserId,
+                    userId = decodedUserId,
                     profilePictureUrl = interceptedProfilePictureUrl,
                 ),
             )
@@ -107,7 +107,7 @@ class SignInUseCaseTest {
     @Test
     fun `invoke returns Failure OTHER when jwtHandler fails`() = runTest {
         // Given
-        val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
+        val googleUser = GoogleUserSignInDomainModel(userId = "tokenId")
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.failure(Exception("JWT decoding failed"))
         coEvery { connectivityRepositoryContract.isConnected() } returns true
         coEvery { profileImageInterceptorContract.intercept(any()) } returns "intercepted"
@@ -125,7 +125,7 @@ class SignInUseCaseTest {
     @Test
     fun `invoke calls signInNetworkRepositoryContract with correct user`() = runTest {
         // Given
-        val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
+        val googleUser = GoogleUserSignInDomainModel(userId = "tokenId")
         val decodedUserId = "userId"
         val interceptedProfilePictureUrl = "intercepted"
 
@@ -141,7 +141,7 @@ class SignInUseCaseTest {
         coVerify {
             signInNetworkRepositoryContract.signIn(
                 googleUser.copy(
-                    tokenId = decodedUserId,
+                    userId = decodedUserId,
                     profilePictureUrl = interceptedProfilePictureUrl,
                 ),
             )
@@ -151,7 +151,7 @@ class SignInUseCaseTest {
     @Test
     fun `invoke calls signInPreferencesRepositoryContract with correct token`() = runTest {
         // Given
-        val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
+        val googleUser = GoogleUserSignInDomainModel(userId = "tokenId")
         val decodedUserId = "userId"
         coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
         coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
@@ -169,7 +169,7 @@ class SignInUseCaseTest {
     fun `invoke does not call connectivityRepositoryContract isConnected if params are not null`() =
         runTest {
             // Given
-            val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
+            val googleUser = GoogleUserSignInDomainModel(userId = "tokenId")
             val decodedUserId = "userId"
             coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
             coEvery { signInPreferencesRepositoryContract.signIn(any()) } returns Unit
@@ -200,7 +200,7 @@ class SignInUseCaseTest {
     fun `invoke calls signInPreferencesRepositoryContract and signInNetworkRepositoryContract in correct order`() =
         runTest {
             // Given
-            val googleUser = GoogleUserSignInDomainModel(tokenId = "tokenId")
+            val googleUser = GoogleUserSignInDomainModel(userId = "tokenId")
             val decodedUserId = "userId"
             val interceptedProfilePictureUrl = "intercepted"
             coEvery { jwtHandlerContract.decodeSubject(any()) } returns Result.success(decodedUserId)
@@ -216,7 +216,7 @@ class SignInUseCaseTest {
                 signInPreferencesRepositoryContract.signIn(decodedUserId)
                 signInNetworkRepositoryContract.signIn(
                     googleUser.copy(
-                        tokenId = decodedUserId,
+                        userId = decodedUserId,
                         profilePictureUrl = interceptedProfilePictureUrl,
                     ),
                 )

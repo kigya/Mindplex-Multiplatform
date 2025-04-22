@@ -8,7 +8,7 @@ plugins {
     id("com.android.library")
     id("internal.config.android")
     id("internal.config.shared.detekt")
-    id("internal.config.shared.arrow")
+    id("internal.config.shared.outcome")
 }
 
 configure<KotlinMultiplatformExtension> {

@@ -23,6 +23,8 @@ import dev.kigya.mindplex.feature.game.presentation.mapper.GameDifficultyMapper.
 import dev.kigya.mindplex.feature.game.presentation.mapper.GameTypeMapper
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute.Game.TypePresentationModel
+import dev.kigya.outcome.onSuccess
+import dev.kigya.outcome.unwrap
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,6 +43,7 @@ class GameScreenViewModel(
     initialState = GameContract.State(),
 ),
     GameContract {
+
     private val _gameType = MutableStateFlow(TypePresentationModel.MULTIPLE)
     private var _timerJob: Job? = null
 
@@ -75,18 +78,18 @@ class GameScreenViewModel(
     }
 
     private suspend fun getQuestion() {
-        getQuestionUseCase.invoke(
+        getQuestionUseCase(
             GameDomainConfig(
                 category = getState().category mappedBy GameCategoryMapper,
                 difficulty = getState().difficulty mappedBy GameDifficultyMapper,
                 type = _gameType.value mappedBy GameTypeMapper,
             ),
-        ).fold(
-            ifLeft = { error: MindplexDomainError ->
+        ).unwrap(
+            onFailure = { error: MindplexDomainError ->
                 updateState { copy(stubErrorType = error.toStubErrorType()) }
             },
-            ifRight = { questionData: QuestionDomainModel ->
-                getScoreUseCase.invoke(None).onRight { score ->
+            onSuccess = { questionData: QuestionDomainModel ->
+                getScoreUseCase(None).onSuccess { score ->
                     updateState { copy(score = score) }
                 }
                 val type = questionData.config.type mappedBy GameTypeMapper
@@ -115,12 +118,12 @@ class GameScreenViewModel(
                 question = question,
                 answerIndex = answerIndex,
             ),
-        ).fold(
-            ifLeft = { error: MindplexDomainError ->
+        ).unwrap(
+            onFailure = { error: MindplexDomainError ->
                 updateState { copy(stubErrorType = error.toStubErrorType()) }
             },
-            ifRight = { questionValidation: QuestionValidationDomainModel ->
-                updateScoreUseCase.invoke(questionValidation.isAnswerCorrect)
+            onSuccess = { questionValidation: QuestionValidationDomainModel ->
+                updateScoreUseCase(questionValidation.isAnswerCorrect)
                 val updatedAnswers = getState().answers.mapIndexed { i, answer ->
                     val domainResult = questionValidation.results.find { it.index == i }
 

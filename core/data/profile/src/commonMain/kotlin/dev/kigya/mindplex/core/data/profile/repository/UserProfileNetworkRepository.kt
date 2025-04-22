@@ -8,7 +8,8 @@ import dev.kigya.mindplex.core.data.profile.mapper.UserRemoteProfileMapper
 import dev.kigya.mindplex.core.data.profile.model.UserRemoteProfileDto
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileNetworkRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.model.UserProfileDomainModel
-import dev.kigya.mindplex.core.util.dsl.runSuspendCatching
+import dev.kigya.outcome.Outcome
+import dev.kigya.outcome.outcomeSuspendCatchingOn
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Users as UsersCollection
@@ -17,28 +18,26 @@ class UserProfileNetworkRepository(
     private val dispatcher: CoroutineDispatcher,
 ) : UserProfileNetworkRepositoryContract {
 
-    override suspend fun getUserProfile(token: String): Result<UserProfileDomainModel> =
-        runSuspendCatching {
-            withContext(dispatcher) {
-                val documentSnapshot = Firebase.firestore
-                    .collection(UsersCollection.NAME)
-                    .document(token)
-                    .get(Source.SERVER)
+    override suspend fun getUserProfile(userId: String): Outcome<*, UserProfileDomainModel> =
+        outcomeSuspendCatchingOn(dispatcher) {
+            val documentSnapshot = Firebase.firestore
+                .collection(UsersCollection.NAME)
+                .document(userId)
+                .get(Source.SERVER)
 
-                val userDto = documentSnapshot.data<UserRemoteProfileDto>()
-                val domainProfile = UserRemoteProfileMapper.mapToDomainModel(userDto)
+            val userDto = documentSnapshot.data<UserRemoteProfileDto>()
+            val domainProfile = UserRemoteProfileMapper.mapToDomainModel(userDto)
 
-                val globalRank = getGlobalRank(userDto.score)
-                val localRank = userDto.countryCode?.let {
-                    getLocalRank(userDto.score, it)
-                }
-
-                val finalProfile = domainProfile.copy(
-                    globalRank = globalRank,
-                    localRank = localRank,
-                )
-                return@withContext finalProfile
+            val globalRank = getGlobalRank(userDto.score)
+            val localRank = userDto.countryCode?.let {
+                getLocalRank(userDto.score, it)
             }
+
+            val finalProfile = domainProfile.copy(
+                globalRank = globalRank,
+                localRank = localRank,
+            )
+            finalProfile
         }
 
     private suspend fun getGlobalRank(userScore: Int): Int {
@@ -71,13 +70,13 @@ class UserProfileNetworkRepository(
     }
 
     override suspend fun updateUserScore(
-        token: String,
+        userId: String,
         score: Int,
     ) {
         withContext(dispatcher) {
             Firebase.firestore
                 .collection(UsersCollection.NAME)
-                .document(token)
+                .document(userId)
                 .update(hashMapOf(UsersCollection.Document.SCORE to score))
         }
     }

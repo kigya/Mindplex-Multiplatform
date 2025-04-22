@@ -8,7 +8,7 @@ internal object GoogleUserPresentationMapper : DomainMapper<GoogleUser?, GoogleU
 
     override fun mapToDomainModel(entity: GoogleUser?): GoogleUserSignInDomainModel? = entity?.let {
         GoogleUserSignInDomainModel(
-            tokenId = it.idToken,
+            userId = it.idToken,
             displayName = it.displayName,
             profilePictureUrl = it.profilePicUrl,
         )

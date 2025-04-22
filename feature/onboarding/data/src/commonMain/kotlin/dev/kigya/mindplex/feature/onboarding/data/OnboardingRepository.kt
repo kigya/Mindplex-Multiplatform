@@ -17,7 +17,7 @@ class OnboardingRepository(
 
     override val isOnboardingCompleted: Flow<Boolean>
         get() = dataStore.data.map { preferences ->
-            preferences[booleanPreferencesKey(IS_ONBOARDING_COMPLETED_KEY)] ?: false
+            preferences[booleanPreferencesKey(IS_ONBOARDING_COMPLETED_KEY)] == true
         }
 
     override suspend fun setOnboardingCompleted() {

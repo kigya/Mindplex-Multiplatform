@@ -1,11 +1,12 @@
 package dev.kigya.mindplex.core.domain.profile.contract
 
 import dev.kigya.mindplex.core.domain.profile.model.UserProfileDomainModel
+import dev.kigya.outcome.Outcome
 
 interface UserProfileNetworkRepositoryContract {
-    suspend fun getUserProfile(token: String): Result<UserProfileDomainModel>
+    suspend fun getUserProfile(userId: String): Outcome<*, UserProfileDomainModel>
     suspend fun updateUserScore(
-        token: String,
+        userId: String,
         score: Int,
     )
 }
