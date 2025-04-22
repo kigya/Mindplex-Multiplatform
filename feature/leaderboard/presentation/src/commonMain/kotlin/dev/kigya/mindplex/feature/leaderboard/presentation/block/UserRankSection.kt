@@ -19,7 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import coil3.compose.AsyncImage
 import dev.carlsen.flagkit.FlagKit
-import dev.kigya.mindplex.core.presentation.uikit.MindplexSpacer
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
@@ -107,8 +106,6 @@ private fun UserRankCard(
             maxLines = 1,
             align = TextAlign.Start,
         )
-
-        MindplexSpacer(modifier = modifier.weight(1f))
 
         MindplexText(
             value = stringResource(Res.string.leaderboard_points, state.userScore),
