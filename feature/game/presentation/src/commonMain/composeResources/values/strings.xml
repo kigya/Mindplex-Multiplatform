@@ -3,4 +3,5 @@
     <string name="game_modes_true_of_false_title">True or False Mastery</string>
     <string name="game_modes_random_title">Will of chance</string>
     <string name="game_question_placeholder">Silhouette — a song performed by the group “KANA-BOON” is featured as the sixteenth opening of which anime?</string>
+    <string name="game_score_placeholder">Score</string>
 </resources>

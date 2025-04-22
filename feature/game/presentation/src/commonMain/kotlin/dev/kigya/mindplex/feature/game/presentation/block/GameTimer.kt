@@ -8,11 +8,13 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import dev.kigya.mindplex.core.presentation.common.extension.toPx
 import dev.kigya.mindplex.core.presentation.uikit.MindplexMeasurablePlaceholder
@@ -32,7 +34,10 @@ internal fun GameTimer(
     state: GameContract.State,
     modifier: Modifier = Modifier,
 ) {
-    MindplexMeasurablePlaceholder(state.isLoading) {
+    MindplexMeasurablePlaceholder(
+        isLoading = state.isLoading,
+        modifier = modifier.clip(CircleShape),
+    ) {
         BoxWithConstraints(
             modifier = modifier,
             contentAlignment = Alignment.Center,

@@ -1,5 +1,6 @@
 package dev.kigya.mindplex.feature.game.presentation.block
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -23,7 +24,7 @@ internal fun GameQuestion(
     isLoading = state.isLoading,
     textToMeasure = stringResource(Res.string.game_question_placeholder),
     textStyle = GameTheme.typography.gameQuestion,
-    modifier = modifier,
+    modifier = modifier.padding(vertical = GameTheme.dimension.dp48.value),
 ) {
     state.question?.let { text ->
         MindplexText(
