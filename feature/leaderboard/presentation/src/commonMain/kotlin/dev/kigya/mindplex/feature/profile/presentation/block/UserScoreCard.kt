@@ -2,7 +2,6 @@ package dev.kigya.mindplex.feature.profile.presentation.block
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -61,17 +60,20 @@ internal fun UserScoreCard(
                 ),
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(LeaderboardTheme.dimension.dp8.value),
     ) {
         Spacer(modifier = Modifier.height(LeaderboardTheme.dimension.dp16.value))
         if (isFirstRank) {
-            Box(contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+            ) {
                 MindplexIcon(
                     resource = Res.drawable.ic_crown,
                     color = LeaderboardTheme.colorScheme.leaderboardCrown,
                 )
 
                 MindplexText(
+                    modifier = Modifier.padding(top = LeaderboardTheme.dimension.dp8.value),
                     value = state.userRank,
                     color = LeaderboardTheme.colorScheme.leaderboardUserPodiumRankText,
                     typography = LeaderboardTheme.typography.leaderboardUserPodiumRankText,
@@ -85,7 +87,11 @@ internal fun UserScoreCard(
             )
         }
 
-        Box(modifier = Modifier.width(LeaderboardTheme.dimension.dp48.value)) {
+        Box(
+            modifier = Modifier
+                .width(LeaderboardTheme.dimension.dp48.value)
+                .padding(vertical = LeaderboardTheme.dimension.dp8.value),
+        ) {
             AsyncImage(
                 modifier = Modifier
                     .size(LeaderboardTheme.dimension.dp48.value)
@@ -121,6 +127,7 @@ internal fun UserScoreCard(
         )
 
         MindplexText(
+            modifier = Modifier.padding(vertical = LeaderboardTheme.dimension.dp2.value),
             value = stringResource(Res.string.leaderboard_points, state.userScore),
             color = LeaderboardTheme.colorScheme.leaderboardUserPodiumScoreText,
             typography = LeaderboardTheme.typography.leaderboardUserPodiumScoreText,
