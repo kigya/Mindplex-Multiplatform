@@ -15,17 +15,19 @@ internal fun GameTopBar(
     event: (GameContract.Event) -> Unit,
 ) {
     Box {
-        GameTopBarShimmer()
-
-        AnimatedVisibility(
-            visible = !state.isLoading,
-            enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
-            exit = slideOutVertically(targetOffsetY = { -it }) + fadeOut(),
-        ) {
-            GameTopBarContent(
-                state = state,
-                event = event,
-            )
+        if (state.isLoading) {
+            GameTopBarShimmer()
+        } else {
+            AnimatedVisibility(
+                visible = !state.isLoading,
+                enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
+                exit = slideOutVertically(targetOffsetY = { -it }) + fadeOut(),
+            ) {
+                GameTopBarContent(
+                    state = state,
+                    event = event,
+                )
+            }
         }
     }
 }

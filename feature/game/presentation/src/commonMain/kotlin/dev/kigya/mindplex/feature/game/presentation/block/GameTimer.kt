@@ -35,7 +35,7 @@ internal fun GameTimer(
     modifier: Modifier = Modifier,
 ) {
     MindplexMeasurablePlaceholder(
-        state.isLoading,
+        isLoading = state.isLoading,
         modifier = modifier.clip(CircleShape),
     ) {
         BoxWithConstraints(
