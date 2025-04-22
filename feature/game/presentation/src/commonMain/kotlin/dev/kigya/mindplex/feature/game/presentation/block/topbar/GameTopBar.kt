@@ -16,7 +16,7 @@ internal fun GameTopBar(
 ) {
     Box {
         if (state.isLoading) {
-            GameTopBarShimmer()
+            GameTopBarShimmer(state = state)
         } else {
             AnimatedVisibility(
                 visible = !state.isLoading,
