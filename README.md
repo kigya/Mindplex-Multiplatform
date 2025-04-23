@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # 🧠 Mindplex
 
 <div align="left"><figure><img src=".gitbook/assets/Logo.svg" alt="" width="128"><figcaption></figcaption></figure></div>
