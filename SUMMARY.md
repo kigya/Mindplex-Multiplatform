@@ -1,3 +1,3 @@
 # Table of contents
 
-* [💡 Mindplex](README.md)
+* [🧠 Mindplex](README.md)
