@@ -2,39 +2,8 @@
 
 <div align="left"><figure><img src=".gitbook/assets/Logo.svg" alt="" width="128"><figcaption></figcaption></figure></div>
 
-Introducing Mindplex, your ultimate quiz app destination! Dive into a world of knowledge with our engaging true/false questions and multiple-choice quizzes designed to challenge your intellect and entertain you endlessly. Experience the sleek user interface starting from the splash screen to the intuitive onboarding flow, guiding you seamlessly into the heart of Mindplex.
+Discover **Mindplex** – the ultimate quiz adventure that turns learning into pure excitement! Challenge yourself with lightning-fast True/False showdowns and thoughtfully crafted multiple-choice quizzes, all wrapped in a sleek, intuitive interface. Breeze through Google single-tap login, race against the clock, and climb the global leaderboard as you rack up points. Join thousands of knowledge warriors, sharpen your mind, and prove you’re the reigning quiz champion. Ready to dominate? Dive into Mindplex today!
 
-Log in effortlessly and explore the main screen, where a world of quizzes awaits. Whether you're in the mood for a quick true/false challenge or a more extensive multiple-choice quiz, Mindplex has got you covered. Celebrate your victories and track your progress on the achievements screen, showcasing your journey through the realms of knowledge.
+For detailed app information, setup instructions, and a collaboration guide, visit the official Mindplex documentation at [Mindplex Docs](https://personal-106.gitbook.io/mindplex-docs). This comprehensive resource will help you get the most out of your quiz adventure experience.
 
-Personalize your experience on the profile screen, where you can customize your avatar and display your quiz conquests. With Mindplex, you're not just playing a game; you're embarking on a journey of learning and fun. So why wait? Check Mindplex now and start your quiz adventure today!
-
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
-
-***
-
-## Development
-
-### Setup
-
-We use Git Hooks to run Detekt before commit so you need to install them:
-
-```shell
-./gradlew installGitHooks
-```
-
-***
-
-## 🚀 Technologies Used
-
-* Kotlin
-* Jetpack Compose Multiplatform
-* Koin
-* Multiplatform view-lifecycle
-* Jetpack Navigation
-* Compottie
-* Ktor + Ktorfit
-* Preferences DataStore
-* Detekt
-* Konsist + Junit + Turbine + MockK
-* ~~Decompose + Essenty~~
-* ~~Realm~~
+{% embed url="https://personal-106.gitbook.io/mindplex-docs" %}
