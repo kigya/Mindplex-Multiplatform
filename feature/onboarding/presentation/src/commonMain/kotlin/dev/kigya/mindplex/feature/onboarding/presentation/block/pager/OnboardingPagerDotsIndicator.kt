@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -53,7 +54,9 @@ internal fun ColumnScope.OnboardingPagerDotsIndicator(
     orientation = orientation,
     state = state,
     pagerState = pagerState,
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier
+        .height(OnboardingTheme.dimension.dp24.value)
+        .fillMaxWidth(),
 )
 
 @Composable
