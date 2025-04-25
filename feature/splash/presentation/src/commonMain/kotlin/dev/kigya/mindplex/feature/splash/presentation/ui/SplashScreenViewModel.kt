@@ -20,8 +20,8 @@ import kotlin.time.Duration.Companion.milliseconds
 class SplashScreenViewModel(
     private val getIsOnboardingCompletedUseCase: GetIsOnboardingCompletedUseCase,
     private val getIsUserSignedInUseCase: GetIsUserSignedInUseCase,
-    private val getThemeUseCase: CheckAppInDarkThemeUseCase,
-    private val setThemeUseCase: UpdateAppInDarkThemeUsrCase,
+    private val checkAppInDarkThemeUseCase: CheckAppInDarkThemeUseCase,
+    private val updateAppInDarkThemeUsrCase: UpdateAppInDarkThemeUsrCase,
     navigatorContract: MindplexNavigatorContract,
 ) : BaseViewModel<SplashContract.State, SplashContract.Effect>(
     navigatorContract = navigatorContract,
@@ -34,7 +34,7 @@ class SplashScreenViewModel(
 
     override fun executeStartAction() {
         withUseCaseScope {
-            getThemeUseCase(None).getOrNull()
+            checkAppInDarkThemeUseCase(None).getOrNull()
                 ?: sendEffect(SplashContract.Effect.RequestSystemTheme)
 
             combine(
@@ -65,7 +65,7 @@ class SplashScreenViewModel(
                     )
                 }
 
-                is SplashContract.Event.OnSystemThemeReceived -> setThemeUseCase(event.isDark)
+                is SplashContract.Event.OnSystemThemeReceived -> updateAppInDarkThemeUsrCase(event.isDark)
             }
         }
     }
