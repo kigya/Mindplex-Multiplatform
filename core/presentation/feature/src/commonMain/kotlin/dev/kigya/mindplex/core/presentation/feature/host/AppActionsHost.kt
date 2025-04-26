@@ -142,6 +142,13 @@ private fun NavigationEffects(
                         popUpTo(popUpToRoute) { inclusive = intent.inclusive }
                     }
                 }
+
+                is NavigationIntent.PreloadScreen -> {
+                    navHostController.navigate(intent.route) {
+                        launchSingleTop = true
+                    }
+                    navHostController.popBackStack()
+                }
             }
         }
     }

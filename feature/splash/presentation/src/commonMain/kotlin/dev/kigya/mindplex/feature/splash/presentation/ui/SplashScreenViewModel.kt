@@ -9,7 +9,6 @@ import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompl
 import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
-import dev.kigya.outcome.getOrNull
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -31,11 +30,11 @@ class SplashScreenViewModel(
 
     private val _isOnboardingCompleted = MutableStateFlow<Boolean?>(null)
     private val _isUserSignedIn = MutableStateFlow<Boolean?>(null)
+    private val _nextRoute = MutableStateFlow<ScreenRoute?>(null)
 
     override fun executeStartAction() {
         withUseCaseScope {
-            checkAppInDarkThemeUseCase(None).getOrNull()
-                ?: sendEffect(SplashContract.Effect.RequestSystemTheme)
+            checkAppInDarkThemeUseCase(None) ?: sendEffect(SplashContract.Effect.RequestSystemTheme)
 
             combine(
                 getIsOnboardingCompletedUseCase(None),
@@ -43,6 +42,15 @@ class SplashScreenViewModel(
             ) { isOnboardingCompleted, isUserSignedIn ->
                 _isOnboardingCompleted.update { isOnboardingCompleted }
                 _isUserSignedIn.update { isUserSignedIn }
+
+                val next = when {
+                    isOnboardingCompleted.not() -> ScreenRoute.Onboarding
+                    isUserSignedIn.not() -> ScreenRoute.Login
+                    else -> ScreenRoute.Home
+                }
+                _nextRoute.update { next }
+
+                navigatorContract.preloadAndInitializeScreen(next)
             }.launchIn(this)
         }
     }
