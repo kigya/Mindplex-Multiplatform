@@ -27,6 +27,7 @@ import dev.kigya.mindplex.core.presentation.common.util.SystemBarsColor
 import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
 import dev.kigya.mindplex.core.presentation.feature.host.AppActionsHost
 import dev.kigya.mindplex.core.presentation.feature.host.AppActionsHostViewModel
+import dev.kigya.mindplex.core.presentation.theme.LocalTheme
 import dev.kigya.mindplex.core.presentation.theme.MindplexTheme
 import dev.kigya.mindplex.feature.game.presentation.ui.GameScreen
 import dev.kigya.mindplex.feature.game.presentation.ui.GameScreenViewModel
@@ -71,33 +72,28 @@ fun App() {
                     navController = navigationController,
                     startDestination = ScreenRoute.Splash,
                 ) {
-                    animatedComposable<ScreenRoute.Splash> {
-                        SystemBarsColor(SystemBarsColor.LIGHT)
+                    animatedComposable<ScreenRoute.Splash>(forceSystemBarsColor = SystemBarsColor.LIGHT) {
                         SplashScreen(koinViewModel<SplashScreenViewModel>())
                     }
 
-                    animatedComposable<ScreenRoute.Onboarding> {
-                        SystemBarsColor(SystemBarsColor.LIGHT)
+                    animatedComposable<ScreenRoute.Onboarding>(forceSystemBarsColor = SystemBarsColor.LIGHT) {
                         OnboardingScreen(koinViewModel<OnboardingScreenViewModel>())
                     }
 
                     animatedComposable<ScreenRoute.Login> {
-                        SystemBarsColor(SystemBarsColor.AUTO)
                         LoginScreen(koinViewModel<LoginScreenViewModel>())
                     }
 
                     animatedComposable<ScreenRoute.Home> {
-                        SystemBarsColor(SystemBarsColor.AUTO)
                         HomeScreen(koinViewModel<HomeScreenViewModel>())
                     }
 
                     animatedComposable<ScreenRoute.Leaderboard> {
-                        SystemBarsColor(SystemBarsColor.AUTO)
+                        AutoSystemBarsColor()
                         LeaderboardScreen(koinViewModel<LeaderboardScreenViewModel>())
                     }
 
                     animatedComposable<ScreenRoute.Profile> {
-                        SystemBarsColor(SystemBarsColor.AUTO)
                         ProfileScreen(koinViewModel<ProfileScreenViewModel>())
                     }
 
@@ -112,7 +108,6 @@ fun App() {
                                 nullableEnumNavType(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
                         ),
                     ) { backStackEntry ->
-                        SystemBarsColor(SystemBarsColor.AUTO)
 
                         val arguments = backStackEntry.toRoute<ScreenRoute.Game>()
                         GameScreen(
@@ -135,12 +130,20 @@ fun App() {
 
 private inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
     typeMap: Map<KType, NavType<*>> = emptyMap(),
+    forceSystemBarsColor: SystemBarsColor? = null,
     crossinline screen: @Composable (NavBackStackEntry) -> Unit,
 ) = composable<T>(
     enterTransition = { fadeIn() },
     exitTransition = { fadeOut() },
     typeMap = typeMap,
-) { screen(it) }
+) {
+    if (forceSystemBarsColor == null) {
+        AutoSystemBarsColor()
+    } else {
+        SystemBarsColor(forceSystemBarsColor)
+    }
+    screen(it)
+}
 
 @Composable
 private fun rememberCoilImageLoader(): ImageLoader {
@@ -159,4 +162,13 @@ private fun rememberIsDarkTheme(): Boolean {
         .distinctUntilChanged()
         .collectAsStateWithLifecycle(false)
     return remember(isDarkTheme) { isDarkTheme }
+}
+
+@Composable
+private fun AutoSystemBarsColor() {
+    val isDarkTheme = LocalTheme.current.isDark
+
+    SystemBarsColor(
+        if (isDarkTheme) SystemBarsColor.LIGHT else SystemBarsColor.DARK,
+    )
 }
