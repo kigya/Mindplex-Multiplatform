@@ -55,7 +55,7 @@ internal fun ColumnScope.OnboardingPagerDotsIndicator(
     state = state,
     pagerState = pagerState,
     modifier = Modifier
-        .height(OnboardingTheme.dimension.dp24.value)
+        .height(OnboardingTheme.dimension.dp16.value)
         .fillMaxWidth(),
 )
 
