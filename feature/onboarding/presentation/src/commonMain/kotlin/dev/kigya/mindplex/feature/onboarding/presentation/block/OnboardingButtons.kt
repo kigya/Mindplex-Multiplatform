@@ -1,5 +1,14 @@
 package dev.kigya.mindplex.feature.onboarding.presentation.block
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -33,45 +42,65 @@ internal fun ColumnScope.OnboardingButtons(
 
     MindplexSpacer(size = OnboardingTheme.dimension.dp36)
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = LocalOnboardingButtonsHorizontalPadding.current),
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        state.onboardingData[pagerState.currentPage].skipButtonTextResource?.let { skipResource ->
-            MindplexButton(
-                text = stringResource(skipResource),
-                backgroundColor = OnboardingTheme.colorScheme.onboardingSkipButtonBackground,
-                borderColor = OnboardingTheme.colorScheme.onboardingSkipButtonBackground,
-                textColor = OnboardingTheme.colorScheme.onboardingSkipButtonText,
-                modifier = Modifier
-                    .weight(1f)
-                    .testTag("onboarding_skip_button_${pagerState.currentPage}"),
-                textTypography = OnboardingTheme.typography.onboardingButton,
-            ) {
-                event(OnboardingContract.Event.OnSkipClicked)
-                performClickHapticFeedback(hapticFeedback)
+    AnimatedContent(
+        targetState = pagerState.currentPage,
+        transitionSpec = {
+            if ((targetState == 0 || targetState == 1) && (initialState == 0 || initialState == 1)) {
+                fadeIn(tween(0)) togetherWith fadeOut(tween(0))
+            } else if (targetState > initialState) {
+                (slideInHorizontally { it } + fadeIn() togetherWith slideOutHorizontally { -it } + fadeOut())
+                    .using(SizeTransform(clip = false))
+            } else {
+                (slideInHorizontally { -it } + fadeIn() togetherWith slideOutHorizontally { it } + fadeOut())
+                    .using(SizeTransform(clip = false))
             }
-
-            if (pagerState.currentPage < state.onboardingData.size) {
-                MindplexSpacer(size = OnboardingTheme.dimension.dp24)
+        },
+    ) { page ->
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = LocalOnboardingButtonsHorizontalPadding.current),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            state.onboardingData[page].skipButtonTextResource?.let { skipResource ->
+                AnimatedVisibility(
+                    visible = page < state.onboardingData.size,
+                    modifier = Modifier.weight(1f),
+                    enter = fadeIn() + slideInHorizontally(),
+                    exit = fadeOut() + slideOutHorizontally(),
+                ) {
+                    MindplexButton(
+                        text = stringResource(skipResource),
+                        backgroundColor = OnboardingTheme.colorScheme.onboardingSkipButtonBackground,
+                        borderColor = OnboardingTheme.colorScheme.onboardingSkipButtonBackground,
+                        textColor = OnboardingTheme.colorScheme.onboardingSkipButtonText,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag("onboarding_skip_button_$page"),
+                        textTypography = OnboardingTheme.typography.onboardingButton,
+                    ) {
+                        event(OnboardingContract.Event.OnSkipClicked)
+                        performClickHapticFeedback(hapticFeedback)
+                    }
+                }
+                if (page < state.onboardingData.size) {
+                    MindplexSpacer(size = OnboardingTheme.dimension.dp24)
+                }
             }
-        }
-
-        state.onboardingData[pagerState.currentPage].nextButtonTextResource?.let { nextResource ->
-            MindplexButton(
-                text = stringResource(nextResource),
-                backgroundColor = OnboardingTheme.colorScheme.onboardingNextButtonBackground,
-                borderColor = OnboardingTheme.colorScheme.onboardingNextButtonBackground,
-                textColor = OnboardingTheme.colorScheme.onboardingNextButtonText,
-                modifier = Modifier
-                    .weight(1f)
-                    .testTag("onboarding_next_button_${pagerState.currentPage}"),
-                textTypography = OnboardingTheme.typography.onboardingButton,
-            ) {
-                event(OnboardingContract.Event.OnNextClicked(pagerState.currentPage))
-                performClickHapticFeedback(hapticFeedback)
+            state.onboardingData[page].nextButtonTextResource?.let { nextResource ->
+                MindplexButton(
+                    text = stringResource(nextResource),
+                    backgroundColor = OnboardingTheme.colorScheme.onboardingNextButtonBackground,
+                    borderColor = OnboardingTheme.colorScheme.onboardingNextButtonBackground,
+                    textColor = OnboardingTheme.colorScheme.onboardingNextButtonText,
+                    modifier = Modifier
+                        .weight(1f)
+                        .testTag("onboarding_next_button_$page"),
+                    textTypography = OnboardingTheme.typography.onboardingButton,
+                ) {
+                    event(OnboardingContract.Event.OnNextClicked(pagerState.currentPage))
+                    performClickHapticFeedback(hapticFeedback)
+                }
             }
         }
     }
