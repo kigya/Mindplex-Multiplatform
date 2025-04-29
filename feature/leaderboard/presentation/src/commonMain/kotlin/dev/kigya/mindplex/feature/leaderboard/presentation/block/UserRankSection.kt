@@ -40,7 +40,7 @@ internal fun UserRankSection(
 ) {
     if (nonPodiumUsers.isNotEmpty()) {
         LazyColumn(
-            modifier = modifier.padding(bottom = LeaderboardTheme.dimension.dp80.value),
+            modifier = modifier.padding(bottom = LeaderboardTheme.dimension.dp90.value),
             overscrollEffect = null,
         ) {
             items(nonPodiumUsers.size) { index ->

@@ -21,5 +21,6 @@ data object MindplexDimension {
     val dp48: MindplexDsToken<Dp> = MindplexDsToken(48.dp)
     val dp64: MindplexDsToken<Dp> = MindplexDsToken(64.dp)
     val dp80: MindplexDsToken<Dp> = MindplexDsToken(80.dp)
+    val dp90: MindplexDsToken<Dp> = MindplexDsToken(90.dp)
     val dp128: MindplexDsToken<Dp> = MindplexDsToken(128.dp)
 }

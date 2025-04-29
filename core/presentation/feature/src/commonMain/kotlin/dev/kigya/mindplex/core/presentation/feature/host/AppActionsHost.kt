@@ -76,7 +76,7 @@ fun AppActionsHost(
     ) {
         AnimatedNavigationBar(
             modifier = Modifier.padding(
-                vertical = HostTheme.dimension.dp16.value,
+                vertical = HostTheme.dimension.dp24.value,
                 horizontal = HostTheme.dimension.dp16.value,
             ),
             selectedIndex = state.activeVertical.index,
