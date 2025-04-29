@@ -122,8 +122,6 @@ private fun ColumnScope.OnboardingContentPortraitVariant(
                 state = state,
                 page = page,
             )
-
-            MindplexSpacer(size = OnboardingTheme.dimension.dp24)
         }
     }
 

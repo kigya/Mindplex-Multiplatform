@@ -3,6 +3,7 @@ package dev.kigya.mindplex.feature.onboarding.presentation.block
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +33,7 @@ internal fun OnboardingDescription(
             color = OnboardingTheme.colorScheme.onboardingDescription,
             typography = OnboardingTheme.typography.onboardingDescription,
             modifier = Modifier
+                .height(OnboardingTheme.dimension.dp64.value)
                 .graphicsLayer {
                     this.alpha = alpha
                 }
