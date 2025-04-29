@@ -64,8 +64,8 @@ internal object ProfileTheme : MindplexTheme() {
     val MindplexColorScheme.profileVerticalDivider
         @Composable
         get() = this provides MindplexDynamicColor(
-            light = super.color.iris10,
-            dark = super.color.iris10,
+            light = super.color.iris20,
+            dark = super.color.white20,
         )
 
     val MindplexColorScheme.profileThemeNameText
