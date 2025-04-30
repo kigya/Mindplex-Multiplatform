@@ -6,8 +6,6 @@ import dev.kigya.mindplex.core.data.parser.JwtParser
 import dev.kigya.mindplex.core.data.parser.JwtParserContract
 import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
 import dev.kigya.mindplex.core.data.scout.impl.ScoutNetworkClient
-import dev.kigya.mindplex.feature.login.data.JwtHandler
-import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,13 +31,6 @@ val dataSourceModule = module {
     } onClose { connectivityManager ->
         connectivityManager?.close()
     }
-
-    single {
-        JwtHandler(
-            dispatcher = get(named(Dispatchers.Default::class.simpleName.orEmpty())),
-            jwtParserContract = get(),
-        )
-    } bind JwtHandlerContract::class
 
     factory {
         ScoutNetworkClient(

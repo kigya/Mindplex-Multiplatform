@@ -17,7 +17,7 @@ class SignInPreferencesRepository(
 
     override val userId: Flow<String?>
         get() = dataStore.data.map { preferences ->
-            preferences[stringPreferencesKey(GOOGLE_ID_TOKEN)]
+            preferences[stringPreferencesKey(MINDPLEX_JWT)]
         }
 
     override val isSignedIn: Flow<Boolean>
@@ -26,7 +26,7 @@ class SignInPreferencesRepository(
     override suspend fun signIn(googleIdToken: String) {
         withContext(dispatcher) {
             dataStore.edit { preferences ->
-                preferences[stringPreferencesKey(GOOGLE_ID_TOKEN)] = googleIdToken
+                preferences[stringPreferencesKey(MINDPLEX_JWT)] = googleIdToken
             }
         }
     }
@@ -34,12 +34,12 @@ class SignInPreferencesRepository(
     override suspend fun signOut() {
         withContext(dispatcher) {
             dataStore.edit { preferences ->
-                preferences.remove(stringPreferencesKey(GOOGLE_ID_TOKEN))
+                preferences.remove(stringPreferencesKey(MINDPLEX_JWT))
             }
         }
     }
 
     private companion object {
-        const val GOOGLE_ID_TOKEN = "google_id_token"
+        const val MINDPLEX_JWT = "mindplex_jwt"
     }
 }

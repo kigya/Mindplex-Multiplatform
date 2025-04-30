@@ -23,10 +23,8 @@ import dev.kigya.mindplex.feature.leaderboard.data.repository.UserRankNetworkRep
 import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankDatabaseRepositoryContract
 import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.data.repository.interceptor.ProfileImageInterceptor
-import dev.kigya.mindplex.feature.login.data.repository.repository.CountryCodeNetworkRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInNetworkRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInPreferencesRepository
-import dev.kigya.mindplex.feature.login.domain.contract.CountryCodeNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.ProfileImageInterceptorContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
@@ -55,6 +53,7 @@ val repositoryModule = module {
 
     single {
         SignInNetworkRepository(
+            scoutNetworkClientContract = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind SignInNetworkRepositoryContract::class
@@ -65,6 +64,7 @@ val repositoryModule = module {
 
     single {
         UserProfileNetworkRepository(
+            scoutNetworkClientContract = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind UserProfileNetworkRepositoryContract::class
@@ -79,6 +79,7 @@ val repositoryModule = module {
     single {
         FactsNetworkRepository(
             scoutNetworkClientContract = get(),
+            dataStore = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind FactsNetworkRepositoryContract::class
@@ -100,6 +101,7 @@ val repositoryModule = module {
     single {
         QuestionsNetworkRepository(
             scoutNetworkClientContract = get(),
+            dataStore = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind QuestionsNetworkRepositoryContract::class
@@ -117,16 +119,11 @@ val repositoryModule = module {
 
     single {
         UserRankNetworkRepository(
+            scoutNetworkClientContract = get(),
+            dataStore = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind UserRankNetworkRepositoryContract::class
-
-    single {
-        CountryCodeNetworkRepository(
-            scoutNetworkClientContract = get(),
-            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
-        )
-    } bind CountryCodeNetworkRepositoryContract::class
 
     single {
         ThemePreferencesRepository(

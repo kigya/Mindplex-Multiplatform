@@ -4,6 +4,7 @@ plugins {
         with(component) {
             alias(serialization)
             alias(room)
+            alias(ktor)
         }
     }
 }
@@ -13,14 +14,13 @@ kotlin {
         commonMain.dependencies {
             with(libs) {
                 implementation(coroutines.core)
-                implementation(firebase.firestore)
-                implementation(firebase.common)
                 implementation(bundles.dataStore)
             }
             with(projects) {
                 implementation(core.domain.profile)
                 implementation(core.data.firebase)
                 implementation(core.util)
+                implementation(core.data.scout)
             }
         }
     }

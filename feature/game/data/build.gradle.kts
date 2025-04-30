@@ -6,6 +6,7 @@ plugins {
             alias(koin)
             alias(serialization)
             alias(room)
+            alias(ktor)
         }
     }
 }
@@ -15,13 +16,19 @@ kotlin {
         commonMain.dependencies {
             with(libs) {
                 implementation(ksoup)
+                with(dataStore) {
+                    implementation(preferences)
+                    implementation(core)
+                }
             }
             with(projects) {
                 implementation(feature.game.domain)
                 with(core) {
                     implementation(util)
-                    implementation(data.firebase)
-                    implementation(data.scout)
+                    with(data) {
+                        implementation(firebase)
+                        implementation(scout)
+                    }
                 }
             }
         }

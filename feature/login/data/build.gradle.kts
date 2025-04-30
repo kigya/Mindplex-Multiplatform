@@ -15,15 +15,16 @@ kotlin {
             with(libs) {
                 implementation(coroutines.core)
                 implementation(bundles.dataStore)
-                implementation(firebase.firestore)
             }
             with(projects) {
                 implementation(feature.login.domain)
                 with(core) {
                     implementation(util)
-                    implementation(data.firebase)
-                    implementation(data.jwtParser)
-                    implementation(data.scout)
+                    with(data){
+                        implementation(firebase)
+                        implementation(jwtParser)
+                        implementation(scout)
+                    }
                 }
             }
         }

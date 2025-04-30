@@ -4,54 +4,43 @@ import androidx.annotation.CheckResult
 import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityRepositoryContract
 import dev.kigya.mindplex.core.domain.interactor.base.BaseSuspendUseCase
 import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
-import dev.kigya.mindplex.feature.login.domain.contract.CountryCodeNetworkRepositoryContract
-import dev.kigya.mindplex.feature.login.domain.contract.JwtHandlerContract
 import dev.kigya.mindplex.feature.login.domain.contract.ProfileImageInterceptorContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.model.GoogleUserSignInDomainModel
 import dev.kigya.outcome.Outcome
-import dev.kigya.outcome.getOrNull
-import dev.kigya.outcome.unwrap
 
 class SignInUseCase(
     private val signInPreferencesRepositoryContract: SignInPreferencesRepositoryContract,
     private val signInNetworkRepositoryContract: SignInNetworkRepositoryContract,
-    private val countryCodeRepositoryContract: CountryCodeNetworkRepositoryContract,
     private val connectivityRepositoryContract: ConnectivityRepositoryContract,
     private val profileImageInterceptorContract: ProfileImageInterceptorContract,
-    private val jwtHandlerContract: JwtHandlerContract,
-) : BaseSuspendUseCase<Outcome<MindplexDomainError, Unit>, GoogleUserSignInDomainModel?>() {
+) : BaseSuspendUseCase<Outcome<MindplexDomainError, String>, GoogleUserSignInDomainModel?>() {
 
     @CheckResult
     override suspend fun invoke(
         params: GoogleUserSignInDomainModel?,
-    ): Outcome<MindplexDomainError, Unit> {
+    ): Outcome<MindplexDomainError, String> {
         if (!connectivityRepositoryContract.isConnected()) {
-            return Outcome.failure(
-                error = MindplexDomainError.NETWORK,
-            )
+            return Outcome.failure(MindplexDomainError.NETWORK)
         }
-        val googleUserDomainModel = params ?: return Outcome.failure(
-            error = MindplexDomainError.OTHER,
+
+        val googleUserDomainModel = params ?: return Outcome.failure(MindplexDomainError.OTHER)
+
+        val interceptedUser = googleUserDomainModel.copy(
+            profilePictureUrl = profileImageInterceptorContract.intercept(
+                googleUserDomainModel.profilePictureUrl,
+            ),
         )
 
-        return jwtHandlerContract
-            .decodeSubject(googleUserDomainModel.userId)
-            .unwrap(
-                onFailure = { Outcome.failure(MindplexDomainError.OTHER) },
+        return signInNetworkRepositoryContract.signIn(interceptedUser)
+            .fold(
                 onSuccess = { userId ->
-                    val googleUser = googleUserDomainModel.copy(
-                        userId = userId,
-                        profilePictureUrl = profileImageInterceptorContract.intercept(
-                            googleUserDomainModel.profilePictureUrl,
-                        ),
-                        countryCode = countryCodeRepositoryContract.fetchCountryCode().getOrNull(),
-                    )
-                    signInNetworkRepositoryContract.signIn(googleUser)
-                    signInPreferencesRepositoryContract.signIn(googleUser.userId)
-
-                    Outcome.success(Unit)
+                    signInPreferencesRepositoryContract.signIn(userId)
+                    Outcome.success(userId)
+                },
+                onFailure = {
+                    Outcome.failure(MindplexDomainError.OTHER)
                 },
             )
     }

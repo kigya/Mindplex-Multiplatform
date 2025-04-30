@@ -7,7 +7,6 @@ import dev.kigya.mindplex.core.domain.profile.usecase.UpdateAppInDarkThemeUsrCas
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
 import dev.kigya.mindplex.feature.login.domain.usecase.SignOutUseCase
-import dev.kigya.mindplex.feature.profile.domain.usecase.UpdateCountryCodeUseCase
 import dev.kigya.mindplex.feature.profile.presentation.contract.ProfileContract
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
@@ -20,7 +19,6 @@ class ProfileScreenViewModel(
     private val getThemeUseCase: CheckAppInDarkThemeUseCase,
     private val saveThemeUseCase: UpdateAppInDarkThemeUsrCase,
     private val singOutUseCase: SignOutUseCase,
-    private val updateCountryCodeUseCase: UpdateCountryCodeUseCase,
 ) : BaseViewModel<ProfileContract.State, ProfileContract.Effect>(
     navigatorContract = navigatorContract,
     initialState = ProfileContract.State(),
@@ -31,7 +29,6 @@ class ProfileScreenViewModel(
         withUseCaseScope {
             fetchScreenData()
             fetchTheme()
-            updateCountryCodeUseCase(None)
         }
     }
 

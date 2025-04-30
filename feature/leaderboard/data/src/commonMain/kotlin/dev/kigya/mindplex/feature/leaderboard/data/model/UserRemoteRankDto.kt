@@ -8,6 +8,6 @@ import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Users.Do
 internal data class UserRemoteRankDto(
     @SerialName(UsersDocument.AVATAR_URL) val avatarUrl: String,
     @SerialName(UsersDocument.COUNTRY_CODE) val countryCode: String,
-    @SerialName(UsersDocument.NAME) val name: String,
+    @SerialName(UsersDocument.DISPLAY_NAME) val name: String,
     @SerialName(UsersDocument.SCORE) val score: Int,
 )

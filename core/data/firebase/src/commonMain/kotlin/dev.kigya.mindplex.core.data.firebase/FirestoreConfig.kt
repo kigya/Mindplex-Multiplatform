@@ -7,9 +7,11 @@ data object FirestoreConfig {
 
             object Document {
                 const val AVATAR_URL = "avatarUrl"
-                const val NAME = "name"
+                const val DISPLAY_NAME = "displayName"
                 const val SCORE = "score"
                 const val COUNTRY_CODE = "countryCode"
+                const val GLOBAL_RANK = "globalRank"
+                const val LOCAL_RANK = "localRank"
             }
         }
     }

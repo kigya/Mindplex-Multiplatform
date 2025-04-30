@@ -4,18 +4,63 @@ import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
 interface ScoutNetworkClientContract {
-    suspend fun <ResponseType : Any> fetch(
+    suspend fun <ResponseType : Any> get(
         vararg path: String,
         params: Map<String, String> = emptyMap(),
+        headers: Map<String, String> = emptyMap(),
+        type: KType,
+    ): ResponseType
+
+    suspend fun <ResponseType : Any> post(
+        vararg path: String,
+        params: Map<String, String> = emptyMap(),
+        headers: Map<String, String> = emptyMap(),
+        body: Any,
+        type: KType,
+    ): ResponseType
+
+    suspend fun <ResponseType : Any> patch(
+        vararg path: String,
+        params: Map<String, String> = emptyMap(),
+        headers: Map<String, String> = emptyMap(),
+        body: Any,
         type: KType,
     ): ResponseType
 }
 
-suspend inline fun <reified T : Any> ScoutNetworkClientContract.fetchReified(
+suspend inline fun <reified T : Any> ScoutNetworkClientContract.getReified(
     vararg path: String,
     params: Map<String, String> = emptyMap(),
-): T = fetch(
+    headers: Map<String, String> = emptyMap(),
+): T = get(
     path = path,
     params = params,
+    headers = headers,
+    type = typeOf<T>(),
+)
+
+suspend inline fun <reified T : Any> ScoutNetworkClientContract.postReified(
+    vararg path: String,
+    params: Map<String, String> = emptyMap(),
+    headers: Map<String, String> = emptyMap(),
+    body: Any,
+): T = post(
+    path = path,
+    params = params,
+    headers = headers,
+    body = body,
+    type = typeOf<T>(),
+)
+
+suspend inline fun <reified T : Any> ScoutNetworkClientContract.patchReified(
+    vararg path: String,
+    params: Map<String, String> = emptyMap(),
+    headers: Map<String, String> = emptyMap(),
+    body: Any,
+): T = patch(
+    path = path,
+    params = params,
+    headers = headers,
+    body = body,
     type = typeOf<T>(),
 )

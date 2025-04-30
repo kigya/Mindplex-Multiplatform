@@ -6,6 +6,7 @@ plugins {
             alias(koin)
             alias(serialization)
             alias(room)
+            alias(ktor)
         }
     }
 }
@@ -15,12 +16,18 @@ kotlin {
         commonMain.dependencies {
             with(libs) {
                 implementation(kotlinx.datetime)
+                with(dataStore) {
+                    implementation(core)
+                    implementation(preferences)
+                }
             }
             with(projects) {
                 implementation(feature.home.domain)
-                implementation(core.util)
-                implementation(core.data.firebase)
-                implementation(core.data.scout)
+                with(core) {
+                    implementation(util)
+                    implementation(data.firebase)
+                    implementation(data.scout)
+                }
             }
         }
     }
