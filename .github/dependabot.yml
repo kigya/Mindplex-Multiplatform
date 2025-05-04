@@ -1,8 +1,18 @@
 version: 2
+
+registries:
+  outcome-github-packages:
+    type: "maven-repository"
+    url: "https://maven.pkg.github.com/kigya/Outcome"
+    username: "${{ github.actor }}"
+    password: "${{ secrets.GITHUB_TOKEN }}"
+
 updates:
   - package-ecosystem: "gradle"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "sunday"
-    rebase-strategy: "disabled"
+    open-pull-requests-limit: 0
+    registries:
+      - "outcome-github-packages"
