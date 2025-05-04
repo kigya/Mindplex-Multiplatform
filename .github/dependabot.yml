@@ -5,7 +5,7 @@ registries:
     type: "maven-repository"
     url: "https://maven.pkg.github.com/kigya/Outcome"
     username: "${{ github.actor }}"
-    password: "${{ secrets.GITHUB_TOKEN }}"
+    password: "${{ secrets.MINDPLEX_DEPENDABOT }}"
 
 updates:
   - package-ecosystem: "gradle"
