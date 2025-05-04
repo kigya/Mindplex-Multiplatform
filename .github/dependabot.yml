@@ -9,7 +9,7 @@ registries:
 
 updates:
   - package-ecosystem: "gradle"
-    directory: "/"
+    directory: "/gradle"
     schedule:
       interval: "weekly"
       day: "sunday"
