@@ -12,6 +12,10 @@ plugins {
 
 configure<BaseExtension> {
     buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            isShrinkResources = false
+        }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
