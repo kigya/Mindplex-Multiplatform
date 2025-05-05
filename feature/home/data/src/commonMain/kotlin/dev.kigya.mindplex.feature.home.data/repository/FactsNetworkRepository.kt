@@ -2,9 +2,9 @@ package dev.kigya.mindplex.feature.home.data.repository
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.stringPreferencesKey
 import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
 import dev.kigya.mindplex.core.data.scout.api.getReified
+import dev.kigya.mindplex.core.util.getJwtToken
 import dev.kigya.mindplex.feature.home.data.mapper.FactsRemoteDataMapper
 import dev.kigya.mindplex.feature.home.data.mapper.FactsRemoteDataMapper.mappedBy
 import dev.kigya.mindplex.feature.home.data.model.FactRemoteDto
@@ -14,8 +14,6 @@ import dev.kigya.outcome.Outcome
 import dev.kigya.outcome.outcomeSuspendCatchingOn
 import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 
 class FactsNetworkRepository(
     private val scoutNetworkClientContract: ScoutNetworkClientContract,
@@ -24,9 +22,7 @@ class FactsNetworkRepository(
 ) : FactsNetworkRepositoryContract {
     override suspend fun fetchFacts(limit: Int): Outcome<*, List<FactDomainModel>> =
         outcomeSuspendCatchingOn(dispatcher) {
-            val jwtToken = dataStore.data.map { preferences ->
-                preferences[stringPreferencesKey(MINDPLEX_JWT)]
-            }.first()
+            val jwtToken = dataStore.getJwtToken()
 
             scoutNetworkClientContract.getReified<List<FactRemoteDto>>(
                 path = arrayOf("facts"),
@@ -34,8 +30,4 @@ class FactsNetworkRepository(
                 headers = mapOf(HttpHeaders.Authorization to "Bearer $jwtToken"),
             ) mappedBy FactsRemoteDataMapper
         }
-
-    private companion object {
-        const val MINDPLEX_JWT = "mindplex_jwt"
-    }
 }

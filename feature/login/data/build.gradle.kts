@@ -22,7 +22,6 @@ kotlin {
                     implementation(util)
                     with(data){
                         implementation(firebase)
-                        implementation(jwtParser)
                         implementation(scout)
                     }
                 }

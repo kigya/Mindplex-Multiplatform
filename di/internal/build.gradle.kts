@@ -46,7 +46,6 @@ kotlin {
                     implementation(domain.connectivity)
                     implementation(domain.profile)
                     implementation(presentation.feature)
-                    implementation(data.jwtParser)
                     implementation(data.scout)
                 }
                 with(navigation) {

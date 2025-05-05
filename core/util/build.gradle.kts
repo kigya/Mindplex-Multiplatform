@@ -13,6 +13,10 @@ kotlin {
                 implementation(coroutines.core)
                 implementation(compose.navigation)
                 api(compose.shimmer)
+                with(dataStore) {
+                    implementation(core)
+                    implementation(preferences)
+                }
             }
         }
     }

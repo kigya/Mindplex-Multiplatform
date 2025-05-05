@@ -2,8 +2,6 @@ package dev.kigya.mindplex.di.internal.module
 
 import dev.jordond.connectivity.Connectivity
 import dev.kigya.mindplex.core.data.connectivity.ConnectivityManager
-import dev.kigya.mindplex.core.data.parser.JwtParser
-import dev.kigya.mindplex.core.data.parser.JwtParserContract
 import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
 import dev.kigya.mindplex.core.data.scout.impl.ScoutNetworkClient
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,7 +15,6 @@ import org.koin.dsl.onClose
 
 val dataSourceModule = module {
     single { Connectivity() } bind Connectivity::class
-    single { JwtParser() } bind JwtParserContract::class
 
     factory {
         ConnectivityManager(
