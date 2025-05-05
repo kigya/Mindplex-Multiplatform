@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -62,6 +64,7 @@ fun App() {
             setSingletonImageLoaderFactory { imageLoader }
 
             var predictiveBackAlpha by remember { mutableFloatStateOf(1f) }
+            var bottomBarHeight by remember { mutableStateOf(0.dp) }
 
             Box(
                 modifier = Modifier.alpha(predictiveBackAlpha),
@@ -93,7 +96,10 @@ fun App() {
 
                     animatedComposable<ScreenRoute.Leaderboard> {
                         SystemBarsColor(SystemBarsColor.AUTO)
-                        LeaderboardScreen(koinViewModel<LeaderboardScreenViewModel>())
+                        LeaderboardScreen(
+                            koinViewModel<LeaderboardScreenViewModel>(),
+                            bottomBarHeight = bottomBarHeight,
+                        )
                     }
 
                     animatedComposable<ScreenRoute.Profile> {
@@ -127,7 +133,9 @@ fun App() {
                 AppActionsHost(
                     navigationController = navigationController,
                     contract = koinViewModel<AppActionsHostViewModel>(),
-                ) { predictiveBackAlpha = it }
+                    onBackPressAlphaChange = { predictiveBackAlpha = it },
+                    onBottomBarHeightMeasured = { height -> bottomBarHeight = height },
+                )
             }
         }
     }
