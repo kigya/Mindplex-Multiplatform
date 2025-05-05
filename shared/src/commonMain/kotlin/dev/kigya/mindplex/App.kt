@@ -4,11 +4,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -48,10 +45,7 @@ import dev.kigya.mindplex.feature.splash.presentation.ui.SplashScreenViewModel
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import dev.kigya.mindplex.navigation.navigator.type.enumNavTypeEntry
 import dev.kigya.mindplex.navigation.navigator.type.nullableEnumNavType
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.withContext
 import org.koin.compose.KoinContext
 import org.koin.compose.currentKoinScope
 import org.koin.core.parameter.parametersOf
@@ -65,15 +59,9 @@ fun App() {
             val navigationController = rememberNavController()
 
             val imageLoader = rememberCoilImageLoader()
-            imageLoader?.let { imageLoader ->
-                setSingletonImageLoaderFactory { imageLoader }
-            }
+            setSingletonImageLoaderFactory { imageLoader }
 
             var predictiveBackAlpha by remember { mutableFloatStateOf(1f) }
-
-            val gameTypeMap by produceState<Map<KType, NavType<*>>>(initialValue = emptyMap()) {
-                value = withContext(Dispatchers.Default) { buildGameTypeMap() }
-            }
 
             Box(
                 modifier = Modifier.alpha(predictiveBackAlpha),
@@ -114,7 +102,15 @@ fun App() {
                     }
 
                     animatedComposable<ScreenRoute.Game>(
-                        typeMap = gameTypeMap,
+                        typeMap = mapOf(
+                            enumNavTypeEntry(ScreenRoute.Game.TypePresentationModel::valueOf),
+                            enumNavTypeEntry(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
+                            enumNavTypeEntry(ScreenRoute.Game.CategoryPresentationModel::valueOf),
+                            typeOf<ScreenRoute.Game.CategoryPresentationModel?>() to
+                                nullableEnumNavType(ScreenRoute.Game.CategoryPresentationModel::valueOf),
+                            typeOf<ScreenRoute.Game.DifficultyPresentationModel?>() to
+                                nullableEnumNavType(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
+                        ),
                     ) { backStackEntry ->
                         SystemBarsColor(SystemBarsColor.AUTO)
 
@@ -147,21 +143,12 @@ private inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
 ) { screen(it) }
 
 @Composable
-private fun rememberCoilImageLoader(): ImageLoader? {
+private fun rememberCoilImageLoader(): ImageLoader {
     val koinScope = currentKoinScope()
     val context = LocalPlatformContext.current
-
-    var loader by remember { mutableStateOf<ImageLoader?>(null) }
-
-    LaunchedEffect(koinScope) {
-        loader = withContext(Dispatchers.IO) {
-            koinScope
-                .getKoin()
-                .get<ImageLoader> { parametersOf(context) }
-        }
+    return remember {
+        koinScope.getKoin().get<ImageLoader> { parametersOf(context) }
     }
-
-    return loader
 }
 
 @Composable
@@ -175,13 +162,3 @@ private fun rememberIsDarkTheme(): Boolean {
         .collectAsStateWithLifecycle(false)
     return remember(isDarkTheme) { isDarkTheme }
 }
-
-private fun buildGameTypeMap(): Map<KType, NavType<*>> = mapOf(
-    enumNavTypeEntry(ScreenRoute.Game.TypePresentationModel::valueOf),
-    enumNavTypeEntry(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
-    enumNavTypeEntry(ScreenRoute.Game.CategoryPresentationModel::valueOf),
-    typeOf<ScreenRoute.Game.CategoryPresentationModel?>() to
-        nullableEnumNavType(ScreenRoute.Game.CategoryPresentationModel::valueOf),
-    typeOf<ScreenRoute.Game.DifficultyPresentationModel?>() to
-        nullableEnumNavType(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
-)
