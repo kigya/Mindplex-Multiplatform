@@ -11,15 +11,28 @@ plugins {
 }
 
 configure<BaseExtension> {
+    val localProperties = java.util.Properties().apply {
+        load(rootProject.file("local.properties").inputStream())
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(localProperties["RELEASE_STORE_FILE"] as String)
+            storePassword = localProperties["RELEASE_STORE_PASSWORD"] as String
+            keyAlias = localProperties["RELEASE_KEY_ALIAS"] as String
+            keyPassword = localProperties["RELEASE_KEY_PASSWORD"] as String
+        }
+    }
+
     buildTypes {
         getByName("debug") {
             isMinifyEnabled = false
             isShrinkResources = false
         }
         getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
-
+            isMinifyEnabled = false
+            isShrinkResources = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }

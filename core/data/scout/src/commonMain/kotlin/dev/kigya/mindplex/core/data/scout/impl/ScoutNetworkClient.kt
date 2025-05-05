@@ -1,6 +1,7 @@
 package dev.kigya.mindplex.core.data.scout.impl
 
 import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
+import dev.kigya.mindplex.core.data.scout.api.StageProvider
 import dev.kigya.mindplex.core.data.scout.exception.ScoutException
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
@@ -22,6 +23,7 @@ import kotlin.reflect.typeOf
 
 class ScoutNetworkClient(
     private val httpClient: HttpClient,
+    private val stageProvider: StageProvider,
     private val dispatcher: CoroutineDispatcher,
 ) : ScoutNetworkClientContract {
 
@@ -32,6 +34,10 @@ class ScoutNetworkClient(
         headers: Map<String, String>,
         type: KType,
     ): ResponseType = withContext(dispatcher) {
+        val finalHeaders = headers.toMutableMap().apply {
+            put(X_STAGE, stageProvider.getStage())
+        }
+
         val response: HttpResponse = httpClient.get {
             url {
                 protocol = URLProtocol.HTTPS
@@ -41,13 +47,13 @@ class ScoutNetworkClient(
                     parameters.append(key, value)
                 }
             }
-            headers.forEach { (key, value) ->
+            finalHeaders.forEach { (key, value) ->
                 header(key, value)
             }
         }
+
         if (response.status.isSuccess()) {
-            val bytes = response.readRawBytes()
-            val text = bytes.decodeToString()
+            val text = response.readRawBytes().decodeToString()
             if (type == typeOf<String>()) {
                 text as ResponseType
             } else {
@@ -69,6 +75,10 @@ class ScoutNetworkClient(
         body: Any,
         type: KType,
     ): ResponseType = withContext(dispatcher) {
+        val finalHeaders = headers.toMutableMap().apply {
+            put(X_STAGE, stageProvider.getStage())
+        }
+
         val response: HttpResponse = httpClient.post {
             url {
                 protocol = URLProtocol.HTTPS
@@ -78,14 +88,14 @@ class ScoutNetworkClient(
                     parameters.append(key, value)
                 }
             }
-            headers.forEach { (key, value) ->
+            finalHeaders.forEach { (key, value) ->
                 header(key, value)
             }
             setBody(body)
         }
+
         if (response.status.isSuccess()) {
-            val bytes = response.readRawBytes()
-            val text = bytes.decodeToString()
+            val text = response.readRawBytes().decodeToString()
             if (type == typeOf<String>()) {
                 text as ResponseType
             } else {
@@ -107,6 +117,10 @@ class ScoutNetworkClient(
         body: Any,
         type: KType,
     ): ResponseType = withContext(dispatcher) {
+        val finalHeaders = headers.toMutableMap().apply {
+            put(X_STAGE, stageProvider.getStage())
+        }
+
         val response: HttpResponse = httpClient.patch {
             url {
                 protocol = URLProtocol.HTTPS
@@ -116,14 +130,14 @@ class ScoutNetworkClient(
                     parameters.append(key, value)
                 }
             }
-            headers.forEach { (key, value) ->
+            finalHeaders.forEach { (key, value) ->
                 header(key, value)
             }
             setBody(body)
         }
+
         if (response.status.isSuccess()) {
-            val bytes = response.readRawBytes()
-            val text = bytes.decodeToString()
+            val text = response.readRawBytes().decodeToString()
             if (type == typeOf<String>()) {
                 text as ResponseType
             } else {
@@ -139,5 +153,6 @@ class ScoutNetworkClient(
 
     private companion object {
         const val BASE_PATH = "mindplex-backend.onrender.com"
+        const val X_STAGE = "X-Stage"
     }
 }

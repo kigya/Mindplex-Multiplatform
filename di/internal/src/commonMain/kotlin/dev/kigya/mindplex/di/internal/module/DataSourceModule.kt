@@ -32,6 +32,7 @@ val dataSourceModule = module {
     factory {
         ScoutNetworkClient(
             httpClient = get(),
+            stageProvider = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind ScoutNetworkClientContract::class
