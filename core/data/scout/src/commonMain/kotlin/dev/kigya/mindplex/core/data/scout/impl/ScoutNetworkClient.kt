@@ -1,8 +1,9 @@
 package dev.kigya.mindplex.core.data.scout.impl
 
 import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
-import dev.kigya.mindplex.core.data.scout.api.StageProvider
 import dev.kigya.mindplex.core.data.scout.exception.ScoutException
+import dev.kigya.mindplex.core.util.JwtProvider
+import dev.kigya.mindplex.core.util.buildstage.BuildStageContract
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -23,7 +24,8 @@ import kotlin.reflect.typeOf
 
 class ScoutNetworkClient(
     private val httpClient: HttpClient,
-    private val stageProvider: StageProvider,
+    private val buildStageContract: BuildStageContract,
+    private val jwtProvider: JwtProvider,
     private val dispatcher: CoroutineDispatcher,
 ) : ScoutNetworkClientContract {
 
@@ -31,11 +33,11 @@ class ScoutNetworkClient(
     override suspend fun <ResponseType : Any> get(
         vararg path: String,
         params: Map<String, String>,
-        headers: Map<String, String>,
+        headers: Array<ScoutHeaders>,
         type: KType,
     ): ResponseType = withContext(dispatcher) {
-        val finalHeaders = headers.toMutableMap().apply {
-            put(X_STAGE, stageProvider.getStage())
+        val requestHeaders = resolveHeaders(headers).toMutableMap().apply {
+            put(X_STAGE, buildStageContract.getStage())
         }
 
         val response: HttpResponse = httpClient.get {
@@ -47,7 +49,7 @@ class ScoutNetworkClient(
                     parameters.append(key, value)
                 }
             }
-            finalHeaders.forEach { (key, value) ->
+            requestHeaders.forEach { (key, value) ->
                 header(key, value)
             }
         }
@@ -71,12 +73,12 @@ class ScoutNetworkClient(
     override suspend fun <ResponseType : Any> post(
         vararg path: String,
         params: Map<String, String>,
-        headers: Map<String, String>,
+        headers: Array<ScoutHeaders>,
         body: Any,
         type: KType,
     ): ResponseType = withContext(dispatcher) {
-        val finalHeaders = headers.toMutableMap().apply {
-            put(X_STAGE, stageProvider.getStage())
+        val requestHeaders = resolveHeaders(headers).toMutableMap().apply {
+            put(X_STAGE, buildStageContract.getStage())
         }
 
         val response: HttpResponse = httpClient.post {
@@ -88,7 +90,7 @@ class ScoutNetworkClient(
                     parameters.append(key, value)
                 }
             }
-            finalHeaders.forEach { (key, value) ->
+            requestHeaders.forEach { (key, value) ->
                 header(key, value)
             }
             setBody(body)
@@ -113,12 +115,12 @@ class ScoutNetworkClient(
     override suspend fun <ResponseType : Any> patch(
         vararg path: String,
         params: Map<String, String>,
-        headers: Map<String, String>,
+        headers: Array<ScoutHeaders>,
         body: Any,
         type: KType,
     ): ResponseType = withContext(dispatcher) {
-        val finalHeaders = headers.toMutableMap().apply {
-            put(X_STAGE, stageProvider.getStage())
+        val requestHeaders = resolveHeaders(headers).toMutableMap().apply {
+            put(X_STAGE, buildStageContract.getStage())
         }
 
         val response: HttpResponse = httpClient.patch {
@@ -130,7 +132,7 @@ class ScoutNetworkClient(
                     parameters.append(key, value)
                 }
             }
-            finalHeaders.forEach { (key, value) ->
+            requestHeaders.forEach { (key, value) ->
                 header(key, value)
             }
             setBody(body)
@@ -151,8 +153,30 @@ class ScoutNetworkClient(
         }
     }
 
+    private suspend fun resolveHeaders(headers: Array<ScoutHeaders>): Map<String, String> {
+        val result = mutableMapOf<String, String>()
+        result[X_STAGE] = buildStageContract.getStage()
+
+        headers.forEach {
+            when (it) {
+                is ScoutHeaders.GoogleJwt -> result[HEADER_AUTHORIZATION] = "$BEARER_PREFIX ${it.value}"
+
+                is ScoutHeaders.MindplexJwt -> {
+                    val jwt = jwtProvider.getToken()
+                    result[HEADER_AUTHORIZATION] = "$BEARER_PREFIX $jwt"
+                }
+
+                is ScoutHeaders.ContentType -> result[HEADER_CONTENT_TYPE] = it.value
+            }
+        }
+        return result
+    }
+
     private companion object {
         const val BASE_PATH = "mindplex-backend.onrender.com"
         const val X_STAGE = "X-Stage"
+        const val BEARER_PREFIX = "Bearer"
+        const val HEADER_AUTHORIZATION = "Authorization"
+        const val HEADER_CONTENT_TYPE = "Content-Type"
     }
 }

@@ -2,14 +2,14 @@ package dev.kigya.mindplex.core.data.profile.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Users.Document as UsersDocument
 
 @Serializable
 data class UserRemoteProfileDto(
-    @SerialName(UsersDocument.AVATAR_URL) val avatarUrl: String,
-    @SerialName(UsersDocument.COUNTRY_CODE) val countryCode: String?,
-    @SerialName(UsersDocument.DISPLAY_NAME) val displayName: String,
-    @SerialName(UsersDocument.SCORE) val score: Int,
-    @SerialName(UsersDocument.GLOBAL_RANK) val globalRank: Int,
-    @SerialName(UsersDocument.LOCAL_RANK) val localRank: Int,
+    @SerialName("id") val id: String,
+    @SerialName("avatarUrl") val avatarUrl: String,
+    @SerialName("countryCode") val countryCode: String?,
+    @SerialName("displayName") val displayName: String,
+    @SerialName("score") val score: Int,
+    @SerialName("globalRank") val globalRank: Int,
+    @SerialName("localRank") val localRank: Int,
 )

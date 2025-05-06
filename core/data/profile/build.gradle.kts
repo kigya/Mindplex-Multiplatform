@@ -4,7 +4,6 @@ plugins {
         with(component) {
             alias(serialization)
             alias(room)
-            alias(ktor)
         }
     }
 }

@@ -12,6 +12,7 @@ internal object UserLocalRankMapper : DomainMapper<UserLocalRank, UserRankDomain
         profilePictureUrl = entity.userLocalData?.avatar.orEmpty(),
         userCountry = entity.userLocalData?.countryCode.orEmpty(),
         score = entity.userLocalData?.score ?: 0,
+        id = entity.id,
     )
 
     override fun mapFromDomainModel(domainModel: UserRankDomainModel): UserLocalRank =

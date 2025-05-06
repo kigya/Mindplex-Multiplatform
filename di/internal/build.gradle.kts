@@ -47,6 +47,7 @@ kotlin {
                     implementation(domain.profile)
                     implementation(presentation.feature)
                     implementation(data.scout)
+                    implementation(util)
                 }
                 with(navigation) {
                     implementation(internal)

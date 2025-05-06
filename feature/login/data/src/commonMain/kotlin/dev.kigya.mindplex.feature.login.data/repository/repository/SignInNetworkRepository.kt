@@ -2,6 +2,7 @@ package dev.kigya.mindplex.feature.login.data.repository.repository
 
 import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
 import dev.kigya.mindplex.core.data.scout.api.postReified
+import dev.kigya.mindplex.core.data.scout.impl.ScoutHeaders
 import dev.kigya.mindplex.feature.login.data.model.SignInRequest
 import dev.kigya.mindplex.feature.login.data.model.SignInResponse
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
@@ -18,11 +19,14 @@ class SignInNetworkRepository(
             withContext(dispatcher) {
                 val response: SignInResponse = scoutNetworkClientContract.postReified(
                     path = arrayOf("user"),
-                    headers = mapOf("Accept" to "application/json"),
                     body = SignInRequest(
                         token = googleUser.idToken,
                         displayName = googleUser.displayName,
                         avatarUrl = googleUser.profilePictureUrl,
+                    ),
+                    headers = arrayOf(
+                        ScoutHeaders.ContentType("application/json"),
+                        ScoutHeaders.GoogleJwt(it),
                     ),
                 )
 

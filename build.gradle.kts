@@ -21,6 +21,8 @@ plugins {
 
         alias(serialization) apply false
         alias(room) apply false
+
+        alias(buildkonfig) apply false
     }
 }
 

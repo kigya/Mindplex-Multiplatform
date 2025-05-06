@@ -22,6 +22,7 @@ interface LeaderboardContract :
         @ConsistentCopyVisibility
         @Immutable
         data class UserCardData internal constructor(
+            val id: String = String.empty,
             val userName: String = String.empty,
             val avatarUrl: String? = null,
             val countryCode: String? = null,
