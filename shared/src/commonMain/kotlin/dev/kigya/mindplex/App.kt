@@ -146,7 +146,9 @@ private inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
 private fun rememberCoilImageLoader(): ImageLoader {
     val koinScope = currentKoinScope()
     val context = LocalPlatformContext.current
-    return remember { koinScope.getKoin().get<ImageLoader> { parametersOf(context) } }
+    return remember {
+        koinScope.getKoin().get<ImageLoader> { parametersOf(context) }
+    }
 }
 
 @Composable
