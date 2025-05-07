@@ -7,30 +7,28 @@ import dev.kigya.mindplex.feature.login.data.model.SignInRequest
 import dev.kigya.mindplex.feature.login.data.model.SignInResponse
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.model.GoogleUserSignInDomainModel
+import dev.kigya.outcome.Outcome
+import dev.kigya.outcome.outcomeSuspendCatchingOn
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 
 class SignInNetworkRepository(
     private val scoutNetworkClientContract: ScoutNetworkClientContract,
     private val dispatcher: CoroutineDispatcher,
 ) : SignInNetworkRepositoryContract {
-    override suspend fun signIn(googleUser: GoogleUserSignInDomainModel): Result<String> =
-        requireNotNull(googleUser.idToken).let {
-            withContext(dispatcher) {
-                val response: SignInResponse = scoutNetworkClientContract.postReified(
-                    path = arrayOf("user"),
-                    body = SignInRequest(
-                        token = googleUser.idToken,
-                        displayName = googleUser.displayName,
-                        avatarUrl = googleUser.profilePictureUrl,
-                    ),
-                    headers = arrayOf(
-                        ScoutHeaders.ContentType("application/json"),
-                        ScoutHeaders.GoogleJwt(it),
-                    ),
-                )
+    override suspend fun signIn(googleUser: GoogleUserSignInDomainModel): Outcome<*, String> =
+        outcomeSuspendCatchingOn(dispatcher) {
+            val idToken = requireNotNull(googleUser.idToken)
 
-                Result.success(response.token)
-            }
+            val response: SignInResponse = scoutNetworkClientContract.postReified(
+                path = arrayOf("user"),
+                body = SignInRequest(
+                    token = idToken,
+                    displayName = googleUser.displayName,
+                    avatarUrl = googleUser.profilePictureUrl,
+                ),
+                headers = arrayOf(ScoutHeaders.GoogleJwt(idToken)),
+            )
+
+            response.token
         }
 }

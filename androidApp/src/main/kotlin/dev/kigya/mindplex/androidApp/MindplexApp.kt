@@ -13,18 +13,21 @@ internal class MindplexApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        StrictMode.setThreadPolicy(
-            StrictMode.ThreadPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .build(),
-        )
-        StrictMode.setVmPolicy(
-            StrictMode.VmPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .build(),
-        )
+        if (BuildConfig.BUILD_STAGE == "debug") {
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build(),
+            )
+            StrictMode.setVmPolicy(
+                StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build(),
+            )
+        }
+
         Firebase.initialize(this@MindplexApp)
         initKoin(appModule = appModule)
     }

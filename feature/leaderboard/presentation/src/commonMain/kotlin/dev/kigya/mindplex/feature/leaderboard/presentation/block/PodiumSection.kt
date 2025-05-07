@@ -24,8 +24,8 @@ import mindplex_multiplatform.feature.leaderboard.presentation.generated.resourc
 
 internal object PodiumConstants {
     const val FIRST_RANK_CARD_FRACTION = 0.7f
-    const val SECOND_RANK_CARD_FRACTION = 0.5f
-    const val THIRD_RANK_CARD_FRACTION = 0.45f
+    const val SECOND_RANK_CARD_FRACTION = 0.53f
+    const val THIRD_RANK_CARD_FRACTION = 0.47f
 }
 
 @Composable

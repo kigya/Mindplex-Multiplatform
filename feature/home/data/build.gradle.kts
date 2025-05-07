@@ -15,10 +15,6 @@ kotlin {
         commonMain.dependencies {
             with(libs) {
                 implementation(kotlinx.datetime)
-                with(dataStore) {
-                    implementation(core)
-                    implementation(preferences)
-                }
             }
             with(projects) {
                 implementation(feature.home.domain)

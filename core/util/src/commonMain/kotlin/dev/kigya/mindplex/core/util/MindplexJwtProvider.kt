@@ -23,7 +23,7 @@ class MindplexJwtProvider(
 }
 
 suspend fun DataStore<Preferences>.getJwtToken(): String? = this.data
-    .map { preferences -> preferences[stringPreferencesKey(MINDPLEX_JWT)] }
+    .map { preferences -> preferences[stringPreferencesKey(MINDPLEX_JWT_KEY)] }
     .firstOrNull()
 
-private const val MINDPLEX_JWT = "mindplex_jwt"
+private const val MINDPLEX_JWT_KEY = "mindplex_jwt"

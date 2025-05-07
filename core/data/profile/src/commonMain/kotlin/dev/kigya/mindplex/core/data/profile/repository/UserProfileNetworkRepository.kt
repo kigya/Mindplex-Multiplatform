@@ -1,6 +1,8 @@
 package dev.kigya.mindplex.core.data.profile.repository
 
 import dev.kigya.mindplex.core.data.profile.mapper.UserRemoteProfileMapper
+import dev.kigya.mindplex.core.data.profile.model.ScoreDeltaDto
+import dev.kigya.mindplex.core.data.profile.model.ScoreUpdateResponseDto
 import dev.kigya.mindplex.core.data.profile.model.UserRemoteProfileDto
 import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
 import dev.kigya.mindplex.core.data.scout.api.getReified
@@ -12,8 +14,8 @@ import dev.kigya.outcome.Outcome
 import dev.kigya.outcome.outcomeSuspendCatchingOn
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
+
+private const val MINDPLEX_BACKEND_COLLECTION_USER = "user"
 
 class UserProfileNetworkRepository(
     private val scoutNetworkClientContract: ScoutNetworkClientContract,
@@ -23,7 +25,7 @@ class UserProfileNetworkRepository(
     override suspend fun getUserProfile(jwtToken: String): Outcome<*, UserProfileDomainModel> =
         outcomeSuspendCatchingOn(dispatcher) {
             val userDto: UserRemoteProfileDto = scoutNetworkClientContract.getReified(
-                path = arrayOf(FIRESTORE_COLLECTION_USER, FIRESTORE_DOCUMENT_PROFILE),
+                path = arrayOf(MINDPLEX_BACKEND_COLLECTION_USER, "profile"),
                 headers = arrayOf(ScoutHeaders.MindplexJwt),
             )
 
@@ -36,17 +38,12 @@ class UserProfileNetworkRepository(
         score: Int,
     ) {
         withContext(dispatcher) {
-            scoutNetworkClientContract.patchReified<Unit>(
-                path = arrayOf(FIRESTORE_COLLECTION_USER, FIRESTORE_FIELD_SCORE),
+            val response: ScoreUpdateResponseDto = scoutNetworkClientContract.patchReified(
+                path = arrayOf(MINDPLEX_BACKEND_COLLECTION_USER, "score"),
                 headers = arrayOf(ScoutHeaders.MindplexJwt),
-                body = JsonObject(mapOf("delta" to JsonPrimitive(score))),
+                body = ScoreDeltaDto(score),
             )
+            response.newScore
         }
-    }
-
-    private companion object {
-        const val FIRESTORE_COLLECTION_USER = "user"
-        const val FIRESTORE_FIELD_SCORE = "score"
-        const val FIRESTORE_DOCUMENT_PROFILE = "profile"
     }
 }

@@ -5,7 +5,6 @@ plugins {
             alias(unit.test)
             alias(room)
             alias(serialization)
-            alias(ktor)
         }
     }
 }
@@ -15,10 +14,6 @@ kotlin {
         commonMain.dependencies {
             with(libs) {
                 implementation(coroutines.core)
-                with(dataStore) {
-                    implementation(core)
-                    implementation(preferences)
-                }
             }
             with(projects) {
                 implementation(feature.leaderboard.domain)
@@ -26,7 +21,6 @@ kotlin {
                     implementation(util)
                     with(data){
                         implementation(profile)
-                        implementation(firebase)
                         implementation(scout)
                     }
                 }

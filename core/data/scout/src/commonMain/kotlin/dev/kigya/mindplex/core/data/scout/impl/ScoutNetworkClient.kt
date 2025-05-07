@@ -37,7 +37,7 @@ class ScoutNetworkClient(
         type: KType,
     ): ResponseType = withContext(dispatcher) {
         val requestHeaders = resolveHeaders(headers).toMutableMap().apply {
-            put(X_STAGE, buildStageContract.getStage())
+            put(HEADER_X_STAGE, buildStageContract.getStage())
         }
 
         val response: HttpResponse = httpClient.get {
@@ -78,7 +78,7 @@ class ScoutNetworkClient(
         type: KType,
     ): ResponseType = withContext(dispatcher) {
         val requestHeaders = resolveHeaders(headers).toMutableMap().apply {
-            put(X_STAGE, buildStageContract.getStage())
+            put(HEADER_X_STAGE, buildStageContract.getStage())
         }
 
         val response: HttpResponse = httpClient.post {
@@ -120,7 +120,7 @@ class ScoutNetworkClient(
         type: KType,
     ): ResponseType = withContext(dispatcher) {
         val requestHeaders = resolveHeaders(headers).toMutableMap().apply {
-            put(X_STAGE, buildStageContract.getStage())
+            put(HEADER_X_STAGE, buildStageContract.getStage())
         }
 
         val response: HttpResponse = httpClient.patch {
@@ -155,7 +155,7 @@ class ScoutNetworkClient(
 
     private suspend fun resolveHeaders(headers: Array<ScoutHeaders>): Map<String, String> {
         val result = mutableMapOf<String, String>()
-        result[X_STAGE] = buildStageContract.getStage()
+        result[HEADER_X_STAGE] = buildStageContract.getStage()
 
         headers.forEach {
             when (it) {
@@ -165,8 +165,6 @@ class ScoutNetworkClient(
                     val jwt = jwtProvider.getToken()
                     result[HEADER_AUTHORIZATION] = "$BEARER_PREFIX $jwt"
                 }
-
-                is ScoutHeaders.ContentType -> result[HEADER_CONTENT_TYPE] = it.value
             }
         }
         return result
@@ -174,9 +172,8 @@ class ScoutNetworkClient(
 
     private companion object {
         const val BASE_PATH = "mindplex-backend.onrender.com"
-        const val X_STAGE = "X-Stage"
+        const val HEADER_X_STAGE = "X-Stage"
         const val BEARER_PREFIX = "Bearer"
         const val HEADER_AUTHORIZATION = "Authorization"
-        const val HEADER_CONTENT_TYPE = "Content-Type"
     }
 }

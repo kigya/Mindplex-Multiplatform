@@ -28,11 +28,7 @@ kotlin {
 plugins.withId("org.jetbrains.kotlin.multiplatform") {
     apply(plugin = "com.codingfeline.buildkonfig")
 
-    val buildType = when {
-        project.hasProperty("release") -> "release"
-        System.getenv("CONFIGURATION") == "Release" -> "release"
-        else -> "debug"
-    }
+    val buildType = project.findProperty("build-stage")?.toString() ?: "debug"
 
     extensions.configure<BuildKonfigExtension> {
         packageName = "dev.kigya.mindplex.build"

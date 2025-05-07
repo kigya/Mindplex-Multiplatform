@@ -33,15 +33,12 @@ class SignInUseCase(
             ),
         )
 
-        return signInNetworkRepositoryContract.signIn(interceptedUser)
-            .fold(
-                onSuccess = { userId ->
-                    signInPreferencesRepositoryContract.signIn(userId)
-                    Outcome.success(userId)
-                },
-                onFailure = {
-                    Outcome.failure(MindplexDomainError.OTHER)
-                },
-            )
+        return when (val result = signInNetworkRepositoryContract.signIn(interceptedUser)) {
+            is Outcome.Success -> {
+                signInPreferencesRepositoryContract.signIn(result.value)
+                Outcome.success(result.value)
+            }
+            is Outcome.Failure -> Outcome.failure(MindplexDomainError.OTHER)
+        }
     }
 }

@@ -16,6 +16,10 @@ configure<BaseExtension> {
         load(rootProject.file("local.properties").inputStream())
     }
 
+    defaultConfig {
+        buildConfigField("String", "BUILD_STAGE", "\"${project.findProperty("build-stage") ?: "debug"}\"")
+    }
+
     signingConfigs {
         create("release") {
             storeFile = file(localProperties["release.store.file"] as String)
