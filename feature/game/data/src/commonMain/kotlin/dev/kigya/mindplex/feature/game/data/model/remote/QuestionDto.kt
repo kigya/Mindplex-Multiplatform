@@ -9,6 +9,6 @@ internal data class QuestionDto(
     @SerialName("difficulty") val difficulty: DifficultyDto,
     @SerialName("category") val category: CategoryDto,
     @SerialName("question") val question: String,
-    @SerialName("correct_answer") val correctAnswer: String,
-    @SerialName("incorrect_answers") val incorrectAnswers: List<String>,
+    @SerialName("correctAnswer") val correctAnswer: String,
+    @SerialName("incorrectAnswers") val incorrectAnswers: List<String>,
 )

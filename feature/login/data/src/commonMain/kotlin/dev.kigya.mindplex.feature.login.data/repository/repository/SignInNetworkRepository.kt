@@ -1,51 +1,34 @@
 package dev.kigya.mindplex.feature.login.data.repository.repository
 
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.firestore.Source
-import dev.gitlive.firebase.firestore.firestore
+import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
+import dev.kigya.mindplex.core.data.scout.api.postReified
+import dev.kigya.mindplex.core.data.scout.impl.ScoutHeaders
+import dev.kigya.mindplex.feature.login.data.model.SignInRequest
+import dev.kigya.mindplex.feature.login.data.model.SignInResponse
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.model.GoogleUserSignInDomainModel
+import dev.kigya.outcome.Outcome
+import dev.kigya.outcome.outcomeSuspendCatchingOn
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
-import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Users as UsersCollection
 
 class SignInNetworkRepository(
+    private val scoutNetworkClientContract: ScoutNetworkClientContract,
     private val dispatcher: CoroutineDispatcher,
 ) : SignInNetworkRepositoryContract {
-    override suspend fun signIn(googleUser: GoogleUserSignInDomainModel) =
-        requireNotNull(googleUser.userId).let { userId ->
-            withContext(dispatcher) {
-                val documentRef = Firebase.firestore
-                    .collection(UsersCollection.NAME)
-                    .document(userId)
+    override suspend fun signIn(googleUser: GoogleUserSignInDomainModel): Outcome<*, String> =
+        outcomeSuspendCatchingOn(dispatcher) {
+            val idToken = requireNotNull(googleUser.idToken)
 
-                val isExist = documentRef.get(Source.SERVER).exists
+            val response: SignInResponse = scoutNetworkClientContract.postReified(
+                path = arrayOf("user"),
+                body = SignInRequest(
+                    token = idToken,
+                    displayName = googleUser.displayName,
+                    avatarUrl = googleUser.profilePictureUrl,
+                ),
+                headers = arrayOf(ScoutHeaders.GoogleJwt(idToken)),
+            )
 
-                if (isExist) {
-                    documentRef.update(
-                        hashMapOf(
-                            UsersCollection.Document.NAME to googleUser.displayName,
-                            UsersCollection.Document.AVATAR_URL to googleUser.profilePictureUrl.orEmpty(),
-                            UsersCollection.Document.COUNTRY_CODE to googleUser.countryCode,
-                        ),
-                    )
-                } else {
-                    documentRef.set(
-                        hashMapOf(
-                            UsersCollection.Document.NAME to googleUser.displayName,
-                            UsersCollection.Document.AVATAR_URL to googleUser.profilePictureUrl.orEmpty(),
-                            UsersCollection.Document.COUNTRY_CODE to googleUser.countryCode,
-                            UsersCollection.Document.SCORE to 0,
-                        ),
-                    )
-                }
-            }
+            response.token
         }
-
-    override suspend fun signOut(googleIdToken: String) = withContext(dispatcher) {
-        Firebase.firestore
-            .collection(UsersCollection.NAME)
-            .document(googleIdToken)
-            .delete()
-    }
 }

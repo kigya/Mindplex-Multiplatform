@@ -18,9 +18,10 @@ kotlin {
             }
             with(projects) {
                 implementation(feature.home.domain)
-                implementation(core.util)
-                implementation(core.data.firebase)
-                implementation(core.data.scout)
+                with(core) {
+                    implementation(util)
+                    implementation(data.scout)
+                }
             }
         }
     }

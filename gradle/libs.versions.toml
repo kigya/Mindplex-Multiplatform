@@ -89,6 +89,9 @@ flagKit = { require = "1.1.0" }
 # Outcome
 outcome = "0.1.5"
 
+# Buildkonfig
+buildkonfig = "0.17.1"
+
 [libraries]
 # Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
@@ -219,6 +222,7 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 room = { id = "androidx.room", version.ref = "room" }
+buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 
 convention-build-feature-buildConfig = "build-feature.build-config:1.0"
 convention-build-feature-resValues = "build-feature.res-values:1.0"

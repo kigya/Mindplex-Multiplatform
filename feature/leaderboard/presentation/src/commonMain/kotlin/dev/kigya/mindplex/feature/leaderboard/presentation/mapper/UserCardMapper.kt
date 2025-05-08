@@ -24,5 +24,6 @@ internal object UserCardMapper : DomainMapper<UserRankDomainModel, LeaderboardCo
         profilePictureUrl = domainModel.avatarUrl,
         userCountry = domainModel.countryCode.orEmpty(),
         score = domainModel.userScore.toIntOrNull() ?: 0,
+        id = domainModel.id,
     )
 }

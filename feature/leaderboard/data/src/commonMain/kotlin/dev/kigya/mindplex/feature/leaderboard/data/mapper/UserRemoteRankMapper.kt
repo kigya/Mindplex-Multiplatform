@@ -12,6 +12,7 @@ internal object UserRemoteRankMapper : DomainMapper<UserRemoteRankDto, UserRankD
             profilePictureUrl = entity.avatarUrl,
             score = entity.score,
             userCountry = entity.countryCode,
+            id = entity.id,
         )
 
     override fun mapFromDomainModel(domainModel: UserRankDomainModel): UserRemoteRankDto =
@@ -20,5 +21,6 @@ internal object UserRemoteRankMapper : DomainMapper<UserRemoteRankDto, UserRankD
             avatarUrl = domainModel.profilePictureUrl.orEmpty(),
             score = domainModel.score,
             countryCode = domainModel.userCountry.orEmpty(),
+            id = domainModel.id,
         )
 }

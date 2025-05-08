@@ -11,7 +11,6 @@ import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesReposit
 import dev.kigya.outcome.Outcome
 import dev.kigya.outcome.unwrap
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 
 class GetUserProfileUseCase(
     private val userProfileNetworkRepositoryContract: UserProfileNetworkRepositoryContract,
@@ -22,29 +21,28 @@ class GetUserProfileUseCase(
     override suspend operator fun invoke(
         params: None,
     ): Outcome<MindplexDomainError, UserProfileDomainModel> {
-        return signInPreferencesRepositoryContract.userId.map { userId ->
-            val userId = userId ?: return@map Outcome.failure(MindplexDomainError.OTHER)
+        val jwtToken = signInPreferencesRepositoryContract.userId.first()
+            ?: return Outcome.failure(MindplexDomainError.OTHER)
 
-            userProfileNetworkRepositoryContract.getUserProfile(userId).unwrap(
-                onSuccess = { networkProfile ->
-                    userProfileDatabaseRepositoryContract.saveUserProfile(
-                        userId = userId,
-                        profile = networkProfile,
-                    )
-                    Outcome.success(networkProfile)
-                },
-                onFailure = {
-                    userProfileDatabaseRepositoryContract.getUserProfile(userId).unwrap(
-                        onSuccess = { databaseProfile -> Outcome.success(databaseProfile) },
-                        onFailure = {
-                            if (!connectivityRepositoryContract.isConnected()) {
-                                return@map Outcome.failure(MindplexDomainError.NETWORK)
-                            }
-                            return@map Outcome.failure(MindplexDomainError.OTHER)
-                        },
-                    )
-                },
-            )
-        }.first()
+        return userProfileNetworkRepositoryContract.getUserProfile(jwtToken).unwrap(
+            onSuccess = { networkProfile ->
+                userProfileDatabaseRepositoryContract.saveUserProfile(
+                    userId = jwtToken,
+                    profile = networkProfile,
+                )
+                Outcome.success(networkProfile)
+            },
+            onFailure = {
+                userProfileDatabaseRepositoryContract.getUserProfile(jwtToken).unwrap(
+                    onSuccess = { databaseProfile -> Outcome.success(databaseProfile) },
+                    onFailure = {
+                        if (!connectivityRepositoryContract.isConnected()) {
+                            return Outcome.failure(MindplexDomainError.NETWORK)
+                        }
+                        return Outcome.failure(MindplexDomainError.OTHER)
+                    },
+                )
+            },
+        )
     }
 }

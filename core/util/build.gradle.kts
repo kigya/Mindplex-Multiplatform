@@ -1,3 +1,6 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+import com.codingfeline.buildkonfig.gradle.BuildKonfigExtension
+
 plugins {
     with(libs.plugins.convention) {
         alias(config.shared.library)
@@ -13,7 +16,24 @@ kotlin {
                 implementation(coroutines.core)
                 implementation(compose.navigation)
                 api(compose.shimmer)
+                with(dataStore) {
+                    implementation(core)
+                    implementation(preferences)
+                }
             }
+        }
+    }
+}
+
+plugins.withId("org.jetbrains.kotlin.multiplatform") {
+    apply(plugin = "com.codingfeline.buildkonfig")
+
+    val buildType = project.findProperty("build-stage")?.toString() ?: "debug"
+
+    extensions.configure<BuildKonfigExtension> {
+        packageName = "dev.kigya.mindplex.build"
+        defaultConfigs {
+            buildConfigField(FieldSpec.Type.STRING, "BUILD_TYPE", buildType)
         }
     }
 }

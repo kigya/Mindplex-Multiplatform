@@ -10,6 +10,8 @@ import dev.kigya.mindplex.core.domain.connectivity.contract.ConnectivityReposito
 import dev.kigya.mindplex.core.domain.profile.contract.ThemePreferencesRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileDatabaseRepositoryContract
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileNetworkRepositoryContract
+import dev.kigya.mindplex.core.util.JwtProvider
+import dev.kigya.mindplex.core.util.MindplexJwtProvider
 import dev.kigya.mindplex.feature.game.data.repository.QuestionsDatabaseRepository
 import dev.kigya.mindplex.feature.game.data.repository.QuestionsNetworkRepository
 import dev.kigya.mindplex.feature.game.domain.contract.QuestionsDatabaseRepositoryContract
@@ -23,10 +25,8 @@ import dev.kigya.mindplex.feature.leaderboard.data.repository.UserRankNetworkRep
 import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankDatabaseRepositoryContract
 import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.data.repository.interceptor.ProfileImageInterceptor
-import dev.kigya.mindplex.feature.login.data.repository.repository.CountryCodeNetworkRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInNetworkRepository
 import dev.kigya.mindplex.feature.login.data.repository.repository.SignInPreferencesRepository
-import dev.kigya.mindplex.feature.login.domain.contract.CountryCodeNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.ProfileImageInterceptorContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInNetworkRepositoryContract
 import dev.kigya.mindplex.feature.login.domain.contract.SignInPreferencesRepositoryContract
@@ -55,6 +55,7 @@ val repositoryModule = module {
 
     single {
         SignInNetworkRepository(
+            scoutNetworkClientContract = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind SignInNetworkRepositoryContract::class
@@ -65,6 +66,7 @@ val repositoryModule = module {
 
     single {
         UserProfileNetworkRepository(
+            scoutNetworkClientContract = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind UserProfileNetworkRepositoryContract::class
@@ -117,16 +119,10 @@ val repositoryModule = module {
 
     single {
         UserRankNetworkRepository(
-            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
-        )
-    } bind UserRankNetworkRepositoryContract::class
-
-    single {
-        CountryCodeNetworkRepository(
             scoutNetworkClientContract = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
-    } bind CountryCodeNetworkRepositoryContract::class
+    } bind UserRankNetworkRepositoryContract::class
 
     single {
         ThemePreferencesRepository(
@@ -134,4 +130,11 @@ val repositoryModule = module {
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind ThemePreferencesRepositoryContract::class
+
+    single {
+        MindplexJwtProvider(
+            dataStore = get<DataStore<Preferences>>(),
+            dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
+        )
+    } bind JwtProvider::class
 }

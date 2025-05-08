@@ -1,6 +1,7 @@
 package dev.kigya.mindplex.core.domain.profile.model
 
 data class UserProfileDomainModel(
+    val id: String,
     val displayName: String,
     val profilePictureUrl: String?,
     val userCountry: String?,

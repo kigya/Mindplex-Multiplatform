@@ -2,7 +2,8 @@ package dev.kigya.mindplex.feature.game.data.repository
 
 import com.mohamedrejeb.ksoup.entities.KsoupEntities
 import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
-import dev.kigya.mindplex.core.data.scout.api.fetchReified
+import dev.kigya.mindplex.core.data.scout.api.getReified
+import dev.kigya.mindplex.core.data.scout.impl.ScoutHeaders
 import dev.kigya.mindplex.feature.game.data.mapper.QuestionsRemoteDataMapper
 import dev.kigya.mindplex.feature.game.data.mapper.QuestionsRemoteDataMapper.mappedBy
 import dev.kigya.mindplex.feature.game.data.model.remote.QuestionDto
@@ -20,9 +21,11 @@ class QuestionsNetworkRepository(
 
     override suspend fun getQuestions(): Outcome<*, List<QuestionDomainModel>> =
         outcomeSuspendCatchingOn(dispatcher) {
-            val questionsJson: String = scoutNetworkClientContract.fetchReified<String>(
+            val questionsJson: String = scoutNetworkClientContract.getReified<String>(
                 path = arrayOf("questions"),
+                headers = arrayOf(ScoutHeaders.MindplexJwt),
             )
+
             Json.decodeFromString<List<QuestionDto>>(questionsJson)
                 .map { it.decodeFields() }
                 .mappedBy(QuestionsRemoteDataMapper)
