@@ -75,7 +75,9 @@ private fun ColumnScope.LeaderboardPortraitSection(state: LeaderboardContract.St
     if (state.isLoading) {
         ShimmerUserRankSection()
     } else {
-        UserRankSection(nonPodiumUsers = state.nonPodiumUsers)
+        UserRankSection(
+            nonPodiumUsers = state.nonPodiumUsers,
+        )
     }
 }
 

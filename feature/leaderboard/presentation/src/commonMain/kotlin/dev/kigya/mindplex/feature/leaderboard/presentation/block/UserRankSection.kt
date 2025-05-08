@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import coil3.compose.AsyncImage
 import dev.carlsen.flagkit.FlagKit
+import dev.kigya.mindplex.core.presentation.theme.window.LocalNavigationBarPaddings
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
@@ -40,7 +41,7 @@ internal fun UserRankSection(
 ) {
     if (nonPodiumUsers.isNotEmpty()) {
         LazyColumn(
-            modifier = modifier.padding(bottom = LeaderboardTheme.dimension.dp80.value),
+            modifier = modifier.padding(bottom = LocalNavigationBarPaddings.current.calculateBottomPadding()),
             overscrollEffect = null,
         ) {
             items(nonPodiumUsers.size) { index ->

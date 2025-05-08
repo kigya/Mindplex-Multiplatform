@@ -5,6 +5,9 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,6 +18,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.PredictiveBackHandler
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import dev.kigya.mindplex.core.presentation.common.util.koinViewModel
 import dev.kigya.mindplex.core.presentation.feature.contract.ScreenHostContract
@@ -40,6 +47,7 @@ import mindplex_multiplatform.core.presentation.feature.generated.resources.ic_p
 fun AppActionsHost(
     navigationController: NavHostController,
     contract: ScreenHostContract,
+    onBottomBarHeightMeasured: (Dp) -> Unit,
     onBackPressAlphaChange: (Float) -> Unit,
 ) {
     val hostViewModel = koinViewModel<AppActionsHostViewModel>()
@@ -49,8 +57,17 @@ fun AppActionsHost(
     var backGestureProgress by remember { mutableStateOf(0f) }
     val animatedAlpha by animateFloatAsState(targetValue = 1f - backGestureProgress)
 
+    val navBarsPadding = WindowInsets.navigationBars.asPaddingValues()
+    val density = LocalDensity.current
+
+    var bottomBarHeight by remember { mutableStateOf(0.dp) }
+
     LaunchedEffect(animatedAlpha) {
         onBackPressAlphaChange(animatedAlpha)
+    }
+
+    LaunchedEffect(bottomBarHeight) {
+        onBottomBarHeightMeasured(bottomBarHeight)
     }
 
     PredictiveBackHandler(
@@ -75,10 +92,17 @@ fun AppActionsHost(
         exit = fadeOut(animationSpec = tween()),
     ) {
         AnimatedNavigationBar(
-            modifier = Modifier.padding(
-                vertical = HostTheme.dimension.dp16.value,
-                horizontal = HostTheme.dimension.dp16.value,
-            ),
+            modifier = Modifier
+                .onGloballyPositioned { coordinates ->
+                    bottomBarHeight = with(density) {
+                        coordinates.size.height.toDp()
+                    }
+                }
+                .padding(
+                    bottom = navBarsPadding.calculateBottomPadding(),
+                    start = HostTheme.dimension.dp16.value,
+                    end = HostTheme.dimension.dp16.value,
+                ),
             selectedIndex = state.activeVertical.index,
         ) {
             MindplexIconButton(
@@ -136,6 +160,7 @@ private fun NavigationEffects(
                         shouldExit = true
                     }
                 }
+
                 is NavigationIntent.NavigateTo -> navHostController.navigate(intent.route) {
                     launchSingleTop = intent.isSingleTop
                     intent.popUpToRoute?.let { popUpToRoute ->
