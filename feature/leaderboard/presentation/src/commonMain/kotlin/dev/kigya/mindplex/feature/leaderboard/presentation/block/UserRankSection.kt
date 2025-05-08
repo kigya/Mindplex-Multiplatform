@@ -17,9 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import coil3.compose.AsyncImage
 import dev.carlsen.flagkit.FlagKit
+import dev.kigya.mindplex.core.presentation.theme.window.LocalNavigationBarPaddings
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
 import dev.kigya.mindplex.core.util.extension.empty
 import dev.kigya.mindplex.feature.leaderboard.presentation.contract.LeaderboardContract
@@ -37,12 +37,11 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun UserRankSection(
     nonPodiumUsers: ImmutableList<LeaderboardContract.State.UserCardData>,
-    bottomBarHeight: Dp,
     modifier: Modifier = Modifier,
 ) {
     if (nonPodiumUsers.isNotEmpty()) {
         LazyColumn(
-            modifier = modifier.padding(bottom = bottomBarHeight),
+            modifier = modifier.padding(bottom = LocalNavigationBarPaddings.current.calculateBottomPadding()),
             overscrollEffect = null,
         ) {
             items(nonPodiumUsers.size) { index ->

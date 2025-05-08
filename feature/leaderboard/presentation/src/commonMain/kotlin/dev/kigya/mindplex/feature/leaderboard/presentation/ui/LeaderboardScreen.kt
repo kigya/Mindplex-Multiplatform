@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
 import dev.kigya.mindplex.core.presentation.common.util.MindplexAdaptiveContainer
 import dev.kigya.mindplex.core.presentation.feature.effect.use
 import dev.kigya.mindplex.core.presentation.uikit.MindplexErrorStubContainer
@@ -27,16 +26,12 @@ import dev.kigya.mindplex.feature.leaderboard.presentation.ui.theme.LeaderboardT
 private const val LANDSCAPE_PODIUM_FRACTION = 0.43f
 
 @Composable
-fun LeaderboardScreen(
-    contract: LeaderboardContract,
-    bottomBarHeight: Dp,
-) {
+fun LeaderboardScreen(contract: LeaderboardContract) {
     val (state, event, _) = use(contract)
 
     LeaderboardScreenContent(
         state = state,
         event = event,
-        bottomBarHeight = bottomBarHeight,
     )
 }
 
@@ -44,7 +39,6 @@ fun LeaderboardScreen(
 @VisibleForTesting
 internal fun LeaderboardScreenContent(
     state: LeaderboardContract.State,
-    bottomBarHeight: Dp,
     event: (LeaderboardContract.Event) -> Unit,
 ) = LeaderboardCompositionLocalProvider {
     MindplexErrorStubContainer(
@@ -55,26 +49,17 @@ internal fun LeaderboardScreenContent(
     ) {
         MindplexAdaptiveContainer(
             portrait = {
-                LeaderboardPortraitSection(
-                    state = state,
-                    bottomBarHeight = bottomBarHeight,
-                )
+                LeaderboardPortraitSection(state = state)
             },
             landscape = {
-                LeaderboardLandscapeSection(
-                    state = state,
-                    bottomBarHeight = bottomBarHeight,
-                )
+                LeaderboardLandscapeSection(state = state)
             },
         )
     }
 }
 
 @Composable
-private fun ColumnScope.LeaderboardPortraitSection(
-    state: LeaderboardContract.State,
-    bottomBarHeight: Dp,
-) {
+private fun ColumnScope.LeaderboardPortraitSection(state: LeaderboardContract.State) {
     LeaderboardScreenHeader(modifier = Modifier.fillMaxWidth())
 
     MindplexSpacer(size = LeaderboardTheme.dimension.dp36)
@@ -92,16 +77,12 @@ private fun ColumnScope.LeaderboardPortraitSection(
     } else {
         UserRankSection(
             nonPodiumUsers = state.nonPodiumUsers,
-            bottomBarHeight = bottomBarHeight,
         )
     }
 }
 
 @Composable
-private fun ColumnScope.LeaderboardLandscapeSection(
-    state: LeaderboardContract.State,
-    bottomBarHeight: Dp,
-) {
+private fun ColumnScope.LeaderboardLandscapeSection(state: LeaderboardContract.State) {
     LeaderboardScreenHeader(modifier = Modifier.fillMaxWidth())
 
     MindplexSpacer(size = LeaderboardTheme.dimension.dp36)
@@ -126,7 +107,6 @@ private fun ColumnScope.LeaderboardLandscapeSection(
             UserRankSection(
                 modifier = Modifier.weight(1f),
                 nonPodiumUsers = state.nonPodiumUsers,
-                bottomBarHeight = bottomBarHeight,
             )
         }
     }
