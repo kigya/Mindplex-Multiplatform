@@ -12,8 +12,6 @@ import dev.kigya.mindplex.core.domain.profile.contract.UserProfileDatabaseReposi
 import dev.kigya.mindplex.core.domain.profile.contract.UserProfileNetworkRepositoryContract
 import dev.kigya.mindplex.core.util.JwtProvider
 import dev.kigya.mindplex.core.util.MindplexJwtProvider
-import dev.kigya.mindplex.core.util.buildstage.BuildStageContract
-import dev.kigya.mindplex.core.util.buildstage.BuildStageProvider
 import dev.kigya.mindplex.feature.game.data.repository.QuestionsDatabaseRepository
 import dev.kigya.mindplex.feature.game.data.repository.QuestionsNetworkRepository
 import dev.kigya.mindplex.feature.game.domain.contract.QuestionsDatabaseRepositoryContract
@@ -139,8 +137,4 @@ val repositoryModule = module {
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )
     } bind JwtProvider::class
-
-    single {
-        BuildStageProvider()
-    } bind BuildStageContract::class
 }

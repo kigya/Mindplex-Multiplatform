@@ -38,12 +38,11 @@ class UserProfileNetworkRepository(
         score: Int,
     ) {
         withContext(dispatcher) {
-            val response: ScoreUpdateResponseDto = scoutNetworkClientContract.patchReified(
+            scoutNetworkClientContract.patchReified<ScoreUpdateResponseDto>(
                 path = arrayOf(MINDPLEX_BACKEND_COLLECTION_USER, "score"),
                 headers = arrayOf(ScoutHeaders.MindplexJwt),
                 body = ScoreDeltaDto(score),
             )
-            response.newScore
         }
     }
 }

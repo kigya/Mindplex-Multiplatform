@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.StrictMode
 import com.google.firebase.Firebase
 import com.google.firebase.initialize
+import dev.kigya.mindplex.core.util.buildstage.BuildStage
 import dev.kigya.mindplex.initKoin
 import org.koin.dsl.module
 
@@ -13,7 +14,7 @@ internal class MindplexApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.BUILD_STAGE == "debug") {
+        if (BuildStage.current() == BuildStage.DEBUG) {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectAll()

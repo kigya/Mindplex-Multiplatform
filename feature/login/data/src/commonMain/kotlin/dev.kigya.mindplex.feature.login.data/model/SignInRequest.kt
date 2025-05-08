@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SignInRequest(
     @SerialName("token") val token: String,
-    @SerialName("displayName")val displayName: String,
-    @SerialName("avatarUrl")val avatarUrl: String? = null,
+    @SerialName("displayName") val displayName: String,
+    @SerialName("avatarUrl") val avatarUrl: String? = null,
 )

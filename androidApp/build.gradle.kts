@@ -30,5 +30,6 @@ dependencies {
 
     with(projects) {
         implementation(shared)
+        implementation(core.util)
     }
 }

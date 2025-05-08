@@ -32,7 +32,6 @@ val dataSourceModule = module {
     factory {
         ScoutNetworkClient(
             httpClient = get(),
-            buildStageContract = get(),
             jwtProvider = get(),
             dispatcher = get(qualifier = named(Dispatchers.IO::class.simpleName.orEmpty())),
         )

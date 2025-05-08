@@ -4,7 +4,7 @@ import kotlin.jvm.JvmInline
 
 sealed interface ScoutHeaders {
     @JvmInline
-    value class GoogleJwt(val value: String) : ScoutHeaders
+    value class GoogleJwt(val rawValue: String) : ScoutHeaders
 
     data object MindplexJwt : ScoutHeaders
 }
