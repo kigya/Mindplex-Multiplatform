@@ -1,8 +1,8 @@
 package dev.kigya.mindplex.feature.game.domain.model
 
 data class QuestionValidationDomainModel(
-    val isAnswerCorrect: Boolean,
     val question: String,
+    val validationType: ValidationType,
     val results: List<QuestionDomainResult>,
 )
 
@@ -15,4 +15,5 @@ enum class ValidationType {
     INCORRECT,
     NEUTRAL,
     CORRECT,
+    NO_ANSWER,
 }

@@ -41,16 +41,26 @@ class ValidateQuestionUseCase(
                         }
                         QuestionDomainResult(idx, vt)
                     }
-
+                    val validationType = defineValidationType(params, results, userAnswerIndex)
                     val validation = QuestionValidationDomainModel(
-                        isAnswerCorrect = results.none { it.validationType == ValidationType.INCORRECT } &&
-                            userAnswerIndex != -1,
                         question = questionDomain.question,
+                        validationType = validationType,
                         results = results,
                     )
-
                     Outcome.success(validation)
                 },
             )
     }
+}
+
+private fun defineValidationType(
+    params: UserChoiceDomainModel,
+    results: List<QuestionDomainResult>,
+    userAnswerIndex: Int,
+): ValidationType = when {
+    params.isAnswered.not() -> ValidationType.NO_ANSWER
+    results.none { it.validationType == ValidationType.INCORRECT } && userAnswerIndex != -1 ->
+        ValidationType.CORRECT
+
+    else -> ValidationType.INCORRECT
 }
