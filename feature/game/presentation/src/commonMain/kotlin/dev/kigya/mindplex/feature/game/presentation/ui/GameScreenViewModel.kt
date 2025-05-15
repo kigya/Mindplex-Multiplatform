@@ -123,7 +123,7 @@ class GameScreenViewModel(
                 updateState { copy(stubErrorType = error.toStubErrorType()) }
             },
             onSuccess = { questionValidation: QuestionValidationDomainModel ->
-                updateScoreUseCase(questionValidation.isAnswerCorrect)
+                updateScoreUseCase(questionValidation.validationType)
                 val updatedAnswers = getState().answers.mapIndexed { i, answer ->
                     val domainResult = questionValidation.results.find { it.index == i }
 
