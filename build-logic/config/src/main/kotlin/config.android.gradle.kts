@@ -3,6 +3,7 @@ import com.android.build.gradle.BaseExtension
 import extension.configureIfExists
 import extension.getInt
 import extension.libs
+import java.util.Properties
 
 plugins {
     kotlin("android")
@@ -11,11 +12,32 @@ plugins {
 }
 
 configure<BaseExtension> {
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
+    val localProperties = Properties().apply {
+        load(rootProject.file("local.properties").inputStream())
+    }
 
+    defaultConfig {
+        buildConfigField("String", "BUILD_STAGE", "\"${project.findProperty("build-stage") ?: "debug"}\"")
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(localProperties["release.store.file"] as String)
+            storePassword = localProperties["release.store.password"] as String
+            keyAlias = localProperties["release.key.alias"] as String
+            keyPassword = localProperties["release.key.password"] as String
+        }
+    }
+
+    buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            isShrinkResources = false
+        }
+        getByName("release") {
+            isMinifyEnabled = false
+            isShrinkResources = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }

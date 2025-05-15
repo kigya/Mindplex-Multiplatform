@@ -1,0 +1,17 @@
+version: 2
+
+registries:
+  outcome-github-packages:
+    type: "maven-repository"
+    url: "https://maven.pkg.github.com/kigya/Outcome"
+    username: "${{ github.actor }}"
+    password: "${{ secrets.MINDPLEX_DEPENDABOT }}"
+
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+    registries:
+      - "outcome-github-packages"

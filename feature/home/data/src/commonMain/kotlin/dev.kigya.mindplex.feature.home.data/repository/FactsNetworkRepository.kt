@@ -1,7 +1,8 @@
 package dev.kigya.mindplex.feature.home.data.repository
 
 import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
-import dev.kigya.mindplex.core.data.scout.api.fetchReified
+import dev.kigya.mindplex.core.data.scout.api.getReified
+import dev.kigya.mindplex.core.data.scout.impl.ScoutHeaders
 import dev.kigya.mindplex.feature.home.data.mapper.FactsRemoteDataMapper
 import dev.kigya.mindplex.feature.home.data.mapper.FactsRemoteDataMapper.mappedBy
 import dev.kigya.mindplex.feature.home.data.model.FactRemoteDto
@@ -17,9 +18,10 @@ class FactsNetworkRepository(
 ) : FactsNetworkRepositoryContract {
     override suspend fun fetchFacts(limit: Int): Outcome<*, List<FactDomainModel>> =
         outcomeSuspendCatchingOn(dispatcher) {
-            scoutNetworkClientContract.fetchReified<List<FactRemoteDto>>(
+            scoutNetworkClientContract.getReified<List<FactRemoteDto>>(
                 path = arrayOf("facts"),
                 params = mapOf("limit" to "$limit"),
+                headers = arrayOf(ScoutHeaders.MindplexJwt),
             ) mappedBy FactsRemoteDataMapper
         }
 }

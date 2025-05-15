@@ -1,9 +1,8 @@
 package dev.kigya.mindplex.feature.leaderboard.data.repository
 
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.firestore.Direction
-import dev.gitlive.firebase.firestore.firestore
-import dev.kigya.mindplex.feature.leaderboard.data.exception.UserRankNotFoundException
+import dev.kigya.mindplex.core.data.scout.api.ScoutNetworkClientContract
+import dev.kigya.mindplex.core.data.scout.api.getReified
+import dev.kigya.mindplex.core.data.scout.impl.ScoutHeaders
 import dev.kigya.mindplex.feature.leaderboard.data.mapper.UserRemoteRankMapper
 import dev.kigya.mindplex.feature.leaderboard.data.model.UserRemoteRankDto
 import dev.kigya.mindplex.feature.leaderboard.domain.contract.UserRankNetworkRepositoryContract
@@ -11,28 +10,21 @@ import dev.kigya.mindplex.feature.leaderboard.domain.model.UserRankDomainModel
 import dev.kigya.outcome.Outcome
 import dev.kigya.outcome.outcomeSuspendCatchingOn
 import kotlinx.coroutines.CoroutineDispatcher
-import dev.kigya.mindplex.core.data.firebase.FirestoreConfig.Collection.Users as UsersCollection
 
 class UserRankNetworkRepository(
+    private val scoutNetworkClientContract: ScoutNetworkClientContract,
     private val dispatcher: CoroutineDispatcher,
 ) : UserRankNetworkRepositoryContract {
 
-    override suspend fun getTopUsersByScore(userLimit: Int): Outcome<*, List<UserRankDomainModel>> =
-        outcomeSuspendCatchingOn(dispatcher) {
-            try {
-                val documentSnapshot = Firebase.firestore
-                    .collection(UsersCollection.NAME)
-                    .orderBy(UsersCollection.Document.SCORE, Direction.DESCENDING)
-                    .limit(userLimit)
-                    .get()
+    override suspend fun getTopUsersByScore(
+        userLimit: Int,
+    ): Outcome<*, List<UserRankDomainModel>> = outcomeSuspendCatchingOn(dispatcher) {
+        val response: List<UserRemoteRankDto> = scoutNetworkClientContract.getReified(
+            path = arrayOf("leaderboard"),
+            params = mapOf("limit" to userLimit.toString()),
+            headers = arrayOf(ScoutHeaders.MindplexJwt),
+        )
 
-                documentSnapshot.documents.map { document ->
-                    val userDto = document.data<UserRemoteRankDto>()
-                    UserRemoteRankMapper.mapToDomainModel(userDto)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                throw UserRankNotFoundException("Failed to fetch top users by score: ${e.message}")
-            }
-        }
+        response.map(UserRemoteRankMapper::mapToDomainModel)
+    }
 }

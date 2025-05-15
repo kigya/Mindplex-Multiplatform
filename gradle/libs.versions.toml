@@ -49,9 +49,9 @@ konsist = { prefer = "0.17.3" }
 junit = { prefer = "5.11.0-M1" }
 turbine = { prefer = "1.2.0" }
 assertk = { prefer = "0.28.1" }
-coreKtx = { prefer = "1.6.1" }
 mockk = { prefer = "1.13.10" }
 robolectric = { prefer = "4.12" }
+androidTestCoreKtx = { prefer = "1.6.1" }
 
 # Detekt
 detekt = { require = "1.23.7" }
@@ -80,9 +80,6 @@ kotlinxDatetime = { prefer = "0.6.2" }
 # Immutable Collections
 kotlinxCollectionsImmutable = { require = "0.3.8" }
 
-# Kotlin Poet
-kotlinPoet = { prefer = "2.0.0" }
-
 # Json Parsing
 ksoup = { require = "0.5.0" }
 
@@ -92,10 +89,10 @@ flagKit = { require = "1.1.0" }
 # Outcome
 outcome = "0.1.5"
 
-[libraries]
-# Flagkit
-flagKit = { module = "dev.carlsen.flagkit:flagkit", version.ref = "flagKit"}
+# Buildkonfig
+buildkonfig = "0.17.1"
 
+[libraries]
 # Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
@@ -148,7 +145,7 @@ assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assert
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 compose-ui-test-junit4-android = { module = "androidx.compose.ui:ui-test-junit4-android", version.ref = "composeTest" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "composeTest" }
-core-ktx = { module = "androidx.test:core-ktx", version.ref = "coreKtx" }
+core-ktx = { module = "androidx.test:core-ktx", version.ref = "androidTestCoreKtx" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 
 # Detekt Libraries
@@ -183,11 +180,11 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 # Immutable Collections
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 
-# Kotlin Poet
-kotlin-poet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinPoet" }
-
 # Ksoup
 ksoup = { module = "com.mohamedrejeb.ksoup:ksoup-entities", version.ref = "ksoup" }
+
+# Flagkit
+flagKit = { module = "dev.carlsen.flagkit:flagkit", version.ref = "flagKit" }
 
 # Outcome
 outcome = { module = "dev.kigya.outcome:core", version.ref = "outcome" }
@@ -225,6 +222,7 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 room = { id = "androidx.room", version.ref = "room" }
+buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 
 convention-build-feature-buildConfig = "build-feature.build-config:1.0"
 convention-build-feature-resValues = "build-feature.res-values:1.0"

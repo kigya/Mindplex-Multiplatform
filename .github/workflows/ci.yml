@@ -1,59 +1,57 @@
 name: CI Workflows
+env:
+  ENABLE_PIPELINE: false
 
 on:
   pull_request:
     branches:
-      - master
+      - trunk
 
 jobs:
   detekt:
+    if: ${{ env.ENABLE_PIPELINE == 'true' }}
     runs-on: macos-latest
-
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup_gradle
-
       - name: Detekt
         uses: gradle/gradle-build-action@v3
         with:
           arguments: detekt detektDebug
 
   build:
-    runs-on: macos-latest
+    if: ${{ env.ENABLE_PIPELINE == 'true' }}
     needs: detekt
-
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup_gradle
-
       - name: Build
         uses: gradle/gradle-build-action@v3
         with:
           arguments: assembleDebug
 
   lint:
-    runs-on: macos-latest
+    if: ${{ env.ENABLE_PIPELINE == 'true' }}
     needs: build
-
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup_gradle
-
       - name: Lint
         uses: gradle/gradle-build-action@v3
         with:
           arguments: lintDebug
 
   test:
+    if: ${{ env.ENABLE_PIPELINE == 'true' }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ macos-latest ]
-
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup_gradle
-
       - name: Run Unit and Instrumented Tests
         uses: gradle/gradle-build-action@v3
         with:

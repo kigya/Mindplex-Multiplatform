@@ -15,6 +15,7 @@ internal object UserLocalProfileMapper : DomainMapper<UserLocalProfile, UserProf
             score = entity.userLocalData?.score ?: 0,
             globalRank = entity.userLocalData?.globalRank,
             localRank = entity.userLocalData?.localRank,
+            id = entity.id,
         )
 
     override fun mapFromDomainModel(domainModel: UserProfileDomainModel): UserLocalProfile =

@@ -20,7 +20,6 @@ kotlin {
                 implementation(feature.game.domain)
                 with(core) {
                     implementation(util)
-                    implementation(data.firebase)
                     implementation(data.scout)
                 }
             }

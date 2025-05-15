@@ -2,6 +2,7 @@ package dev.kigya.mindplex.feature.leaderboard.presentation.block
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.kigya.mindplex.core.presentation.uikit.MindplexText
@@ -16,6 +17,7 @@ import org.jetbrains.compose.resources.stringResource
 internal fun LeaderboardScreenHeader(modifier: Modifier = Modifier) {
     Row(modifier = modifier.fillMaxWidth()) {
         MindplexText(
+            modifier = Modifier.padding(vertical = LeaderboardTheme.dimension.dp12.value),
             value = stringResource(Res.string.leaderboard),
             color = LeaderboardTheme.colorScheme.leaderboardTitleText,
             typography = LeaderboardTheme.typography.leaderboardTitleText,

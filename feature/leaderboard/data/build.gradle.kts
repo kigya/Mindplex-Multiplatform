@@ -14,14 +14,15 @@ kotlin {
         commonMain.dependencies {
             with(libs) {
                 implementation(coroutines.core)
-                implementation(firebase.firestore)
             }
             with(projects) {
                 implementation(feature.leaderboard.domain)
                 with(core) {
-                    implementation(data.profile)
                     implementation(util)
-                    implementation(data.firebase)
+                    with(data){
+                        implementation(profile)
+                        implementation(scout)
+                    }
                 }
             }
         }
