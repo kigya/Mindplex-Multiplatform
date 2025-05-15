@@ -1,13 +1,21 @@
 package dev.kigya.mindplex.core.presentation.feature.host
 
+import dev.kigya.mindplex.core.domain.interactor.base.None
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.contract.ScreenHostContract
+import dev.kigya.mindplex.feature.login.domain.usecase.GetIsUserSignedInUseCase
+import dev.kigya.mindplex.feature.onboarding.domain.usecase.GetIsOnboardingCompletedUseCase
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class AppActionsHostViewModel(
+    private val getIsOnboardingCompletedUseCase: GetIsOnboardingCompletedUseCase,
+    private val getIsUserSignedInUseCase: GetIsUserSignedInUseCase,
     navigatorContract: MindplexNavigatorContract,
 ) : BaseViewModel<ScreenHostContract.State, ScreenHostContract.Effect>(
     navigatorContract = navigatorContract,
@@ -15,7 +23,29 @@ class AppActionsHostViewModel(
 ),
     ScreenHostContract {
 
+    private val _startDestination = MutableStateFlow<ScreenRoute?>(null)
+    val startDestination = _startDestination.asStateFlow()
+
     val navigationChannel = navigatorContract.navigationChannel
+
+    init {
+        withUseCaseScope {
+            determineStartDestination()
+        }
+    }
+
+    private suspend fun determineStartDestination() {
+        val isOnboardingCompleted = getIsOnboardingCompletedUseCase(None).first()
+        val isUserSignedIn = getIsUserSignedInUseCase(None).first()
+
+        val route = when {
+            isOnboardingCompleted.not() -> ScreenRoute.Onboarding
+            isUserSignedIn.not() -> ScreenRoute.Login
+            else -> ScreenRoute.Home
+        }
+        _startDestination.value = route
+        handleEvent(ScreenHostContract.Event.OnNewRouteReceived(route))
+    }
 
     override fun handleEvent(event: ScreenHostContract.Event) {
         withUseCaseScope {
@@ -46,7 +76,6 @@ class AppActionsHostViewModel(
     private suspend fun handleVerticalClick(selectedVertical: ScreenHostContract.State.Vertical) {
         val activeVertical = getState().activeVertical
         val newRoute = selectedVertical.mapToRoute()
-
         if (activeVertical != selectedVertical) {
             navigatorContract.navigateTo(
                 route = newRoute,

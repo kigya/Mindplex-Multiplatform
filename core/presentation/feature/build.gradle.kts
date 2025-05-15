@@ -19,6 +19,8 @@ kotlin {
                 implementation(core.presentation.theme)
                 implementation(core.domain.interactor)
                 implementation(navigation.api)
+                implementation(feature.onboarding.domain)
+                implementation(feature.login.domain)
             }
         }
     }

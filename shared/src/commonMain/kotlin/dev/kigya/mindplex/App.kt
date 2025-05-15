@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -68,6 +69,9 @@ fun App() {
 
             var predictiveBackAlpha by remember { mutableFloatStateOf(1f) }
             var bottomBarHeight by remember { mutableStateOf(0.dp) }
+            var isShowSplash by remember { mutableStateOf(true) }
+            val viewModel = koinViewModel<AppActionsHostViewModel>()
+            val startDestination by viewModel.startDestination.collectAsState()
 
             CompositionLocalProvider(LocalNavigationBarPaddings provides PaddingValues(bottom = bottomBarHeight)) {
                 Box(
@@ -76,13 +80,8 @@ fun App() {
                 ) {
                     NavHost(
                         navController = navigationController,
-                        startDestination = ScreenRoute.Splash,
+                        startDestination = startDestination ?: ScreenRoute.Onboarding,
                     ) {
-                        animatedComposable<ScreenRoute.Splash> {
-                            SystemBarsColor(SystemBarsColor.LIGHT)
-                            SplashScreen(koinViewModel<SplashScreenViewModel>())
-                        }
-
                         animatedComposable<ScreenRoute.Onboarding> {
                             SystemBarsColor(SystemBarsColor.LIGHT)
                             OnboardingScreen(koinViewModel<OnboardingScreenViewModel>())
@@ -137,6 +136,12 @@ fun App() {
                         onBackPressAlphaChange = { predictiveBackAlpha = it },
                         onBottomBarHeightMeasured = { height -> bottomBarHeight = height },
                     )
+                    if (isShowSplash) {
+                        SplashScreen(
+                            contract = koinViewModel<SplashScreenViewModel>(),
+                            onComplete = { isShowSplash = false },
+                        )
+                    }
                 }
             }
         }

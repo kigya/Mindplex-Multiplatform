@@ -22,11 +22,7 @@ kotlin {
                     implementation(presentation.uikit)
                     implementation(presentation.theme)
                 }
-                with(feature) {
-                    implementation(profile.domain)
-                    implementation(onboarding.domain)
-                    implementation(login.domain)
-                }
+                implementation(feature.profile.domain)
                 implementation(navigation.api)
             }
         }
