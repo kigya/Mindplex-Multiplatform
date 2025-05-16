@@ -76,6 +76,11 @@ class MindplexNavigator : MindplexNavigatorContract {
         )
     }
 
+    override suspend fun preloadAndInitializeScreen(route: ScreenRoute) {
+        pushRouteUnderCurrent(route)
+        navigationChannel.send(NavigationIntent.PreloadScreen(route))
+    }
+
     private fun popRouteHistory(
         targetRoute: ScreenRoute?,
         inclusive: Boolean,
@@ -120,5 +125,16 @@ class MindplexNavigator : MindplexNavigatorContract {
 
         newHistory = newHistory + newRoute
         _routeHistory = newHistory
+    }
+
+    private fun pushRouteUnderCurrent(newRoute: ScreenRoute) {
+        val oldHistory = _routeHistory
+        if (oldHistory.isEmpty()) {
+            _routeHistory = listOf(newRoute)
+        } else {
+            val allExceptLast = oldHistory.dropLast(1)
+            val last = oldHistory.last()
+            _routeHistory = allExceptLast + newRoute + last
+        }
     }
 }

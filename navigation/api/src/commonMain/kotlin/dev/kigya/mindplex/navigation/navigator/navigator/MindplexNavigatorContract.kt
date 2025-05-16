@@ -31,4 +31,6 @@ interface MindplexNavigatorContract {
         inclusive: Boolean = false,
         isSingleTop: Boolean = false,
     )
+
+    suspend fun preloadAndInitializeScreen(route: ScreenRoute)
 }

@@ -23,5 +23,6 @@ interface SplashContract :
     @Immutable
     sealed class Effect {
         internal data object RequestSystemTheme : Effect()
+        internal data object NavigationFinished : Effect()
     }
 }
