@@ -78,55 +78,57 @@ fun App() {
                     modifier = Modifier.alpha(predictiveBackAlpha),
                     contentAlignment = Alignment.BottomCenter,
                 ) {
-                    NavHost(
-                        navController = navigationController,
-                        startDestination = startDestination ?: ScreenRoute.Onboarding,
-                    ) {
-                        animatedComposable<ScreenRoute.Onboarding> {
-                            SystemBarsColor(SystemBarsColor.LIGHT)
-                            OnboardingScreen(koinViewModel<OnboardingScreenViewModel>())
-                        }
+                    startDestination?.let { route ->
+                        NavHost(
+                            navController = navigationController,
+                            startDestination = route,
+                        ) {
+                            animatedComposable<ScreenRoute.Onboarding> {
+                                SystemBarsColor(SystemBarsColor.LIGHT)
+                                OnboardingScreen(koinViewModel<OnboardingScreenViewModel>())
+                            }
 
-                        animatedComposable<ScreenRoute.Login> {
-                            SystemBarsColor(SystemBarsColor.AUTO)
-                            LoginScreen(koinViewModel<LoginScreenViewModel>())
-                        }
+                            animatedComposable<ScreenRoute.Login> {
+                                SystemBarsColor(SystemBarsColor.AUTO)
+                                LoginScreen(koinViewModel<LoginScreenViewModel>())
+                            }
 
-                        animatedComposable<ScreenRoute.Home> {
-                            SystemBarsColor(SystemBarsColor.AUTO)
-                            HomeScreen(koinViewModel<HomeScreenViewModel>())
-                        }
+                            animatedComposable<ScreenRoute.Home> {
+                                SystemBarsColor(SystemBarsColor.AUTO)
+                                HomeScreen(koinViewModel<HomeScreenViewModel>())
+                            }
 
-                        animatedComposable<ScreenRoute.Leaderboard> {
-                            SystemBarsColor(SystemBarsColor.AUTO)
-                            LeaderboardScreen(koinViewModel<LeaderboardScreenViewModel>())
-                        }
+                            animatedComposable<ScreenRoute.Leaderboard> {
+                                SystemBarsColor(SystemBarsColor.AUTO)
+                                LeaderboardScreen(koinViewModel<LeaderboardScreenViewModel>())
+                            }
 
-                        animatedComposable<ScreenRoute.Profile> {
-                            SystemBarsColor(SystemBarsColor.AUTO)
-                            ProfileScreen(koinViewModel<ProfileScreenViewModel>())
-                        }
+                            animatedComposable<ScreenRoute.Profile> {
+                                SystemBarsColor(SystemBarsColor.AUTO)
+                                ProfileScreen(koinViewModel<ProfileScreenViewModel>())
+                            }
 
-                        animatedComposable<ScreenRoute.Game>(
-                            typeMap = mapOf(
-                                enumNavTypeEntry(ScreenRoute.Game.TypePresentationModel::valueOf),
-                                enumNavTypeEntry(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
-                                enumNavTypeEntry(ScreenRoute.Game.CategoryPresentationModel::valueOf),
-                                typeOf<ScreenRoute.Game.CategoryPresentationModel?>() to
-                                    nullableEnumNavType(ScreenRoute.Game.CategoryPresentationModel::valueOf),
-                                typeOf<ScreenRoute.Game.DifficultyPresentationModel?>() to
-                                    nullableEnumNavType(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
-                            ),
-                        ) { backStackEntry ->
-                            SystemBarsColor(SystemBarsColor.AUTO)
+                            animatedComposable<ScreenRoute.Game>(
+                                typeMap = mapOf(
+                                    enumNavTypeEntry(ScreenRoute.Game.TypePresentationModel::valueOf),
+                                    enumNavTypeEntry(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
+                                    enumNavTypeEntry(ScreenRoute.Game.CategoryPresentationModel::valueOf),
+                                    typeOf<ScreenRoute.Game.CategoryPresentationModel?>() to
+                                        nullableEnumNavType(ScreenRoute.Game.CategoryPresentationModel::valueOf),
+                                    typeOf<ScreenRoute.Game.DifficultyPresentationModel?>() to
+                                        nullableEnumNavType(ScreenRoute.Game.DifficultyPresentationModel::valueOf),
+                                ),
+                            ) { backStackEntry ->
+                                SystemBarsColor(SystemBarsColor.AUTO)
 
-                            val arguments = backStackEntry.toRoute<ScreenRoute.Game>()
-                            GameScreen(
-                                contract = koinViewModel<GameScreenViewModel>(),
-                                type = arguments.type,
-                                category = arguments.category,
-                                difficulty = arguments.difficulty,
-                            )
+                                val arguments = backStackEntry.toRoute<ScreenRoute.Game>()
+                                GameScreen(
+                                    contract = koinViewModel<GameScreenViewModel>(),
+                                    type = arguments.type,
+                                    category = arguments.category,
+                                    difficulty = arguments.difficulty,
+                                )
+                            }
                         }
                     }
 

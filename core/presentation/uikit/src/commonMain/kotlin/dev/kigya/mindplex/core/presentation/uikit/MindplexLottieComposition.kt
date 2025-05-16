@@ -5,20 +5,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import io.github.alexzhirkevich.compottie.LottieCompositionSpec
+import io.github.alexzhirkevich.compottie.LottieComposition
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
-import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
 
-/**
- * [Figma](https://figmashort.link/mYjQ6p)
- */
 @Composable
-fun MindplexLottie(
-    reader: suspend () -> ByteArray,
+fun MindplexLottieComposition(
+    composition: LottieComposition,
     modifier: Modifier = Modifier,
     isRestartable: Boolean = false,
     shouldBeReversedOnRepeat: Boolean = false,
@@ -27,11 +23,6 @@ fun MindplexLottie(
     contentScale: ContentScale = ContentScale.FillBounds,
     onFinish: () -> Unit = {},
 ) {
-    val json by produceState<String?>(initialValue = null) {
-        value = reader().decodeToString()
-    }
-    val composition by rememberLottieComposition(json) { LottieCompositionSpec.JsonString(json.orEmpty()) }
-
     val progress by animateLottieCompositionAsState(
         composition = composition,
         restartOnPlay = isRestartable,
@@ -39,7 +30,10 @@ fun MindplexLottie(
         speed = speed,
         iterations = iterations,
     )
-    val isAnimationComplete by derivedStateOf { progress == 1f }
+
+    val isAnimationComplete by remember(progress) {
+        derivedStateOf { progress == 1f }
+    }
 
     LaunchedEffect(isAnimationComplete) { if (isAnimationComplete) onFinish() }
 

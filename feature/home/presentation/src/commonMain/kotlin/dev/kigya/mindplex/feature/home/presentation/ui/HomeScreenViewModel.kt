@@ -1,7 +1,6 @@
 package dev.kigya.mindplex.feature.home.presentation.ui
 
 import dev.kigya.mindplex.core.domain.interactor.base.None
-import dev.kigya.mindplex.core.domain.interactor.model.MindplexDomainError
 import dev.kigya.mindplex.core.domain.profile.usecase.GetUserProfileUseCase
 import dev.kigya.mindplex.core.presentation.feature.BaseViewModel
 import dev.kigya.mindplex.core.presentation.feature.mapper.toStubErrorType
@@ -18,9 +17,7 @@ import dev.kigya.mindplex.feature.home.presentation.mapper.FactsPresentationMapp
 import dev.kigya.mindplex.feature.home.presentation.mapper.FactsPresentationMapper.mappedBy
 import dev.kigya.mindplex.navigation.navigator.navigator.MindplexNavigatorContract
 import dev.kigya.mindplex.navigation.navigator.route.ScreenRoute
-import dev.kigya.outcome.onFailure
 import dev.kigya.outcome.unwrap
-import dev.kigya.outcome.zipParallelAccumulate
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
@@ -43,12 +40,57 @@ class HomeScreenViewModel(
 
     override fun executeStartAction() {
         withUseCaseScope {
-            val result = getUserProfileUseCase.invoke(None)
-            result.unwrap(
-                onFailure = { navigatorContract.navigateTo(ScreenRoute.Login) },
-                onSuccess = { fetchScreenData() },
-            )
+            launch { loadProfile() }
+            launch { fetchFacts() }
         }
+    }
+
+    private suspend fun loadProfile() {
+        val result = getUserProfileUseCase(None)
+        result.unwrap(
+            onFailure = { navigatorContract.navigateTo(ScreenRoute.Login) },
+            onSuccess = { profile ->
+                updateState {
+                    copy(
+                        stubErrorType = null,
+                        headerData = headerData.copy(
+                            userName = profile.displayName,
+                            avatarUrl = profile.profilePictureUrl,
+                            isProfileNameLoading = false,
+                            isProfilePictureLoading = false,
+                        ),
+                    )
+                }
+            },
+        )
+    }
+
+    private suspend fun fetchFacts() {
+        val result = getFactsUseCase(GetFactsUseCase.Params(FACTS_AMOUNT))
+        result.unwrap(
+            onFailure = { error ->
+                updateState { copy(stubErrorType = error.toStubErrorType()) }
+            },
+            onSuccess = { facts ->
+                updateState {
+                    copy(
+                        stubErrorType = null,
+                        factsData = factsData.copy(
+                            areFactsLoading = false,
+                            facts = facts mappedBy FactsPresentationMapper,
+                        ),
+                        typesData = typesData.copy(
+                            areTypesLoading = false,
+                        ),
+                        categorySelectionData = categorySelectionData.copy(
+                            categories = getCategories(),
+                            difficulties = getDifficulties(),
+                        ),
+                    )
+                }
+                enableFactsAutoChangeEffect()
+            },
+        )
     }
 
     override fun handleEvent(event: HomeContract.Event) {
@@ -81,46 +123,8 @@ class HomeScreenViewModel(
 
     private suspend fun fetchScreenData() = supervisorScope {
         updateState { HomeContract.State() }
-
-        zipParallelAccumulate(
-            fa = { getUserProfileUseCase(None) },
-            fb = { getFactsUseCase(GetFactsUseCase.Params(FACTS_AMOUNT)) },
-            combineError = { e1, e2 ->
-                listOf(e1, e2)
-                    .takeIf { MindplexDomainError.NETWORK in it }
-                    ?.let { MindplexDomainError.NETWORK }
-                    ?: MindplexDomainError.OTHER
-            },
-            transform = { profile, facts ->
-                updateState {
-                    copy(
-                        stubErrorType = null,
-                        headerData = headerData.copy(
-                            userName = profile.displayName,
-                            avatarUrl = profile.profilePictureUrl,
-                            isProfileNameLoading = false,
-                            isProfilePictureLoading = false,
-                        ),
-                        factsData = factsData.copy(
-                            areFactsLoading = false,
-                            facts = facts mappedBy FactsPresentationMapper,
-                        ),
-                        typesData = typesData.copy(
-                            areTypesLoading = false,
-                        ),
-                        categorySelectionData = categorySelectionData.copy(
-                            categories = getCategories(),
-                            difficulties = getDifficulties(),
-                        ),
-                    )
-                }
-                launch { enableFactsAutoChangeEffect() }
-            },
-        ).onFailure { error ->
-            updateState {
-                copy(stubErrorType = error.toStubErrorType())
-            }
-        }
+        loadProfile()
+        fetchFacts()
     }
 
     private suspend fun enableFactsAutoChangeEffect() {
