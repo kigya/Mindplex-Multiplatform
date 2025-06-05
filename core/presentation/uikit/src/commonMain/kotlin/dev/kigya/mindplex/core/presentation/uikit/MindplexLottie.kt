@@ -30,7 +30,8 @@ fun MindplexLottie(
     val json by produceState<String?>(initialValue = null) {
         value = reader().decodeToString()
     }
-    val composition by rememberLottieComposition { LottieCompositionSpec.JsonString(json.orEmpty()) }
+    val composition by rememberLottieComposition(json) { LottieCompositionSpec.JsonString(json.orEmpty()) }
+
     val progress by animateLottieCompositionAsState(
         composition = composition,
         restartOnPlay = isRestartable,

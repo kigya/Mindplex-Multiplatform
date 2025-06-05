@@ -17,4 +17,8 @@ sealed class NavigationIntent(
         val popUpToRoute: ScreenRoute? = null,
         val isSingleTop: Boolean = false,
     ) : NavigationIntent(route, inclusive)
+
+    data class PreloadScreen(
+        override val route: ScreenRoute,
+    ) : NavigationIntent(route, inclusive = false)
 }

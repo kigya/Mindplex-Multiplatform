@@ -17,6 +17,7 @@ private fun SplashScreenPreview() {
             state = SplashContract.State(shouldDisplayText = true),
             event = Lambda.noOpConsumer(),
             effect = StableFlow.empty(),
+            onComplete = {},
         )
     }
 }

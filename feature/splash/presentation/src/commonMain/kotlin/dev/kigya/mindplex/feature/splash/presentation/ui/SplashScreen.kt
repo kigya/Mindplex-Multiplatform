@@ -13,13 +13,17 @@ import dev.kigya.mindplex.feature.splash.presentation.contract.SplashContract
 import dev.kigya.mindplex.feature.splash.presentation.ui.provider.SplashCompositionLocalProvider
 
 @Composable
-fun SplashScreen(contract: SplashContract) {
+fun SplashScreen(
+    contract: SplashContract,
+    onComplete: () -> Unit,
+) {
     val (state, event, effect) = use(contract)
 
     SplashScreenContent(
         state = state,
         event = event,
         effect = effect,
+        onComplete = onComplete,
     )
 }
 
@@ -29,6 +33,7 @@ internal fun SplashScreenContent(
     state: SplashContract.State,
     event: (SplashContract.Event) -> Unit,
     effect: StableFlow<SplashContract.Effect>,
+    onComplete: () -> Unit,
 ) = SplashCompositionLocalProvider {
     SplashContainer {
         val isSystemDark = isSystemInDarkTheme()
@@ -38,6 +43,11 @@ internal fun SplashScreenContent(
                 when (themeEffect) {
                     is SplashContract.Effect.RequestSystemTheme ->
                         event(SplashContract.Event.OnSystemThemeReceived(isSystemDark))
+
+                    SplashContract.Effect.NavigationFinished -> {
+                        event.invoke(SplashContract.Event.OnAnimationFinished)
+                        onComplete()
+                    }
                 }
             }
         }
