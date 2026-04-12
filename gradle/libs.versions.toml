@@ -90,7 +90,7 @@ flagKit = { require = "1.1.0" }
 outcome = "0.1.5"
 
 # Buildkonfig
-buildkonfig = "0.17.1"
+buildkonfig = "0.18.0"
 
 [libraries]
 # Serialization
